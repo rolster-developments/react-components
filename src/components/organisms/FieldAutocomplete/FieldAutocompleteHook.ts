@@ -2,7 +2,7 @@ import {
   AbstractAutocompleteElement as Element,
   AutocompleteStore,
   ListCollection,
-  createStoreAutocomplete
+  createAutocompleteStore
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import {
@@ -204,7 +204,7 @@ export function useFieldAutocomplete<
   }
 
   function refreshCoincidences(pattern: string | null, reboot = false): void {
-    const { collection, store } = createStoreAutocomplete({
+    const { collection, store } = createAutocompleteStore({
       pattern,
       suggestions,
       reboot,

@@ -12,7 +12,11 @@ export default rolster({
     '@rolster/i18n',
     '@rolster/react-forms',
     '@rolster/strings',
-    '@rolster/validators'
+    '@rolster/validators',
+    'lottie-react',
+    'react',
+    'react-dom',
+    'uuid'
   ],
   plugins: [peerDepsExternal(), css()]
 });
