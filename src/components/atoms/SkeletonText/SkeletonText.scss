@@ -1,5 +1,5 @@
 // Rolster Technology SkeletonText Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 17/Jun/2022
@@ -19,7 +19,9 @@
   text-overflow: inherit;
 
   &__value {
-    display: block;
+    display: flex;
+    column-gap: var(--rlc-skeleton-text-column-gap);
+    align-items: center;
     font-weight: inherit;
     font-size: inherit;
     line-height: inherit;

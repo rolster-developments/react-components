@@ -1,5 +1,5 @@
 // Rolster Technology Ballot Component
-// v1.1.0
+// v1.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -12,9 +12,9 @@
   position: relative;
   display: flex;
   width: 100%;
-  align-content: center;
+  align-items: center;
   column-gap: var(--rls-sizing-x4);
-  padding: var(--rls-sizing-x4);
+  padding: var(--rlc-ballot-padding);
   box-sizing: border-box;
   overflow: hidden;
 
@@ -31,13 +31,13 @@
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    row-gap: var(--rls-sizing-x2);
+    row-gap: var(--rlc-ballot-component-row-gap);
   }
 
   &__title {
-    --rlc-skeleton-text-height: var(--rls-label-line-height);
-    --rlc-skeleton-text-letter-spacing: var(--rls-label-letter-spacing);
-    --rlc-skeleton-text-font-size: var(--rls-label-font-size);
+    --rlc-skeleton-text-height: var(--rlc-ballot-title-height);
+    --rlc-skeleton-text-letter-spacing: var(--rlc-ballot-title-letter-spacing);
+    --rlc-skeleton-text-font-size: var(--rlc-ballot-title-font-size);
 
     position: relative;
     width: 100%;
@@ -45,24 +45,24 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-weight: var(--rls-font-weight-medium);
-    font-size: var(--rls-label-font-size);
-    letter-spacing: var(--rls-label-letter-spacing);
-    min-height: var(--rls-label-line-height);
-    line-height: var(--rls-label-line-height);
+    font-weight: var(--rlc-ballot-title-font-weight);
+    font-size: var(--rlc-ballot-title-font-size);
+    letter-spacing: var(--rlc-ballot-title-letter-spacing);
+    min-height: var(--rlc-ballot-title-height);
+    line-height: var(--rlc-ballot-title-height);
   }
 
   &__subtitle {
     --rlc-skeleton-text-height: var(--rlc-ballot-subtitle-height);
-    --rlc-skeleton-text-letter-spacing: var(--rls-smalltext-letter-spacing);
-    --rlc-skeleton-text-font-size: var(--rls-smalltext-font-size);
+    --rlc-skeleton-text-letter-spacing: var(--rlc-ballot-subtitle-letter-spacing);
+    --rlc-skeleton-text-font-size: var(--rlc-ballot-subtitle-font-size);
 
     position: relative;
     width: var(--rlc-ballot-subtitle-width);
     color: var(--rls-app-color-300);
-    font-weight: var(--rls-font-weight-semibold);
-    font-size: var(--rls-smalltext-font-size);
-    letter-spacing: var(--rls-smalltext-letter-spacing);
+    font-weight: var(--rlc-ballot-subtitle-font-weight);
+    font-size: var(--rls-ballot-subtitle-font-size);
+    letter-spacing: var(--rlc-ballot-subtitle-letter-spacing);
     min-height: var(--rlc-ballot-subtitle-height);
     line-height: var(--rlc-ballot-subtitle-height);
     overflow: var(--rlc-ballot-subtitle-overflow);
