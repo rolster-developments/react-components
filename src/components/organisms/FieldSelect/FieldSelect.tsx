@@ -152,7 +152,7 @@ export function RlsFieldSelect<T = any>(
           img={element.img}
           initials={element.initials}
         >
-          {element.title}
+          <span>{element.title}</span>
         </RlsBallot>
       )}
     />

@@ -37,7 +37,9 @@ export function RlsBallot({
         </label>
         {subtitle && (
           <label className="rls-ballot__subtitle">
-            <RlsSkeletonText active={skeleton}>{subtitle}</RlsSkeletonText>
+            <RlsSkeletonText active={skeleton}>
+              <span>{subtitle}</span>
+            </RlsSkeletonText>
           </label>
         )}
       </div>

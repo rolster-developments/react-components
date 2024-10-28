@@ -75,20 +75,14 @@ export function RlsFieldAutocompleteTemplate<
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <label
+          <input
             className="rls-field-list__control"
+            readOnly={true}
+            disabled={disabled}
+            placeholder={placeholder}
+            value={fieldAutocomplete.listControl.value}
             onClick={fieldAutocomplete.onClickControl}
-          >
-            {fieldAutocomplete.listControl.value ? (
-              <span className="rls-field-list__control__description">
-                {fieldAutocomplete.listControl.value}
-              </span>
-            ) : (
-              <span className="rls-field-list__control__placeholder">
-                {placeholder}
-              </span>
-            )}
-          </label>
+          />
 
           {!hiddenIcon && fieldAutocomplete.listControl.value && (
             <button
@@ -197,7 +191,7 @@ export function RlsFieldAutocomplete<T = any>(
           img={element.img}
           initials={element.initials}
         >
-          {element.title}
+          <span>{element.title}</span>
         </RlsBallot>
       )}
     />

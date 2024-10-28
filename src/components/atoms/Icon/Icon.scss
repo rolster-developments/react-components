@@ -1,18 +1,18 @@
 // Rolster Technology Icon Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 12/Sep/2023
+// Updated: 27/Oct/2024
 
 .rls-icon {
   --pvt-icon-display: block;
 
   position: relative;
-  font-size: var(--rlc-icon-font-size);
-  width: var(--rlc-icon-width);
-  height: var(--rlc-icon-height);
-  line-height: var(--rlc-icon-height);
+  font-size: var(--rlc-icon-dimesion);
+  width: var(--rlc-icon-dimesion);
+  height: var(--rlc-icon-dimesion);
+  line-height: var(--rlc-icon-dimesion);
 
   &--skeleton {
     --pvt-icon-display: none;
@@ -24,7 +24,6 @@
   & > i {
     display: var(--pvt-icon-display);
     color: var(--rlc-icon-color);
-    float: left;
     width: 100%;
     height: 100%;
     line-height: inherit;

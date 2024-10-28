@@ -8,7 +8,7 @@ interface DatatableCellProps extends RlsComponent {
   overflow?: boolean;
 }
 
-interface DatatableDataProps extends RlsComponent {
+interface DatatableRecordProps extends RlsComponent {
   className?: string;
   error?: boolean;
 }
@@ -42,21 +42,39 @@ export function RlsDatatableTitle({
   );
 }
 
-export function RlsDatatableData({
+export function RlsDatatableRecord({
   children,
   className,
   error
-}: DatatableDataProps) {
+}: DatatableRecordProps) {
   return (
     <tr
       className={renderClassStatus(
-        'rls-datatable__data',
+        'rls-datatable__record',
         { error },
         className
       ).trim()}
     >
       {children}
     </tr>
+  );
+}
+
+export function RlsDatatableTotals({
+  children,
+  className,
+  error
+}: DatatableRecordProps) {
+  return (
+    <div
+      className={renderClassStatus(
+        'rls-datatable__totals',
+        { error },
+        className
+      ).trim()}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -79,25 +97,7 @@ export function RlsDatatableCell({
   );
 }
 
-export function RlsDatatableTotals({
-  children,
-  className,
-  error
-}: DatatableDataProps) {
-  return (
-    <div
-      className={renderClassStatus(
-        'rls-datatable__totals',
-        { error },
-        className
-      ).trim()}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function RlsDatatableInfo({
+export function RlsDatatableData({
   children,
   className,
   control,
@@ -106,7 +106,7 @@ export function RlsDatatableInfo({
   return (
     <div
       className={renderClassStatus(
-        'rls-datatable__info',
+        'rls-datatable__data',
         { control, overflow },
         className
       ).trim()}

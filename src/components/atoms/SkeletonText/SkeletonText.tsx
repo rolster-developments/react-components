@@ -16,7 +16,7 @@ export function RlsSkeletonText({
       {active ? (
         <RlsSkeleton />
       ) : (
-        <span className="rls-skeleton-text__value">{children}</span>
+        <label className="rls-skeleton-text__value">{children}</label>
       )}
     </div>
   );
