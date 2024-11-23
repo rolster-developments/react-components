@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "18.15.7",
+  "version": "18.15.8",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -34,14 +34,14 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rolster/commons": "^2.0.5",
+    "@rolster/commons": "^2.0.8",
     "@rolster/components": "^0.3.10",
     "@rolster/dates": "^2.0.0",
-    "@rolster/forms": "^2.5.0",
-    "@rolster/i18n": "^2.0.0",
+    "@rolster/forms": "^2.6.1",
+    "@rolster/i18n": "^2.1.1",
     "@rolster/react-forms": "^18.6.0",
     "@rolster/strings": "^2.0.0",
-    "@rolster/validators": "^1.0.5",
+    "@rolster/validators": "^2.0.0",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
