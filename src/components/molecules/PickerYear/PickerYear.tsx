@@ -80,10 +80,7 @@ export function RlsPickerYear({
 
   function onChange(value: number): void {
     setYearValue(value);
-
-    if (onValue) {
-      onValue(value);
-    }
+    onValue && onValue(value);
   }
 
   return (
@@ -120,7 +117,11 @@ export function RlsPickerYear({
               selected
             })}
             onClick={
-              value && !disabledPicker ? () => onChange(value) : undefined
+              value && !disabledPicker
+                ? () => {
+                    onChange(value);
+                  }
+                : undefined
             }
           >
             <span className="rls-picker-year__year__span rls-body1-medium">

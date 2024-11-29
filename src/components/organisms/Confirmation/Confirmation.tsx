@@ -1,8 +1,8 @@
 import { PartialSealed } from '@rolster/commons';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
-import reactI18n from '../../../i18n';
 import { renderClassStatus } from '../../../helpers/css';
+import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';

@@ -88,9 +88,7 @@ export function RlsFieldDateRange({
           maxDate={maxDate}
           minDate={minDate}
           onListener={({ value }) => {
-            if (value) {
-              setValue(value);
-            }
+            value && setValue(value);
 
             setModalIsVisible(false);
           }}

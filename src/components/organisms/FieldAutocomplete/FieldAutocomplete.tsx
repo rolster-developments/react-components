@@ -4,7 +4,7 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
-import reactI18n from '../../../i18n';
+import { reactI18n } from '../../../i18n';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';

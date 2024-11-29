@@ -1,7 +1,6 @@
 import {
   AbstractAutocompleteElement as Element,
   AutocompleteStore,
-  ListCollection,
   createAutocompleteStore
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
@@ -19,7 +18,7 @@ const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
 
 export interface FieldAutocompleteControl<
-  T = unknown,
+  T = any,
   E extends Element<T> = Element<T>
 > {
   coincidences: E[];
@@ -65,18 +64,14 @@ export function useFieldAutocomplete<
   const listControl = useListControl({ suggestions, formControl });
 
   const {
-    collection,
     inputRef,
     navigationElement,
     navigationInput,
     setFocused,
+    setFormState,
     setValue,
     setVisible
   } = listControl;
-
-  const initializedState = useRef(false);
-  const initializedCollection = useRef(false);
-  const changeInternal = useRef(false);
 
   useEffect(() => {
     refreshCoincidences(pattern, true);
@@ -85,51 +80,6 @@ export function useFieldAutocomplete<
   useEffect(() => {
     refreshCoincidences(pattern);
   }, [pattern]);
-
-  useEffect(() => {
-    if (!initializedState.current || !initializedCollection.current) {
-      initializedState.current = true;
-      return;
-    }
-
-    if (changeInternal.current) {
-      changeInternal.current = false;
-      return;
-    }
-
-    refresh(collection, formControl?.value);
-  }, [formControl?.value]);
-
-  useEffect(() => {
-    if (!initializedCollection.current || !initializedState.current) {
-      initializedCollection.current = true;
-      return;
-    }
-
-    refresh(collection, formControl?.value);
-  }, [collection]);
-
-  function refresh(collection: ListCollection<T>, state?: T): void {
-    if (!state) {
-      return setValue('');
-    }
-
-    const element = collection.find(state);
-
-    if (element) {
-      return setValue(element.description);
-    }
-
-    setValue('');
-    setFormState(undefined);
-  }
-
-  function setFormState(value: Undefined<T>): void {
-    if (formControl) {
-      changeInternal.current = true;
-      formControl.setValue(value);
-    }
-  }
 
   function onClickControl(): void {
     if (!disabled) {
@@ -167,9 +117,7 @@ export function useFieldAutocomplete<
     setValue('');
     setFormState(undefined);
 
-    if (onValue) {
-      onValue(undefined);
-    }
+    onValue && onValue(undefined);
   }
 
   function onClickBackdrop(): void {
@@ -198,9 +146,7 @@ export function useFieldAutocomplete<
       setValue(description);
     }
 
-    if (onValue) {
-      onValue(value);
-    }
+    onValue && onValue(value);
   }
 
   function refreshCoincidences(pattern: string | null, reboot = false): void {

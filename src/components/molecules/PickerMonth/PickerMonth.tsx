@@ -86,7 +86,11 @@ export function RlsPickerMonth({
             selected
           })}
           onClick={
-            !(disabled || disabledPicker) ? () => onChange(value) : undefined
+            !(disabled || disabledPicker)
+              ? () => {
+                  onChange(value);
+                }
+              : undefined
           }
         >
           <span className="rls-picker-month__span">{label}</span>

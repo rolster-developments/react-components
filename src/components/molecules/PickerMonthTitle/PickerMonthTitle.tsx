@@ -49,9 +49,8 @@ export function RlsPickerMonthTitle({
   }
 
   function onPreviousYear(): void {
-    if (itIsDefined(yearControl.value)) {
+    itIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value - 1);
-    }
   }
 
   function onPrevious(): void {
@@ -70,9 +69,8 @@ export function RlsPickerMonthTitle({
   }
 
   function onNextYear(): void {
-    if (itIsDefined(yearControl.value)) {
+    itIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value + 1);
-    }
   }
 
   function onNext(): void {

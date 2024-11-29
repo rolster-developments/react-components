@@ -73,10 +73,7 @@ export function RlsPickerDay({
 
   function onChange(value: number): void {
     setDayValue(value);
-
-    if (onValue) {
-      onValue(value);
-    }
+    onValue && onValue(value);
   }
 
   return (

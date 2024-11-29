@@ -1,6 +1,6 @@
 import { i18n } from '@rolster/i18n';
 
-const reactI18n = i18n({
+export const reactI18n = i18n({
   es: {
     confirmationActionApproved: 'Aceptar',
     dateActionCancel: 'Cancelar',
@@ -21,5 +21,3 @@ const reactI18n = i18n({
     listInputPlaceholder: 'Search...'
   }
 });
-
-export default reactI18n;

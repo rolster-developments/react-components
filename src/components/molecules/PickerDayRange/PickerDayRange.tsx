@@ -96,7 +96,11 @@ export function RlsPickerDayRange({
                     }
                   )}
                   onClick={
-                    value && !disabledPicker ? () => onChange(value) : undefined
+                    value && !disabledPicker
+                      ? () => {
+                          onChange(value);
+                        }
+                      : undefined
                   }
                 >
                   <span className="rls-picker-day-range__element__span">

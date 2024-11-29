@@ -25,10 +25,7 @@ export function RlsInputPassword({
 
   function onChange(event: any): void {
     formControl?.setValue(event.target.value);
-
-    if (onValue) {
-      onValue(event.target.value);
-    }
+    onValue && onValue(event.target.value);
   }
 
   function onFocus() {
@@ -44,14 +41,14 @@ export function RlsInputPassword({
   return (
     <div
       className={renderClassStatus('rls-input-password', {
-        focused: formControl?.focused || focused,
+        focused: formControl?.focused ?? focused,
         disabled
       })}
     >
       <input
         className="rls-input-password__component"
         autoComplete="off"
-        type={type || 'password'}
+        type={type ?? 'password'}
         placeholder={placeholder}
         disabled={disabled}
         onFocus={onFocus}

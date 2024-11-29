@@ -53,10 +53,7 @@ export function RlsFieldDate({
 
   function onChange(value?: Date): void {
     setValue(value);
-
-    if (onValue) {
-      onValue(value);
-    }
+    onValue && onValue(value);
   }
 
   function onClickInput(): void {
@@ -118,10 +115,7 @@ export function RlsFieldDate({
           maxDate={maxDate}
           minDate={minDate}
           onListener={({ value, type }) => {
-            if (type !== PickerListenerType.Cancel) {
-              onChange(value);
-            }
-
+            type !== PickerListenerType.Cancel && onChange(value);
             formControl?.touch();
             setModalIsVisible(false);
           }}

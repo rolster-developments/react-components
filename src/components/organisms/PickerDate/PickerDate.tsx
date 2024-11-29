@@ -14,7 +14,7 @@ import {
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
-import reactI18n from '../../../i18n';
+import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import {
@@ -72,21 +72,18 @@ export function RlsPickerDate({
   }, []);
 
   useEffect(() => {
-    if (itIsDefined(yearControl.value)) {
+    itIsDefined(yearControl.value) &&
       setValue(assignYearInDate(value, yearControl.value));
-    }
   }, [yearControl.value]);
 
   useEffect(() => {
-    if (itIsDefined(monthControl.value)) {
+    itIsDefined(monthControl.value) &&
       setValue(assignMonthInDate(value, monthControl.value));
-    }
   }, [monthControl.value]);
 
   useEffect(() => {
-    if (itIsDefined(dayControl.value)) {
+    itIsDefined(dayControl.value) &&
       setValue(assignDayInDate(value, dayControl.value));
-    }
   }, [dayControl.value]);
 
   function onVisibilityDay(): void {
@@ -102,9 +99,7 @@ export function RlsPickerDate({
   }
 
   function onCancel(): void {
-    if (onListener) {
-      onListener({ type: PickerListenerType.Cancel });
-    }
+    onListener && onListener({ type: PickerListenerType.Cancel });
   }
 
   function onToday(): void {
@@ -113,17 +108,12 @@ export function RlsPickerDate({
     monthControl.setValue(today.getMonth());
     formControl?.setValue(today);
 
-    if (onListener) {
-      onListener({ type: PickerListenerType.Now, value: today });
-    }
+    onListener && onListener({ type: PickerListenerType.Now, value: today });
   }
 
   function onSelect(): void {
     formControl?.setValue(value);
-
-    if (onListener) {
-      onListener({ type: PickerListenerType.Select, value });
-    }
+    onListener && onListener({ type: PickerListenerType.Select, value });
   }
 
   return (

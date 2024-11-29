@@ -8,7 +8,7 @@ import {
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
-import reactI18n from '../../../i18n';
+import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import {
@@ -69,10 +69,7 @@ export function RlsPickerDateRange({
   }, [monthControl.value]);
 
   useEffect(() => {
-    if (dayControl.value) {
-      setValue(dayControl.value);
-    }
-
+    dayControl.value && setValue(dayControl.value);
     setVisibility('DAY');
   }, [dayControl.value]);
 
@@ -89,17 +86,12 @@ export function RlsPickerDateRange({
   }
 
   function onCancel(): void {
-    if (onListener) {
-      onListener({ type: PickerListenerType.Cancel });
-    }
+    onListener && onListener({ type: PickerListenerType.Cancel });
   }
 
   function onSelect(): void {
     formControl?.setValue(value);
-
-    if (onListener) {
-      onListener({ type: PickerListenerType.Select, value });
-    }
+    onListener && onListener({ type: PickerListenerType.Select, value });
   }
 
   return (

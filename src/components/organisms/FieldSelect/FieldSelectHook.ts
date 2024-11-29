@@ -1,15 +1,6 @@
-import {
-  AbstractListElement as Element,
-  ListCollection
-} from '@rolster/components';
+import { AbstractListElement as Element } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import {
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useRef
-} from 'react';
+import { KeyboardEvent, KeyboardEventHandler, MouseEventHandler } from 'react';
 import { ListControl, useListControl } from '../../../hooks';
 
 export interface FieldSelectControl<
@@ -44,64 +35,15 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
   const listControl = useListControl({ suggestions, formControl });
 
   const {
-    collection,
     inputRef,
     visible,
     navigationElement,
     navigationInput,
     setFocused,
+    setFormState,
     setValue,
     setVisible
   } = listControl;
-
-  const initializedState = useRef(false);
-  const initializedCollection = useRef(false);
-  const changeInternal = useRef(false);
-
-  useEffect(() => {
-    if (!initializedState.current || !initializedCollection.current) {
-      initializedState.current = true;
-      return;
-    }
-
-    if (changeInternal.current) {
-      changeInternal.current = false;
-      return;
-    }
-
-    refresh(collection, formControl?.value);
-  }, [formControl?.value]);
-
-  useEffect(() => {
-    if (!initializedCollection.current || !initializedState.current) {
-      initializedCollection.current = true;
-      return;
-    }
-
-    refresh(collection, formControl?.value);
-  }, [collection]);
-
-  function refresh(collection: ListCollection<T>, state?: T): void {
-    if (!state) {
-      return setValue('');
-    }
-
-    const element = collection.find(state);
-
-    if (element) {
-      return setValue(element.description);
-    }
-
-    setValue('');
-    setFormState(undefined);
-  }
-
-  function setFormState(value: Undefined<T>): void {
-    if (formControl) {
-      changeInternal.current = true;
-      formControl.setValue(value);
-    }
-  }
 
   function onFocusInput(): void {
     setFocused(true);
@@ -135,10 +77,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
 
   function onClickAction(): void {
     setVisible(!visible);
-
-    if (!visible) {
-      inputRef?.current?.focus();
-    }
+    !visible && inputRef?.current?.focus();
   }
 
   function onClickBackdrop(): void {
@@ -169,9 +108,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
       setValue(description);
     }
 
-    if (onValue) {
-      onValue(value);
-    }
+    onValue && onValue(value);
   }
 
   return {

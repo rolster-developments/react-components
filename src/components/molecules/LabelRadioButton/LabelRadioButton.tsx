@@ -5,21 +5,21 @@ import { RlsRadioButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './LabelRadioButton.css';
 
-interface LabelRadioButtonProps extends RlsComponent {
+interface LabelRadioButtonProps<T = any> extends RlsComponent {
   disabled?: boolean;
   extended?: boolean;
-  formControl?: ReactControl<HTMLElement>;
-  value?: any;
+  formControl?: ReactControl<HTMLElement, T | undefined>;
+  value?: T;
 }
 
-export function RlsLabelRadioButton({
+export function RlsLabelRadioButton<T = any>({
   children,
   disabled,
   extended,
   formControl,
   rlsTheme,
   value
-}: LabelRadioButtonProps) {
+}: LabelRadioButtonProps<T>) {
   const [checked, setChecked] = useState(formControl?.value === value);
 
   useEffect(() => {
@@ -27,9 +27,7 @@ export function RlsLabelRadioButton({
   }, [formControl?.value]);
 
   function onSelect(): void {
-    if (formControl) {
-      formControl?.setValue(value);
-    }
+    formControl && formControl?.setValue(value);
   }
 
   return (
