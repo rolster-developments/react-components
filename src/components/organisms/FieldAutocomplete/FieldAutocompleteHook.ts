@@ -68,7 +68,7 @@ export function useFieldAutocomplete<
     navigationElement,
     navigationInput,
     setFocused,
-    setFormState,
+    setFormValue,
     setValue,
     setVisible
   } = listControl;
@@ -115,7 +115,7 @@ export function useFieldAutocomplete<
   function onClickAction(): void {
     setVisible(false);
     setValue('');
-    setFormState(undefined);
+    setFormValue(undefined);
 
     onValue && onValue(undefined);
   }
@@ -142,7 +142,7 @@ export function useFieldAutocomplete<
     if (onSelect) {
       onSelect(value);
     } else {
-      setFormState(value);
+      setFormValue(value);
       setValue(description);
     }
 

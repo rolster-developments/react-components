@@ -22,7 +22,7 @@ export interface ListControl<T = any> extends ListControlState {
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
   setFocused: (focused: boolean) => void;
-  setFormState(value: Undefined<T>): void;
+  setFormValue(value: Undefined<T>): void;
   setValue: (value: string) => void;
   setVisible: (visible: boolean) => void;
 }
@@ -49,9 +49,6 @@ export function useListControl<T = any>({
 
   const collection = useRef(new ListCollection<T>([]));
   const position = useRef(0);
-  const initializedState = useRef(false);
-  const initializedCollection = useRef(false);
-  const changeInternal = useRef(false);
   const protectedValue = useRef<T>();
 
   useEffect(() => {
@@ -68,7 +65,7 @@ export function useListControl<T = any>({
   }, []);
 
   useEffect(() => {
-    formControl?.touch();
+    state.visible && formControl?.touch();
 
     setState((state) => ({
       ...state,
@@ -77,29 +74,9 @@ export function useListControl<T = any>({
   }, [state.visible]);
 
   useEffect(() => {
-    if (!initializedState.current || !initializedCollection.current) {
-      initializedState.current = true;
-      return;
-    }
-
-    if (changeInternal.current) {
-      changeInternal.current = false;
-      return;
-    }
-
-    refresh(collection.current, formControl?.value);
-  }, [formControl?.value]);
-
-  useEffect(() => {
     collection.current = new ListCollection(suggestions);
-
-    if (!initializedCollection.current || !initializedState.current) {
-      initializedCollection.current = true;
-      return;
-    }
-
     refresh(collection.current, formControl?.value);
-  }, [suggestions]);
+  }, [suggestions, formControl?.value]);
 
   function refresh(collection: ListCollection<T>, state?: T): void {
     if (!state) {
@@ -109,13 +86,14 @@ export function useListControl<T = any>({
     const element = collection.find(state);
 
     if (element) {
+      protectedValue.current = undefined;
       return setValue(element.description);
     }
 
     if (!refreshProtected(collection)) {
       protectedValue.current = state;
       setValue('');
-      setFormState(undefined);
+      setFormValue(undefined);
     }
   }
 
@@ -141,11 +119,8 @@ export function useListControl<T = any>({
     setState((state) => ({ ...state, value }));
   }
 
-  function setFormState(value: Undefined<T>): void {
-    if (formControl) {
-      changeInternal.current = true;
-      formControl.setValue(value);
-    }
+  function setFormValue(value: Undefined<T>): void {
+    formControl?.setValue(value);
   }
 
   function setVisible(visible: boolean): void {
@@ -160,7 +135,7 @@ export function useListControl<T = any>({
         list: listRef.current
       });
 
-      position.current = newPosition || 0;
+      position.current = newPosition ?? 0;
     }
   }
 
@@ -182,7 +157,7 @@ export function useListControl<T = any>({
     navigationElement,
     navigationInput,
     setFocused,
-    setFormState,
+    setFormValue,
     setValue,
     setVisible
   };

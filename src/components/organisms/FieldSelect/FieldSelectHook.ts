@@ -40,7 +40,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
     navigationElement,
     navigationInput,
     setFocused,
-    setFormState,
+    setFormValue,
     setValue,
     setVisible
   } = listControl;
@@ -104,7 +104,7 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
     if (onSelect) {
       onSelect(value);
     } else {
-      setFormState(value);
+      setFormValue(value);
       setValue(description);
     }
 
