@@ -65,8 +65,6 @@ export function useListControl<T = any>({
   }, []);
 
   useEffect(() => {
-    state.visible && formControl?.touch();
-
     setState((state) => ({
       ...state,
       higher: locationListCanTop(contentRef.current, listRef.current)
@@ -125,6 +123,8 @@ export function useListControl<T = any>({
 
   function setVisible(visible: boolean): void {
     setState((state) => ({ ...state, visible }));
+
+    !visible && formControl?.touch();
   }
 
   function navigationInput(event: KeyboardEvent): void {

@@ -30,31 +30,29 @@ interface FieldSelectTemplateProps<T = any, E extends Element<T> = Element<T>>
 export function RlsFieldSelectTemplate<
   T = any,
   E extends Element<T> = Element<T>
->({
-  render,
-  suggestions,
-  children,
-  disabled,
-  formControl,
-  onSelect,
-  onValue,
-  placeholder,
-  rlsTheme
-}: FieldSelectTemplateProps<T, E>) {
-  const fieldSelect = useFieldSelect({
+>(props: FieldSelectTemplateProps<T, E>) {
+  const fieldSelect = useFieldSelect(props);
+
+  const {
+    render,
     suggestions,
+    children,
     disabled,
     formControl,
-    onSelect,
-    onValue
-  });
+    placeholder,
+    rlsTheme
+  } = props;
 
   return (
     <div
       ref={fieldSelect.listControl.contentRef}
       className={renderClassStatus(
         'rls-field-box',
-        { focused: fieldSelect.listControl.focused, disabled },
+        {
+          focused: fieldSelect.listControl.focused,
+          error: formControl?.wrong,
+          disabled
+        },
         'rls-field-list rls-field-select'
       )}
       rls-theme={rlsTheme}

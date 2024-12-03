@@ -35,27 +35,20 @@ interface FieldAutocompleteTemplateProps<
 export function RlsFieldAutocompleteTemplate<
   T = any,
   E extends Element<T> = Element<T>
->({
-  render,
-  suggestions,
-  children,
-  disabled,
-  formControl,
-  hiddenIcon,
-  onSearch,
-  onSelect,
-  onValue,
-  placeholder,
-  rlsTheme,
-  searching
-}: FieldAutocompleteTemplateProps<T, E>) {
-  const fieldAutocomplete = useFieldAutocomplete({
-    suggestions,
+>(props: FieldAutocompleteTemplateProps<T, E>) {
+  const fieldAutocomplete = useFieldAutocomplete(props);
+
+  const {
+    render,
+    children,
     disabled,
     formControl,
-    onSelect,
-    onValue
-  });
+    hiddenIcon,
+    onSearch,
+    placeholder,
+    rlsTheme,
+    searching
+  } = props;
 
   return (
     <div
@@ -65,6 +58,7 @@ export function RlsFieldAutocompleteTemplate<
         {
           disabled,
           focused: fieldAutocomplete.listControl.focused,
+          error: formControl?.wrong,
           selected: !!fieldAutocomplete.listControl.value
         },
         'rls-field-list rls-field-autocomplete'
