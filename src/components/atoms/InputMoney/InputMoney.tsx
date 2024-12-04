@@ -1,27 +1,22 @@
-import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
+import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
 import './InputMoney.css';
 
-interface InputMoneyProps {
+interface InputMoneyProps extends InputProps<number> {
   decimals?: boolean;
-  disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, number>;
-  placeholder?: string;
   symbol?: string;
-  value?: number;
-  onValue?: (value: number) => void;
 }
 
 export function RlsInputMoney({
   decimals,
   disabled,
   formControl,
+  onValue,
   placeholder,
   symbol,
-  value,
-  onValue
+  value
 }: InputMoneyProps) {
   const [valueInput, setValueInput] = useState(value || 0);
 

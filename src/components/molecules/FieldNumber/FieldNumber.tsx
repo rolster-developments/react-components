@@ -1,27 +1,19 @@
-import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputNumber } from '../../atoms';
-import { RlsComponent } from '../../definitions';
+import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldNumber.css';
-
-interface FieldNumberProps extends RlsComponent {
-  disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, number>;
-  placeholder?: string;
-  value?: number;
-  onValue?: (value: number) => void;
-}
 
 export function RlsFieldNumber({
   children,
   disabled,
   formControl,
+  msgErrorDisabled,
+  onValue,
   placeholder,
   rlsTheme,
-  value,
-  onValue
-}: FieldNumberProps) {
+  value
+}: FieldBoxProps<number>) {
   return (
     <div
       className={renderClassStatus(
@@ -49,10 +41,12 @@ export function RlsFieldNumber({
         </div>
       </div>
 
-      <RlsMessageFormError
-        className="rls-field-box__error"
-        formControl={formControl}
-      />
+      {!msgErrorDisabled && (
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
+      )}
     </div>
   );
 }

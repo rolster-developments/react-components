@@ -1,18 +1,12 @@
-import { ReactControl } from '@rolster/react-forms';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputMoney } from '../../atoms';
-import { RlsComponent } from '../../definitions';
+import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldMoney.css';
 
-interface FieldMoneyProps extends RlsComponent {
+interface FieldMoneyProps extends FieldBoxProps<number> {
   decimals?: boolean;
-  disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, number>;
-  placeholder?: string;
   symbol?: string;
-  value?: number;
-  onValue?: (value: number) => void;
 }
 
 export function RlsFieldMoney({
@@ -20,11 +14,12 @@ export function RlsFieldMoney({
   decimals,
   disabled,
   formControl,
+  msgErrorDisabled,
+  onValue,
   placeholder,
   symbol,
   rlsTheme,
-  value,
-  onValue
+  value
 }: FieldMoneyProps) {
   return (
     <div
@@ -55,10 +50,12 @@ export function RlsFieldMoney({
         </div>
       </div>
 
-      <RlsMessageFormError
-        className="rls-field-box__error"
-        formControl={formControl}
-      />
+      {!msgErrorDisabled && (
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
+      )}
     </div>
   );
 }

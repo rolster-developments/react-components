@@ -11,8 +11,8 @@ import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
 interface ListControlState {
   focused: boolean;
   higher: boolean;
+  listIsVisible: boolean;
   value: string;
-  visible: boolean;
 }
 
 export interface ListControl<T = any> extends ListControlState {
@@ -21,10 +21,8 @@ export interface ListControl<T = any> extends ListControlState {
   listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
-  setFocused: (focused: boolean) => void;
   setFormValue(value: Undefined<T>): void;
-  setValue: (value: string) => void;
-  setVisible: (visible: boolean) => void;
+  setState: (state: Partial<ListControlState>) => void;
 }
 
 interface ListControlProps<T = any> {
@@ -39,12 +37,13 @@ export function useListControl<T = any>({
   const contentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listIsOpen = useRef(false);
 
   const [state, setState] = useState<ListControlState>({
     focused: false,
     higher: false,
     value: '',
-    visible: false
+    listIsVisible: false
   });
 
   const collection = useRef(new ListCollection<T>([]));
@@ -54,7 +53,7 @@ export function useListControl<T = any>({
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
       !contentRef?.current?.contains(target as any) &&
-        setState((state) => ({ ...state, visible: false }));
+        setState((state) => ({ ...state, listIsVisible: false }));
     }
 
     document.addEventListener('click', onCloseSuggestions);
@@ -65,11 +64,19 @@ export function useListControl<T = any>({
   }, []);
 
   useEffect(() => {
+    if (!listIsOpen.current && state.listIsVisible) {
+      listIsOpen.current = true;
+    }
+
+    if (listIsOpen.current && !state.listIsVisible) {
+      formControl?.touch();
+    }
+
     setState((state) => ({
       ...state,
       higher: locationListCanTop(contentRef.current, listRef.current)
     }));
-  }, [state.visible]);
+  }, [state.listIsVisible]);
 
   useEffect(() => {
     collection.current = new ListCollection(suggestions);
@@ -78,20 +85,22 @@ export function useListControl<T = any>({
 
   function refresh(collection: ListCollection<T>, state?: T): void {
     if (!state) {
-      return refreshProtected(collection) ? undefined : setValue('');
+      return refreshProtected(collection)
+        ? undefined
+        : refreshState({ value: '' });
     }
 
     const element = collection.find(state);
 
     if (element) {
       protectedValue.current = undefined;
-      return setValue(element.description);
+      return refreshState({ value: element.description });
     }
 
     if (!refreshProtected(collection)) {
       protectedValue.current = state;
-      setValue('');
       setFormValue(undefined);
+      refreshState({ value: '' });
     }
   }
 
@@ -109,26 +118,16 @@ export function useListControl<T = any>({
     return false;
   }
 
-  function setFocused(focused: boolean): void {
-    setState((state) => ({ ...state, focused }));
-  }
-
-  function setValue(value: string): void {
-    setState((state) => ({ ...state, value }));
+  function refreshState(state: Partial<ListControlState>): void {
+    setState((currentState) => ({ ...currentState, state }));
   }
 
   function setFormValue(value: Undefined<T>): void {
     formControl?.setValue(value);
   }
 
-  function setVisible(visible: boolean): void {
-    setState((state) => ({ ...state, visible }));
-
-    !visible && formControl?.touch();
-  }
-
   function navigationInput(event: KeyboardEvent): void {
-    if (state.visible) {
+    if (state.listIsVisible) {
       const newPosition = navigationListFromInput({
         content: contentRef.current,
         event: event as any,
@@ -156,9 +155,7 @@ export function useListControl<T = any>({
     listRef,
     navigationElement,
     navigationInput,
-    setFocused,
     setFormValue,
-    setValue,
-    setVisible
+    setState: refreshState
   };
 }

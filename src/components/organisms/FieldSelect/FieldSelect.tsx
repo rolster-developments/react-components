@@ -17,9 +17,10 @@ interface FieldSelectProps<T = any, E extends Element<T> = Element<T>>
   suggestions: E[];
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T | undefined>;
-  placeholder?: string;
+  msgErrorDisabled?: boolean;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
+  placeholder?: string;
 }
 
 interface FieldSelectTemplateProps<T = any, E extends Element<T> = Element<T>>
@@ -39,6 +40,7 @@ export function RlsFieldSelectTemplate<
     children,
     disabled,
     formControl,
+    msgErrorDisabled,
     placeholder,
     rlsTheme
   } = props;
@@ -75,7 +77,7 @@ export function RlsFieldSelectTemplate<
           />
           <button
             className={renderClassStatus('rls-field-list__action', {
-              visible: fieldSelect.listControl.visible
+              visible: fieldSelect.listControl.listIsVisible
             })}
             disabled={disabled}
             onClick={fieldSelect.onClickAction}
@@ -85,15 +87,17 @@ export function RlsFieldSelectTemplate<
         </div>
       </div>
 
-      <RlsMessageFormError
-        className="rls-field-box__error"
-        formControl={formControl}
-      />
+      {!msgErrorDisabled && (
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
+      )}
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: fieldSelect.listControl.visible,
-          hide: !fieldSelect.listControl.visible,
+          visible: fieldSelect.listControl.listIsVisible,
+          hide: !fieldSelect.listControl.listIsVisible,
           higher: fieldSelect.listControl.higher
         })}
       >

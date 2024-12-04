@@ -56,8 +56,8 @@ export function useFieldAutocomplete<
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
   const currentStore = useRef<AutocompleteStore<T, E>>({
-    pattern: '',
     coincidences: [],
+    pattern: '',
     previous: null
   });
 
@@ -67,10 +67,8 @@ export function useFieldAutocomplete<
     inputRef,
     navigationElement,
     navigationInput,
-    setFocused,
     setFormValue,
-    setValue,
-    setVisible
+    setState
   } = listControl;
 
   useEffect(() => {
@@ -83,7 +81,7 @@ export function useFieldAutocomplete<
 
   function onClickControl(): void {
     if (!disabled) {
-      setVisible(true);
+      setState({ listIsVisible: true });
 
       setTimeout(() => {
         inputRef?.current?.focus();
@@ -92,18 +90,18 @@ export function useFieldAutocomplete<
   }
 
   function onFocusInput(): void {
-    setFocused(true);
+    setState({ focused: true });
   }
 
   function onBlurInput(): void {
-    setFocused(false);
+    setState({ focused: false });
   }
 
   function onKeydownInput(event: KeyboardEvent): void {
     switch (event.code) {
       case 'Escape':
       case 'Tab':
-        setVisible(false);
+        setState({ listIsVisible: false });
         break;
 
       default:
@@ -113,15 +111,13 @@ export function useFieldAutocomplete<
   }
 
   function onClickAction(): void {
-    setVisible(false);
-    setValue('');
+    setState({ listIsVisible: false, value: '' });
     setFormValue(undefined);
-
     onValue && onValue(undefined);
   }
 
   function onClickBackdrop(): void {
-    setVisible(false);
+    setState({ listIsVisible: false });
   }
 
   function onClickElement(element: Element<T>): MouseEventHandler {
@@ -137,13 +133,12 @@ export function useFieldAutocomplete<
   }
 
   function onChange({ description, value }: Element<T>): void {
-    setVisible(false);
-
     if (onSelect) {
+      setState({ listIsVisible: false });
       onSelect(value);
     } else {
+      setState({ listIsVisible: false, value: description });
       setFormValue(value);
-      setValue(description);
     }
 
     onValue && onValue(value);

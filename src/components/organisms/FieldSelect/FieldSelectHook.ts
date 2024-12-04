@@ -36,37 +36,35 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
 
   const {
     inputRef,
-    visible,
+    listIsVisible,
     navigationElement,
     navigationInput,
-    setFocused,
     setFormValue,
-    setValue,
-    setVisible
+    setState
   } = listControl;
 
   function onFocusInput(): void {
-    setFocused(true);
+    setState({ focused: true });
   }
 
   function onBlurInput(): void {
-    setFocused(false);
+    setState({ focused: false });
   }
 
   function onClickInput(): void {
-    setVisible(true);
+    setState({ listIsVisible: true });
   }
 
   function onKeydownInput(event: KeyboardEvent): void {
     switch (event.code) {
       case 'Space':
       case 'Enter':
-        setVisible(true);
+        setState({ listIsVisible: true });
         break;
 
       case 'Escape':
       case 'Tab':
-        setVisible(false);
+        setState({ listIsVisible: false });
         break;
 
       default:
@@ -76,12 +74,12 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
   }
 
   function onClickAction(): void {
-    setVisible(!visible);
-    !visible && inputRef?.current?.focus();
+    setState({ listIsVisible: !listIsVisible });
+    !listIsVisible && inputRef?.current?.focus();
   }
 
   function onClickBackdrop(): void {
-    setVisible(false);
+    setState({ listIsVisible: false });
   }
 
   function onClickElement(element: Element<T>): MouseEventHandler {
@@ -99,13 +97,12 @@ export function useFieldSelect<T = unknown, E extends Element<T> = Element<T>>({
   function onChange({ description, value }: Element<T>): void {
     inputRef?.current?.focus();
 
-    setVisible(false);
-
     if (onSelect) {
+      setState({ listIsVisible: false });
       onSelect(value);
     } else {
       setFormValue(value);
-      setValue(description);
+      setState({ listIsVisible: false, value: description });
     }
 
     onValue && onValue(value);

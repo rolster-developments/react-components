@@ -1,25 +1,25 @@
-import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
+import { RolsterControl } from '../../types';
 import './InputPassword.css';
 
 type InputPasswordType = 'password' | 'text';
 
 interface InputPasswordProps extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, string>;
+  formControl?: RolsterControl<string>;
+  onValue?: (value: string) => void;
   placeholder?: string;
   type?: InputPasswordType;
-  onValue?: (value: string) => void;
 }
 
 export function RlsInputPassword({
   disabled,
   formControl,
+  onValue,
   placeholder,
-  type,
-  onValue
+  type
 }: InputPasswordProps) {
   const [focused, setFocused] = useState(false);
 

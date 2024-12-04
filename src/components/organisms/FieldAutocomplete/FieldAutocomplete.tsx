@@ -18,6 +18,7 @@ interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, T | undefined>;
   hiddenIcon?: boolean;
+  msgErrorDisabled?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: T) => void;
   onValue?: (value?: T) => void;
@@ -44,6 +45,7 @@ export function RlsFieldAutocompleteTemplate<
     disabled,
     formControl,
     hiddenIcon,
+    msgErrorDisabled,
     onSearch,
     placeholder,
     rlsTheme,
@@ -90,15 +92,17 @@ export function RlsFieldAutocompleteTemplate<
         </div>
       </div>
 
-      <RlsMessageFormError
-        className="rls-field-box__error"
-        formControl={formControl}
-      />
+      {!msgErrorDisabled && (
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
+      )}
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: fieldAutocomplete.listControl.visible,
-          hide: !fieldAutocomplete.listControl.visible,
+          visible: fieldAutocomplete.listControl.listIsVisible,
+          hide: !fieldAutocomplete.listControl.listIsVisible,
           higher: fieldAutocomplete.listControl.higher
         })}
       >

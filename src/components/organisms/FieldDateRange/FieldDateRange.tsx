@@ -15,6 +15,7 @@ interface FieldDateRangeProps extends RlsComponent {
   formControl?: ReactControl<HTMLElement, DateRange | undefined>;
   maxDate?: Date;
   minDate?: Date;
+  msgErrorDisabled?: boolean;
   placeholder?: string;
 }
 
@@ -25,6 +26,7 @@ export function RlsFieldDateRange({
   formControl,
   maxDate,
   minDate,
+  msgErrorDisabled,
   placeholder,
   rlsTheme
 }: FieldDateRangeProps) {
@@ -74,10 +76,12 @@ export function RlsFieldDateRange({
           </div>
         </div>
 
-        <RlsMessageFormError
-          className="rls-field-box__error"
-          formControl={formControl}
-        />
+        {!msgErrorDisabled && (
+          <RlsMessageFormError
+            className="rls-field-box__error"
+            formControl={formControl}
+          />
+        )}
       </div>
 
       <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>

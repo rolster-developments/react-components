@@ -7,20 +7,20 @@ import './Input.css';
 interface InputProps extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLInputElement>;
+  onValue?: (value: any) => void;
   placeholder?: string;
   type?: HTMLInputTypeAttribute;
   value?: any;
-  onValue?: (value: any) => void;
 }
 
 export function RlsInput({
   children,
   disabled,
   formControl,
+  onValue,
   placeholder,
   type,
-  value,
-  onValue
+  value
 }: InputProps) {
   const [focused, setFocused] = useState(false);
 

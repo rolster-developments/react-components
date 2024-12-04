@@ -19,6 +19,7 @@ interface FieldDateProps extends RlsComponent {
   format?: string;
   maxDate?: Date;
   minDate?: Date;
+  msgErrorDisabled?: boolean;
   onValue?: (value?: Date) => void;
   placeholder?: string;
 }
@@ -31,6 +32,7 @@ export function RlsFieldDate({
   format,
   maxDate,
   minDate,
+  msgErrorDisabled,
   onValue,
   placeholder,
   rlsTheme
@@ -101,10 +103,12 @@ export function RlsFieldDate({
           </div>
         </div>
 
-        <RlsMessageFormError
-          className="rls-field-box__error"
-          formControl={formControl}
-        />
+        {!msgErrorDisabled && (
+          <RlsMessageFormError
+            className="rls-field-box__error"
+            formControl={formControl}
+          />
+        )}
       </div>
 
       <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>

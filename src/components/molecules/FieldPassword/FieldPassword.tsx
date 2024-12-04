@@ -1,14 +1,15 @@
-import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction, RlsInputPassword } from '../../atoms';
 import { RlsComponent } from '../../definitions';
+import { RolsterControl } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldPassword.css';
 
 interface FieldPasswordProps extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement, string>;
+  formControl?: RolsterControl<string>;
+  msgErrorDisabled?: boolean;
   placeholder?: string;
 }
 
@@ -16,6 +17,7 @@ export function RlsFieldPassword({
   children,
   disabled,
   formControl,
+  msgErrorDisabled,
   placeholder,
   rlsTheme
 }: FieldPasswordProps) {
@@ -56,10 +58,12 @@ export function RlsFieldPassword({
         </div>
       </div>
 
-      <RlsMessageFormError
-        className="rls-field-box__error"
-        formControl={formControl}
-      />
+      {!msgErrorDisabled && (
+        <RlsMessageFormError
+          className="rls-field-box__error"
+          formControl={formControl}
+        />
+      )}
     </div>
   );
 }
