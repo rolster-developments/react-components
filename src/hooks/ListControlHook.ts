@@ -119,7 +119,7 @@ export function useListControl<T = any>({
   }
 
   function refreshState(state: Partial<ListControlState>): void {
-    setState((currentState) => ({ ...currentState, state }));
+    setState((currentState) => ({ ...currentState, ...state }));
   }
 
   function setFormValue(value: Undefined<T>): void {
