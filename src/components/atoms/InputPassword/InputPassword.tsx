@@ -42,7 +42,7 @@ export function RlsInputPassword({
     <div
       className={renderClassStatus('rls-input-password', {
         focused: formControl?.focused ?? focused,
-        disabled
+        disabled: formControl?.disabled || disabled
       })}
     >
       <input
