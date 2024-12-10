@@ -56,7 +56,7 @@ export function RlsInput({
         autoComplete="off"
         type={type ?? 'text'}
         placeholder={placeholder}
-        disabled={formControl?.disabled ?? disabled}
+        disabled={formControl?.disabled || disabled}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
