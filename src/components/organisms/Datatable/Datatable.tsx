@@ -1,5 +1,5 @@
 import { renderClassStatus } from '../../../helpers/css';
-import { DatatableHook } from '../../../hooks';
+import { DatatableController } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 
 interface DatatableCellProps extends RlsComponent {
@@ -14,7 +14,7 @@ interface DatatableRecordProps extends RlsComponent {
 }
 
 interface DatatableProps extends RlsComponent {
-  datatable?: DatatableHook;
+  datatable?: DatatableController;
   footer?: JSX.Element;
   header?: JSX.Element;
   summary?: JSX.Element;
@@ -134,7 +134,7 @@ export function RlsDatatable({
       <table>
         {header && <thead className="rls-datatable__thead">{header}</thead>}
 
-        <tbody ref={datatable?.bodyRef} className="rls-datatable__tbody">
+        <tbody ref={datatable?.tableRef} className="rls-datatable__tbody">
           {children}
         </tbody>
       </table>

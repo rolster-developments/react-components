@@ -8,38 +8,66 @@ import {
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
 
-interface ListControlState {
+interface ListControllerState {
   focused: boolean;
   higher: boolean;
   listIsVisible: boolean;
   value: string;
 }
 
-export interface ListControl<T = any> extends ListControlState {
+export interface ListController<T = any> extends ListControllerState {
   contentRef: RefObject<HTMLDivElement>;
   inputRef: RefObject<HTMLInputElement>;
   listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
   setFormValue(value: Undefined<T>): void;
-  setState: (state: Partial<ListControlState>) => void;
+  setState: (state: Partial<ListControllerState>) => void;
 }
 
-interface ListControlProps<T = any> {
+interface ListControllerProps<T = any> {
   suggestions: AbstractListElement<T>[];
-  formControl?: ReactControl<HTMLElement, T | undefined>;
+  formControl?: ReactControl<HTMLElement, T>;
+  value?: T;
 }
 
-export function useListControl<T = any>({
-  suggestions,
-  formControl
-}: ListControlProps<T>): ListControl<T> {
+interface ValueControllerProps<T = any> extends ListControllerProps<T> {
+  value: NonUndefined<T>;
+}
+
+interface UndefinedControllerProps<T = any>
+  extends ListControllerProps<T | undefined> {
+  value: undefined;
+}
+
+type VoidControllerProps<T = any> = Omit<
+  UndefinedControllerProps<T | undefined>,
+  'value'
+>;
+
+export function useListController<T = any>(
+  props: VoidControllerProps<T>
+): ListController<T | undefined>;
+export function useListController<T = any>(
+  props: UndefinedControllerProps<T>
+): ListController<T | undefined>;
+export function useListController<T = any>(
+  props: ValueControllerProps<T>
+): ListController<T>;
+export function useListController<T = any>(
+  props: ListControllerProps<T>
+): ListController<T>;
+export function useListController<T = any>(
+  props: ListControllerProps<T>
+): ListController<T> {
+  const { suggestions, formControl, value } = props;
+
   const contentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listIsOpen = useRef(false);
 
-  const [state, setState] = useState<ListControlState>({
+  const [state, setState] = useState<ListControllerState>({
     focused: false,
     higher: false,
     value: '',
@@ -99,7 +127,7 @@ export function useListControl<T = any>({
 
     if (!refreshProtected(collection)) {
       protectedValue.current = state;
-      setFormValue(undefined);
+      setFormValue(value as T);
       refreshState({ value: '' });
     }
   }
@@ -118,11 +146,11 @@ export function useListControl<T = any>({
     return false;
   }
 
-  function refreshState(state: Partial<ListControlState>): void {
+  function refreshState(state: Partial<ListControllerState>): void {
     setState((currentState) => ({ ...currentState, ...state }));
   }
 
-  function setFormValue(value: Undefined<T>): void {
+  function setFormValue(value: T): void {
     formControl?.setValue(value);
   }
 

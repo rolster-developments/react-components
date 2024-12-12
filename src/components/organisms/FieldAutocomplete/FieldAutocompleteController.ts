@@ -12,7 +12,7 @@ import {
   useRef,
   useState
 } from 'react';
-import { ListControl, useListControl } from '../../../hooks';
+import { ListController, useListController } from '../../../controllers';
 
 const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
@@ -22,7 +22,7 @@ export interface FieldAutocompleteControl<
   E extends Element<T> = Element<T>
 > {
   coincidences: E[];
-  listControl: ListControl<T>;
+  controller: ListController<T>;
   onBlurInput: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
@@ -38,21 +38,49 @@ export interface FieldAutocompleteControl<
 interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>> {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T | undefined>;
-  onSelect?: (value: T) => void;
-  onValue?: (value?: T) => void;
+  formControl?: ReactControl<HTMLElement, T>;
+  onSelect?: (value: NonNullable<T>) => void;
+  onValue?: (value: T) => void;
+  value?: T;
 }
+
+interface FieldValueProps<T = any, E extends Element<T> = Element<T>>
+  extends FieldAutocompleteProps<T, E> {
+  value: NonUndefined<T>;
+}
+
+interface FieldUndefinedProps<T = any, E extends Element<T> = Element<T>>
+  extends FieldAutocompleteProps<T | undefined, E> {
+  value: undefined;
+}
+
+type FieldVoidProps<T = any, E extends Element<T> = Element<T>> = Omit<
+  FieldUndefinedProps<T | undefined, E>,
+  'value'
+>;
 
 export function useFieldAutocomplete<
   T = any,
   E extends Element<T> = Element<T>
->({
-  disabled,
-  formControl,
-  onSelect,
-  onValue,
-  suggestions
-}: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E> {
+>(props: FieldVoidProps<T, E>): FieldAutocompleteControl<T | undefined, E>;
+export function useFieldAutocomplete<
+  T = any,
+  E extends Element<T> = Element<T>
+>(props: FieldUndefinedProps<T, E>): FieldAutocompleteControl<T | undefined, E>;
+export function useFieldAutocomplete<
+  T = any,
+  E extends Element<T> = Element<T>
+>(props: FieldValueProps<T, E>): FieldAutocompleteControl<T, E>;
+export function useFieldAutocomplete<
+  T = any,
+  E extends Element<T> = Element<T>
+>(props: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E>;
+export function useFieldAutocomplete<
+  T = any,
+  E extends Element<T> = Element<T>
+>(props: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E> {
+  const controller = useListController(props);
+
   const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
   const currentStore = useRef<AutocompleteStore<T, E>>({
@@ -61,19 +89,11 @@ export function useFieldAutocomplete<
     previous: null
   });
 
-  const listControl = useListControl({ suggestions, formControl });
-
-  const {
-    inputRef,
-    navigationElement,
-    navigationInput,
-    setFormValue,
-    setState
-  } = listControl;
+  const disabled = props.formControl?.disabled || props.disabled;
 
   useEffect(() => {
     refreshCoincidences(pattern, true);
-  }, [suggestions]);
+  }, [props.suggestions]);
 
   useEffect(() => {
     refreshCoincidences(pattern);
@@ -81,43 +101,43 @@ export function useFieldAutocomplete<
 
   function onClickControl(): void {
     if (!disabled) {
-      setState({ listIsVisible: true });
+      controller.setState({ listIsVisible: true });
 
       setTimeout(() => {
-        inputRef?.current?.focus();
+        controller.inputRef?.current?.focus();
       }, DURATION_ANIMATION);
     }
   }
 
   function onFocusInput(): void {
-    setState({ focused: true });
+    controller.setState({ focused: true });
   }
 
   function onBlurInput(): void {
-    setState({ focused: false });
+    controller.setState({ focused: false });
   }
 
   function onKeydownInput(event: KeyboardEvent): void {
     switch (event.code) {
       case 'Escape':
       case 'Tab':
-        setState({ listIsVisible: false });
+        controller.setState({ listIsVisible: false });
         break;
 
       default:
-        navigationInput(event);
+        controller.navigationInput(event);
         break;
     }
   }
 
   function onClickAction(): void {
-    setState({ listIsVisible: false, value: '' });
-    setFormValue(undefined);
-    onValue && onValue(undefined);
+    controller.setState({ listIsVisible: false, value: '' });
+    controller.setFormValue(props.value);
+    props.onValue && props.onValue(props.value as T);
   }
 
   function onClickBackdrop(): void {
-    setState({ listIsVisible: false });
+    controller.setState({ listIsVisible: false });
   }
 
   function onClickElement(element: Element<T>): MouseEventHandler {
@@ -128,26 +148,28 @@ export function useFieldAutocomplete<
 
   function onKeydownElement(element: Element<T>): KeyboardEventHandler {
     return (event) => {
-      event.code === 'Enter' ? onChange(element) : navigationElement(event);
+      event.code === 'Enter'
+        ? onChange(element)
+        : controller.navigationElement(event);
     };
   }
 
   function onChange({ description, value }: Element<T>): void {
-    if (onSelect) {
-      setState({ listIsVisible: false });
-      onSelect(value);
+    if (props.onSelect) {
+      controller.setState({ listIsVisible: false });
+      value && props.onSelect(value);
     } else {
-      setState({ listIsVisible: false, value: description });
-      setFormValue(value);
+      controller.setState({ listIsVisible: false, value: description });
+      controller.setFormValue(value);
     }
 
-    onValue && onValue(value);
+    props.onValue && props.onValue(value);
   }
 
   function refreshCoincidences(pattern: string | null, reboot = false): void {
     const { collection, store } = createAutocompleteStore({
       pattern,
-      suggestions,
+      suggestions: props.suggestions,
       reboot,
       store: currentStore.current
     });
@@ -158,7 +180,7 @@ export function useFieldAutocomplete<
 
   return {
     coincidences,
-    listControl,
+    controller,
     onBlurInput,
     onClickAction,
     onClickBackdrop,

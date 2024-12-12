@@ -15,13 +15,16 @@ const FORMAT_DATE = '{dd}/{mx}/{aa}';
 interface FieldDateProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, Undefined<Date>>;
+  formControl?:
+    | ReactControl<HTMLElement, Date>
+    | ReactControl<HTMLElement, Date | undefined>;
   format?: string;
   maxDate?: Date;
   minDate?: Date;
   msgErrorDisabled?: boolean;
   onValue?: (value?: Date) => void;
   placeholder?: string;
+  value?: Date;
 }
 
 export function RlsFieldDate({
@@ -35,11 +38,12 @@ export function RlsFieldDate({
   msgErrorDisabled,
   onValue,
   placeholder,
-  rlsTheme
+  rlsTheme,
+  value: defaultValue
 }: FieldDateProps) {
   const today = new Date(); // Initial current date in component
 
-  const [value, setValue] = useState<Undefined<Date>>();
+  const [value, setValue] = useState(defaultValue);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   useEffect(() => {
@@ -64,7 +68,7 @@ export function RlsFieldDate({
 
   function onClickAction(): void {
     if (value) {
-      formControl?.setValue(undefined);
+      formControl?.setValue(defaultValue as Date);
       formControl?.touch();
       onChange(undefined);
     } else {
