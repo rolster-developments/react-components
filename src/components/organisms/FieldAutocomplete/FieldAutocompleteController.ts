@@ -38,51 +38,23 @@ export interface FieldAutocompleteControl<
 interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>> {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?:
+    | ReactControl<HTMLElement, T | undefined>
+    | ReactControl<HTMLElement, NonNullable<T>>;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   value?: T;
 }
 
-interface FieldValueProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldAutocompleteProps<T, E> {
-  value: NonUndefined<T>;
-}
-
-interface FieldUndefinedProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldAutocompleteProps<T | undefined, E> {
-  value: undefined;
-}
-
-type FieldVoidProps<T = any, E extends Element<T> = Element<T>> = Omit<
-  FieldUndefinedProps<T | undefined, E>,
-  'value'
->;
-
-export function useFieldAutocomplete<
-  T = any,
-  E extends Element<T> = Element<T>
->(props: FieldVoidProps<T, E>): FieldAutocompleteControl<T | undefined, E>;
-export function useFieldAutocomplete<
-  T = any,
-  E extends Element<T> = Element<T>
->(props: FieldUndefinedProps<T, E>): FieldAutocompleteControl<T | undefined, E>;
-export function useFieldAutocomplete<
-  T = any,
-  E extends Element<T> = Element<T>
->(props: FieldValueProps<T, E>): FieldAutocompleteControl<T, E>;
-export function useFieldAutocomplete<
-  T = any,
-  E extends Element<T> = Element<T>
->(props: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E>;
 export function useFieldAutocomplete<
   T = any,
   E extends Element<T> = Element<T>
 >(props: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E> {
-  const controller = useListController(props);
+  const controller = useListController<T>(props);
 
-  const [pattern, setPattern] = useState('');
   const [coincidences, setCoincidences] = useState<E[]>([]);
+  const [pattern, setPattern] = useState('');
+
   const currentStore = useRef<AutocompleteStore<T, E>>({
     coincidences: [],
     pattern: '',
@@ -101,7 +73,7 @@ export function useFieldAutocomplete<
 
   function onClickControl(): void {
     if (!disabled) {
-      controller.setState({ listIsVisible: true });
+      controller.setState({ modalIsVisible: true });
 
       setTimeout(() => {
         controller.inputRef?.current?.focus();
@@ -121,7 +93,7 @@ export function useFieldAutocomplete<
     switch (event.code) {
       case 'Escape':
       case 'Tab':
-        controller.setState({ listIsVisible: false });
+        controller.setState({ modalIsVisible: false });
         break;
 
       default:
@@ -131,13 +103,13 @@ export function useFieldAutocomplete<
   }
 
   function onClickAction(): void {
-    controller.setState({ listIsVisible: false, value: '' });
+    controller.setState({ modalIsVisible: false, value: '' });
     controller.setFormValue(props.value);
     props.onValue && props.onValue(props.value as T);
   }
 
   function onClickBackdrop(): void {
-    controller.setState({ listIsVisible: false });
+    controller.setState({ modalIsVisible: false });
   }
 
   function onClickElement(element: Element<T>): MouseEventHandler {
@@ -156,10 +128,10 @@ export function useFieldAutocomplete<
 
   function onChange({ description, value }: Element<T>): void {
     if (props.onSelect) {
-      controller.setState({ listIsVisible: false });
+      controller.setState({ modalIsVisible: false });
       value && props.onSelect(value);
     } else {
-      controller.setState({ listIsVisible: false, value: description });
+      controller.setState({ modalIsVisible: false, value: description });
       controller.setFormValue(value);
     }
 

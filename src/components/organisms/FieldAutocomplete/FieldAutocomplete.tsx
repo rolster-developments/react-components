@@ -16,7 +16,9 @@ interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?:
+    | ReactControl<HTMLElement, T | undefined>
+    | ReactControl<HTMLElement, NonNullable<T>>;
   hiddenIcon?: boolean;
   msgErrorDisabled?: boolean;
   onSearch?: (pattern: string) => void;
@@ -34,6 +36,47 @@ interface FieldAutocompleteTemplateProps<
   render: (element: E) => ReactNode;
 }
 
+interface FormUndefinedTemplateProps<T = any>
+  extends FieldAutocompleteTemplateProps<T, AutocompleteElement<T>> {
+  formControl: ReactControl<HTMLElement, T | undefined>;
+  value: undefined;
+}
+
+interface FormControlTemplateProps<T = any>
+  extends FieldAutocompleteTemplateProps<T, AutocompleteElement<T>> {
+  formControl: ReactControl<HTMLElement, NonNullable<T>>;
+  value: NonNullable<T>;
+}
+
+interface FormVoidTemplateProps<T = any>
+  extends Omit<
+    FieldAutocompleteTemplateProps<T, AutocompleteElement<T>>,
+    'value'
+  > {
+  formControl: ReactControl<HTMLElement, T | undefined>;
+}
+
+type SuggestionsTemplateProps<T = any> = Omit<
+  FieldAutocompleteTemplateProps<T, AutocompleteElement<T>>,
+  'formControl' | 'value'
+>;
+
+export function RlsFieldAutocompleteTemplate<T = any>(
+  props: FormUndefinedTemplateProps<T>
+): JSX.Element;
+export function RlsFieldAutocompleteTemplate<T = any>(
+  props: FormControlTemplateProps<T>
+): JSX.Element;
+export function RlsFieldAutocompleteTemplate<T = any>(
+  props: FormVoidTemplateProps<T>
+): JSX.Element;
+export function RlsFieldAutocompleteTemplate<T = any>(
+  props: SuggestionsTemplateProps<T>
+): JSX.Element;
+export function RlsFieldAutocompleteTemplate<
+  T = any,
+  E extends Element<T> = Element<T>
+>(props: FieldAutocompleteTemplateProps<T, E>): JSX.Element;
 export function RlsFieldAutocompleteTemplate<
   T = any,
   E extends Element<T> = Element<T>
@@ -103,9 +146,9 @@ export function RlsFieldAutocompleteTemplate<
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: controller.listIsVisible,
+          visible: controller.modalIsVisible,
           higher: controller.higher,
-          hide: !controller.listIsVisible
+          hide: !controller.modalIsVisible
         })}
       >
         <div className="rls-field-list__suggestions__body">
@@ -176,29 +219,39 @@ export function RlsFieldAutocompleteTemplate<
   );
 }
 
-interface FieldValueProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldAutocompleteProps<T, E> {
-  value: NonUndefined<T>;
-}
-
-interface FieldUndefinedProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldAutocompleteProps<T, E> {
+interface FormUndefinedProps<T = any>
+  extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
+  formControl: ReactControl<HTMLElement, T | undefined>;
   value: undefined;
 }
 
-type FieldVoidProps<T = any, E extends Element<T> = Element<T>> = Omit<
-  FieldValueProps<T, E>,
-  'value'
+interface FormControlProps<T = any>
+  extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
+  formControl: ReactControl<HTMLElement, NonNullable<T>>;
+  value: NonNullable<T>;
+}
+
+interface FormVoidProps<T = any>
+  extends Omit<FieldAutocompleteProps<T, AutocompleteElement<T>>, 'value'> {
+  formControl: ReactControl<HTMLElement, T | undefined>;
+}
+
+type SuggestionsProps<T = any> = Omit<
+  FieldAutocompleteProps<T, AutocompleteElement<T>>,
+  'formControl' | 'value'
 >;
 
 export function RlsFieldAutocomplete<T = any>(
-  props: FieldVoidProps<T, AutocompleteElement<T>>
+  props: FormUndefinedProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
-  props: FieldUndefinedProps<T, AutocompleteElement<T>>
+  props: FormControlProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
-  props: FieldValueProps<T, AutocompleteElement<T>>
+  props: FormVoidProps<T>
+): JSX.Element;
+export function RlsFieldAutocomplete<T = any>(
+  props: SuggestionsProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>

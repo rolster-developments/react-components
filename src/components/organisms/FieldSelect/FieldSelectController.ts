@@ -21,43 +21,18 @@ export interface FieldSelectControl<
 interface FieldSelectProps<T = any, E extends Element<T> = Element<T>> {
   suggestions: E[];
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?:
+    | ReactControl<HTMLElement, T | undefined>
+    | ReactControl<HTMLElement, NonNullable<T>>;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   value?: T;
 }
 
-interface FieldValueProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldSelectProps<T, E> {
-  value: NonUndefined<T>;
-}
-
-interface FieldUndefinedProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldSelectProps<T | undefined, E> {
-  value: undefined;
-}
-
-type FieldVoidProps<T = any, E extends Element<T> = Element<T>> = Omit<
-  FieldValueProps<T | undefined, E>,
-  'value'
->;
-
-export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
-  props: FieldVoidProps<T, E>
-): FieldSelectControl<T | undefined, E>;
-export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
-  props: FieldUndefinedProps<T, E>
-): FieldSelectControl<T | undefined, E>;
-export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
-  props: FieldValueProps<T, E>
-): FieldSelectControl<T, E>;
-export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
-  props: FieldSelectProps<T, E>
-): FieldSelectControl<T, E>;
 export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
   props: FieldSelectProps<T, E>
 ): FieldSelectControl<T, E> {
-  const controller = useListController(props);
+  const controller = useListController<T>(props);
 
   function onFocusInput(): void {
     controller.setState({ focused: true });
@@ -68,19 +43,19 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
   }
 
   function onClickInput(): void {
-    controller.setState({ listIsVisible: true });
+    controller.setState({ modalIsVisible: true });
   }
 
   function onKeydownInput(event: KeyboardEvent): void {
     switch (event.code) {
       case 'Space':
       case 'Enter':
-        controller.setState({ listIsVisible: true });
+        controller.setState({ modalIsVisible: true });
         break;
 
       case 'Escape':
       case 'Tab':
-        controller.setState({ listIsVisible: false });
+        controller.setState({ modalIsVisible: false });
         break;
 
       default:
@@ -90,12 +65,14 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
   }
 
   function onClickAction(): void {
-    controller.setState({ listIsVisible: !controller.listIsVisible });
-    !controller.listIsVisible && controller.inputRef?.current?.focus();
+    const modalIsVisible = !controller.modalIsVisible;
+
+    controller.setState({ modalIsVisible });
+    modalIsVisible && controller.inputRef?.current?.focus();
   }
 
   function onClickBackdrop(): void {
-    controller.setState({ listIsVisible: false });
+    controller.setState({ modalIsVisible: false });
   }
 
   function onClickElement(element: Element<T>): MouseEventHandler {
@@ -116,11 +93,11 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
     controller.inputRef?.current?.focus();
 
     if (props.onSelect) {
-      controller.setState({ listIsVisible: false });
+      controller.setState({ modalIsVisible: false });
       value && props.onSelect(value);
     } else {
       controller.setFormValue(value);
-      controller.setState({ listIsVisible: false, value: description });
+      controller.setState({ modalIsVisible: false, value: description });
     }
 
     props.onValue && props.onValue(value);

@@ -1,9 +1,9 @@
 import {
   AbstractListElement,
   ListCollection,
+  locationListCanTop,
   navigationListFromElement,
-  navigationListFromInput,
-  locationListCanTop
+  navigationListFromInput
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
@@ -11,7 +11,7 @@ import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
 interface ListControllerState {
   focused: boolean;
   higher: boolean;
-  listIsVisible: boolean;
+  modalIsVisible: boolean;
   value: string;
 }
 
@@ -21,57 +21,33 @@ export interface ListController<T = any> extends ListControllerState {
   listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
-  setFormValue(value: Undefined<T>): void;
+  setFormValue(value?: T): void;
   setState: (state: Partial<ListControllerState>) => void;
 }
 
 interface ListControllerProps<T = any> {
   suggestions: AbstractListElement<T>[];
-  formControl?: ReactControl<HTMLElement, T>;
+  formControl?:
+    | ReactControl<HTMLElement, T | undefined>
+    | ReactControl<HTMLElement, NonNullable<T>>;
   value?: T;
 }
 
-interface ValueControllerProps<T = any> extends ListControllerProps<T> {
-  value: NonUndefined<T>;
-}
-
-interface UndefinedControllerProps<T = any>
-  extends ListControllerProps<T | undefined> {
-  value: undefined;
-}
-
-type VoidControllerProps<T = any> = Omit<
-  UndefinedControllerProps<T | undefined>,
-  'value'
->;
-
-export function useListController<T = any>(
-  props: VoidControllerProps<T>
-): ListController<T | undefined>;
-export function useListController<T = any>(
-  props: UndefinedControllerProps<T>
-): ListController<T | undefined>;
-export function useListController<T = any>(
-  props: ValueControllerProps<T>
-): ListController<T>;
-export function useListController<T = any>(
-  props: ListControllerProps<T>
-): ListController<T>;
 export function useListController<T = any>(
   props: ListControllerProps<T>
 ): ListController<T> {
   const { suggestions, formControl, value } = props;
 
+  const listIsOpen = useRef(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const listIsOpen = useRef(false);
 
   const [state, setState] = useState<ListControllerState>({
     focused: false,
     higher: false,
     value: '',
-    listIsVisible: false
+    modalIsVisible: false
   });
 
   const collection = useRef(new ListCollection<T>([]));
@@ -81,7 +57,7 @@ export function useListController<T = any>(
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
       !contentRef?.current?.contains(target as any) &&
-        setState((state) => ({ ...state, listIsVisible: false }));
+        setState((state) => ({ ...state, modalIsVisible: false }));
     }
 
     document.addEventListener('click', onCloseSuggestions);
@@ -92,11 +68,11 @@ export function useListController<T = any>(
   }, []);
 
   useEffect(() => {
-    if (!listIsOpen.current && state.listIsVisible) {
+    if (!listIsOpen.current && state.modalIsVisible) {
       listIsOpen.current = true;
     }
 
-    if (listIsOpen.current && !state.listIsVisible) {
+    if (listIsOpen.current && !state.modalIsVisible) {
       formControl?.touch();
     }
 
@@ -104,7 +80,7 @@ export function useListController<T = any>(
       ...state,
       higher: locationListCanTop(contentRef.current, listRef.current)
     }));
-  }, [state.listIsVisible]);
+  }, [state.modalIsVisible]);
 
   useEffect(() => {
     collection.current = new ListCollection(suggestions);
@@ -150,12 +126,12 @@ export function useListController<T = any>(
     setState((currentState) => ({ ...currentState, ...state }));
   }
 
-  function setFormValue(value: T): void {
+  function setFormValue(value: any): void {
     formControl?.setValue(value);
   }
 
   function navigationInput(event: KeyboardEvent): void {
-    if (state.listIsVisible) {
+    if (state.modalIsVisible) {
       const newPosition = navigationListFromInput({
         content: contentRef.current,
         event: event as any,
