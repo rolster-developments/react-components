@@ -11,6 +11,7 @@ interface DatatableCellProps extends RlsComponent {
 interface DatatableRecordProps extends RlsComponent {
   className?: string;
   error?: boolean;
+  warning?: boolean;
 }
 
 interface DatatableProps extends RlsComponent {
@@ -45,13 +46,14 @@ export function RlsDatatableTitle({
 export function RlsDatatableRecord({
   children,
   className,
-  error
+  error,
+  warning
 }: DatatableRecordProps) {
   return (
     <tr
       className={renderClassStatus(
         'rls-datatable__record',
-        { error },
+        { error, warning },
         className
       ).trim()}
     >
@@ -63,13 +65,14 @@ export function RlsDatatableRecord({
 export function RlsDatatableTotals({
   children,
   className,
-  error
+  error,
+  warning
 }: DatatableRecordProps) {
   return (
     <div
       className={renderClassStatus(
         'rls-datatable__totals',
-        { error },
+        { error, warning },
         className
       ).trim()}
     >
