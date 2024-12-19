@@ -12,13 +12,38 @@ import './FieldDateRange.css';
 interface FieldDateRangeProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, DateRange | undefined>;
+  formControl?:
+    | ReactControl<HTMLElement, DateRange>
+    | ReactControl<HTMLElement, DateRange | undefined>;
   maxDate?: Date;
   minDate?: Date;
   msgErrorDisabled?: boolean;
   placeholder?: string;
+  value?: DateRange;
 }
 
+interface FieldDateRangeControlProps extends FieldDateRangeProps {
+  formControl: ReactControl<HTMLElement, DateRange>;
+  value: DateRange;
+}
+
+interface FieldDateRangeUndefinedProps extends FieldDateRangeProps {
+  formControl: ReactControl<HTMLElement, DateRange | undefined>;
+  value: undefined;
+}
+
+interface FieldDateRangeVoidProps extends Omit<FieldDateRangeProps, 'value'> {
+  formControl: ReactControl<HTMLElement, DateRange | undefined>;
+}
+
+export function RlsFieldDateRange(
+  props: FieldDateRangeControlProps
+): JSX.Element;
+export function RlsFieldDateRange(
+  props: FieldDateRangeUndefinedProps
+): JSX.Element;
+export function RlsFieldDateRange(props: FieldDateRangeVoidProps): JSX.Element;
+export function RlsFieldDateRange(props: FieldDateRangeProps): JSX.Element;
 export function RlsFieldDateRange({
   children,
   date: datePicker,
@@ -28,7 +53,8 @@ export function RlsFieldDateRange({
   minDate,
   msgErrorDisabled,
   placeholder,
-  rlsTheme
+  rlsTheme,
+  value: defaultValue
 }: FieldDateRangeProps) {
   const currentRange = formControl?.value || DateRange.now();
   const currentDate = datePicker || new Date();
@@ -42,7 +68,7 @@ export function RlsFieldDateRange({
 
   function onClickAction(): void {
     if (value) {
-      formControl?.setValue(undefined);
+      formControl?.setValue(defaultValue as DateRange);
       setValue(undefined);
     } else {
       setModalIsVisible(true);

@@ -23,7 +23,9 @@ interface PickerDateRangeProps extends RlsComponent {
   automatic?: boolean;
   date?: Date;
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, DateRange | undefined>;
+  formControl?:
+    | ReactControl<HTMLElement, DateRange>
+    | ReactControl<HTMLElement, DateRange | undefined>;
   maxDate?: Date;
   minDate?: Date;
   onListener?: (listener: PickerListener<DateRange>) => void;
