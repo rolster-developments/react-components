@@ -1,9 +1,9 @@
 // Rolster Technology Poster Component
-// v1.0.2
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Oct/2024
+// Updated: 20/Dic/2024
 
 .rls-poster {
   position: relative;
@@ -17,6 +17,16 @@
   padding: var(--rlc-poster-padding);
   text-align: var(--rlc-poster-text-align);
   border-radius: var(--rls-sizing-x2);
-  color: var(--rls-theme-color-100);
-  background: var(--rls-theme-color-500);
+  color: var(--rls-app-color-300);
+  background: var(--rls-app-background-100);
+
+  &[rls-theme] {
+    color: var(--rls-theme-color-100);
+    background: var(--rls-theme-color-500);
+  }
+
+  &--contrast[rls-theme] {
+    color: var(--rls-theme-color-700);
+    background: var(--rls-theme-color-100);
+  }
 }

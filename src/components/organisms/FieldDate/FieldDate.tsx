@@ -22,29 +22,37 @@ interface FieldDateProps extends RlsComponent {
   maxDate?: Date;
   minDate?: Date;
   msgErrorDisabled?: boolean;
-  onValue?: (value?: Date) => void;
+  onValue?: ((value?: Date) => void) | ((value: Date) => void);
   placeholder?: string;
   value?: Date;
 }
 
-interface FieldDateControlProps extends FieldDateProps {
+interface FormControlDefinedProps extends FieldDateProps {
   formControl: ReactControl<HTMLElement, Date>;
   value: Date;
+  onValue?: (value: Date) => void;
 }
 
-interface FieldDateUndefinedProps extends FieldDateProps {
+interface FormControlUndefinedProps extends FieldDateProps {
   formControl: ReactControl<HTMLElement, Date | undefined>;
   value: undefined;
+  onValue?: (value?: Date) => void;
 }
 
-interface FieldDateVoidProps extends Omit<FieldDateProps, 'value'> {
+interface FormControlVoidProps extends Omit<FieldDateProps, 'value'> {
   formControl: ReactControl<HTMLElement, Date | undefined>;
+  onValue?: (value?: Date) => void;
 }
 
-export function RlsFieldDate(props: FieldDateControlProps): JSX.Element;
-export function RlsFieldDate(props: FieldDateUndefinedProps): JSX.Element;
-export function RlsFieldDate(props: FieldDateVoidProps): JSX.Element;
-export function RlsFieldDate(props: FieldDateProps): JSX.Element;
+interface FormControlEmptyProps
+  extends Omit<FieldDateProps, 'formControl' | 'value'> {
+  onValue?: (value?: Date) => void;
+}
+
+export function RlsFieldDate(props: FormControlDefinedProps): JSX.Element;
+export function RlsFieldDate(props: FormControlUndefinedProps): JSX.Element;
+export function RlsFieldDate(props: FormControlVoidProps): JSX.Element;
+export function RlsFieldDate(props: FormControlEmptyProps): JSX.Element;
 export function RlsFieldDate({
   children,
   date,
@@ -61,7 +69,7 @@ export function RlsFieldDate({
 }: FieldDateProps) {
   const today = new Date(); // Initial current date in component
 
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(formControl?.value || defaultValue);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   useEffect(() => {
@@ -77,7 +85,7 @@ export function RlsFieldDate({
 
   function onChange(value?: Date): void {
     setValue(value);
-    onValue && onValue(value);
+    onValue && onValue(value as Date);
   }
 
   function onClickInput(): void {
@@ -88,7 +96,7 @@ export function RlsFieldDate({
     if (value) {
       formControl?.setValue(defaultValue as Date);
       formControl?.touch();
-      onChange(undefined);
+      onChange(defaultValue);
     } else {
       setModalIsVisible(true);
     }

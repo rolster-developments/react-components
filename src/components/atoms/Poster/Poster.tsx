@@ -1,9 +1,17 @@
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './Poster.css';
 
-export function RlsPoster({ children, rlsTheme }: RlsComponent) {
+interface PosterProps extends RlsComponent {
+  contrast?: boolean;
+}
+
+export function RlsPoster({ children, contrast, rlsTheme }: PosterProps) {
   return (
-    <div className="rls-poster" rls-theme={rlsTheme}>
+    <div
+      className={renderClassStatus('rls-poster', { contrast })}
+      rls-theme={rlsTheme}
+    >
       {children}
     </div>
   );

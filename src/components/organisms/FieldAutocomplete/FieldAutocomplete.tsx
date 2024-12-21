@@ -23,7 +23,7 @@ interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
   msgErrorDisabled?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: NonNullable<T>) => void;
-  onValue?: (value?: T) => void;
+  onValue?: ((value?: T) => void) | ((value: T) => void);
   placeholder?: string;
   searching?: boolean;
   value?: T;
@@ -36,47 +36,6 @@ interface FieldAutocompleteTemplateProps<
   render: (element: E) => ReactNode;
 }
 
-interface FormUndefinedTemplateProps<T = any>
-  extends FieldAutocompleteTemplateProps<T, AutocompleteElement<T>> {
-  formControl: ReactControl<HTMLElement, T | undefined>;
-  value: undefined;
-}
-
-interface FormControlTemplateProps<T = any>
-  extends FieldAutocompleteTemplateProps<T, AutocompleteElement<T>> {
-  formControl: ReactControl<HTMLElement, NonNullable<T>>;
-  value: NonNullable<T>;
-}
-
-interface FormVoidTemplateProps<T = any>
-  extends Omit<
-    FieldAutocompleteTemplateProps<T, AutocompleteElement<T>>,
-    'value'
-  > {
-  formControl: ReactControl<HTMLElement, T | undefined>;
-}
-
-type SuggestionsTemplateProps<T = any> = Omit<
-  FieldAutocompleteTemplateProps<T, AutocompleteElement<T>>,
-  'formControl' | 'value'
->;
-
-export function RlsFieldAutocompleteTemplate<T = any>(
-  props: FormUndefinedTemplateProps<T>
-): JSX.Element;
-export function RlsFieldAutocompleteTemplate<T = any>(
-  props: FormControlTemplateProps<T>
-): JSX.Element;
-export function RlsFieldAutocompleteTemplate<T = any>(
-  props: FormVoidTemplateProps<T>
-): JSX.Element;
-export function RlsFieldAutocompleteTemplate<T = any>(
-  props: SuggestionsTemplateProps<T>
-): JSX.Element;
-export function RlsFieldAutocompleteTemplate<
-  T = any,
-  E extends Element<T> = Element<T>
->(props: FieldAutocompleteTemplateProps<T, E>): JSX.Element;
 export function RlsFieldAutocompleteTemplate<
   T = any,
   E extends Element<T> = Element<T>
@@ -219,39 +178,45 @@ export function RlsFieldAutocompleteTemplate<
   );
 }
 
-interface FormUndefinedProps<T = any>
-  extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
-  formControl: ReactControl<HTMLElement, T | undefined>;
-  value: undefined;
-}
-
-interface FormControlProps<T = any>
+interface FormControlDefinedProps<T = any>
   extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
   formControl: ReactControl<HTMLElement, NonNullable<T>>;
   value: NonNullable<T>;
+  onValue?: (value: T) => void;
 }
 
-interface FormVoidProps<T = any>
+interface FormControlUndefinedProps<T = any>
+  extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
+  formControl: ReactControl<HTMLElement, T | undefined>;
+  value: undefined;
+  onValue?: (value?: T) => void;
+}
+
+interface FormControlVoidProps<T = any>
   extends Omit<FieldAutocompleteProps<T, AutocompleteElement<T>>, 'value'> {
   formControl: ReactControl<HTMLElement, T | undefined>;
+  onValue?: (value: T) => void;
 }
 
-type SuggestionsProps<T = any> = Omit<
-  FieldAutocompleteProps<T, AutocompleteElement<T>>,
-  'formControl' | 'value'
->;
+interface FormControlEmptyProps<T = any>
+  extends Omit<
+    FieldAutocompleteProps<T, AutocompleteElement<T>>,
+    'formControl' | 'value'
+  > {
+  onValue?: (value?: T) => void;
+}
 
 export function RlsFieldAutocomplete<T = any>(
-  props: FormUndefinedProps<T>
+  props: FormControlUndefinedProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
-  props: FormControlProps<T>
+  props: FormControlDefinedProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
-  props: FormVoidProps<T>
+  props: FormControlVoidProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
-  props: SuggestionsProps<T>
+  props: FormControlEmptyProps<T>
 ): JSX.Element;
 export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>

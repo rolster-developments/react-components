@@ -1,3 +1,4 @@
+import { PickerListenerType } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
@@ -18,32 +19,39 @@ interface FieldDateRangeProps extends RlsComponent {
   maxDate?: Date;
   minDate?: Date;
   msgErrorDisabled?: boolean;
+  onValue?: ((value?: DateRange) => void) | ((value: DateRange) => void);
   placeholder?: string;
   value?: DateRange;
 }
 
-interface FieldDateRangeControlProps extends FieldDateRangeProps {
+interface FormControlDefinedProps extends FieldDateRangeProps {
   formControl: ReactControl<HTMLElement, DateRange>;
   value: DateRange;
+  onValue?: (value: DateRange) => void;
 }
 
-interface FieldDateRangeUndefinedProps extends FieldDateRangeProps {
+interface FormControlUndefinedProps extends FieldDateRangeProps {
   formControl: ReactControl<HTMLElement, DateRange | undefined>;
   value: undefined;
+  onValue?: (value?: DateRange) => void;
 }
 
-interface FieldDateRangeVoidProps extends Omit<FieldDateRangeProps, 'value'> {
+interface FormControlVoidProps extends Omit<FieldDateRangeProps, 'value'> {
   formControl: ReactControl<HTMLElement, DateRange | undefined>;
+  onValue?: (value?: DateRange) => void;
 }
 
+interface FormControlEmptyProps
+  extends Omit<FieldDateRangeProps, 'formControl' | 'value'> {
+  onValue?: (value?: DateRange) => void;
+}
+
+export function RlsFieldDateRange(props: FormControlDefinedProps): JSX.Element;
 export function RlsFieldDateRange(
-  props: FieldDateRangeControlProps
+  props: FormControlUndefinedProps
 ): JSX.Element;
-export function RlsFieldDateRange(
-  props: FieldDateRangeUndefinedProps
-): JSX.Element;
-export function RlsFieldDateRange(props: FieldDateRangeVoidProps): JSX.Element;
-export function RlsFieldDateRange(props: FieldDateRangeProps): JSX.Element;
+export function RlsFieldDateRange(props: FormControlVoidProps): JSX.Element;
+export function RlsFieldDateRange(props: FormControlEmptyProps): JSX.Element;
 export function RlsFieldDateRange({
   children,
   date: datePicker,
@@ -52,14 +60,14 @@ export function RlsFieldDateRange({
   maxDate,
   minDate,
   msgErrorDisabled,
+  onValue,
   placeholder,
   rlsTheme,
   value: defaultValue
 }: FieldDateRangeProps) {
-  const currentRange = formControl?.value || DateRange.now();
   const currentDate = datePicker || new Date();
 
-  const [value, setValue] = useState<Undefined<DateRange>>(currentRange);
+  const [value, setValue] = useState(formControl?.value || defaultValue);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   function onClickInput(): void {
@@ -69,10 +77,16 @@ export function RlsFieldDateRange({
   function onClickAction(): void {
     if (value) {
       formControl?.setValue(defaultValue as DateRange);
-      setValue(undefined);
+      formControl?.touch();
+      onChange(defaultValue);
     } else {
       setModalIsVisible(true);
     }
+  }
+
+  function onChange(value?: DateRange): void {
+    setValue(value);
+    onValue && onValue(value as DateRange);
   }
 
   return (
@@ -117,9 +131,9 @@ export function RlsFieldDateRange({
           disabled={disabled}
           maxDate={maxDate}
           minDate={minDate}
-          onListener={({ value }) => {
-            value && setValue(value);
-
+          onListener={({ type, value }) => {
+            type !== PickerListenerType.Cancel && onChange(value);
+            formControl?.touch();
             setModalIsVisible(false);
           }}
         />
