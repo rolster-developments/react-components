@@ -22,7 +22,7 @@ export function RlsButtonAction({
         <RlsIcon value={icon} />
       </div>
       {tooltip && (
-        <div className="rls-button-action__tooltip caption-semibold">
+        <div className="rls-button-action__tooltip rls-overline-medium">
           <span>{tooltip}</span>
         </div>
       )}

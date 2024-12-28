@@ -74,7 +74,6 @@
       transform-origin: 0% 0%;
       transition: transform 240ms 0ms var(--rls-standard-curve),
         opacity 240ms 0ms var(--rls-standard-curve);
-      will-change: opacity, transform;
       box-shadow: 0px 0px 0px 3px var(--rls-theme-shadow-500);
 
       li {

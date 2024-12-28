@@ -1,10 +1,12 @@
 import './TabularText.css';
 
-const baseCls = 'rls-tabular-text';
+const className = 'rls-tabular-text';
 const pointers = ['.', ','];
 
 function charClass(char: string): string {
-  return pointers.includes(char) ? `${baseCls}__pointer` : `${baseCls}__char`;
+  return pointers.includes(char)
+    ? `${className}__pointer`
+    : `${className}__char`;
 }
 
 interface TabularTextProps {

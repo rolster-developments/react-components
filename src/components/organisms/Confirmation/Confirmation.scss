@@ -62,11 +62,10 @@
     visibility: var(--pvt-component-visibility);
     padding: var(--rls-sizing-x8) 0rem;
     box-sizing: border-box;
-    z-index: var(--rls-z-index-2);
+    z-index: var(--rls-z-index-4);
     border-radius: var(--rls-sizing-x4);
     background: var(--rls-app-background-500);
     box-shadow: var(--rls-app-shadow-4);
-    will-change: transform;
     transform: var(--pvt-component-transform);
     transition: opacity 125ms 0ms var(--rls-deceleration-curve),
       transform 125ms 0ms var(--rls-deceleration-curve),
@@ -146,8 +145,7 @@
     right: 0px;
     bottom: var(--pvt-backdrop-bottom);
     opacity: var(--pvt-backdrop-opacity);
-    z-index: 1;
-    will-change: opacity;
+    z-index: var(--rls-z-index-2);
     background: var(--rls-theme-backdrop-900);
     backdrop-filter: blur(2px);
     transition: opacity 120ms 0ms var(--rls-deceleration-curve),

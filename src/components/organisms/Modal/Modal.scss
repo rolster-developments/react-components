@@ -1,14 +1,15 @@
 // Rolster Technology Modal Component
-// v1.0.2
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Ene/2024
+// Updated: 28/Dic/2024
 
 .rls-modal {
   --pvt-component-transform: translateY(80rem) scale(0.6);
   --pvt-component-height: 0rem;
   --pvt-component-opacity: 0;
+  --pvt-component-overflow: hidden;
   --pvt-component-visibility: hidden;
   --pvt-backdrop-opacity: 0;
   --pvt-backdrop-bottom: initial;
@@ -23,6 +24,10 @@
   visibility: hidden;
   align-items: center;
   justify-content: center;
+
+  &--overflow {
+    --pvt-component-overflow: initial;
+  }
 
   &--visible {
     --pvt-component-visibility: visible;
@@ -43,10 +48,9 @@
     opacity: var(--pvt-component-opacity);
     visibility: var(--pvt-component-visibility);
     z-index: var(--rls-z-index-2);
-    overflow: hidden;
+    overflow: var(--pvt-component-overflow);
     border-radius: var(--rls-sizing-x4);
     background: var(--rls-app-background-500);
-    will-change: transform;
     transform: var(--pvt-component-transform);
     transition: opacity 125ms 0ms var(--rls-deceleration-curve),
       transform 125ms 0ms var(--rls-deceleration-curve),
@@ -62,7 +66,6 @@
     bottom: var(--pvt-backdrop-bottom);
     opacity: var(--pvt-backdrop-opacity);
     z-index: 1;
-    will-change: opacity;
     background: var(--rls-theme-backdrop-900);
     backdrop-filter: blur(2px);
     transition: opacity 120ms 0ms var(--rls-deceleration-curve),
