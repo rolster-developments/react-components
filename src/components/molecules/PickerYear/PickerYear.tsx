@@ -1,5 +1,5 @@
 import { itIsDefined } from '@rolster/commons';
-import { checkYearPicker, createYearPicker } from '@rolster/components';
+import { createYearPicker, verifyYearPicker } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
@@ -34,28 +34,28 @@ export function RlsPickerYear({
     formControl?.value || currentDate.getFullYear()
   );
   const [template, setTemplate] = useState(
-    createYearPicker(createPickerProps())
+    createYearPicker(createPickerOptions())
   );
 
   useEffect(() => {
-    const props = createPickerProps(); // YearPickerProps
+    const options = createPickerOptions(); // YearPickerProps
 
-    const year = checkYearPicker(props);
+    const year = verifyYearPicker(options);
 
     year
       ? setYearValue(year)
-      : setTemplate(createYearPicker(createPickerProps()));
+      : setTemplate(createYearPicker(createPickerOptions()));
   }, [date, year, value, minDate, maxDate]);
 
   useEffect(() => {
-    const year = checkYearPicker(createPickerProps());
+    const year = verifyYearPicker(createPickerOptions());
 
     itIsDefined(year)
       ? formControl?.setValue(year)
       : setValue(formControl?.value || currentDate.getFullYear());
   }, [formControl?.value]);
 
-  function createPickerProps() {
+  function createPickerOptions() {
     return {
       date: currentDate,
       year,

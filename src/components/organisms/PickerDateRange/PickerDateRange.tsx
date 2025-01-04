@@ -1,4 +1,4 @@
-import { PickerListener, PickerListenerType } from '@rolster/components';
+import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import {
   DateRange,
   assignMonthInDate,
@@ -88,12 +88,12 @@ export function RlsPickerDateRange({
   }
 
   function onCancel(): void {
-    onListener && onListener({ type: PickerListenerType.Cancel });
+    onListener && onListener({ event: PickerListenerEvent.Cancel });
   }
 
   function onSelect(): void {
     formControl?.setValue(value);
-    onListener && onListener({ type: PickerListenerType.Select, value });
+    onListener && onListener({ event: PickerListenerEvent.Select, value });
   }
 
   return (

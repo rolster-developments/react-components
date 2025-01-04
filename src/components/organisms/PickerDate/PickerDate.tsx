@@ -1,9 +1,9 @@
 import { itIsDefined } from '@rolster/commons';
 import {
   PickerListener,
-  PickerListenerType,
-  checkDateRange,
-  dateOutRange
+  PickerListenerEvent,
+  dateOutRange,
+  verifyDateRange
 } from '@rolster/components';
 import {
   assignDayInDate,
@@ -63,14 +63,14 @@ export function RlsPickerDate({
   const [visibility, setVisibility] = useState<Visibility>('DAY');
 
   useEffect(() => {
-    const dateCheck = checkDateRange({
+    const dateRange = verifyDateRange({
       date: formControl?.value || date || today,
       minDate,
       maxDate
     });
 
-    setValue(dateCheck);
-    formControl?.setValue(dateCheck);
+    setValue(dateRange);
+    formControl?.setValue(dateRange);
   }, []);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export function RlsPickerDate({
   }
 
   function onCancel(): void {
-    onListener && onListener({ type: PickerListenerType.Cancel });
+    onListener && onListener({ event: PickerListenerEvent.Cancel });
   }
 
   function onToday(): void {
@@ -110,12 +110,12 @@ export function RlsPickerDate({
     monthControl.setValue(today.getMonth());
     formControl?.setValue(today);
 
-    onListener && onListener({ type: PickerListenerType.Now, value: today });
+    onListener && onListener({ event: PickerListenerEvent.Now, value: today });
   }
 
   function onSelect(): void {
     formControl?.setValue(value);
-    onListener && onListener({ type: PickerListenerType.Select, value });
+    onListener && onListener({ event: PickerListenerEvent.Select, value });
   }
 
   return (

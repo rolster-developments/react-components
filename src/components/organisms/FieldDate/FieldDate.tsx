@@ -1,4 +1,4 @@
-import { PickerListenerType, checkDateRange } from '@rolster/components';
+import { PickerListenerEvent, verifyDateRange } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
@@ -73,14 +73,14 @@ export function RlsFieldDate({
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   useEffect(() => {
-    const dateCheck = checkDateRange({
+    const dateRange = verifyDateRange({
       date: formControl?.value || date || today,
       minDate,
       maxDate
     });
 
-    setValue(dateCheck);
-    formControl?.setValue(dateCheck);
+    setValue(dateRange);
+    formControl?.setValue(dateRange);
   }, []);
 
   function onChange(value?: Date): void {
@@ -148,8 +148,8 @@ export function RlsFieldDate({
           disabled={disabled}
           maxDate={maxDate}
           minDate={minDate}
-          onListener={({ value, type }) => {
-            type !== PickerListenerType.Cancel && onChange(value);
+          onListener={({ event, value }) => {
+            event !== PickerListenerEvent.Cancel && onChange(value);
             formControl?.touch();
             setModalIsVisible(false);
           }}

@@ -1,4 +1,4 @@
-import { PickerListenerType } from '@rolster/components';
+import { PickerListenerEvent } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
@@ -131,8 +131,8 @@ export function RlsFieldDateRange({
           disabled={disabled}
           maxDate={maxDate}
           minDate={minDate}
-          onListener={({ type, value }) => {
-            type !== PickerListenerType.Cancel && onChange(value);
+          onListener={({ event, value }) => {
+            event !== PickerListenerEvent.Cancel && onChange(value);
             formControl?.touch();
             setModalIsVisible(false);
           }}

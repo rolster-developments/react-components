@@ -1,8 +1,8 @@
 import { itIsDefined } from '@rolster/commons';
 import {
   MonthState,
-  checkMonthPicker,
-  createMonthPicker
+  createMonthPicker,
+  verifyMonthPicker
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
@@ -38,22 +38,22 @@ export function RlsPickerMonth({
   );
 
   useEffect(() => {
-    const props = createPickerProps(); // MonthPickerProps
+    const options = createPickerOptions(); // MonthPickerProps
 
-    const month = checkMonthPicker(props);
+    const month = verifyMonthPicker(options);
 
-    month ? setMonthValue(month) : setMonths(createMonthPicker(props));
+    month ? setMonthValue(month) : setMonths(createMonthPicker(options));
   }, [date, year, value, minDate, maxDate]);
 
   useEffect(() => {
-    const month = checkMonthPicker(createPickerProps());
+    const month = verifyMonthPicker(createPickerOptions());
 
     itIsDefined(month)
       ? formControl?.setValue(month)
       : setValue(formControl?.value || currentDate.getMonth());
   }, [formControl?.value]);
 
-  function createPickerProps() {
+  function createPickerOptions() {
     return {
       date: currentDate,
       month: itIsDefined(formControl?.value) ? formControl?.value : value,

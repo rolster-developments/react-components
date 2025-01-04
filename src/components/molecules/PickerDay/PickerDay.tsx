@@ -1,8 +1,8 @@
 import { itIsDefined } from '@rolster/commons';
 import {
   WeekState,
-  checkDayPicker,
-  createDayPicker
+  createDayPicker,
+  verifyDayPicker
 } from '@rolster/components';
 import { DAY_LABELS } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
@@ -41,22 +41,22 @@ export function RlsPickerDay({
   );
 
   useEffect(() => {
-    const props = createPickerProps();
+    const options = createPickerOptions();
 
-    const day = checkDayPicker(props);
+    const day = verifyDayPicker(options);
 
-    day ? setDayValue(day) : setWeeks(createDayPicker(props));
+    day ? setDayValue(day) : setWeeks(createDayPicker(options));
   }, [date, month, year, value, minDate, maxDate]);
 
   useEffect(() => {
-    const day = checkDayPicker(createPickerProps());
+    const day = verifyDayPicker(createPickerOptions());
 
     day
       ? formControl?.setValue(day)
       : setValue(formControl?.value || currentDate.getDate());
   }, [formControl?.value]);
 
-  function createPickerProps() {
+  function createPickerOptions() {
     return {
       date: currentDate,
       day: formControl?.value || value,
