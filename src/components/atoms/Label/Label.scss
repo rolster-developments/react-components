@@ -6,9 +6,12 @@
 // Updated: 30/Ene/2025
 
 .rls-label {
-  color: var(--rls-theme-color-500);
   font-size: var(--rlc-label-font-size);
   letter-spacing: var(--rlc-label-letter-spacing);
   line-height: var(--rlc-label-height);
   font-weight: inherit;
+
+  &[rls-theme] {
+    color: var(--rls-theme-color-500);
+  }
 }
