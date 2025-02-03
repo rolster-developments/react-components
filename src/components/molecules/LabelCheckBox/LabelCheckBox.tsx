@@ -15,6 +15,7 @@ export function RlsLabelCheckBox({
   children,
   disabled,
   extended,
+  identifier,
   formControl,
   rlsTheme
 }: LabelCheckBoxProps) {
@@ -34,6 +35,7 @@ export function RlsLabelCheckBox({
 
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-label-checkbox', {
         disabled,
         extended

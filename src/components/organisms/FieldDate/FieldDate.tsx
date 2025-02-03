@@ -59,6 +59,7 @@ export function RlsFieldDate({
   disabled,
   formControl,
   format,
+  identifier,
   maxDate,
   minDate,
   msgErrorDisabled,
@@ -107,7 +108,7 @@ export function RlsFieldDate({
     : '';
 
   return (
-    <div className="rls-field-date" rls-theme={rlsTheme}>
+    <div id={identifier} className="rls-field-date" rls-theme={rlsTheme}>
       <div className={renderClassStatus('rls-field-box', { disabled })}>
         {children && <label className="rls-field-box__label">{children}</label>}
 

@@ -16,6 +16,7 @@ export function RlsLabelRadioButton<T = any>({
   children,
   disabled,
   extended,
+  identifier,
   formControl,
   rlsTheme,
   value
@@ -32,6 +33,7 @@ export function RlsLabelRadioButton<T = any>({
 
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-label-radiobutton', {
         disabled,
         extended

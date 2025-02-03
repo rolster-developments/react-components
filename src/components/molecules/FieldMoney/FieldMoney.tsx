@@ -14,6 +14,7 @@ export function RlsFieldMoney({
   decimals,
   disabled,
   formControl,
+  identifier,
   msgErrorDisabled,
   onValue,
   placeholder,
@@ -23,6 +24,7 @@ export function RlsFieldMoney({
 }: FieldMoneyProps) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus(
         'rls-field-box',
         {

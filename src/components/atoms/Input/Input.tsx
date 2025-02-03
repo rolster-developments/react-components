@@ -17,6 +17,7 @@ export function RlsInput({
   children,
   disabled,
   formControl,
+  identifier,
   onValue,
   placeholder,
   type,
@@ -45,6 +46,7 @@ export function RlsInput({
 
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-input', {
         focused: formControl?.focused ?? focused,
         disabled: formControl?.disabled || disabled

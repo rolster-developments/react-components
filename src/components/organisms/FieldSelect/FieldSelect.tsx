@@ -62,7 +62,12 @@ export function RlsFieldSelectTemplate<
   );
 
   return (
-    <div ref={controller.contentRef} className={className} rls-theme={rlsTheme}>
+    <div
+      id={props.identifier}
+      ref={controller.contentRef}
+      className={className}
+      rls-theme={rlsTheme}
+    >
       {children && <label className="rls-field-box__label">{children}</label>}
 
       <div className="rls-field-box__component">

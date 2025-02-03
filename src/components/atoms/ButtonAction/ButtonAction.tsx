@@ -13,11 +13,17 @@ interface ButtonActionProps extends RlsComponent {
 export function RlsButtonAction({
   icon,
   disabled,
-  tooltip,
-  onClick
+  identifier,
+  onClick,
+  tooltip
 }: ButtonActionProps) {
   return (
-    <button className="rls-button-action" onClick={onClick} disabled={disabled}>
+    <button
+      id={identifier}
+      className="rls-button-action"
+      onClick={onClick}
+      disabled={disabled}
+    >
       <div className="rls-button-action__content">
         <RlsIcon value={icon} />
       </div>

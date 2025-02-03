@@ -12,5 +12,6 @@ export type RlsTheme =
 
 export interface RlsComponent {
   children?: ReactNode;
+  identifier?: string;
   rlsTheme?: RlsTheme;
 }

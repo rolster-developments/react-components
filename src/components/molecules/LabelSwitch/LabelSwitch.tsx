@@ -15,6 +15,7 @@ export function RlsLabelSwitch({
   children,
   disabled,
   extended,
+  identifier,
   formControl,
   rlsTheme
 }: LabelSwitchProps) {
@@ -34,6 +35,7 @@ export function RlsLabelSwitch({
 
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-label-switch', { disabled, extended })}
       rls-theme={rlsTheme}
     >

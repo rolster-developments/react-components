@@ -6,6 +6,7 @@ import './InputNumber.css';
 export function RlsInputNumber({
   disabled,
   formControl,
+  identifier,
   onValue,
   placeholder,
   value
@@ -18,7 +19,7 @@ export function RlsInputNumber({
   }
 
   return (
-    <div className="rls-input-number">
+    <div id={identifier} className="rls-input-number">
       <RlsInput
         formControl={formControl}
         type="number"

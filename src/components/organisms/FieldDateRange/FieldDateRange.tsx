@@ -57,6 +57,7 @@ export function RlsFieldDateRange({
   date: datePicker,
   disabled,
   formControl,
+  identifier,
   maxDate,
   minDate,
   msgErrorDisabled,
@@ -90,7 +91,7 @@ export function RlsFieldDateRange({
   }
 
   return (
-    <div className="rls-field-date-range" rls-theme={rlsTheme}>
+    <div id={identifier} className="rls-field-date-range" rls-theme={rlsTheme}>
       <div className={renderClassStatus('rls-field-box', { disabled })}>
         {children && <label className="rls-field-box__label">{children}</label>}
 

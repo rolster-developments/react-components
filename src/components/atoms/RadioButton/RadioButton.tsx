@@ -11,11 +11,13 @@ interface RadioButtonProps extends RlsComponent {
 export function RlsRadioButton({
   checked,
   disabled,
+  identifier,
   rlsTheme,
   onClick
 }: RadioButtonProps) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-radiobutton', { checked, disabled })}
       onClick={onClick}
       rls-theme={rlsTheme}

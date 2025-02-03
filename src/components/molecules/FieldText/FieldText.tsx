@@ -8,6 +8,7 @@ export function RlsFieldText({
   children,
   disabled,
   formControl,
+  identifier,
   msgErrorDisabled,
   onValue,
   placeholder,
@@ -16,6 +17,7 @@ export function RlsFieldText({
 }: FieldBoxProps<string>) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus(
         'rls-field-box',
         {

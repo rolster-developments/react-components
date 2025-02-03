@@ -8,6 +8,7 @@ export type RolsterControl<T = any> =
 export interface InputProps<T = any> {
   disabled?: boolean;
   formControl?: RolsterControl<T>;
+  identifier?: string;
   onValue?: (value: T) => void;
   placeholder?: string;
   value?: T;

@@ -18,6 +18,7 @@ export function RlsButton({
   type,
   children,
   disabled,
+  identifier,
   prefixIcon,
   suffixIcon,
   rlsTheme,
@@ -25,6 +26,7 @@ export function RlsButton({
 }: ButtonProps) {
   return (
     <button
+      id={identifier}
       className="rls-button"
       onClick={onClick}
       rls-theme={rlsTheme}

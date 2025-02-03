@@ -17,6 +17,7 @@ export function RlsFieldPassword({
   children,
   disabled,
   formControl,
+  identifier,
   msgErrorDisabled,
   placeholder,
   rlsTheme
@@ -29,6 +30,7 @@ export function RlsFieldPassword({
 
   return (
     <div
+      id={identifier}
       className={renderClassStatus(
         ' rls-field-box',
         {

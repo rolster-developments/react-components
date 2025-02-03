@@ -6,6 +6,7 @@ import './InputText.css';
 export function RlsInputText({
   disabled,
   formControl,
+  identifier,
   onValue,
   placeholder,
   value
@@ -18,7 +19,7 @@ export function RlsInputText({
   }
 
   return (
-    <div className="rls-input-text">
+    <div id={identifier} className="rls-input-text">
       <RlsInput
         formControl={formControl}
         type="text"

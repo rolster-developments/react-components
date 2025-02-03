@@ -17,11 +17,13 @@ interface Props extends RlsComponent {
 export function RlsSwitch({
   checked,
   disabled,
-  rlsTheme,
-  onClick
+  identifier,
+  onClick,
+  rlsTheme
 }: SwitchProps) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-switch', { checked, disabled })}
       onClick={onClick}
       rls-theme={rlsTheme}
@@ -34,9 +36,15 @@ export function RlsSwitch({
   );
 }
 
-export function RlsSwitchControl({ formControl, disabled, rlsTheme }: Props) {
+export function RlsSwitchControl({
+  formControl,
+  disabled,
+  identifier,
+  rlsTheme
+}: Props) {
   return (
     <RlsSwitch
+      identifier={identifier}
       checked={formControl.value || false}
       disabled={disabled}
       onClick={() => {

@@ -17,11 +17,13 @@ interface CheckBoxControlProps extends RlsComponent {
 export function RlsCheckBox({
   checked,
   disabled,
+  identifier,
   onClick,
   rlsTheme
 }: CheckBoxProps) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-checkbox', { checked, disabled })}
       onClick={onClick}
       rls-theme={rlsTheme}
@@ -34,10 +36,12 @@ export function RlsCheckBox({
 export function RlsCheckBoxControl({
   formControl,
   disabled,
+  identifier,
   rlsTheme
 }: CheckBoxControlProps) {
   return (
     <RlsCheckBox
+      identifier={identifier}
       checked={!!formControl.value}
       disabled={disabled}
       onClick={() => {

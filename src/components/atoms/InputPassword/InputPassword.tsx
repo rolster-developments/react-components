@@ -17,6 +17,7 @@ interface InputPasswordProps extends RlsComponent {
 export function RlsInputPassword({
   disabled,
   formControl,
+  identifier,
   onValue,
   placeholder,
   type
@@ -40,6 +41,7 @@ export function RlsInputPassword({
 
   return (
     <div
+      id={identifier}
       className={renderClassStatus('rls-input-password', {
         focused: formControl?.focused ?? focused,
         disabled: formControl?.disabled || disabled

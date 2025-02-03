@@ -13,6 +13,7 @@ export function RlsInputMoney({
   decimals,
   disabled,
   formControl,
+  identifier,
   onValue,
   placeholder,
   symbol,
@@ -26,7 +27,7 @@ export function RlsInputMoney({
   }
 
   return (
-    <div className="rls-input-money">
+    <div id={identifier} className="rls-input-money">
       <RlsInput
         formControl={formControl}
         type="number"
