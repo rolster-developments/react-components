@@ -13,7 +13,7 @@ export function RlsInputText({
 }: InputProps<string>) {
   const [valueInput, setValueInput] = useState(value ?? '');
 
-  function onChange(value: string): void {
+  function onValueInput(value: string): void {
     !formControl && setValueInput(value);
     onValue && onValue(value);
   }
@@ -26,7 +26,7 @@ export function RlsInputText({
         value={value}
         disabled={disabled}
         placeholder={placeholder}
-        onValue={onChange}
+        onValue={onValueInput}
       >
         {formControl?.value ?? value ?? valueInput}
       </RlsInput>

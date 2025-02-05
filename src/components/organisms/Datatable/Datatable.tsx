@@ -21,17 +21,23 @@ interface DatatableProps extends RlsComponent {
   summary?: JSX.Element;
 }
 
-export function RlsDatatableHeader({ children }: RlsComponent) {
-  return <tr className="rls-datatable__header">{children}</tr>;
+export function RlsDatatableHeader({ children, identifier }: RlsComponent) {
+  return (
+    <tr id={identifier} className="rls-datatable__header">
+      {children}
+    </tr>
+  );
 }
 
 export function RlsDatatableTitle({
   children,
   className,
-  control
+  control,
+  identifier
 }: DatatableCellProps) {
   return (
     <th
+      id={identifier}
       className={renderClassStatus(
         'rls-datatable__title',
         { control },
@@ -47,10 +53,12 @@ export function RlsDatatableRecord({
   children,
   className,
   error,
+  identifier,
   warning
 }: DatatableRecordProps) {
   return (
     <tr
+      id={identifier}
       className={renderClassStatus(
         'rls-datatable__record',
         { error, warning },
@@ -66,10 +74,12 @@ export function RlsDatatableTotals({
   children,
   className,
   error,
+  identifier,
   warning
 }: DatatableRecordProps) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus(
         'rls-datatable__totals',
         { error, warning },
@@ -85,10 +95,12 @@ export function RlsDatatableCell({
   children,
   className,
   control,
+  identifier,
   overflow
 }: DatatableCellProps) {
   return (
     <th
+      id={identifier}
       className={renderClassStatus(
         'rls-datatable__cell',
         { control, overflow },
@@ -104,10 +116,12 @@ export function RlsDatatableData({
   children,
   className,
   control,
+  identifier,
   overflow
 }: DatatableCellProps) {
   return (
     <div
+      id={identifier}
       className={renderClassStatus(
         'rls-datatable__data',
         { control, overflow },
@@ -124,6 +138,7 @@ export function RlsDatatable({
   datatable,
   footer,
   header,
+  identifier,
   rlsTheme,
   summary
 }: DatatableProps) {
@@ -134,7 +149,7 @@ export function RlsDatatable({
       })}
       rls-theme={rlsTheme}
     >
-      <table>
+      <table id={identifier}>
         {header && <thead className="rls-datatable__thead">{header}</thead>}
 
         <tbody ref={datatable?.tableRef} className="rls-datatable__tbody">

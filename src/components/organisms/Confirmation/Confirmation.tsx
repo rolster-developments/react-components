@@ -29,6 +29,7 @@ type Result = Promise<ConfirmationResult>;
 interface ConfirmationAction {
   label: string;
   onClick: () => void;
+  identifier?: string;
 }
 
 interface ConfirmationBasic {
@@ -88,12 +89,20 @@ export function RlsConfirmation({
           <div className="rls-confirmation__footer">
             <div className="rls-confirmation__actions">
               {approved && (
-                <RlsButton type="raised" onClick={approved.onClick}>
+                <RlsButton
+                  identifier={approved.identifier}
+                  type="raised"
+                  onClick={approved.onClick}
+                >
                   {approved.label}
                 </RlsButton>
               )}
               {reject && (
-                <RlsButton type="outline" onClick={reject.onClick}>
+                <RlsButton
+                  identifier={reject.identifier}
+                  type="outline"
+                  onClick={reject.onClick}
+                >
                   {reject.label}
                 </RlsButton>
               )}

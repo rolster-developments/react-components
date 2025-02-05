@@ -62,7 +62,7 @@ export function RlsInput({
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
-        value={formControl?.value ?? value ?? ''}
+        value={formControl?.value || value || ''}
       />
       <span className="rls-input__value">{children}</span>
     </div>
