@@ -26,7 +26,7 @@ export class ConfirmationResult extends PartialSealed<
 
 type Result = Promise<ConfirmationResult>;
 
-interface ConfirmationAction {
+interface ConfirmationButton {
   label: string;
   onClick: () => void;
   identifier?: string;
@@ -40,17 +40,22 @@ interface ConfirmationBasic {
 }
 
 interface ConfirmationProps extends ConfirmationBasic {
-  approved?: ConfirmationAction;
-  reject?: ConfirmationAction;
+  approved?: ConfirmationButton;
+  reject?: ConfirmationButton;
   visible?: boolean;
 }
 
-interface ConfirmationConfig extends ConfirmationBasic {
-  approved?: string;
-  reject?: string;
+interface ConfirmationAction {
+  label: string;
+  identifier?: string;
 }
 
-export type Confirmation = (props: ConfirmationConfig) => Result;
+interface ConfirmationOptions extends ConfirmationBasic {
+  approved?: ConfirmationAction;
+  reject?: ConfirmationAction;
+}
+
+export type Confirmation = (options: ConfirmationOptions) => Result;
 
 export interface ConfirmationService {
   RlsConfirmation: JSX.Element;
@@ -125,9 +130,9 @@ export function useConfirmationService(): ConfirmationService {
     document.body
   );
 
-  function confirmation(config: ConfirmationConfig): Result {
+  function confirmation(options: ConfirmationOptions): Result {
     return new Promise<ConfirmationResult>((resolve) => {
-      const { content, rlsTheme, subtitle, title, approved, reject } = config;
+      const { content, rlsTheme, subtitle, title, approved, reject } = options;
 
       setConfig({
         content,
@@ -135,19 +140,21 @@ export function useConfirmationService(): ConfirmationService {
         subtitle,
         title,
         approved: {
-          label: approved || reactI18n('confirmationActionApproved'),
+          label: approved?.label ?? reactI18n('confirmationActionApproved'),
           onClick: () => {
             setVisible(false);
             resolve(ConfirmationResult.approved());
-          }
+          },
+          identifier: approved?.identifier
         },
         reject: reject
           ? {
-              label: reject,
+              label: reject.label,
               onClick: () => {
                 setVisible(false);
                 resolve(ConfirmationResult.reject());
-              }
+              },
+              identifier: reject.identifier
             }
           : undefined
       });
