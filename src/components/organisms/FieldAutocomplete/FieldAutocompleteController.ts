@@ -37,6 +37,7 @@ export interface FieldAutocompleteControl<
 
 interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>> {
   suggestions: E[];
+  automatic?: boolean;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
@@ -61,8 +62,6 @@ export function useFieldAutocomplete<
     previous: null
   });
 
-  const disabled = props.formControl?.disabled || props.disabled;
-
   useEffect(() => {
     refreshCoincidences(pattern, true);
   }, [props.suggestions]);
@@ -70,16 +69,6 @@ export function useFieldAutocomplete<
   useEffect(() => {
     refreshCoincidences(pattern);
   }, [pattern]);
-
-  function onClickControl(): void {
-    if (!disabled) {
-      controller.setState({ modalIsVisible: true });
-
-      setTimeout(() => {
-        controller.inputRef?.current?.focus();
-      }, DURATION_ANIMATION);
-    }
-  }
 
   function onFocusInput(): void {
     controller.setState({ focused: true });
@@ -102,10 +91,22 @@ export function useFieldAutocomplete<
     }
   }
 
+  function onClickControl(): void {
+    controller.setState({ modalIsVisible: true });
+
+    setTimeout(() => {
+      controller.inputRef?.current?.focus();
+    }, DURATION_ANIMATION);
+  }
+
   function onClickAction(): void {
-    controller.setState({ modalIsVisible: false, value: '' });
-    controller.setFormValue(props.value);
-    props.onValue && props.onValue(props.value as T);
+    if (controller.value) {
+      controller.setState({ modalIsVisible: false, value: '' });
+      controller.setFormValue(props.value);
+      props.onValue && props.onValue(props.value as T);
+    } else {
+      onClickControl();
+    }
   }
 
   function onClickBackdrop(): void {
@@ -127,15 +128,17 @@ export function useFieldAutocomplete<
   }
 
   function onChange({ description, value }: Element<T>): void {
-    if (props.onSelect) {
+    const { onSelect, onValue } = props;
+
+    if (onSelect) {
       controller.setState({ modalIsVisible: false });
-      value && props.onSelect(value);
+      value && onSelect(value);
     } else {
       controller.setState({ modalIsVisible: false, value: description });
       controller.setFormValue(value);
     }
 
-    props.onValue && props.onValue(value);
+    onValue && onValue(value);
   }
 
   function refreshCoincidences(pattern: string | null, reboot = false): void {

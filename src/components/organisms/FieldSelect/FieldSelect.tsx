@@ -15,6 +15,7 @@ import './FieldSelect.css';
 interface FieldSelectProps<T = any, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
+  automatic?: boolean;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>

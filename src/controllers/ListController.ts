@@ -27,6 +27,7 @@ export interface ListController<T = any> extends ListControllerState {
 
 interface ListControllerProps<T = any> {
   suggestions: AbstractListElement<T>[];
+  automatic?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
@@ -36,7 +37,7 @@ interface ListControllerProps<T = any> {
 export function useListController<T = any>(
   props: ListControllerProps<T>
 ): ListController<T> {
-  const { suggestions, formControl, value } = props;
+  const { suggestions, automatic, formControl, value } = props;
 
   const listIsOpen = useRef(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ export function useListController<T = any>(
 
   const collection = useRef(new ListCollection<T>([]));
   const position = useRef(0);
-  const protectedValue = useRef<T>();
+  const _protected = useRef<T>();
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
@@ -84,37 +85,54 @@ export function useListController<T = any>(
 
   useEffect(() => {
     collection.current = new ListCollection(suggestions);
-    refresh(collection.current, formControl?.value);
-  }, [suggestions, formControl?.value]);
+    refresh(collection.current, formControl?.value, automatic);
+  }, [suggestions]);
 
-  function refresh(collection: ListCollection<T>, state?: T): void {
+  useEffect(() => {
+    refresh(collection.current, formControl?.value);
+  }, [formControl?.value]);
+
+  function refresh(
+    collection: ListCollection<T>,
+    state?: T,
+    automatic?: boolean
+  ): void {
     if (!state) {
-      return refreshProtected(collection)
-        ? undefined
-        : refreshState({ value: '' });
+      !refreshWithProtected(collection, automatic) &&
+        refreshState({ value: '' });
+
+      return undefined;
     }
 
     const element = collection.find(state);
 
     if (element) {
-      protectedValue.current = undefined;
+      _protected.current = undefined;
       return refreshState({ value: element.description });
     }
 
-    if (!refreshProtected(collection)) {
-      protectedValue.current = state;
+    if (!refreshWithProtected(collection, automatic)) {
+      _protected.current = state;
       setFormValue(value as T);
       refreshState({ value: '' });
     }
   }
 
-  function refreshProtected(collection: ListCollection<T>): boolean {
-    if (protectedValue.current) {
-      const element = collection.find(protectedValue.current);
+  function refreshWithProtected(
+    collection: ListCollection<T>,
+    automatic?: boolean
+  ): boolean {
+    if (automatic && collection.value[0]) {
+      setFormValue(collection.value[0].value);
+      return true;
+    }
+
+    if (_protected.current) {
+      const element = collection.find(_protected.current);
 
       if (element) {
-        formControl?.setValue(protectedValue.current);
-        protectedValue.current = undefined;
+        formControl?.setValue(_protected.current);
+        _protected.current = undefined;
         return true;
       }
     }

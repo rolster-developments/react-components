@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export type RlsTheme =
   | 'standard'
   | 'success'
@@ -10,8 +8,7 @@ export type RlsTheme =
   | 'smartness'
   | 'obsidian';
 
-export interface RlsComponent {
-  children?: ReactNode;
+export interface RlsComponent extends React.PropsWithChildren {
   identifier?: string;
   rlsTheme?: RlsTheme;
 }

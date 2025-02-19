@@ -15,11 +15,11 @@ import './FieldAutocomplete.css';
 interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
   extends RlsComponent {
   suggestions: E[];
+  automatic?: boolean;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
-  hiddenIcon?: boolean;
   msgErrorDisabled?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: NonNullable<T>) => void;
@@ -48,7 +48,6 @@ export function RlsFieldAutocompleteTemplate<
     render,
     children,
     formControl,
-    hiddenIcon,
     msgErrorDisabled,
     onSearch,
     placeholder,
@@ -89,15 +88,13 @@ export function RlsFieldAutocompleteTemplate<
             onClick={autocomplete.onClickControl}
           />
 
-          {!hiddenIcon && controller.value && (
-            <button
-              className="rls-field-list__action"
-              disabled={disabled}
-              onClick={autocomplete.onClickAction}
-            >
-              <RlsIcon value="trash-2" />
-            </button>
-          )}
+          <button
+            className="rls-field-list__action"
+            disabled={disabled}
+            onClick={autocomplete.onClickAction}
+          >
+            <RlsIcon value={controller.value ? 'trash-2' : 'arrow-ios-down'} />
+          </button>
         </div>
       </div>
 
@@ -124,8 +121,8 @@ export function RlsFieldAutocompleteTemplate<
                 type="text"
                 placeholder={reactI18n('listInputPlaceholder')}
                 value={autocomplete.pattern}
-                onChange={({ target: { value } }) => {
-                  autocomplete.setPattern(value);
+                onChange={(event) => {
+                  autocomplete.setPattern(event.target.value);
                 }}
                 disabled={disabled || searching}
                 onFocus={autocomplete.onFocusInput}

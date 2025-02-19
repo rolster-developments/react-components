@@ -20,6 +20,7 @@ export interface FieldSelectControl<
 
 interface FieldSelectProps<T = any, E extends Element<T> = Element<T>> {
   suggestions: E[];
+  automatic?: boolean;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
@@ -90,17 +91,19 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
   }
 
   function onChange({ description, value }: Element<T>): void {
+    const { onSelect, onValue } = props;
+
     controller.inputRef?.current?.focus();
 
-    if (props.onSelect) {
+    if (onSelect) {
       controller.setState({ modalIsVisible: false });
-      value && props.onSelect(value);
+      value && onSelect(value);
     } else {
       controller.setFormValue(value);
       controller.setState({ modalIsVisible: false, value: description });
     }
 
-    props.onValue && props.onValue(value);
+    onValue && onValue(value);
   }
 
   return {

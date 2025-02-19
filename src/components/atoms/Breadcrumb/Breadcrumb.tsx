@@ -1,6 +1,7 @@
+import { renderClassStatus } from '../../../helpers';
 import './Breadcrumb.css';
 
-interface BreadcrumbLabel {
+export interface BreadcrumbLabel {
   label: string;
   onClick?: () => void;
 }
@@ -14,7 +15,13 @@ export function RlsBreadcrumb({ labels }: BreadcrumbProps) {
     <div className="rls-breadcrumb">
       {labels.map(({ label, onClick }, index) => (
         <label key={index} className="rls-breadcrumb__label" onClick={onClick}>
-          <a className="rls-breadcrumb__label__a">{label}</a>
+          <a
+            className={renderClassStatus('rls-breadcrumb__label__a', {
+              actionable: !!onClick
+            })}
+          >
+            {label}
+          </a>
         </label>
       ))}
     </div>
