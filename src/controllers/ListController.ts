@@ -89,7 +89,7 @@ export function useListController<T = any>(
   }, [suggestions]);
 
   useEffect(() => {
-    refresh(collection.current, formControl?.value);
+    refresh(collection.current, formControl?.value, automatic);
   }, [formControl?.value]);
 
   function refresh(

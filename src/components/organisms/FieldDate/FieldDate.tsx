@@ -107,9 +107,13 @@ export function RlsFieldDate({
     ? dateFormatTemplate(value, format || FORMAT_DATE)
     : '';
 
+  const _disabled = formControl?.disabled || disabled;
+
   return (
     <div id={identifier} className="rls-field-date" rls-theme={rlsTheme}>
-      <div className={renderClassStatus('rls-field-box', { disabled })}>
+      <div
+        className={renderClassStatus('rls-field-box', { disabled: _disabled })}
+      >
         {children && <label className="rls-field-box__label">{children}</label>}
 
         <div className="rls-field-box__component">
@@ -121,7 +125,7 @@ export function RlsFieldDate({
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
-              disabled={disabled}
+              disabled={_disabled}
             />
 
             <button
@@ -146,7 +150,7 @@ export function RlsFieldDate({
         <RlsPickerDate
           formControl={formControl}
           date={date}
-          disabled={disabled}
+          disabled={_disabled}
           maxDate={maxDate}
           minDate={minDate}
           onListener={({ event, value }) => {

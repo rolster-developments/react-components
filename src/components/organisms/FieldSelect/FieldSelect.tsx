@@ -50,14 +50,14 @@ export function RlsFieldSelectTemplate<
     rlsTheme
   } = props;
 
-  const disabled = formControl?.disabled || props.disabled;
+  const _disabled = formControl?.disabled || props.disabled;
 
   const className = renderClassStatus(
     'rls-field-box',
     {
-      focused: controller.focused,
-      disabled,
-      error: formControl?.wrong
+      focused: controller.focused && !_disabled,
+      error: formControl?.wrong,
+      disabled: _disabled
     },
     'rls-field-list rls-field-select'
   );
@@ -77,7 +77,7 @@ export function RlsFieldSelectTemplate<
             ref={controller.inputRef}
             className="rls-field-list__control"
             readOnly={true}
-            disabled={disabled}
+            disabled={_disabled}
             placeholder={placeholder}
             value={controller.value}
             onFocus={select.onFocusInput}
@@ -89,7 +89,7 @@ export function RlsFieldSelectTemplate<
             className={renderClassStatus('rls-field-list__action', {
               visible: controller.modalIsVisible
             })}
-            disabled={disabled}
+            disabled={_disabled}
             onClick={select.onClickAction}
           >
             <RlsIcon value="arrow-ios-down" />

@@ -90,9 +90,13 @@ export function RlsFieldDateRange({
     onValue && onValue(value as DateRange);
   }
 
+  const _disabled = formControl?.disabled || disabled;
+
   return (
     <div id={identifier} className="rls-field-date-range" rls-theme={rlsTheme}>
-      <div className={renderClassStatus('rls-field-box', { disabled })}>
+      <div
+        className={renderClassStatus('rls-field-box', { disabled: _disabled })}
+      >
         {children && <label className="rls-field-box__label">{children}</label>}
 
         <div className="rls-field-box__component">
@@ -104,13 +108,13 @@ export function RlsFieldDateRange({
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
-              disabled={disabled}
+              disabled={_disabled}
             />
 
             <button
               className="rls-field-date-range__action"
               onClick={onClickAction}
-              disabled={disabled}
+              disabled={_disabled}
             >
               <RlsIcon value={value ? 'trash-2' : 'calendar'} />
             </button>
@@ -129,7 +133,7 @@ export function RlsFieldDateRange({
         <RlsPickerDateRange
           formControl={formControl}
           date={currentDate}
-          disabled={disabled}
+          disabled={_disabled}
           maxDate={maxDate}
           minDate={minDate}
           onListener={({ event, value }) => {

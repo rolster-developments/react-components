@@ -15,15 +15,17 @@ export function RlsFieldNumber({
   rlsTheme,
   value
 }: FieldBoxProps<number>) {
+  const _disabled = formControl?.disabled || disabled;
+
   return (
     <div
       id={identifier}
       className={renderClassStatus(
         'rls-field-box',
         {
-          focused: formControl?.focused,
+          focused: formControl?.focused && !_disabled,
           error: formControl?.wrong,
-          disabled: formControl?.disabled || disabled
+          disabled: _disabled
         },
         'rls-field-number'
       )}

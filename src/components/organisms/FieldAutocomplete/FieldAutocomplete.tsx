@@ -55,14 +55,14 @@ export function RlsFieldAutocompleteTemplate<
     searching
   } = props;
 
-  const disabled = formControl?.disabled || props.disabled;
+  const _disabled = formControl?.disabled || props.disabled;
 
   const className = renderClassStatus(
     'rls-field-box',
     {
-      focused: controller.focused,
-      disabled,
+      focused: controller.focused && !_disabled,
       error: formControl?.wrong,
+      disabled: _disabled,
       selected: !!controller.value
     },
     'rls-field-list rls-field-autocomplete'
@@ -82,7 +82,7 @@ export function RlsFieldAutocompleteTemplate<
           <input
             className="rls-field-list__control"
             readOnly={true}
-            disabled={disabled}
+            disabled={_disabled}
             placeholder={placeholder}
             value={controller.value}
             onClick={autocomplete.onClickControl}
@@ -90,7 +90,7 @@ export function RlsFieldAutocompleteTemplate<
 
           <button
             className="rls-field-list__action"
-            disabled={disabled}
+            disabled={_disabled}
             onClick={autocomplete.onClickAction}
           >
             <RlsIcon value={controller.value ? 'trash-2' : 'arrow-ios-down'} />
@@ -124,7 +124,7 @@ export function RlsFieldAutocompleteTemplate<
                 onChange={(event) => {
                   autocomplete.setPattern(event.target.value);
                 }}
-                disabled={disabled || searching}
+                disabled={_disabled || searching}
                 onFocus={autocomplete.onFocusInput}
                 onBlur={autocomplete.onBlurInput}
                 onKeyDown={autocomplete.onKeydownInput}
@@ -132,7 +132,7 @@ export function RlsFieldAutocompleteTemplate<
 
               {onSearch && (
                 <button
-                  disabled={disabled || searching}
+                  disabled={_disabled || searching}
                   onClick={() => {
                     onSearch(autocomplete.pattern);
                   }}
