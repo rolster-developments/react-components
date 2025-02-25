@@ -27,6 +27,7 @@ interface FieldSelectProps<T = any, E extends Element<T> = Element<T>> {
     | ReactControl<HTMLElement, NonNullable<T>>;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
+  unremovable?: boolean;
   value?: T;
 }
 
@@ -66,10 +67,17 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
   }
 
   function onClickAction(): void {
-    const modalIsVisible = !controller.modalIsVisible;
+    const removable = !props.unremovable && !!controller.value;
 
-    controller.setState({ modalIsVisible });
-    modalIsVisible && controller.inputRef?.current?.focus();
+    if (removable) {
+      controller.setState({ modalIsVisible: false, value: '' });
+      controller.setFormValue(props.value);
+      props.onValue && props.onValue(props.value as T);
+    } else {
+      const modalIsVisible = !controller.modalIsVisible;
+      controller.setState({ modalIsVisible });
+      modalIsVisible && controller.inputRef?.current?.focus();
+    }
   }
 
   function onClickBackdrop(): void {

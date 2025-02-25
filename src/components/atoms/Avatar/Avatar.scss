@@ -1,9 +1,9 @@
 // Rolster Technology Avatar Component
-// v1.0.4
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 15/Ago/2022
-// Updated: 14/Jul/2024
+// Updated: 25/Feb/2025
 
 .rls-avatar {
   position: relative;
@@ -30,9 +30,7 @@
   }
 
   span {
+    align-self: center;
     font-size: inherit;
-    margin: auto;
-    height: inherit;
-    line-height: inherit;
   }
 }

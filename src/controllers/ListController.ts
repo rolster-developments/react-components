@@ -6,7 +6,14 @@ import {
   navigationListFromInput
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
+import {
+  KeyboardEvent,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 
 interface ListControllerState {
   focused: boolean;
@@ -89,7 +96,7 @@ export function useListController<T = any>(
   }, [suggestions]);
 
   useEffect(() => {
-    refresh(collection.current, formControl?.value, automatic);
+    refresh(collection.current, formControl?.value);
   }, [formControl?.value]);
 
   function refresh(
@@ -123,7 +130,7 @@ export function useListController<T = any>(
     automatic?: boolean
   ): boolean {
     if (automatic && collection.value[0]) {
-      setFormValue(collection.value[0].value);
+      formControl?.setInitialValue(collection.value[0].value as any);
       return true;
     }
 
@@ -144,9 +151,12 @@ export function useListController<T = any>(
     setState((currentState) => ({ ...currentState, ...state }));
   }
 
-  function setFormValue(value: any): void {
-    formControl?.setValue(value);
-  }
+  const setFormValue = useCallback(
+    (value: any) => {
+      formControl?.setValue(value);
+    },
+    [formControl]
+  );
 
   function navigationInput(event: KeyboardEvent): void {
     if (state.modalIsVisible) {

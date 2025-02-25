@@ -34,6 +34,10 @@
     row-gap: var(--rlc-ballot-component-row-gap);
   }
 
+  .rls-avatar + .rls-ballot__component {
+    width: calc(100% - var(--rlc-avatar-width) - var(--rls-sizing-x4));
+  }
+
   &__title {
     --rlc-skeleton-text-height: var(--rlc-ballot-title-height);
     --rlc-skeleton-text-letter-spacing: var(--rlc-ballot-title-letter-spacing);
@@ -54,7 +58,9 @@
 
   &__subtitle {
     --rlc-skeleton-text-height: var(--rlc-ballot-subtitle-height);
-    --rlc-skeleton-text-letter-spacing: var(--rlc-ballot-subtitle-letter-spacing);
+    --rlc-skeleton-text-letter-spacing: var(
+      --rlc-ballot-subtitle-letter-spacing
+    );
     --rlc-skeleton-text-font-size: var(--rlc-ballot-subtitle-font-size);
 
     position: relative;

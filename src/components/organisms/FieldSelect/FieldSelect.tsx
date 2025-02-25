@@ -24,6 +24,7 @@ interface FieldSelectProps<T = any, E extends Element<T> = Element<T>>
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
   placeholder?: string;
+  unremovable?: boolean;
   value?: T;
 }
 
@@ -47,7 +48,8 @@ export function RlsFieldSelectTemplate<
     formControl,
     msgErrorDisabled,
     placeholder,
-    rlsTheme
+    rlsTheme,
+    unremovable
   } = props;
 
   const _disabled = formControl?.disabled || props.disabled;
@@ -92,7 +94,13 @@ export function RlsFieldSelectTemplate<
             disabled={_disabled}
             onClick={select.onClickAction}
           >
-            <RlsIcon value="arrow-ios-down" />
+            <RlsIcon
+              value={
+                !unremovable && !!controller.value
+                  ? 'trash-2'
+                  : 'arrow-ios-down'
+              }
+            />
           </button>
         </div>
       </div>

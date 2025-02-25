@@ -11,6 +11,8 @@ interface DatatableCellProps extends RlsComponent {
 interface DatatableRecordProps extends RlsComponent {
   className?: string;
   error?: boolean;
+  info?: boolean;
+  successs?: boolean;
   warning?: boolean;
 }
 
@@ -54,6 +56,8 @@ export function RlsDatatableRecord({
   className,
   error,
   identifier,
+  info,
+  successs,
   warning
 }: DatatableRecordProps) {
   return (
@@ -61,7 +65,7 @@ export function RlsDatatableRecord({
       id={identifier}
       className={renderClassStatus(
         'rls-datatable__record',
-        { error, warning },
+        { error, info, successs, warning },
         className
       ).trim()}
     >
@@ -75,6 +79,8 @@ export function RlsDatatableTotals({
   className,
   error,
   identifier,
+  info,
+  successs,
   warning
 }: DatatableRecordProps) {
   return (
@@ -82,7 +88,7 @@ export function RlsDatatableTotals({
       id={identifier}
       className={renderClassStatus(
         'rls-datatable__totals',
-        { error, warning },
+        { error, info, successs, warning },
         className
       ).trim()}
     >
