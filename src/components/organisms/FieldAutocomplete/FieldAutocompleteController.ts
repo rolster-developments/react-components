@@ -12,7 +12,8 @@ import {
   useRef,
   useState
 } from 'react';
-import { ListController, useListController } from '../../../controllers';
+import { useListController } from '../../../controllers';
+import { ListControllerState } from '../../../definitions';
 
 const DURATION_ANIMATION = 240;
 const MAX_ELEMENTS = 6;
@@ -20,9 +21,8 @@ const MAX_ELEMENTS = 6;
 export interface FieldAutocompleteControl<
   T = any,
   E extends Element<T> = Element<T>
-> {
+> extends ListControllerState {
   coincidences: E[];
-  controller: ListController<T>;
   onBlurInput: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
@@ -35,7 +35,11 @@ export interface FieldAutocompleteControl<
   setPattern: (value: string) => void;
 }
 
-interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>> {
+interface FieldAutocompleteProps<
+  T = any,
+  E extends Element<T> = Element<T>,
+  K = string
+> {
   suggestions: E[];
   automatic?: boolean;
   disabled?: boolean;
@@ -44,14 +48,16 @@ interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>> {
     | ReactControl<HTMLElement, NonNullable<T>>;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
+  reference?: (value: T) => K;
   value?: T;
 }
 
 export function useFieldAutocomplete<
   T = any,
-  E extends Element<T> = Element<T>
->(props: FieldAutocompleteProps<T, E>): FieldAutocompleteControl<T, E> {
-  const controller = useListController<T>(props);
+  E extends Element<T> = Element<T>,
+  K = string
+>(props: FieldAutocompleteProps<T, E, K>): FieldAutocompleteControl<T, E> {
+  const controller = useListController<T, K>(props);
 
   const [coincidences, setCoincidences] = useState<E[]>([]);
   const [pattern, setPattern] = useState('');
@@ -101,8 +107,8 @@ export function useFieldAutocomplete<
 
   function onClickAction(): void {
     if (controller.value) {
-      controller.setState({ modalIsVisible: false, value: '' });
-      controller.setFormValue(props.value);
+      controller.setState({ modalIsVisible: false });
+      controller.setFormValue(undefined);
       props.onValue && props.onValue(props.value as T);
     } else {
       onClickControl();
@@ -127,18 +133,18 @@ export function useFieldAutocomplete<
     };
   }
 
-  function onChange({ description, value }: Element<T>): void {
+  function onChange(element: Element<T>): void {
     const { onSelect, onValue } = props;
 
     if (onSelect) {
       controller.setState({ modalIsVisible: false });
-      value && onSelect(value);
+      element.value && onSelect(element.value);
     } else {
-      controller.setState({ modalIsVisible: false, value: description });
-      controller.setFormValue(value);
+      controller.setState({ modalIsVisible: false });
+      controller.setFormValue(element);
     }
 
-    onValue && onValue(value);
+    onValue && onValue(element.value);
   }
 
   function refreshCoincidences(pattern: string | null, reboot = false): void {
@@ -154,8 +160,8 @@ export function useFieldAutocomplete<
   }
 
   return {
+    ...controller,
     coincidences,
-    controller,
     onBlurInput,
     onClickAction,
     onClickBackdrop,

@@ -28,23 +28,24 @@ export interface ListController<T = any> extends ListControllerState {
   listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
-  setFormValue(element?: AbstractListElement<T>, initialValue?: boolean): void;
+  setFormValue(element?: AbstractListElement<T>): void;
   setState: (state: Partial<ListControllerState>) => void;
 }
 
-interface ListControllerProps<T = any> {
+interface ListControllerProps<T = any, K = string> {
   suggestions: AbstractListElement<T>[];
   automatic?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  reference?: (value: T) => K;
   value?: T;
 }
 
-export function useListController<T = any>(
-  props: ListControllerProps<T>
+export function useListController<T = any, K = string>(
+  props: ListControllerProps<T, K>
 ): ListController<T> {
-  const { suggestions, automatic, formControl } = props;
+  const { suggestions, automatic, formControl, reference } = props;
 
   const listIsOpen = useRef(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -58,7 +59,7 @@ export function useListController<T = any>(
     modalIsVisible: false
   });
 
-  const collection = useRef(new ListCollection<T>([]));
+  const collection = useRef(new ListCollection<T, K>([]));
   const position = useRef(0);
   const valueProtected = useRef<T>();
   const changeValueInternal = useRef(false);
@@ -92,7 +93,7 @@ export function useListController<T = any>(
   }, [state.modalIsVisible]);
 
   useEffect(() => {
-    collection.current = new ListCollection(suggestions);
+    collection.current = new ListCollection(suggestions, reference);
 
     if (formControl?.value) {
       const element = collection.current.find(formControl.value);
@@ -115,7 +116,21 @@ export function useListController<T = any>(
 
   useEffect(() => {
     if (!changeValueInternal.current) {
-      //
+      if (formControl?.value) {
+        const element = collection.current.find(formControl.value);
+
+        if (!element) {
+          valueProtected.current = formControl.value;
+
+          automatic
+            ? setFormValue(collection.current.value[0], true)
+            : setFormValue(undefined);
+        } else {
+          setFormValue(element);
+        }
+      } else {
+        automatic && setFormValue(collection.current.value[0], true);
+      }
     }
 
     changeValueInternal.current = false;

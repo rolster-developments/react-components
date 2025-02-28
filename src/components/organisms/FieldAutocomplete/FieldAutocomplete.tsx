@@ -12,8 +12,11 @@ import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldAutocomplete } from './FieldAutocompleteController';
 import './FieldAutocomplete.css';
 
-interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
-  extends RlsComponent {
+interface FieldAutocompleteProps<
+  T = any,
+  E extends Element<T> = Element<T>,
+  K = string
+> extends RlsComponent {
   suggestions: E[];
   automatic?: boolean;
   disabled?: boolean;
@@ -25,24 +28,25 @@ interface FieldAutocompleteProps<T = any, E extends Element<T> = Element<T>>
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
   placeholder?: string;
+  reference?: (value: T) => K;
   searching?: boolean;
   value?: T;
 }
 
 interface FieldAutocompleteTemplateProps<
   T = any,
-  E extends Element<T> = Element<T>
-> extends FieldAutocompleteProps<T, E> {
+  E extends Element<T> = Element<T>,
+  K = string
+> extends FieldAutocompleteProps<T, E, K> {
   render: (element: E) => ReactNode;
 }
 
 export function RlsFieldAutocompleteTemplate<
   T = any,
-  E extends Element<T> = Element<T>
->(props: FieldAutocompleteTemplateProps<T, E>) {
+  E extends Element<T> = Element<T>,
+  K = string
+>(props: FieldAutocompleteTemplateProps<T, E, K>) {
   const autocomplete = useFieldAutocomplete(props);
-
-  const { controller } = autocomplete;
 
   const {
     render,
@@ -60,10 +64,10 @@ export function RlsFieldAutocompleteTemplate<
   const className = renderClassStatus(
     'rls-field-box',
     {
-      focused: controller.focused && !_disabled,
+      focused: autocomplete.focused && !_disabled,
       error: formControl?.wrong,
       disabled: _disabled,
-      selected: !!controller.value
+      selected: !!autocomplete.value
     },
     'rls-field-list rls-field-autocomplete'
   );
@@ -71,7 +75,7 @@ export function RlsFieldAutocompleteTemplate<
   return (
     <div
       id={props.identifier}
-      ref={controller.contentRef}
+      ref={autocomplete.contentRef}
       className={className}
       rls-theme={rlsTheme}
     >
@@ -84,7 +88,7 @@ export function RlsFieldAutocompleteTemplate<
             readOnly={true}
             disabled={_disabled}
             placeholder={placeholder}
-            value={controller.value}
+            value={autocomplete.value}
             onClick={autocomplete.onClickControl}
           />
 
@@ -93,7 +97,9 @@ export function RlsFieldAutocompleteTemplate<
             disabled={_disabled}
             onClick={autocomplete.onClickAction}
           >
-            <RlsIcon value={controller.value ? 'trash-2' : 'arrow-ios-down'} />
+            <RlsIcon
+              value={autocomplete.value ? 'trash-2' : 'arrow-ios-down'}
+            />
           </button>
         </div>
       </div>
@@ -107,16 +113,16 @@ export function RlsFieldAutocompleteTemplate<
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: controller.modalIsVisible,
-          higher: controller.higher,
-          hide: !controller.modalIsVisible
+          visible: autocomplete.modalIsVisible,
+          higher: autocomplete.higher,
+          hide: !autocomplete.modalIsVisible
         })}
       >
         <div className="rls-field-list__suggestions__body">
-          <ul ref={controller.listRef} className="rls-field-list__ul">
+          <ul ref={autocomplete.listRef} className="rls-field-list__ul">
             <div className="rls-field-list__ul__search">
               <input
-                ref={controller.inputRef}
+                ref={autocomplete.inputRef}
                 className="rls-field-list__ul__control"
                 type="text"
                 placeholder={reactI18n('listInputPlaceholder')}

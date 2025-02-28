@@ -12,8 +12,11 @@ import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldSelect } from './FieldSelectController';
 import './FieldSelect.css';
 
-interface FieldSelectProps<T = any, E extends Element<T> = Element<T>>
-  extends RlsComponent {
+interface FieldSelectProps<
+  T = any,
+  E extends Element<T> = Element<T>,
+  K = string
+> extends RlsComponent {
   suggestions: E[];
   automatic?: boolean;
   disabled?: boolean;
@@ -24,19 +27,24 @@ interface FieldSelectProps<T = any, E extends Element<T> = Element<T>>
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
   placeholder?: string;
+  reference?: (value: T) => K;
   unremovable?: boolean;
   value?: T;
 }
 
-interface FieldSelectTemplateProps<T = any, E extends Element<T> = Element<T>>
-  extends FieldSelectProps<T, E> {
+interface FieldSelectTemplateProps<
+  T = any,
+  E extends Element<T> = Element<T>,
+  K = string
+> extends FieldSelectProps<T, E, K> {
   render: (element: E) => ReactNode;
 }
 
 export function RlsFieldSelectTemplate<
   T = any,
-  E extends ListElement<T> = ListElement<T>
->(props: FieldSelectTemplateProps<T, E>) {
+  E extends ListElement<T> = ListElement<T>,
+  K = string
+>(props: FieldSelectTemplateProps<T, E, K>) {
   const select = useFieldSelect(props);
 
   const {

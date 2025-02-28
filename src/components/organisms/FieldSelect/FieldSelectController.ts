@@ -16,7 +16,11 @@ export interface FieldSelectControl<T = any, E extends Element<T> = Element<T>>
   onKeydownInput: (event: KeyboardEvent) => void;
 }
 
-interface FieldSelectProps<T = any, E extends Element<T> = Element<T>> {
+interface FieldSelectProps<
+  T = any,
+  E extends Element<T> = Element<T>,
+  K = string
+> {
   suggestions: E[];
   automatic?: boolean;
   disabled?: boolean;
@@ -25,14 +29,17 @@ interface FieldSelectProps<T = any, E extends Element<T> = Element<T>> {
     | ReactControl<HTMLElement, NonNullable<T>>;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
+  reference?: (value: T) => K;
   unremovable?: boolean;
   value?: T;
 }
 
-export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
-  props: FieldSelectProps<T, E>
-): FieldSelectControl<T, E> {
-  const controller = useListController<T>(props);
+export function useFieldSelect<
+  T = any,
+  E extends Element<T> = Element<T>,
+  K = string
+>(props: FieldSelectProps<T, E, K>): FieldSelectControl<T, E> {
+  const controller = useListController<T, K>(props);
 
   function onFocusInput(): void {
     controller.setState({ focused: true });
