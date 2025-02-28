@@ -5,7 +5,7 @@ import {
   PaginationController
 } from '@rolster/components';
 import { useEffect, useRef, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsIcon } from '../../atoms';
 import './Pagination.css';
 
@@ -113,7 +113,7 @@ export function RlsPagination<T>({
           return (
             <div
               key={index}
-              className={renderClassStatus('rls-pagination__page', {
+              className={useRenderClassStatus('rls-pagination__page', {
                 active: page.active
               })}
               onClick={() => {

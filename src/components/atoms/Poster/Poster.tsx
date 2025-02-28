@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './Poster.css';
 
@@ -15,7 +15,7 @@ export function RlsPoster({
 }: PosterProps) {
   return (
     <div
-      className={renderClassStatus('rls-poster', { contrast, outline })}
+      className={useRenderClassStatus('rls-poster', { contrast, outline })}
       rls-theme={rlsTheme}
     >
       {children}

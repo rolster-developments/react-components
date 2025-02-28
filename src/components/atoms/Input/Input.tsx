@@ -1,6 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { HTMLInputTypeAttribute, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { HTMLInputTypeAttribute, useCallback, useState } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './Input.css';
 
@@ -25,29 +25,31 @@ export function RlsInput({
 }: InputProps) {
   const [focused, setFocused] = useState(false);
 
-  function setValue(value: string | number): void {
-    formControl?.setValue(value);
-    onValue && onValue(value);
-  }
+  const onChange = useCallback(
+    (event: any) => {
+      const value =
+        type === 'number' ? +event.target.value : event.target.value;
 
-  function onChange(event: any): void {
-    setValue(type === 'number' ? +event.target.value : event.target.value);
-  }
+      onValue && onValue(value);
+      formControl?.setValue(value);
+    },
+    [formControl, onValue]
+  );
 
-  function onFocus(): void {
+  const onFocus = useCallback(() => {
     formControl?.focus();
-    setFocused(true);
-  }
+    setFocused(() => true);
+  }, [formControl]);
 
-  function onBlur(): void {
+  const onBlur = useCallback(() => {
     formControl?.blur();
-    setFocused(false);
-  }
+    setFocused(() => false);
+  }, [formControl]);
 
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-input', {
+      className={useRenderClassStatus('rls-input', {
         focused: formControl?.focused ?? focused,
         disabled: formControl?.disabled || disabled
       })}

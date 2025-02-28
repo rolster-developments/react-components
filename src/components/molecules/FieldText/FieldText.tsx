@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsInputText } from '../../atoms';
 import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
@@ -20,7 +20,7 @@ export function RlsFieldText({
   return (
     <div
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         'rls-field-box',
         {
           focused: formControl?.focused && !_disabled,

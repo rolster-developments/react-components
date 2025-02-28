@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 import './InputText.css';
@@ -13,10 +13,13 @@ export function RlsInputText({
 }: InputProps<string>) {
   const [valueInput, setValueInput] = useState(value ?? '');
 
-  function onValueInput(value: string): void {
-    !formControl && setValueInput(value);
-    onValue && onValue(value);
-  }
+  const onValueInput = useCallback(
+    (value: string) => {
+      !formControl && setValueInput(value);
+      onValue && onValue(value);
+    },
+    [formControl, onValue]
+  );
 
   return (
     <div id={identifier} className="rls-input-text">

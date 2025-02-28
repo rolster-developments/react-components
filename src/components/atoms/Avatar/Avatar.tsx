@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './Avatar.css';
 
@@ -15,7 +15,7 @@ export function RlsAvatar({
 }: AvatarProps) {
   return (
     <div
-      className={renderClassStatus('rls-avatar', { rounded, skeleton })}
+      className={useRenderClassStatus('rls-avatar', { rounded, skeleton })}
       rls-theme={rlsTheme}
     >
       {children}

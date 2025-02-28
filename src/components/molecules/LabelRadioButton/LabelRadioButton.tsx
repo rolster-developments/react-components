@@ -1,6 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useCallback, useEffect, useState } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsRadioButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './LabelRadioButton.css';
@@ -27,14 +27,14 @@ export function RlsLabelRadioButton<T = any>({
     setChecked(formControl?.value === value);
   }, [formControl?.value]);
 
-  function onSelect(): void {
+  const onSelect = useCallback(() => {
     formControl && formControl?.setValue(value);
-  }
+  }, [formControl, value]);
 
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-label-radiobutton', {
+      className={useRenderClassStatus('rls-label-radiobutton', {
         disabled,
         extended
       })}

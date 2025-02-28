@@ -7,7 +7,8 @@ import {
 } from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
+import { useRenderClassStatus } from '../../../controllers';
+import { rangeFormatTemplate } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -120,7 +121,7 @@ export function RlsPickerDateRange({
       </div>
 
       <div
-        className={renderClassStatus('rls-picker-date-range__component', {
+        className={useRenderClassStatus('rls-picker-date-range__component', {
           day: visibility === 'DAY',
           month: visibility === 'MONTH',
           year: visibility === 'YEAR'
@@ -153,7 +154,7 @@ export function RlsPickerDateRange({
       </div>
 
       <div
-        className={renderClassStatus('rls-picker-date-range__footer', {
+        className={useRenderClassStatus('rls-picker-date-range__footer', {
           automatic
         })}
       >

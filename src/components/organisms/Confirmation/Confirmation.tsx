@@ -1,11 +1,11 @@
 import { PartialSealed } from '@rolster/commons';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';
+import { useRenderClassStatus } from '../../../controllers';
 
 export class ConfirmationResult extends PartialSealed<
   void,
@@ -73,7 +73,7 @@ export function RlsConfirmation({
 }: ConfirmationProps) {
   return (
     <div
-      className={renderClassStatus('rls-confirmation', { visible })}
+      className={useRenderClassStatus('rls-confirmation', { visible })}
       rls-theme={rlsTheme}
     >
       <div className="rls-confirmation__component">

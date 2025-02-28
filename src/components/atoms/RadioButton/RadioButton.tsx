@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './RadioButton.css';
 
@@ -18,7 +18,7 @@ export function RlsRadioButton({
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-radiobutton', { checked, disabled })}
+      className={useRenderClassStatus('rls-radiobutton', { checked, disabled })}
       onClick={onClick}
       rls-theme={rlsTheme}
     >

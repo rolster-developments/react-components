@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './CheckBox.css';
 
@@ -24,7 +24,7 @@ export function RlsCheckBox({
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-checkbox', { checked, disabled })}
+      className={useRenderClassStatus('rls-checkbox', { checked, disabled })}
       onClick={onClick}
       rls-theme={rlsTheme}
     >

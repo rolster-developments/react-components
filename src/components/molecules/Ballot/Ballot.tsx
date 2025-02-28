@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsAvatar, RlsSkeletonText } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './Ballot.css';
@@ -22,7 +22,7 @@ export function RlsBallot({
 }: BallotProps) {
   return (
     <div
-      className={renderClassStatus('rls-ballot', { bordered, skeleton })}
+      className={useRenderClassStatus('rls-ballot', { bordered, skeleton })}
       rls-theme={rlsTheme}
     >
       {(img || initials) && (

@@ -1,9 +1,9 @@
-type Status = Record<string, string | boolean | undefined | null>;
+export type ClassStatus = Record<string, string | boolean | undefined | null>;
 
 export function renderClassStatus(
   base: string,
-  status: Status = {},
-  aditionals?: string
+  status: ClassStatus = {},
+  additionals?: string
 ): string {
   const resultClass = [base];
 
@@ -15,8 +15,8 @@ export function renderClassStatus(
     }
   });
 
-  if (aditionals) {
-    resultClass.push(aditionals);
+  if (additionals) {
+    resultClass.push(additionals);
   }
 
   return resultClass.join(' ');

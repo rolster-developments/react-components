@@ -1,6 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useCallback, useEffect, useState } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsCheckBox } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './LabelCheckBox.css';
@@ -25,18 +25,16 @@ export function RlsLabelCheckBox({
     setChecked(!!formControl?.value);
   }, [formControl?.value]);
 
-  function onToggle(): void {
-    if (formControl) {
-      formControl?.setValue(!formControl.value);
-    } else {
-      setChecked(!checked);
-    }
-  }
+  const onToggle = useCallback(() => {
+    formControl
+      ? formControl?.setValue(!formControl.value)
+      : setChecked((checked) => !checked);
+  }, [formControl]);
 
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-label-checkbox', {
+      className={useRenderClassStatus('rls-label-checkbox', {
         disabled,
         extended
       })}

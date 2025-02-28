@@ -52,6 +52,10 @@ export function useListController<T = any, K = string>(
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [collection, setCollection] = useState(
+    new ListCollection<T, K>(suggestions)
+  );
+
   const [state, refreshState] = useState<ListControllerState>({
     focused: false,
     higher: false,
@@ -59,7 +63,6 @@ export function useListController<T = any, K = string>(
     modalIsVisible: false
   });
 
-  const collection = useRef(new ListCollection<T, K>([]));
   const position = useRef(0);
   const valueProtected = useRef<T>();
   const changeValueInternal = useRef(false);
@@ -93,48 +96,34 @@ export function useListController<T = any, K = string>(
   }, [state.modalIsVisible]);
 
   useEffect(() => {
-    collection.current = new ListCollection(suggestions, reference);
-
-    if (formControl?.value) {
-      const element = collection.current.find(formControl.value);
-
-      if (!element) {
-        valueProtected.current = formControl.value;
-
-        automatic
-          ? setFormValue(collection.current.value[0], true)
-          : setFormValue(undefined);
-      }
-    } else if (valueProtected.current) {
-      const element = collection.current.find(valueProtected.current);
-
-      element && setFormValue(element);
-    } else {
-      automatic && setFormValue(collection.current.value[0], true);
-    }
+    setCollection(new ListCollection(suggestions, reference));
   }, [suggestions]);
 
   useEffect(() => {
     if (!changeValueInternal.current) {
       if (formControl?.value) {
-        const element = collection.current.find(formControl.value);
+        const element = collection.find(formControl.value);
 
         if (!element) {
           valueProtected.current = formControl.value;
 
           automatic
-            ? setFormValue(collection.current.value[0], true)
+            ? setFormValue(collection.value[0], true)
             : setFormValue(undefined);
         } else {
-          setFormValue(element);
+          refreshState((state) => ({ ...state, value: element.description }));
         }
+      } else if (valueProtected.current) {
+        const element = collection.find(valueProtected.current);
+
+        element && setFormValue(element);
       } else {
-        automatic && setFormValue(collection.current.value[0], true);
+        automatic && setFormValue(collection.value[0], true);
       }
     }
 
     changeValueInternal.current = false;
-  }, [formControl?.value]);
+  }, [collection, formControl?.value]);
 
   const setState = useCallback((state: Partial<ListControllerState>) => {
     refreshState((_state) => ({ ..._state, ...state }));
@@ -144,7 +133,7 @@ export function useListController<T = any, K = string>(
     (element?: AbstractListElement<any>, initialValue = false) => {
       refreshState((_state) => ({
         ..._state,
-        value: element?.description ?? ''
+        value: element?.description || ''
       }));
 
       changeValueInternal.current = true;

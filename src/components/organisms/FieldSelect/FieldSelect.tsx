@@ -5,7 +5,7 @@ import {
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
 import { reactI18n } from '../../../i18n';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot, RlsMessageFormError } from '../../molecules';
@@ -60,7 +60,7 @@ export function RlsFieldSelectTemplate<
 
   const _disabled = formControl?.disabled || props.disabled;
 
-  const className = renderClassStatus(
+  const className = useRenderClassStatus(
     'rls-field-box',
     {
       focused: select.focused && !_disabled,
@@ -94,7 +94,7 @@ export function RlsFieldSelectTemplate<
             onKeyDown={select.onKeydownInput}
           />
           <button
-            className={renderClassStatus('rls-field-list__action')}
+            className={'rls-field-list__action'}
             disabled={_disabled}
             onClick={select.onClickAction}
           >
@@ -115,7 +115,7 @@ export function RlsFieldSelectTemplate<
       )}
 
       <div
-        className={renderClassStatus('rls-field-list__suggestions', {
+        className={useRenderClassStatus('rls-field-list__suggestions', {
           visible: select.modalIsVisible,
           higher: select.higher,
           hide: !select.modalIsVisible

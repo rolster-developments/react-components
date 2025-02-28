@@ -2,7 +2,8 @@ import { PickerListenerEvent } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useState } from 'react';
-import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
+import { useRenderClassStatus } from '../../../controllers';
+import { rangeFormatTemplate } from '../../../helpers';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules';
@@ -95,7 +96,9 @@ export function RlsFieldDateRange({
   return (
     <div id={identifier} className="rls-field-date-range" rls-theme={rlsTheme}>
       <div
-        className={renderClassStatus('rls-field-box', { disabled: _disabled })}
+        className={useRenderClassStatus('rls-field-box', {
+          disabled: _disabled
+        })}
       >
         {children && <label className="rls-field-box__label">{children}</label>}
 

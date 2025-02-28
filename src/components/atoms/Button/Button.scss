@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v2.0.1
+// v2.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 17/Dic/2024
+// Updated: 28/Feb/2025
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -28,6 +28,9 @@
   --pvt-ghost-background: none;
   --pvt-ghost-font-color: var(--rls-theme-color-500);
   --pvt-ghost-border: none;
+  --pvt-gradient-background: var(--rls-theme-gradient-500);
+  --pvt-gradient-font-color: var(--rls-theme-font-500);
+  --pvt-gradient-border: none;
 
   position: relative;
   padding: 0rem;
@@ -60,6 +63,9 @@
     --pvt-ghost-background: var(--rls-theme-color-200);
     --pvt-ghost-font-color: var(--rls-theme-font-100);
     --pvt-ghost-border: none;
+    --pvt-gradient-background: var(--rls-theme-color-700);
+    --pvt-gradient-font-color: var(--rls-theme-font-900);
+    --pvt-gradient-border: none;
   }
 
   &:disabled {
@@ -78,6 +84,9 @@
     --pvt-ghost-background: transparent;
     --pvt-ghost-font-color: var(--rls-theme-color-300);
     --pvt-ghost-border: none;
+    --pvt-gradient-background: var(--rls-theme-color-200);
+    --pvt-gradient-font-color: var(--rls-theme-color-400);
+    --pvt-gradient-border: none;
 
     pointer-events: none;
   }
@@ -145,6 +154,13 @@
       --pvt-button-content-font-color: var(--pvt-ghost-font-color);
       --pvt-button-content-background: var(--pvt-ghost-background);
       --pvt-button-content-border: var(--pvt-ghost-border);
+    }
+
+    &--gradient {
+      --pvt-button-content-background: var(--pvt-gradient-background);
+      --pvt-button-content-font-color: var(--pvt-gradient-font-color);
+      --pvt-button-content-border: var(--pvt-gradient-border);
+      --pvt-button-ripple-background: var(--rls-theme-font-900);
     }
   }
 

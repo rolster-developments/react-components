@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useCallback, useState } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsButtonAction, RlsInputPassword } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RolsterControl } from '../../types';
@@ -24,16 +24,16 @@ export function RlsFieldPassword({
 }: FieldPasswordProps) {
   const [password, setPassword] = useState(true);
 
-  function onToggleInput(): void {
-    setPassword(!password);
-  }
+  const onToggleInput = useCallback(() => {
+    setPassword((password) => !password);
+  }, []);
 
   const _disabled = formControl?.disabled || disabled;
 
   return (
     <div
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         ' rls-field-box',
         {
           focused: formControl?.focused && !_disabled,

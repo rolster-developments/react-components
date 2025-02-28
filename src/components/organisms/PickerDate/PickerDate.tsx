@@ -13,7 +13,7 @@ import {
 } from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { useRenderClassStatus } from '../../../controllers';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
@@ -144,7 +144,7 @@ export function RlsPickerDate({
       </div>
 
       <div
-        className={renderClassStatus('rls-picker-date__component', {
+        className={useRenderClassStatus('rls-picker-date__component', {
           day: visibility === 'DAY',
           month: visibility === 'MONTH',
           year: visibility === 'YEAR'

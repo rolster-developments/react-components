@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './Modal.css';
 
@@ -16,7 +16,7 @@ export function RlsModal({
 }: ModalProps) {
   return ReactDOM.createPortal(
     <div
-      className={renderClassStatus('rls-modal', { overflow, visible })}
+      className={useRenderClassStatus('rls-modal', { overflow, visible })}
       rls-theme={rlsTheme}
     >
       <div className="rls-modal__component">{children}</div>

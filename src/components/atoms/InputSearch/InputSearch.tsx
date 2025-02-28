@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { RolsterControl } from '../../types';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
@@ -19,16 +19,19 @@ export function RlsInputSearch({
 }: InputSearchProps) {
   const [value, setValue] = useState('');
 
-  function onValueInput(value: string): void {
-    !formControl && setValue(value);
-  }
+  const onValue = useCallback(
+    (value: string) => {
+      !formControl && setValue(() => value);
+    },
+    [formControl]
+  );
 
   return (
     <div id={identifier} className="rls-input-search">
       <RlsInput
         formControl={formControl}
         placeholder={placeholder}
-        onValue={onValueInput}
+        onValue={onValue}
       >
         {formControl?.value ?? value}
       </RlsInput>

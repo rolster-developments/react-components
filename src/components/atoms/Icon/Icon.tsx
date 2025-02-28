@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import './Icon.css';
 
 interface IconProps {
@@ -8,7 +8,7 @@ interface IconProps {
 
 export function RlsIcon({ value, skeleton }: IconProps) {
   return (
-    <div className={renderClassStatus('rls-icon', { skeleton })}>
+    <div className={useRenderClassStatus('rls-icon', { skeleton })}>
       <i className={`rls-icon-${value}`}></i>
     </div>
   );

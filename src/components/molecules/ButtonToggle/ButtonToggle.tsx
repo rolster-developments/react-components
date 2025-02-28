@@ -1,5 +1,5 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsButtonType, RlsButton } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './ButtonToggle.css';
@@ -44,16 +44,19 @@ export function RlsButtonToggle({
     };
   }, []);
 
-  function onClickMenu(): void {
-    setVisible((prevValue) => !prevValue);
-  }
+  const onClickMenu = useCallback(() => {
+    setVisible((visible) => !visible);
+  }, []);
 
-  function onSelectAction(action: ButtonToggleOption): void {
-    setAction(action);
-    setVisible(false);
+  const onSelectAction = useCallback(
+    (action: ButtonToggleOption) => {
+      setAction(() => action);
+      setVisible(() => false);
 
-    automatic && onAction(action.value);
-  }
+      automatic && onAction(action.value);
+    },
+    [onAction, automatic]
+  );
 
   return (
     <div className="rls-button-toggle" ref={componentRef} rls-theme={rlsTheme}>
@@ -83,7 +86,7 @@ export function RlsButtonToggle({
       </div>
 
       <div
-        className={renderClassStatus('rls-button-toggle__list', {
+        className={useRenderClassStatus('rls-button-toggle__list', {
           visible,
           hide: !visible
         })}

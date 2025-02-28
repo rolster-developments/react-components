@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsIcon } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './Snackbar.css';
@@ -52,7 +52,7 @@ export function RlsSnackbar({
 }: SnackbarProps) {
   return (
     <div
-      className={renderClassStatus('rls-snackbar', { visible })}
+      className={useRenderClassStatus('rls-snackbar', { visible })}
       rls-theme={rlsTheme}
     >
       {icon && (

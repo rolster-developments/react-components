@@ -7,7 +7,7 @@ import {
 import { DAY_LABELS } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './PickerDay.css';
 

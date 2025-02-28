@@ -4,8 +4,8 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { reactI18n } from '../../../i18n';
-import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon, RlsProgressBar } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot, RlsMessageFormError } from '../../molecules';
@@ -61,7 +61,7 @@ export function RlsFieldAutocompleteTemplate<
 
   const _disabled = formControl?.disabled || props.disabled;
 
-  const className = renderClassStatus(
+  const className = useRenderClassStatus(
     'rls-field-box',
     {
       focused: autocomplete.focused && !_disabled,
@@ -112,7 +112,7 @@ export function RlsFieldAutocompleteTemplate<
       )}
 
       <div
-        className={renderClassStatus('rls-field-list__suggestions', {
+        className={useRenderClassStatus('rls-field-list__suggestions', {
           visible: autocomplete.modalIsVisible,
           higher: autocomplete.higher,
           hide: !autocomplete.modalIsVisible

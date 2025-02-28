@@ -1,6 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useCallback, useEffect, useState } from 'react';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsSwitch } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import './LabelSwitch.css';
@@ -25,18 +25,19 @@ export function RlsLabelSwitch({
     setChecked(!!formControl?.value);
   }, [formControl?.value]);
 
-  function onToggle(): void {
-    if (formControl) {
-      formControl?.setValue(!formControl.value);
-    } else {
-      setChecked(!checked);
-    }
-  }
+  const onToggle = useCallback(() => {
+    formControl
+      ? formControl?.setValue(!formControl.value)
+      : setChecked((checked) => !checked);
+  }, [formControl]);
 
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-label-switch', { disabled, extended })}
+      className={useRenderClassStatus('rls-label-switch', {
+        disabled,
+        extended
+      })}
       rls-theme={rlsTheme}
     >
       <div className="rls-label-switch__component" onClick={onToggle}>

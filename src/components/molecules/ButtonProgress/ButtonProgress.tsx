@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsButtonAction, RlsProgressCircular } from '../../atoms';
 import { RlsTheme } from '../../definitions';
 import './ButtonProgress.css';
@@ -21,7 +21,7 @@ export function RlsButtonProgress({
 }: ButtonProgressProps) {
   return (
     <div
-      className={renderClassStatus('rls-button-progress', { progressing })}
+      className={useRenderClassStatus('rls-button-progress', { progressing })}
       rls-theme={rlsTheme}
     >
       {!progressing && (

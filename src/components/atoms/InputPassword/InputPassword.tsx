@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RolsterControl } from '../../types';
@@ -24,20 +24,23 @@ export function RlsInputPassword({
 }: InputPasswordProps) {
   const [focused, setFocused] = useState(false);
 
-  function onChange(event: any): void {
-    formControl?.setValue(event.target.value);
-    onValue && onValue(event.target.value);
-  }
+  const onChange = useCallback(
+    (event: any) => {
+      formControl?.setValue(event.target.value);
+      onValue && onValue(event.target.value);
+    },
+    [formControl, onValue]
+  );
 
-  function onFocus() {
+  const onFocus = useCallback(() => {
     formControl?.focus();
-    setFocused(true);
-  }
+    setFocused(() => true);
+  }, [formControl]);
 
-  function onBlur() {
+  const onBlur = useCallback(() => {
     formControl?.blur();
-    setFocused(false);
-  }
+    setFocused(() => false);
+  }, [formControl]);
 
   return (
     <div

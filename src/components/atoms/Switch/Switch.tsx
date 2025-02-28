@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './Switch.css';
 
@@ -24,7 +24,7 @@ export function RlsSwitch({
   return (
     <div
       id={identifier}
-      className={renderClassStatus('rls-switch', { checked, disabled })}
+      className={useRenderClassStatus('rls-switch', { checked, disabled })}
       onClick={onClick}
       rls-theme={rlsTheme}
     >

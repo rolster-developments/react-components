@@ -1,4 +1,4 @@
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import './ProgressBar.css';
 
@@ -14,7 +14,7 @@ export function RlsProgressBar({
 }: ProgressBarProps) {
   return (
     <div
-      className={renderClassStatus('rls-progress-bar', { indeterminate })}
+      className={useRenderClassStatus('rls-progress-bar', { indeterminate })}
       rls-theme={rlsTheme}
     >
       <div

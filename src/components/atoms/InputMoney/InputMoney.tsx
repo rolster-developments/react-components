@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
@@ -21,10 +21,13 @@ export function RlsInputMoney({
 }: InputMoneyProps) {
   const [valueInput, setValueInput] = useState(value || 0);
 
-  function onValueInput(value: number): void {
-    !formControl && setValueInput(value);
-    onValue && onValue(value);
-  }
+  const onValueInput = useCallback(
+    (value: number) => {
+      !formControl && setValueInput(value);
+      onValue && onValue(value);
+    },
+    [formControl, onValue]
+  );
 
   return (
     <div id={identifier} className="rls-input-money">

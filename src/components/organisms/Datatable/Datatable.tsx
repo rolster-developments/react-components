@@ -1,5 +1,7 @@
-import { renderClassStatus } from '../../../helpers/css';
-import { DatatableController } from '../../../controllers';
+import {
+  DatatableController,
+  useRenderClassStatus
+} from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 
 interface DatatableCellProps extends RlsComponent {
@@ -40,7 +42,7 @@ export function RlsDatatableTitle({
   return (
     <th
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         'rls-datatable__title',
         { control },
         className
@@ -63,7 +65,7 @@ export function RlsDatatableRecord({
   return (
     <tr
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         'rls-datatable__record',
         { error, info, successs, warning },
         className
@@ -86,7 +88,7 @@ export function RlsDatatableTotals({
   return (
     <div
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         'rls-datatable__totals',
         { error, info, successs, warning },
         className
@@ -107,7 +109,7 @@ export function RlsDatatableCell({
   return (
     <th
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         'rls-datatable__cell',
         { control, overflow },
         className
@@ -128,7 +130,7 @@ export function RlsDatatableData({
   return (
     <div
       id={identifier}
-      className={renderClassStatus(
+      className={useRenderClassStatus(
         'rls-datatable__data',
         { control, overflow },
         className
@@ -150,7 +152,7 @@ export function RlsDatatable({
 }: DatatableProps) {
   return (
     <div
-      className={renderClassStatus('rls-datatable', {
+      className={useRenderClassStatus('rls-datatable', {
         scrolleable: datatable?.scrolleable
       })}
       rls-theme={rlsTheme}

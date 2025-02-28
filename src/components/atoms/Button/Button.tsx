@@ -1,10 +1,16 @@
 import { MouseEventHandler } from 'react';
-import { renderClassStatus } from '../../../helpers/css';
+import { useRenderClassStatus } from '../../../controllers';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import './Button.css';
 
-export type RlsButtonType = 'raised' | 'flat' | 'stroked' | 'outline' | 'ghost';
+export type RlsButtonType =
+  | 'raised'
+  | 'flat'
+  | 'stroked'
+  | 'outline'
+  | 'ghost'
+  | 'gradient';
 
 interface ButtonProps extends RlsComponent {
   type: RlsButtonType;
@@ -32,7 +38,7 @@ export function RlsButton({
       rls-theme={rlsTheme}
       disabled={disabled}
     >
-      <div className={renderClassStatus('rls-button__content', { type })}>
+      <div className={useRenderClassStatus('rls-button__content', { type })}>
         {prefixIcon && <RlsIcon value={prefixIcon} />}
         {children && <div className="rls-button__label">{children}</div>}
         {suffixIcon && <RlsIcon value={suffixIcon} />}
