@@ -39,8 +39,6 @@ export function RlsFieldSelectTemplate<
 >(props: FieldSelectTemplateProps<T, E>) {
   const select = useFieldSelect(props);
 
-  const { controller } = select;
-
   const {
     render,
     suggestions,
@@ -57,7 +55,7 @@ export function RlsFieldSelectTemplate<
   const className = renderClassStatus(
     'rls-field-box',
     {
-      focused: controller.focused && !_disabled,
+      focused: select.focused && !_disabled,
       error: formControl?.wrong,
       disabled: _disabled
     },
@@ -67,7 +65,7 @@ export function RlsFieldSelectTemplate<
   return (
     <div
       id={props.identifier}
-      ref={controller.contentRef}
+      ref={select.contentRef}
       className={className}
       rls-theme={rlsTheme}
     >
@@ -76,29 +74,25 @@ export function RlsFieldSelectTemplate<
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
           <input
-            ref={controller.inputRef}
+            ref={select.inputRef}
             className="rls-field-list__control"
             readOnly={true}
             disabled={_disabled}
             placeholder={placeholder}
-            value={controller.value}
+            value={select.value}
             onFocus={select.onFocusInput}
             onBlur={select.onBlurInput}
             onClick={select.onClickInput}
             onKeyDown={select.onKeydownInput}
           />
           <button
-            className={renderClassStatus('rls-field-list__action', {
-              visible: controller.modalIsVisible
-            })}
+            className={renderClassStatus('rls-field-list__action')}
             disabled={_disabled}
             onClick={select.onClickAction}
           >
             <RlsIcon
               value={
-                !unremovable && !!controller.value
-                  ? 'trash-2'
-                  : 'arrow-ios-down'
+                !unremovable && !!select.value ? 'close' : 'arrow-ios-down'
               }
             />
           </button>
@@ -114,13 +108,13 @@ export function RlsFieldSelectTemplate<
 
       <div
         className={renderClassStatus('rls-field-list__suggestions', {
-          visible: controller.modalIsVisible,
-          higher: controller.higher,
-          hide: !controller.modalIsVisible
+          visible: select.modalIsVisible,
+          higher: select.higher,
+          hide: !select.modalIsVisible
         })}
       >
         <div className="rls-field-list__suggestions__body">
-          <ul ref={controller.listRef} className="rls-field-list__ul">
+          <ul ref={select.listRef} className="rls-field-list__ul">
             {suggestions.map((element, index) => (
               <li
                 key={index}

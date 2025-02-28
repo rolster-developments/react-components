@@ -1,13 +1,11 @@
 import { AbstractListElement as Element } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, KeyboardEventHandler, MouseEventHandler } from 'react';
-import { ListController, useListController } from '../../../controllers';
+import { useListController } from '../../../controllers';
+import { ListControllerState } from '../../../definitions';
 
-export interface FieldSelectControl<
-  T = any,
-  E extends Element<T> = Element<T>
-> {
-  controller: ListController<T>;
+export interface FieldSelectControl<T = any, E extends Element<T> = Element<T>>
+  extends ListControllerState {
   onBlurInput: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
@@ -70,8 +68,8 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
     const removable = !props.unremovable && !!controller.value;
 
     if (removable) {
-      controller.setState({ modalIsVisible: false, value: '' });
-      controller.setFormValue(props.value);
+      controller.setState({ modalIsVisible: false });
+      controller.setFormValue(undefined);
       props.onValue && props.onValue(props.value as T);
     } else {
       const modalIsVisible = !controller.modalIsVisible;
@@ -98,24 +96,24 @@ export function useFieldSelect<T = any, E extends Element<T> = Element<T>>(
     };
   }
 
-  function onChange({ description, value }: Element<T>): void {
+  function onChange(element: Element<T>): void {
     const { onSelect, onValue } = props;
 
     controller.inputRef?.current?.focus();
 
     if (onSelect) {
       controller.setState({ modalIsVisible: false });
-      value && onSelect(value);
+      element.value && onSelect(element.value);
     } else {
-      controller.setFormValue(value);
-      controller.setState({ modalIsVisible: false, value: description });
+      controller.setFormValue(element);
+      controller.setState({ modalIsVisible: false });
     }
 
-    onValue && onValue(value);
+    onValue && onValue(element.value);
   }
 
   return {
-    controller,
+    ...controller,
     onBlurInput,
     onClickAction,
     onClickBackdrop,

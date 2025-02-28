@@ -28,7 +28,7 @@ export interface ListController<T = any> extends ListControllerState {
   listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
-  setFormValue(value?: T): void;
+  setFormValue(element?: AbstractListElement<T>, initialValue?: boolean): void;
   setState: (state: Partial<ListControllerState>) => void;
 }
 
@@ -44,14 +44,14 @@ interface ListControllerProps<T = any> {
 export function useListController<T = any>(
   props: ListControllerProps<T>
 ): ListController<T> {
-  const { suggestions, automatic, formControl, value } = props;
+  const { suggestions, automatic, formControl } = props;
 
   const listIsOpen = useRef(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [state, setState] = useState<ListControllerState>({
+  const [state, refreshState] = useState<ListControllerState>({
     focused: false,
     higher: false,
     value: '',
@@ -60,12 +60,13 @@ export function useListController<T = any>(
 
   const collection = useRef(new ListCollection<T>([]));
   const position = useRef(0);
-  const _protected = useRef<T>();
+  const valueProtected = useRef<T>();
+  const changeValueInternal = useRef(false);
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
       !contentRef?.current?.contains(target as any) &&
-        setState((state) => ({ ...state, modalIsVisible: false }));
+        refreshState((state) => ({ ...state, modalIsVisible: false }));
     }
 
     document.addEventListener('click', onCloseSuggestions);
@@ -84,7 +85,7 @@ export function useListController<T = any>(
       formControl?.touch();
     }
 
-    setState((state) => ({
+    refreshState((state) => ({
       ...state,
       higher: locationListCanTop(contentRef.current, listRef.current)
     }));
@@ -92,93 +93,81 @@ export function useListController<T = any>(
 
   useEffect(() => {
     collection.current = new ListCollection(suggestions);
-    refresh(collection.current, formControl?.value, automatic);
+
+    if (formControl?.value) {
+      const element = collection.current.find(formControl.value);
+
+      if (!element) {
+        valueProtected.current = formControl.value;
+
+        automatic
+          ? setFormValue(collection.current.value[0], true)
+          : setFormValue(undefined);
+      }
+    } else if (valueProtected.current) {
+      const element = collection.current.find(valueProtected.current);
+
+      element && setFormValue(element);
+    } else {
+      automatic && setFormValue(collection.current.value[0], true);
+    }
   }, [suggestions]);
 
   useEffect(() => {
-    refresh(collection.current, formControl?.value);
+    if (!changeValueInternal.current) {
+      //
+    }
+
+    changeValueInternal.current = false;
   }, [formControl?.value]);
 
-  function refresh(
-    collection: ListCollection<T>,
-    state?: T,
-    automatic?: boolean
-  ): void {
-    if (!state) {
-      !refreshWithProtected(collection, automatic) &&
-        refreshState({ value: '' });
-
-      return undefined;
-    }
-
-    const element = collection.find(state);
-
-    if (element) {
-      _protected.current = undefined;
-      return refreshState({ value: element.description });
-    }
-
-    if (!refreshWithProtected(collection, automatic)) {
-      _protected.current = state;
-      setFormValue(value as T);
-      refreshState({ value: '' });
-    }
-  }
-
-  function refreshWithProtected(
-    collection: ListCollection<T>,
-    automatic?: boolean
-  ): boolean {
-    if (automatic && collection.value[0]) {
-      formControl?.setInitialValue(collection.value[0].value as any);
-      return true;
-    }
-
-    if (_protected.current) {
-      const element = collection.find(_protected.current);
-
-      if (element) {
-        formControl?.setValue(_protected.current);
-        _protected.current = undefined;
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  function refreshState(state: Partial<ListControllerState>): void {
-    setState((currentState) => ({ ...currentState, ...state }));
-  }
+  const setState = useCallback((state: Partial<ListControllerState>) => {
+    refreshState((_state) => ({ ..._state, ...state }));
+  }, []);
 
   const setFormValue = useCallback(
-    (value: any) => {
-      formControl?.setValue(value);
+    (element?: AbstractListElement<any>, initialValue = false) => {
+      refreshState((_state) => ({
+        ..._state,
+        value: element?.description ?? ''
+      }));
+
+      changeValueInternal.current = true;
+
+      initialValue
+        ? formControl?.setInitialValue(element?.value)
+        : formControl?.setValue(element?.value);
     },
     [formControl]
   );
 
-  function navigationInput(event: KeyboardEvent): void {
-    if (state.modalIsVisible) {
-      const newPosition = navigationListFromInput({
+  const navigationInput = useCallback(
+    (event: KeyboardEvent) => {
+      if (state.modalIsVisible) {
+        const _position = navigationListFromInput({
+          content: contentRef.current,
+          event: event as any,
+          list: listRef.current
+        });
+
+        position.current = _position ?? 0;
+      }
+    },
+    [state.modalIsVisible]
+  );
+
+  const navigationElement = useCallback(
+    (event: KeyboardEvent) => {
+      position.current = navigationListFromElement({
         content: contentRef.current,
         event: event as any,
-        list: listRef.current
+        input: inputRef.current,
+        list: listRef.current,
+        position: position.current
       });
-
-      position.current = newPosition ?? 0;
-    }
-  }
-
-  function navigationElement(event: KeyboardEvent): void {
-    position.current = navigationListFromElement({
-      content: contentRef.current,
-      event: event as any,
-      input: inputRef.current,
-      list: listRef.current,
-      position: position.current
-    });
-  }
+    },
+    [state.modalIsVisible]
+  );
 
   return {
     ...state,
@@ -188,6 +177,6 @@ export function useListController<T = any>(
     navigationElement,
     navigationInput,
     setFormValue,
-    setState: refreshState
+    setState
   };
 }
