@@ -1,4 +1,4 @@
-import { useRenderClassStatus } from '../../../controllers';
+import { renderClassStatus } from '../../../helpers';
 import './Breadcrumb.css';
 
 export interface BreadcrumbLabel {
@@ -16,7 +16,7 @@ export function RlsBreadcrumb({ labels }: BreadcrumbProps) {
       {labels.map(({ label, onClick }, index) => (
         <label key={index} className="rls-breadcrumb__label" onClick={onClick}>
           <a
-            className={useRenderClassStatus('rls-breadcrumb__label__a', {
+            className={renderClassStatus('rls-breadcrumb__label__a', {
               actionable: !!onClick
             })}
           >

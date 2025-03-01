@@ -131,8 +131,8 @@ export function useListController<T = any, K = string>(
 
   const setFormValue = useCallback(
     (element?: AbstractListElement<any>, initialValue = false) => {
-      refreshState((_state) => ({
-        ..._state,
+      refreshState((state) => ({
+        ...state,
         value: element?.description || ''
       }));
 

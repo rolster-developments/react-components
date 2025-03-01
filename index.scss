@@ -1,0 +1,30 @@
+@use './node_modules/@rolster/styles-foundations/scss/styles';
+
+body {
+  --rlc-button-label-text-transform: uppercase;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x8);
+  padding: var(--rls-sizing-x12);
+  box-sizing: border-box;
+
+  .rls-overline-bold {
+    padding: var(--rls-sizing-x2);
+    border-radius: var(--rls-sizing-x4);
+    background: var(--rls-theme-color-100);
+    color: var(--rls-theme-color-700);
+  }
+}
+
+:root {
+  @media screen and (min-width: 1360px) {
+    --rls-app-font-size: 2.5px;
+  }
+
+  @media screen and (min-width: 1820px) {
+    --rls-app-font-size: 2.75px;
+  }
+}

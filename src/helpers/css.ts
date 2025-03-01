@@ -7,11 +7,11 @@ export function renderClassStatus(
 ): string {
   const resultClass = [base];
 
-  Object.entries(status).forEach(([name, value]) => {
-    if (value) {
-      typeof value === 'string'
-        ? resultClass.push(`${base}--${value}`)
-        : resultClass.push(`${base}--${name}`);
+  Object.entries(status).forEach(([key, state]) => {
+    if (state) {
+      typeof state === 'string'
+        ? resultClass.push(`${base}--${state}`)
+        : resultClass.push(`${base}--${key}`);
     }
   });
 

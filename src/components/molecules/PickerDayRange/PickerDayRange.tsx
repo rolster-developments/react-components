@@ -25,7 +25,7 @@ interface PickerDayRangeProps extends RlsComponent {
 
 export function RlsPickerDayRange({
   date,
-  disabled: disabledPicker,
+  disabled: _disabled,
   formControl,
   maxDate,
   minDate,
@@ -88,7 +88,7 @@ export function RlsPickerDayRange({
                   className={renderClassStatus(
                     'rls-picker-day-range__element',
                     {
-                      disabled: disabled || disabledPicker,
+                      disabled: disabled || _disabled,
                       end,
                       forbidden,
                       ranged,
@@ -96,7 +96,7 @@ export function RlsPickerDayRange({
                     }
                   )}
                   onClick={
-                    value && !disabledPicker
+                    value && !_disabled
                       ? () => {
                           onChange(value);
                         }

@@ -4,8 +4,8 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode } from 'react';
-import { reactI18n } from '../../../i18n';
 import { useRenderClassStatus } from '../../../controllers';
+import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot, RlsMessageFormError } from '../../molecules';
@@ -63,9 +63,9 @@ export function RlsFieldSelectTemplate<
   const className = useRenderClassStatus(
     'rls-field-box',
     {
-      focused: select.focused && !_disabled,
+      disabled: _disabled,
       error: formControl?.wrong,
-      disabled: _disabled
+      focused: select.focused && !_disabled
     },
     'rls-field-list rls-field-select'
   );
@@ -116,44 +116,47 @@ export function RlsFieldSelectTemplate<
 
       <div
         className={useRenderClassStatus('rls-field-list__suggestions', {
-          visible: select.modalIsVisible,
           higher: select.higher,
-          hide: !select.modalIsVisible
+          visible: select.modalIsVisible
         })}
       >
-        <div className="rls-field-list__suggestions__body">
-          <ul ref={select.listRef} className="rls-field-list__ul">
-            {suggestions.map((element, index) => (
-              <li
-                key={index}
-                className="rls-field-list__element"
-                tabIndex={-1}
-                onClick={select.onClickElement(element)}
-                onKeyDown={select.onKeydownElement(element)}
-              >
-                {render(element)}
-              </li>
-            ))}
+        {select.modalIsVisible && (
+          <>
+            <div className="rls-field-list__suggestions__body">
+              <ul ref={select.listRef} className="rls-field-list__ul">
+                {suggestions.map((element, index) => (
+                  <li
+                    key={index}
+                    className="rls-field-list__element"
+                    tabIndex={-1}
+                    onClick={select.onClickElement(element)}
+                    onKeyDown={select.onKeydownElement(element)}
+                  >
+                    {render(element)}
+                  </li>
+                ))}
 
-            {!suggestions.length && (
-              <li className="rls-field-list__empty">
-                <div className="rls-field-list__empty__description">
-                  <label className="rls-label-bold truncate">
-                    {reactI18n('listEmptyTitle')}
-                  </label>
-                  <p className="rls-caption-regular">
-                    {reactI18n('listEmptyDescription')}
-                  </p>
-                </div>
-              </li>
-            )}
-          </ul>
-        </div>
+                {!suggestions.length && (
+                  <li className="rls-field-list__empty">
+                    <div className="rls-field-list__empty__description">
+                      <label className="rls-label-bold truncate">
+                        {reactI18n('listEmptyTitle')}
+                      </label>
+                      <p className="rls-caption-regular">
+                        {reactI18n('listEmptyDescription')}
+                      </p>
+                    </div>
+                  </li>
+                )}
+              </ul>
+            </div>
 
-        <div
-          className="rls-field-list__backdrop"
-          onClick={select.onClickBackdrop}
-        ></div>
+            <div
+              className="rls-field-list__backdrop"
+              onClick={select.onClickBackdrop}
+            ></div>
+          </>
+        )}
       </div>
     </div>
   );
