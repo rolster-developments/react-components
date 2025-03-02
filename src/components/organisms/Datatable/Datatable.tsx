@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   DatatableController,
   useRenderClassStatus
@@ -10,6 +11,10 @@ interface DatatableCellProps extends RlsComponent {
   overflow?: boolean;
 }
 
+interface DatatableSubheaderProps extends RlsComponent {
+  className?: string;
+}
+
 interface DatatableRecordProps extends RlsComponent {
   className?: string;
   error?: boolean;
@@ -20,9 +25,10 @@ interface DatatableRecordProps extends RlsComponent {
 
 interface DatatableProps extends RlsComponent {
   datatable?: DatatableController;
-  footer?: JSX.Element;
-  header?: JSX.Element;
-  summary?: JSX.Element;
+  footer?: ReactNode;
+  header?: ReactNode;
+  summary?: ReactNode;
+  toolbar?: ReactNode;
 }
 
 export function RlsDatatableHeader({ children, identifier }: RlsComponent) {
@@ -50,6 +56,25 @@ export function RlsDatatableTitle({
     >
       {children}
     </th>
+  );
+}
+
+export function RlsDatatableSubheader({
+  children,
+  className,
+  identifier
+}: DatatableSubheaderProps) {
+  return (
+    <tr
+      id={identifier}
+      className={useRenderClassStatus(
+        'rls-datatable__subheader',
+        {},
+        className
+      ).trim()}
+    >
+      {children}
+    </tr>
   );
 }
 
@@ -148,7 +173,8 @@ export function RlsDatatable({
   header,
   identifier,
   rlsTheme,
-  summary
+  summary,
+  toolbar
 }: DatatableProps) {
   return (
     <div
@@ -157,17 +183,19 @@ export function RlsDatatable({
       })}
       rls-theme={rlsTheme}
     >
-      <table id={identifier}>
-        {header && <thead className="rls-datatable__thead">{header}</thead>}
+      {toolbar && <div className="rls-datatable__toolbar">{toolbar}</div>}
 
-        <tbody ref={datatable?.tableRef} className="rls-datatable__tbody">
+      <table id={identifier}>
+        {header && <thead className="rls-datatable__head">{header}</thead>}
+
+        <tbody ref={datatable?.tableRef} className="rls-datatable__body">
           {children}
         </tbody>
       </table>
 
-      {summary && <div className="rls-datatable__tsummary">{summary}</div>}
+      {summary && <div className="rls-datatable__summary">{summary}</div>}
 
-      {footer && <div className="rls-datatable__tfooter">{footer}</div>}
+      {footer && <div className="rls-datatable__footer">{footer}</div>}
     </div>
   );
 }
