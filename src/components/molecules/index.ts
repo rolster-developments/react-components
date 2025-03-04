@@ -1,3 +1,4 @@
+export * from './Alert/Alert';
 export * from './Ballot/Ballot';
 export * from './ButtonProgress/ButtonProgress';
 export * from './ButtonToggle/ButtonToggle';

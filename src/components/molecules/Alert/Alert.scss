@@ -1,0 +1,41 @@
+// Rolster Technology Alert Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 04/Mar/2025
+// Updated: 04/Mar/2025
+
+.rls-alert {
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: var(--rls-sizing-x6);
+  border-radius: var(--rls-sizing-x6);
+  box-sizing: border-box;
+  background: var(--rls-theme-color-100);
+  padding: var(--rls-sizing-x4) var(--rls-sizing-x6);
+
+  &--bordered {
+    border: var(--rls-theme-border-1-500);
+  }
+
+  &__icon {
+    --rlc-icon-color: var(--rls-theme-color-100);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--rls-sizing-x16);
+    height: var(--rls-sizing-x16);
+    border-radius: 50%;
+    background: var(--rls-theme-color-500);
+
+    & + .rls-alert__content {
+      max-width: calc(100% - 22rem);
+    }
+  }
+
+  &__content {
+    width: auto;
+  }
+}

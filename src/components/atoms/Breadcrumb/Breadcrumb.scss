@@ -1,9 +1,9 @@
 // Rolster Technology Breadcrumb Component
-// v1.0.3
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 19/Feb/2025
+// Updated: 03/Mar/2025
 
 .rls-breadcrumb {
   --pvt-link-font-color: var(--rls-app-color-300);
@@ -62,10 +62,11 @@
 
     &__a {
       display: inline-block;
-      cursor: pointer;
       color: var(--pvt-link-font-color);
 
       &--actionable {
+        cursor: pointer;
+
         &:hover {
           color: var(--rls-theme-color-500);
           text-decoration: underline;
