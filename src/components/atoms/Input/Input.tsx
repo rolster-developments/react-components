@@ -1,6 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { HTMLInputTypeAttribute, useCallback, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
+import { HTMLInputTypeAttribute, useCallback, useMemo, useState } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './Input.css';
 
@@ -46,14 +46,15 @@ export function RlsInput({
     setFocused(() => false);
   }, [formControl]);
 
+  const className = useMemo(() => {
+    return renderClassStatus('rls-input', {
+      disabled: formControl?.disabled || disabled,
+      focused: formControl?.focused ?? focused
+    });
+  }, [formControl?.focused, formControl?.disabled, focused, disabled]);
+
   return (
-    <div
-      id={identifier}
-      className={useRenderClassStatus('rls-input', {
-        focused: formControl?.focused ?? focused,
-        disabled: formControl?.disabled || disabled
-      })}
-    >
+    <div id={identifier} className={className}>
       <input
         ref={formControl?.elementRef}
         className="rls-input__component"

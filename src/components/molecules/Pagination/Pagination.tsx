@@ -2,11 +2,12 @@ import {
   FilterCriteria,
   PageState,
   Pagination,
-  PaginationController
+  PaginationController,
+  PaginationTemplate
 } from '@rolster/components';
-import { useEffect, useRef, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsIcon } from '../../atoms';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import './Pagination.css';
 
 interface PaginationEvent<T> {
@@ -31,6 +32,17 @@ export function RlsPagination<T>({
   const controller = useRef(new PaginationController({ suggestions, count }));
   const [template, setTemplate] = useState(controller.current.template);
 
+  const refreshTemplate = useCallback(
+    (template: PaginationTemplate, suggestions: T[]) => {
+      const { firstPage, lastPage } = template;
+
+      onPagination && onPagination({ firstPage, lastPage, suggestions });
+
+      setTemplate(template);
+    },
+    [onPagination]
+  );
+
   useEffect(() => {
     controller.current = new PaginationController({
       suggestions,
@@ -38,55 +50,41 @@ export function RlsPagination<T>({
       position: template.currentPage.value
     });
 
-    onPagination &&
-      onPagination({
-        firstPage: controller.current.template.firstPage,
-        lastPage: controller.current.template.lastPage,
-        suggestions: controller.current.page.collection
-      });
-
-    setTemplate(controller.current.template);
+    refreshTemplate(
+      controller.current.template,
+      controller.current.page.collection
+    );
   }, [suggestions, count]);
 
   useEffect(() => {
     refreshPagination(controller.current.filtrable(filter));
   }, [filter]);
 
-  function refreshPagination(pagination?: Pagination<T>): void {
+  const refreshPagination = useCallback((pagination?: Pagination<T>) => {
     if (pagination) {
-      const { page, template } = pagination;
-      const { firstPage, lastPage } = template;
-
-      onPagination &&
-        onPagination({
-          firstPage,
-          lastPage,
-          suggestions: page.collection
-        });
-
-      setTemplate(template);
+      refreshTemplate(pagination.template, pagination.page.collection);
     }
-  }
+  }, []);
 
-  function goToPagination(page: PageState): void {
+  const goToPagination = useCallback((page: PageState) => {
     refreshPagination(controller.current.goToPage(page));
-  }
+  }, []);
 
-  function goFirstPagination(): void {
+  const goFirstPagination = useCallback(() => {
     refreshPagination(controller.current.goFirstPage());
-  }
+  }, []);
 
-  function goPreviousPagination(): void {
+  const goPreviousPagination = useCallback(() => {
     refreshPagination(controller.current.goPreviousPage());
-  }
+  }, []);
 
-  function goNextPagination(): void {
+  const goNextPagination = useCallback(() => {
     refreshPagination(controller.current.goNextPage());
-  }
+  }, []);
 
-  function goLastPagination(): void {
+  const goLastPagination = useCallback(() => {
     refreshPagination(controller.current.goLastPage());
-  }
+  }, []);
 
   return (
     <div className="rls-pagination">
@@ -113,7 +111,7 @@ export function RlsPagination<T>({
           return (
             <div
               key={index}
-              className={useRenderClassStatus('rls-pagination__page', {
+              className={renderClassStatus('rls-pagination__page', {
                 active: page.active
               })}
               onClick={() => {

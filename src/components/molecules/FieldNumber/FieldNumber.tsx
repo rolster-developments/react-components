@@ -1,5 +1,6 @@
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsInputNumber } from '../../atoms';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
 import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldNumber.css';
@@ -15,22 +16,27 @@ export function RlsFieldNumber({
   rlsTheme,
   value
 }: FieldBoxProps<number>) {
-  const _disabled = formControl?.disabled || disabled;
+  const className = useMemo(() => {
+    const _disabled = formControl?.disabled || disabled;
+
+    return renderClassStatus(
+      'rls-field-box',
+      {
+        focused: formControl?.focused && !_disabled,
+        error: formControl?.wrong,
+        disabled: _disabled
+      },
+      'rls-field-number'
+    );
+  }, [
+    formControl?.focused,
+    formControl?.wrong,
+    formControl?.disabled,
+    disabled
+  ]);
 
   return (
-    <div
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-field-box',
-        {
-          focused: formControl?.focused && !_disabled,
-          error: formControl?.wrong,
-          disabled: _disabled
-        },
-        'rls-field-number'
-      )}
-      rls-theme={rlsTheme}
-    >
+    <div id={identifier} className={className} rls-theme={rlsTheme}>
       {children && <label className="rls-field-box__label">{children}</label>}
 
       <div className="rls-field-box__component">

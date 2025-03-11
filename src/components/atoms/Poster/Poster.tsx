@@ -1,4 +1,5 @@
-import { useRenderClassStatus } from '../../../controllers';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './Poster.css';
 
@@ -13,11 +14,12 @@ export function RlsPoster({
   outline,
   rlsTheme
 }: PosterProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-poster', { contrast, outline });
+  }, [contrast, outline]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-poster', { contrast, outline })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       {children}
     </div>
   );

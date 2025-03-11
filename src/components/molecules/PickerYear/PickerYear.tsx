@@ -18,7 +18,7 @@ interface PickerYearProps extends RlsComponent {
 
 export function RlsPickerYear({
   date,
-  disabled: disabledPicker,
+  disabled: _disabled,
   formControl,
   maxDate,
   minDate,
@@ -30,9 +30,11 @@ export function RlsPickerYear({
   const [value, setValue] = useState(
     formControl?.value || currentDate.getFullYear()
   );
+
   const [year, setYear] = useState(
     formControl?.value || currentDate.getFullYear()
   );
+  
   const [template, setTemplate] = useState(
     createYearPicker(createPickerOptions())
   );
@@ -90,7 +92,7 @@ export function RlsPickerYear({
           <RlsButtonAction
             icon="arrow-ios-left"
             onClick={onClickPrev}
-            disabled={!template.canPrevious || disabledPicker}
+            disabled={!template.canPrevious || _disabled}
           />
         </div>
 
@@ -102,7 +104,7 @@ export function RlsPickerYear({
           <RlsButtonAction
             icon="arrow-ios-right"
             onClick={onClickNext}
-            disabled={!template.canNext || disabledPicker}
+            disabled={!template.canNext || _disabled}
           />
         </div>
       </div>
@@ -112,12 +114,12 @@ export function RlsPickerYear({
           <div
             key={index}
             className={renderClassStatus('rls-picker-year__year', {
-              disabled: disabled || disabledPicker,
+              disabled: disabled || _disabled,
               focused,
               selected
             })}
             onClick={
-              value && !disabledPicker
+              value && !_disabled
                 ? () => {
                     onChange(value);
                   }

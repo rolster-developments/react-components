@@ -1,4 +1,5 @@
-import { useRenderClassStatus } from '../../../controllers';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './Avatar.css';
 
@@ -13,11 +14,12 @@ export function RlsAvatar({
   skeleton,
   rlsTheme
 }: AvatarProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-avatar', { rounded, skeleton });
+  }, [rounded, skeleton]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-avatar', { rounded, skeleton })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       {children}
     </div>
   );

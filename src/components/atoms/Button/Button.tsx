@@ -1,5 +1,5 @@
-import { MouseEventHandler } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
+import { MouseEventHandler, useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import './Button.css';
@@ -30,6 +30,10 @@ export function RlsButton({
   rlsTheme,
   onClick
 }: ButtonProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-button__content', { type });
+  }, [type]);
+
   return (
     <button
       id={identifier}
@@ -38,7 +42,7 @@ export function RlsButton({
       rls-theme={rlsTheme}
       disabled={disabled}
     >
-      <div className={useRenderClassStatus('rls-button__content', { type })}>
+      <div className={className}>
         {prefixIcon && <RlsIcon value={prefixIcon} />}
         {children && <div className="rls-button__label">{children}</div>}
         {suffixIcon && <RlsIcon value={suffixIcon} />}

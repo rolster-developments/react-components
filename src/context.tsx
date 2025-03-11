@@ -1,10 +1,10 @@
-import { createContext, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 import {
   ConfirmationResult,
   Confirmation,
   Snackbar,
-  useConfirmationService,
-  useSnackbarService
+  useConfirmation,
+  useSnackbar
 } from './components';
 import { RlsComponent } from './components/definitions';
 import { renderClassStatus } from './helpers';
@@ -24,18 +24,18 @@ export const RlsContext = createContext<RlsState>({
 });
 
 export function RlsApplication({ children }: RlsComponent) {
-  const { RlsConfirmation, confirmation } = useConfirmationService();
-  const { RlsSnackbar, snackbar } = useSnackbarService();
+  const { RlsConfirmation, confirmation } = useConfirmation();
+  const { RlsSnackbar, snackbar } = useSnackbar();
 
-  const [currentWithNavbar, withNavbar] = useState(false);
+  const [_withNavbar, withNavbar] = useState(false);
+
+  const className = useMemo(() => {
+    return renderClassStatus('rls-app__body', { snackbar: _withNavbar });
+  }, [_withNavbar]);
 
   return (
     <RlsContext.Provider value={{ confirmation, snackbar, withNavbar }}>
-      <div
-        className={renderClassStatus('rls-app__body', {
-          snackbar: currentWithNavbar
-        })}
-      >
+      <div className={className}>
         {children}
         {RlsSnackbar}
       </div>

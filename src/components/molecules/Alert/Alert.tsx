@@ -1,5 +1,6 @@
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsIcon } from '../../atoms';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import './Alert.css';
 
@@ -15,12 +16,12 @@ export function RlsAlert({
   identifier,
   rlsTheme
 }: RlsAlertProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-alert', { bordered });
+  }, [bordered]);
+
   return (
-    <div
-      id={identifier}
-      className={useRenderClassStatus('rls-alert', { bordered })}
-      rls-theme={rlsTheme}
-    >
+    <div id={identifier} className={className} rls-theme={rlsTheme}>
       {icon && (
         <div className="rls-alert__icon">
           <RlsIcon value={icon} />

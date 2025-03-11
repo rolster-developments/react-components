@@ -24,7 +24,7 @@ interface PickerDayProps extends RlsComponent {
 
 export function RlsPickerDay({
   date,
-  disabled: disabledPicker,
+  disabled: _disabled,
   formControl,
   maxDate,
   month,
@@ -97,14 +97,14 @@ export function RlsPickerDay({
                 <div
                   key={index}
                   className={renderClassStatus('rls-picker-day__element', {
-                    disabled: disabled || disabledPicker,
+                    disabled: disabled || _disabled,
                     focused,
                     forbidden,
                     selected,
                     today
                   })}
                   onClick={
-                    value && !disabledPicker ? () => onChange(value) : undefined
+                    value && !_disabled ? () => onChange(value) : undefined
                   }
                 >
                   <span className="rls-picker-day__element__span">

@@ -1,6 +1,6 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsIcon } from '../../atoms';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsTheme } from '../../definitions';
 import './Snackbar.css';
 
@@ -39,7 +39,7 @@ interface SnackbarProps extends SnackbarConfig {
 export type Snackbar = (config: SnackbarConfig) => void;
 
 export interface SnackbarService {
-  RlsSnackbar: JSX.Element;
+  RlsSnackbar: ReactNode;
   snackbar: Snackbar;
 }
 
@@ -50,11 +50,12 @@ export function RlsSnackbar({
   visible,
   rlsTheme
 }: SnackbarProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-snackbar', { visible });
+  }, [visible]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-snackbar', { visible })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       {icon && (
         <div className="rls-snackbar__avatar">
           <RlsIcon value={icon} />
@@ -69,7 +70,7 @@ export function RlsSnackbar({
   );
 }
 
-export function useSnackbarService(): SnackbarService {
+export function useSnackbar(): SnackbarService {
   const [config, setConfig] = useState<SnackbarConfig>({});
   const [duration, setDuration] = useState(4000);
   const [timeoutId, setTimeoutId] = useState<number>();
@@ -92,15 +93,15 @@ export function useSnackbarService(): SnackbarService {
     }
   }, [visible]);
 
-  function snackbar(config: SnackbarConfig): void {
+  const snackbar = useCallback((config: SnackbarConfig) => {
     const { content } = config;
 
     setConfig(config);
 
     setDuration(calculateDuration(String(content)));
 
-    setVisible(!visible);
-  }
+    setVisible((visible) => !visible);
+  }, []);
 
   return {
     RlsSnackbar: rlsSnackbar,

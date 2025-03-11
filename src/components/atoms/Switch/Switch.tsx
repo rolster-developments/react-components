@@ -1,5 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useRenderClassStatus } from '../../../controllers';
+import { useCallback, useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './Switch.css';
 
@@ -21,10 +22,14 @@ export function RlsSwitch({
   onClick,
   rlsTheme
 }: SwitchProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-switch', { checked, disabled });
+  }, [checked, disabled]);
+
   return (
     <div
       id={identifier}
-      className={useRenderClassStatus('rls-switch', { checked, disabled })}
+      className={className}
       onClick={onClick}
       rls-theme={rlsTheme}
     >
@@ -42,14 +47,16 @@ export function RlsSwitchControl({
   identifier,
   rlsTheme
 }: Props) {
+  const onClick = useCallback(() => {
+    formControl.setValue(!formControl.value);
+  }, [formControl.value]);
+
   return (
     <RlsSwitch
       identifier={identifier}
       checked={formControl.value || false}
       disabled={disabled}
-      onClick={() => {
-        formControl.setValue(!formControl.value);
-      }}
+      onClick={onClick}
       rlsTheme={rlsTheme}
     />
   );

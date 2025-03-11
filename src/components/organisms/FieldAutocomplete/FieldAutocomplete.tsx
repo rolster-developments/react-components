@@ -3,15 +3,15 @@ import {
   AutocompleteElement
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
+import { ReactNode, useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
-import { RlsIcon, RlsProgressBar } from '../../atoms';
+import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot, RlsMessageFormError } from '../../molecules';
 import { useFieldAutocomplete } from './FieldAutocompleteController';
 import './FieldAutocomplete.css';
-import { renderClassStatus } from '../../../helpers';
 
 interface FieldAutocompleteProps<
   T = any,
@@ -62,16 +62,31 @@ export function RlsFieldAutocompleteTemplate<
 
   const _disabled = formControl?.disabled || props.disabled;
 
-  const className = useRenderClassStatus(
-    'rls-field-box',
-    {
-      focused: autocomplete.focused && !_disabled,
-      error: formControl?.wrong,
-      disabled: _disabled,
-      selected: !!autocomplete.value
-    },
-    'rls-field-list rls-field-autocomplete'
-  );
+  const className = useMemo(() => {
+    return renderClassStatus(
+      'rls-field-box',
+      {
+        focused: autocomplete.focused && !_disabled,
+        error: formControl?.wrong,
+        disabled: _disabled,
+        selected: !!autocomplete.value
+      },
+      'rls-field-list rls-field-autocomplete'
+    );
+  }, [
+    formControl?.wrong,
+    formControl?.disabled,
+    autocomplete.value,
+    autocomplete.focused,
+    props.disabled
+  ]);
+
+  const classNameList = useMemo(() => {
+    return renderClassStatus('rls-field-list__suggestions', {
+      higher: autocomplete.higher,
+      visible: autocomplete.modalIsVisible
+    });
+  }, [autocomplete.higher, autocomplete.modalIsVisible]);
 
   return (
     <div
@@ -112,12 +127,7 @@ export function RlsFieldAutocompleteTemplate<
         />
       )}
 
-      <div
-        className={renderClassStatus('rls-field-list__suggestions', {
-          higher: autocomplete.higher,
-          visible: autocomplete.modalIsVisible
-        })}
-      >
+      <div className={classNameList}>
         {autocomplete.modalIsVisible && (
           <>
             <div className="rls-field-list__suggestions__body">
@@ -220,19 +230,19 @@ interface FormControlEmptyProps<T = any>
 
 export function RlsFieldAutocomplete<T = any>(
   props: FormControlUndefinedProps<T>
-): JSX.Element;
+): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
   props: FormControlDefinedProps<T>
-): JSX.Element;
+): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
   props: FormControlVoidProps<T>
-): JSX.Element;
+): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
   props: FormControlEmptyProps<T>
-): JSX.Element;
+): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>
-): JSX.Element;
+): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>
 ) {

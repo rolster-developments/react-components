@@ -22,7 +22,7 @@ interface PickerMonthProps extends RlsComponent {
 
 export function RlsPickerMonth({
   date,
-  disabled: disabledPicker,
+  disabled: _disabled,
   formControl,
   maxDate,
   minDate,
@@ -81,12 +81,12 @@ export function RlsPickerMonth({
         <div
           key={index}
           className={renderClassStatus('rls-picker-month__component', {
-            disabled: disabled || disabledPicker,
+            disabled: disabled || _disabled,
             focused,
             selected
           })}
           onClick={
-            !(disabled || disabledPicker)
+            !(disabled || _disabled)
               ? () => {
                   onChange(value);
                 }

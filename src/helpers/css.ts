@@ -19,5 +19,5 @@ export function renderClassStatus(
     resultClass.push(additionals);
   }
 
-  return resultClass.join(' ');
+  return resultClass.join(' ').trim();
 }

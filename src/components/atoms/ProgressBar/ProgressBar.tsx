@@ -1,4 +1,5 @@
-import { useRenderClassStatus } from '../../../controllers';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './ProgressBar.css';
 
@@ -12,11 +13,12 @@ export function RlsProgressBar({
   percentage,
   rlsTheme
 }: ProgressBarProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-progress-bar', { indeterminate });
+  }, [indeterminate]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-progress-bar', { indeterminate })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       <div
         className="rls-progress-bar__component"
         style={{ width: `${percentage || 0}%` }}

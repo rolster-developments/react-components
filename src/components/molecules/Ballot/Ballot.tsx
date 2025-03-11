@@ -1,5 +1,7 @@
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsAvatar, RlsSkeletonText } from '../../atoms';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsAvatar } from '../../atoms/Avatar/Avatar';
+import { RlsSkeletonText } from '../../atoms/SkeletonText/SkeletonText';
 import { RlsComponent } from '../../definitions';
 import './Ballot.css';
 
@@ -20,17 +22,19 @@ export function RlsBallot({
   subtitle,
   rlsTheme
 }: BallotProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-ballot', { bordered, skeleton });
+  }, [bordered, skeleton]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-ballot', { bordered, skeleton })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       {(img || initials) && (
         <RlsAvatar skeleton={skeleton}>
           {img && <img src={img} />}
           {initials && <span>{initials}</span>}
         </RlsAvatar>
       )}
+
       <div className="rls-ballot__component">
         <label className="rls-ballot__title">
           <RlsSkeletonText active={skeleton}>{children}</RlsSkeletonText>

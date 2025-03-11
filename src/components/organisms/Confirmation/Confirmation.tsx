@@ -1,11 +1,11 @@
 import { PartialSealed } from '@rolster/commons';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms';
+import { RlsButton } from '../../atoms/Button/Button';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';
-import { useRenderClassStatus } from '../../../controllers';
 
 export class ConfirmationResult extends PartialSealed<
   void,
@@ -58,7 +58,7 @@ interface ConfirmationOptions extends ConfirmationBasic {
 export type Confirmation = (options: ConfirmationOptions) => Result;
 
 export interface ConfirmationService {
-  RlsConfirmation: JSX.Element;
+  RlsConfirmation: ReactNode;
   confirmation: Confirmation;
 }
 
@@ -71,11 +71,12 @@ export function RlsConfirmation({
   title,
   visible
 }: ConfirmationProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-confirmation', { visible });
+  }, [visible]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-confirmation', { visible })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       <div className="rls-confirmation__component">
         <div className="rls-confirmation__header">
           {title && <div className="rls-confirmation__title">{title}</div>}
@@ -121,7 +122,7 @@ export function RlsConfirmation({
   );
 }
 
-export function useConfirmationService(): ConfirmationService {
+export function useConfirmation(): ConfirmationService {
   const [config, setConfig] = useState<ConfirmationProps>({});
   const [visible, setVisible] = useState(false);
 
@@ -130,7 +131,7 @@ export function useConfirmationService(): ConfirmationService {
     document.body
   );
 
-  function confirmation(options: ConfirmationOptions): Result {
+  const confirmation = useCallback((options: ConfirmationOptions) => {
     return new Promise<ConfirmationResult>((resolve) => {
       const { content, rlsTheme, subtitle, title, approved, reject } = options;
 
@@ -161,7 +162,7 @@ export function useConfirmationService(): ConfirmationService {
 
       setVisible(true);
     });
-  }
+  }, []);
 
   return {
     RlsConfirmation: rlsConfirmation,

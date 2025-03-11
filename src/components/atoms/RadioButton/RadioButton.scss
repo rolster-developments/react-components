@@ -1,9 +1,9 @@
 // Rolster Technology Radiobutton Component
-// v1.0.2
+// v1.0.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Ene/2024
+// Updated: 11/Mar/2025
 
 .rls-radiobutton {
   --pvt-component-transform: scale(0);
@@ -40,6 +40,6 @@
     background: var(--rls-theme-gradient-500);
     transform: var(--pvt-component-transform);
     transform-origin: 50% 50%;
-    transition: all 160ms 0ms var(--rls-standard-curve);
+    /*transition: all 160ms 0ms var(--rls-standard-curve);*/
   }
 }

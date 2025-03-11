@@ -1,6 +1,7 @@
-import { MouseEventHandler } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsButtonAction, RlsProgressCircular } from '../../atoms';
+import { MouseEventHandler, useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
+import { RlsProgressCircular } from '../../atoms/ProgressCircular/ProgressCircular';
 import { RlsTheme } from '../../definitions';
 import './ButtonProgress.css';
 
@@ -19,11 +20,12 @@ export function RlsButtonProgress({
   progressing,
   rlsTheme
 }: ButtonProgressProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-button-progress', { progressing });
+  }, [progressing]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-button-progress', { progressing })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       {!progressing && (
         <RlsButtonAction icon={icon} onClick={onClick} disabled={disabled} />
       )}

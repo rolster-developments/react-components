@@ -1,4 +1,5 @@
-import { useRenderClassStatus } from '../../../controllers';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './FormNavigation.css';
 
@@ -11,11 +12,12 @@ export function RlsFormNavigation({
   visible,
   rlsTheme
 }: FormNavigationProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-form-navigation', { visible });
+  }, [visible]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-form-navigation', { visible })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       <div className="rls-form-navigation__body">{children}</div>
     </div>
   );

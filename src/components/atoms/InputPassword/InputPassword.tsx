@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RolsterControl } from '../../types';
@@ -42,14 +42,15 @@ export function RlsInputPassword({
     setFocused(() => false);
   }, [formControl]);
 
+  const className = useMemo(() => {
+    return renderClassStatus('rls-input-password', {
+      disabled: formControl?.disabled || disabled,
+      focused: formControl?.focused ?? focused
+    });
+  }, [formControl?.focused, formControl?.disabled, focused, disabled]);
+
   return (
-    <div
-      id={identifier}
-      className={renderClassStatus('rls-input-password', {
-        focused: formControl?.focused ?? focused,
-        disabled: formControl?.disabled || disabled
-      })}
-    >
+    <div id={identifier} className={className}>
       <input
         className="rls-input-password__component"
         autoComplete="off"

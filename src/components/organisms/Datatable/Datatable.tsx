@@ -1,8 +1,6 @@
-import { ReactNode } from 'react';
-import {
-  DatatableController,
-  useRenderClassStatus
-} from '../../../controllers';
+import { ReactNode, useMemo } from 'react';
+import { DatatableController } from '../../../controllers';
+import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 
 interface DatatableCellProps extends RlsComponent {
@@ -45,15 +43,12 @@ export function RlsDatatableTitle({
   control,
   identifier
 }: DatatableCellProps) {
+  const classDatatableName = useMemo(() => {
+    return renderClassStatus('rls-datatable__title', { control }, className);
+  }, [control, className]);
+
   return (
-    <th
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-datatable__title',
-        { control },
-        className
-      ).trim()}
-    >
+    <th id={identifier} className={classDatatableName}>
       {children}
     </th>
   );
@@ -64,15 +59,12 @@ export function RlsDatatableSubheader({
   className,
   identifier
 }: DatatableSubheaderProps) {
+  const classDatatableName = useMemo(() => {
+    return renderClassStatus('rls-datatable__subheader', {}, className);
+  }, [className]);
+
   return (
-    <tr
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-datatable__subheader',
-        {},
-        className
-      ).trim()}
-    >
+    <tr id={identifier} className={classDatatableName}>
       {children}
     </tr>
   );
@@ -87,15 +79,16 @@ export function RlsDatatableRecord({
   successs,
   warning
 }: DatatableRecordProps) {
+  const classDatatableName = useMemo(() => {
+    return renderClassStatus(
+      'rls-datatable__record',
+      { error, info, successs, warning },
+      className
+    );
+  }, [error, info, successs, warning, className]);
+
   return (
-    <tr
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-datatable__record',
-        { error, info, successs, warning },
-        className
-      ).trim()}
-    >
+    <tr id={identifier} className={classDatatableName}>
       {children}
     </tr>
   );
@@ -110,15 +103,16 @@ export function RlsDatatableTotals({
   successs,
   warning
 }: DatatableRecordProps) {
+  const classDatatableName = useMemo(() => {
+    return renderClassStatus(
+      'rls-datatable__totals',
+      { error, info, successs, warning },
+      className
+    );
+  }, [error, info, successs, warning, className]);
+
   return (
-    <div
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-datatable__totals',
-        { error, info, successs, warning },
-        className
-      ).trim()}
-    >
+    <div id={identifier} className={classDatatableName}>
       {children}
     </div>
   );
@@ -131,15 +125,16 @@ export function RlsDatatableCell({
   identifier,
   overflow
 }: DatatableCellProps) {
+  const classDatatableName = useMemo(() => {
+    return renderClassStatus(
+      'rls-datatable__cell',
+      { control, overflow },
+      className
+    );
+  }, [control, overflow, className]);
+
   return (
-    <th
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-datatable__cell',
-        { control, overflow },
-        className
-      ).trim()}
-    >
+    <th id={identifier} className={classDatatableName}>
       {children}
     </th>
   );
@@ -152,15 +147,16 @@ export function RlsDatatableData({
   identifier,
   overflow
 }: DatatableCellProps) {
+  const classDatatableName = useMemo(() => {
+    return renderClassStatus(
+      'rls-datatable__data',
+      { control, overflow },
+      className
+    );
+  }, [control, overflow, className]);
+
   return (
-    <div
-      id={identifier}
-      className={useRenderClassStatus(
-        'rls-datatable__data',
-        { control, overflow },
-        className
-      ).trim()}
-    >
+    <div id={identifier} className={classDatatableName}>
       {children}
     </div>
   );
@@ -176,13 +172,14 @@ export function RlsDatatable({
   summary,
   toolbar
 }: DatatableProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-datatable', {
+      scrolleable: datatable?.scrolleable
+    });
+  }, [datatable]);
+
   return (
-    <div
-      className={useRenderClassStatus('rls-datatable', {
-        scrolleable: datatable?.scrolleable
-      })}
-      rls-theme={rlsTheme}
-    >
+    <div className={className} rls-theme={rlsTheme}>
       {toolbar && <div className="rls-datatable__toolbar">{toolbar}</div>}
 
       <table id={identifier}>

@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsButtonAction, RlsInputPassword } from '../../atoms';
+import { useCallback, useMemo, useState } from 'react';
+import { renderClassStatus } from '../../../helpers';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
+import { RlsInputPassword } from '../../atoms/InputPassword/InputPassword';
 import { RlsComponent } from '../../definitions';
 import { RolsterControl } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
@@ -28,22 +29,27 @@ export function RlsFieldPassword({
     setPassword((password) => !password);
   }, []);
 
-  const _disabled = formControl?.disabled || disabled;
+  const className = useMemo(() => {
+    const _disabled = formControl?.disabled || disabled;
+
+    return renderClassStatus(
+      'rls-field-box',
+      {
+        focused: formControl?.focused && !_disabled,
+        error: formControl?.wrong,
+        disabled: _disabled
+      },
+      'rls-field-password'
+    );
+  }, [
+    formControl?.focused,
+    formControl?.wrong,
+    formControl?.disabled,
+    disabled
+  ]);
 
   return (
-    <div
-      id={identifier}
-      className={useRenderClassStatus(
-        ' rls-field-box',
-        {
-          focused: formControl?.focused && !_disabled,
-          error: formControl?.wrong,
-          disabled: _disabled
-        },
-        'rls-field-password'
-      )}
-      rls-theme={rlsTheme}
-    >
+    <div id={identifier} className={className} rls-theme={rlsTheme}>
       {children && <label className="rls-field-box__label">{children}</label>}
 
       <div className="rls-field-box__component">

@@ -1,12 +1,11 @@
 import { PickerListenerEvent } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { rangeFormatTemplate } from '../../../helpers';
-import { RlsIcon } from '../../atoms';
+import { ReactNode, useMemo, useState } from 'react';
+import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
-import { RlsMessageFormError } from '../../molecules';
+import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDateRange } from '../PickerDateRange/PickerDateRange';
 import './FieldDateRange.css';
@@ -47,12 +46,10 @@ interface FormControlEmptyProps
   onValue?: (value?: DateRange) => void;
 }
 
-export function RlsFieldDateRange(props: FormControlDefinedProps): JSX.Element;
-export function RlsFieldDateRange(
-  props: FormControlUndefinedProps
-): JSX.Element;
-export function RlsFieldDateRange(props: FormControlVoidProps): JSX.Element;
-export function RlsFieldDateRange(props: FormControlEmptyProps): JSX.Element;
+export function RlsFieldDateRange(props: FormControlDefinedProps): ReactNode;
+export function RlsFieldDateRange(props: FormControlUndefinedProps): ReactNode;
+export function RlsFieldDateRange(props: FormControlVoidProps): ReactNode;
+export function RlsFieldDateRange(props: FormControlEmptyProps): ReactNode;
 export function RlsFieldDateRange({
   children,
   date: datePicker,
@@ -93,13 +90,13 @@ export function RlsFieldDateRange({
 
   const _disabled = formControl?.disabled || disabled;
 
+  const className = useMemo(() => {
+    return renderClassStatus('rls-field-box', { disabled: _disabled });
+  }, [formControl?.disabled, disabled]);
+
   return (
     <div id={identifier} className="rls-field-date-range" rls-theme={rlsTheme}>
-      <div
-        className={useRenderClassStatus('rls-field-box', {
-          disabled: _disabled
-        })}
-      >
+      <div className={className}>
         {children && <label className="rls-field-box__label">{children}</label>}
 
         <div className="rls-field-box__component">

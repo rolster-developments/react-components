@@ -1,14 +1,14 @@
 import { PickerListenerEvent, verifyDateRange } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { RlsIcon } from '../../atoms';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
-import { RlsMessageFormError } from '../../molecules';
+import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDate } from '../PickerDate/PickerDate';
 import './FieldDate.css';
+import { renderClassStatus } from '../../../helpers';
 
 const FORMAT_DATE = '{dd}/{mx}/{aa}';
 
@@ -49,10 +49,10 @@ interface FormControlEmptyProps
   onValue?: (value?: Date) => void;
 }
 
-export function RlsFieldDate(props: FormControlDefinedProps): JSX.Element;
-export function RlsFieldDate(props: FormControlUndefinedProps): JSX.Element;
-export function RlsFieldDate(props: FormControlVoidProps): JSX.Element;
-export function RlsFieldDate(props: FormControlEmptyProps): JSX.Element;
+export function RlsFieldDate(props: FormControlDefinedProps): ReactNode;
+export function RlsFieldDate(props: FormControlUndefinedProps): ReactNode;
+export function RlsFieldDate(props: FormControlVoidProps): ReactNode;
+export function RlsFieldDate(props: FormControlEmptyProps): ReactNode;
 export function RlsFieldDate({
   children,
   date,
@@ -66,11 +66,11 @@ export function RlsFieldDate({
   onValue,
   placeholder,
   rlsTheme,
-  value: defaultValue
+  value: _value
 }: FieldDateProps) {
   const today = new Date(); // Initial current date in component
 
-  const [value, setValue] = useState(formControl?.value || defaultValue);
+  const [value, setValue] = useState(formControl?.value || _value);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   useEffect(() => {
@@ -95,9 +95,9 @@ export function RlsFieldDate({
 
   function onClickAction(): void {
     if (value) {
-      formControl?.setValue(defaultValue as Date);
+      formControl?.setValue(_value as Date);
       formControl?.touch();
-      onChange(defaultValue);
+      onChange(_value);
     } else {
       setModalIsVisible(true);
     }
@@ -109,11 +109,13 @@ export function RlsFieldDate({
 
   const _disabled = formControl?.disabled || disabled;
 
+  const className = useMemo(() => {
+    return renderClassStatus('rls-field-box', { disabled: _disabled });
+  }, [formControl?.disabled, disabled]);
+
   return (
     <div id={identifier} className="rls-field-date" rls-theme={rlsTheme}>
-      <div
-        className={useRenderClassStatus('rls-field-box', { disabled: _disabled })}
-      >
+      <div className={className}>
         {children && <label className="rls-field-box__label">{children}</label>}
 
         <div className="rls-field-box__component">

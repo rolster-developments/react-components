@@ -12,17 +12,15 @@ import {
   dateFormatTemplate
 } from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
+import { useEffect, useMemo, useState } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms';
+import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
-import {
-  RlsPickerDay,
-  RlsPickerMonth,
-  RlsPickerMonthTitle,
-  RlsPickerYear
-} from '../../molecules';
+import { RlsPickerDay } from '../../molecules/PickerDay/PickerDay';
+import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
+import { RlsPickerMonthTitle } from '../../molecules/PickerMonthTitle/PickerMonthTitle';
+import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
 
 const FORMAT_TITLE = '{dw}, {mx} {dd} de {aa}';
@@ -118,6 +116,14 @@ export function RlsPickerDate({
     onListener && onListener({ event: PickerListenerEvent.Select, value });
   }
 
+  const classNameComponent = useMemo(() => {
+    return renderClassStatus('rls-picker-date__component', {
+      day: visibility === 'DAY',
+      month: visibility === 'MONTH',
+      year: visibility === 'YEAR'
+    });
+  }, [visibility]);
+
   return (
     <div className="rls-picker-date" rls-theme={rlsTheme}>
       <div className="rls-picker-date__header">
@@ -143,13 +149,7 @@ export function RlsPickerDate({
         />
       </div>
 
-      <div
-        className={useRenderClassStatus('rls-picker-date__component', {
-          day: visibility === 'DAY',
-          month: visibility === 'MONTH',
-          year: visibility === 'YEAR'
-        })}
-      >
+      <div className={classNameComponent}>
         <RlsPickerDay
           formControl={dayControl}
           date={dateInitial}

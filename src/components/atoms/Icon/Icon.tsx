@@ -1,4 +1,5 @@
-import { useRenderClassStatus } from '../../../controllers';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import './Icon.css';
 
 interface IconProps {
@@ -7,8 +8,12 @@ interface IconProps {
 }
 
 export function RlsIcon({ value, skeleton }: IconProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-icon', { skeleton });
+  }, [skeleton]);
+
   return (
-    <div className={useRenderClassStatus('rls-icon', { skeleton })}>
+    <div className={className}>
       <i className={`rls-icon-${value}`}></i>
     </div>
   );

@@ -6,18 +6,15 @@ import {
   normalizeMinTime
 } from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
-import { rangeFormatTemplate } from '../../../helpers';
+import { useEffect, useMemo, useState } from 'react';
+import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms';
+import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
-import {
-  RlsPickerDayRange,
-  RlsPickerMonth,
-  RlsPickerMonthTitle,
-  RlsPickerYear
-} from '../../molecules';
+import { RlsPickerDayRange } from '../../molecules/PickerDayRange/PickerDayRange';
+import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
+import { RlsPickerMonthTitle } from '../../molecules/PickerMonthTitle/PickerMonthTitle';
+import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDateRange.css';
 
 interface PickerDateRangeProps extends RlsComponent {
@@ -97,6 +94,20 @@ export function RlsPickerDateRange({
     onListener && onListener({ event: PickerListenerEvent.Select, value });
   }
 
+  const classNameComponent = useMemo(() => {
+    return renderClassStatus('rls-picker-date-range__component', {
+      day: visibility === 'DAY',
+      month: visibility === 'MONTH',
+      year: visibility === 'YEAR'
+    });
+  }, [visibility]);
+
+  const classNameFooter = useMemo(() => {
+    return renderClassStatus('rls-picker-date-range__footer', {
+      automatic
+    });
+  }, [automatic]);
+
   return (
     <div className="rls-picker-date-range" rls-theme={rlsTheme}>
       <div className="rls-picker-date-range__header">
@@ -120,13 +131,7 @@ export function RlsPickerDateRange({
         />
       </div>
 
-      <div
-        className={useRenderClassStatus('rls-picker-date-range__component', {
-          day: visibility === 'DAY',
-          month: visibility === 'MONTH',
-          year: visibility === 'YEAR'
-        })}
-      >
+      <div className={classNameComponent}>
         <RlsPickerDayRange
           formControl={dayControl}
           date={date}
@@ -153,11 +158,7 @@ export function RlsPickerDateRange({
         />
       </div>
 
-      <div
-        className={useRenderClassStatus('rls-picker-date-range__footer', {
-          automatic
-        })}
-      >
+      <div className={classNameFooter}>
         <div className="rls-picker-date-range__actions">
           <div className="rls-picker-date-range__actions--cancel">
             <RlsButton type="ghost" onClick={onCancel}>
