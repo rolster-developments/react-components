@@ -2,14 +2,16 @@ import { itIsDefined } from '@rolster/commons';
 import { monthLimitTemplate } from '@rolster/components';
 import { MONTH_NAMES, Month } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { RlsButtonAction } from '../../atoms';
-import './PickerMonthTitle.css';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
+import './PickerSelectorTitle.css';
+import { i18nSubscribe } from '@rolster/i18n';
 
-type PickerMonthTitleType = 'month' | 'year';
+type PickerSelectorTitleType = 'month' | 'year';
 
-interface PickerMonthTitleProps {
+interface PickerSelectorTitleProps {
   monthControl: ReactControl<HTMLElement, number>;
-  type: PickerMonthTitleType;
+  type: PickerSelectorTitleType;
   yearControl: ReactControl<HTMLElement, number>;
   date?: Date;
   disabled?: boolean;
@@ -18,7 +20,7 @@ interface PickerMonthTitleProps {
   onClick?: () => void;
 }
 
-export function RlsPickerMonthTitle({
+export function RlsPickerSelectorTitle({
   monthControl,
   type,
   yearControl,
@@ -27,17 +29,31 @@ export function RlsPickerMonthTitle({
   maxDate,
   minDate,
   onClick
-}: PickerMonthTitleProps) {
-  const { limitNext, limitPrevious } = monthLimitTemplate({
-    date,
-    maxDate,
-    minDate,
-    month: monthControl.value
-  });
+}: PickerSelectorTitleProps) {
+  const { limitNext, limitPrevious } = useMemo(() => {
+    return monthLimitTemplate({
+      date,
+      maxDate,
+      minDate,
+      month: monthControl.value
+    });
+  }, [date, maxDate, minDate, monthControl.value]);
 
-  const monthName = MONTH_NAMES()[monthControl.value || 0];
+  const [label, setLabel] = useState(
+    MONTH_NAMES(monthControl.value ?? Month.January)
+  );
 
-  function onPreviousMonth(): void {
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setLabel(MONTH_NAMES(monthControl.value ?? Month.January));
+    });
+  }, []);
+
+  useEffect(() => {
+    setLabel(MONTH_NAMES(monthControl.value ?? Month.January));
+  }, [monthControl.value]);
+
+  const onPreviousMonth = useCallback(() => {
     if (itIsDefined(monthControl.value) && itIsDefined(yearControl.value)) {
       if (monthControl.value > Month.January) {
         monthControl.setValue(monthControl.value - 1);
@@ -46,18 +62,18 @@ export function RlsPickerMonthTitle({
         yearControl.setValue(yearControl.value - 1);
       }
     }
-  }
+  }, [monthControl.value, yearControl.value]);
 
-  function onPreviousYear(): void {
+  const onPreviousYear = useCallback(() => {
     itIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value - 1);
-  }
+  }, [yearControl.value]);
 
-  function onPrevious(): void {
+  const onPrevious = useCallback(() => {
     type === 'month' ? onPreviousMonth() : onPreviousYear();
-  }
+  }, [type, onPreviousMonth, onPreviousYear]);
 
-  function onNextMonth(): void {
+  const onNextMonth = useCallback(() => {
     if (itIsDefined(monthControl.value) && itIsDefined(yearControl.value)) {
       if (monthControl.value < Month.December) {
         monthControl.setValue(monthControl.value + 1);
@@ -66,26 +82,26 @@ export function RlsPickerMonthTitle({
         yearControl.setValue(yearControl.value + 1);
       }
     }
-  }
+  }, [monthControl.value, yearControl.value]);
 
-  function onNextYear(): void {
+  const onNextYear = useCallback(() => {
     itIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value + 1);
-  }
+  }, [yearControl.value]);
 
-  function onNext(): void {
+  const onNext = useCallback(() => {
     type === 'month' ? onNextMonth() : onNextYear();
-  }
+  }, [type, onNextMonth, onNextYear]);
 
   return (
-    <div className="rls-picker-month-title">
+    <div className="rls-picker-selector-title">
       <RlsButtonAction
         icon="arrow-ios-left"
         onClick={onPrevious}
         disabled={limitPrevious || disabled}
       />
 
-      <span onClick={onClick}>{monthName}</span>
+      <span onClick={onClick}>{label}</span>
 
       <RlsButtonAction
         icon="arrow-ios-right"

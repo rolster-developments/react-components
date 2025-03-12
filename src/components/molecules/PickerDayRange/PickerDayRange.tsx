@@ -1,4 +1,9 @@
-import { WeekRangeState, createDayRangePicker } from '@rolster/components';
+import {
+  createDayRangePicker,
+  DayRangeState,
+  WeekRangeState
+} from '@rolster/components';
+import { i18nSubscribe } from '@rolster/i18n';
 import {
   DAY_LABELS,
   DateRange,
@@ -8,12 +13,12 @@ import {
   normalizeMinTime
 } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './PickerDayRange.css';
 
-const FORMAT_RANGE = '{dd}/{mx}/{aa}';
+const formatRange = '{dd}/{mx}/{aa}';
 
 interface PickerDayRangeProps extends RlsComponent {
   date?: Date;
@@ -23,26 +28,101 @@ interface PickerDayRangeProps extends RlsComponent {
   minDate?: Date;
 }
 
+interface PickerDayRangeItemProps {
+  day: DayRangeState;
+  onSelect: (value: number) => void;
+  disabled?: boolean;
+}
+
+function RlsPickerDayRangeItem({
+  day,
+  onSelect,
+  disabled
+}: PickerDayRangeItemProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-picker-day-range__element', {
+      disabled: day.disabled || disabled,
+      end: day.end,
+      forbidden: day.forbidden,
+      ranged: day.ranged,
+      source: day.source
+    });
+  }, [day.disabled, day.end, day.forbidden, day.ranged, day.source, disabled]);
+
+  const onClick = useCallback(() => {
+    day.value && !day.disabled && !disabled && onSelect(day.value);
+  }, [day.value, day.disabled, disabled, onSelect]);
+
+  return (
+    <div className={className} onClick={onClick}>
+      <span className="rls-picker-day-range__element__span">
+        {day.value || '??'}
+      </span>
+    </div>
+  );
+}
+
 export function RlsPickerDayRange({
-  date,
-  disabled: _disabled,
+  date: _date,
+  disabled,
   formControl,
   maxDate,
   minDate,
   rlsTheme
 }: PickerDayRangeProps) {
-  const currentRange = formControl?.value || DateRange.now();
-  const currentDate = normalizeMinTime(date || currentRange.minDate);
+  const _range = useMemo(() => {
+    return formControl?.value ?? DateRange.now();
+  }, [formControl?.value]);
 
-  const sourceDate = useRef(currentRange.minDate);
+  const date = useMemo(() => {
+    return normalizeMinTime(_date ?? _range.minDate);
+  }, [_date, _range]);
+
+  const sourceDate = useRef(_range.minDate);
 
   const [weeks, setWeeks] = useState<WeekRangeState[]>([]);
-  const [range, setRange] = useState(currentRange);
+  const [range, setRange] = useState(_range);
+
+  const [headers, setHeaders] = useState(<></>);
+  const [component, setComponent] = useState(<></>);
+
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setHeaders(
+        <div className="rls-picker-day-range__header">
+          {DAY_LABELS().map((title, index) => (
+            <label key={index} className="rls-picker-day-range__label">
+              {title}
+            </label>
+          ))}
+        </div>
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    setComponent(
+      <div className="rls-picker-day-range__component">
+        {weeks.map(({ days }, index) => (
+          <div key={index} className="rls-picker-day-range__week">
+            {days.map((day, index) => (
+              <RlsPickerDayRangeItem
+                key={index}
+                day={day}
+                onSelect={onSelect}
+                disabled={disabled}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }, [weeks]);
 
   useEffect(() => {
     setWeeks(
       createDayRangePicker({
-        date: currentDate,
+        date,
         range,
         sourceDate: sourceDate.current,
         minDate,
@@ -51,67 +131,37 @@ export function RlsPickerDayRange({
     );
   }, [range, date, minDate, maxDate]);
 
-  function onChange(value: number): void {
-    const date = assignDayInDate(currentDate, value);
+  const title = useMemo(() => {
+    return (
+      <div className="rls-picker-day-range__title">
+        {dateFormatTemplate(sourceDate.current, formatRange)}
+      </div>
+    );
+  }, [sourceDate.current]);
 
-    const range = dateIsBefore(date, sourceDate.current)
-      ? new DateRange(sourceDate.current, date)
-      : new DateRange(date, sourceDate.current);
+  const onSelect = useCallback(
+    (value: number) => {
+      const _date = assignDayInDate(date, value);
 
-    sourceDate.current = date;
+      const range = dateIsBefore(_date, sourceDate.current)
+        ? new DateRange(sourceDate.current, date)
+        : new DateRange(_date, sourceDate.current);
 
-    setRange(range);
-    formControl?.setValue(range);
-  }
+      sourceDate.current = _date;
+
+      setRange(range);
+      formControl?.setValue(range);
+    },
+    [date, formControl]
+  );
 
   return (
     <div className="rls-picker-day-range" rls-theme={rlsTheme}>
-      <div className="rls-picker-day-range__title">
-        {dateFormatTemplate(sourceDate.current, FORMAT_RANGE)}
-      </div>
+      {title}
 
-      <div className="rls-picker-day-range__header">
-        {DAY_LABELS().map((title, index) => (
-          <label key={index} className="rls-picker-day-range__label">
-            {title}
-          </label>
-        ))}
-      </div>
+      {headers}
 
-      <div className="rls-picker-day-range__component">
-        {weeks.map(({ days }, index) => (
-          <div key={index} className="rls-picker-day-range__week">
-            {days.map(
-              ({ disabled, end, forbidden, source, ranged, value }, index) => (
-                <div
-                  key={index}
-                  className={renderClassStatus(
-                    'rls-picker-day-range__element',
-                    {
-                      disabled: disabled || _disabled,
-                      end,
-                      forbidden,
-                      ranged,
-                      source
-                    }
-                  )}
-                  onClick={
-                    value && !_disabled
-                      ? () => {
-                          onChange(value);
-                        }
-                      : undefined
-                  }
-                >
-                  <span className="rls-picker-day-range__element__span">
-                    {value || '??'}
-                  </span>
-                </div>
-              )
-            )}
-          </div>
-        ))}
-      </div>
+      {component}
     </div>
   );
 }

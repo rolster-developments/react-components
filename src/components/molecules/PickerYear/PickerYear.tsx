@@ -1,9 +1,13 @@
 import { itIsDefined } from '@rolster/commons';
-import { createYearPicker, verifyYearPicker } from '@rolster/components';
+import {
+  YearState,
+  createYearPicker,
+  verifyYearPicker
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
-import { RlsButtonAction } from '../../atoms';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsComponent } from '../../definitions';
 import './PickerYear.css';
 
@@ -16,25 +20,59 @@ interface PickerYearProps extends RlsComponent {
   onValue?: (value: number) => void;
 }
 
+interface PickerYearItemProps {
+  onSelect: (value: number) => void;
+  year: YearState;
+  disabled?: boolean;
+}
+
+function RlsPickerYearItem({ onSelect, year, disabled }: PickerYearItemProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-picker-year__element', {
+      disabled: year.disabled || disabled,
+      focused: year.focused,
+      selected: year.selected
+    });
+  }, [year.disabled, year.focused, year.selected, disabled]);
+
+  const onClick = useCallback(() => {
+    year.value && !year.disabled && !disabled && onSelect(year.value);
+  }, [year.value, year.disabled, disabled, onSelect]);
+
+  return (
+    <div className={className} onClick={onClick}>
+      <span className="rls-picker-year__span rls-body1-medium">
+        {year.value || '????'}
+      </span>
+    </div>
+  );
+}
+
 export function RlsPickerYear({
-  date,
-  disabled: _disabled,
+  date: _date,
+  disabled,
   formControl,
   maxDate,
   minDate,
   onValue,
   rlsTheme
 }: PickerYearProps) {
-  const currentDate = date || new Date();
+  const date = useMemo(() => _date || new Date(), [_date]);
 
-  const [value, setValue] = useState(
-    formControl?.value || currentDate.getFullYear()
-  );
+  const [value, setValue] = useState(formControl?.value ?? date.getFullYear());
+  const [year, setYear] = useState(formControl?.value ?? date.getFullYear());
 
-  const [year, setYear] = useState(
-    formControl?.value || currentDate.getFullYear()
-  );
-  
+  const [component, setComponent] = useState(<></>);
+
+  const createPickerOptions = useCallback(() => {
+    return {
+      date,
+      year,
+      minDate,
+      maxDate
+    };
+  }, [date, year, minDate, maxDate]);
+
   const [template, setTemplate] = useState(
     createYearPicker(createPickerOptions())
   );
@@ -44,46 +82,56 @@ export function RlsPickerYear({
 
     const year = verifyYearPicker(options);
 
-    year
-      ? setYearValue(year)
-      : setTemplate(createYearPicker(createPickerOptions()));
+    year ? setYearValue(year) : setTemplate(createYearPicker(options));
   }, [date, year, value, minDate, maxDate]);
+
+  useEffect(() => {
+    setComponent(
+      <>
+        {template.years.map((year, index) => (
+          <RlsPickerYearItem
+            key={index}
+            year={year}
+            onSelect={onSelect}
+            disabled={disabled}
+          />
+        ))}
+      </>
+    );
+  }, [template.years]);
 
   useEffect(() => {
     const year = verifyYearPicker(createPickerOptions());
 
     itIsDefined(year)
       ? formControl?.setValue(year)
-      : setValue(formControl?.value || currentDate.getFullYear());
+      : setValue(formControl?.value ?? date.getFullYear());
   }, [formControl?.value]);
 
-  function createPickerOptions() {
-    return {
-      date: currentDate,
-      year,
-      minDate,
-      maxDate
-    };
-  }
+  const setYearValue = useCallback(
+    (value: number) => {
+      formControl ? formControl.setValue(value) : setValue(value);
 
-  function setYearValue(value: number): void {
-    formControl ? formControl.setValue(value) : setValue(value);
+      setYear(value);
+    },
+    [formControl]
+  );
 
-    setYear(value);
-  }
-
-  function onClickPrev(): void {
+  const onClickPrev = useCallback(() => {
     setYear(year - 8);
-  }
+  }, []);
 
-  function onClickNext(): void {
+  const onClickNext = useCallback(() => {
     setYear(year + 8);
-  }
+  }, []);
 
-  function onChange(value: number): void {
-    setYearValue(value);
-    onValue && onValue(value);
-  }
+  const onSelect = useCallback(
+    (value: number) => {
+      setYearValue(value);
+      onValue && onValue(value);
+    },
+    [setYearValue, onValue]
+  );
 
   return (
     <div className="rls-picker-year" rls-theme={rlsTheme}>
@@ -92,7 +140,7 @@ export function RlsPickerYear({
           <RlsButtonAction
             icon="arrow-ios-left"
             onClick={onClickPrev}
-            disabled={!template.canPrevious || _disabled}
+            disabled={!template.canPrevious || disabled}
           />
         </div>
 
@@ -104,34 +152,12 @@ export function RlsPickerYear({
           <RlsButtonAction
             icon="arrow-ios-right"
             onClick={onClickNext}
-            disabled={!template.canNext || _disabled}
+            disabled={!template.canNext || disabled}
           />
         </div>
       </div>
 
-      <div className="rls-picker-year__component">
-        {template.years.map(({ value, disabled, focused, selected }, index) => (
-          <div
-            key={index}
-            className={renderClassStatus('rls-picker-year__year', {
-              disabled: disabled || _disabled,
-              focused,
-              selected
-            })}
-            onClick={
-              value && !_disabled
-                ? () => {
-                    onChange(value);
-                  }
-                : undefined
-            }
-          >
-            <span className="rls-picker-year__year__span rls-body1-medium">
-              {value || '????'}
-            </span>
-          </div>
-        ))}
-      </div>
+      <div className="rls-picker-year__component">{component}</div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ export type RlsTheme =
   | 'warning'
   | 'danger'
   | 'amaizing'
+  | 'amber'
   | 'smartness'
   | 'obsidian';
 

@@ -5,19 +5,16 @@ export function renderClassStatus(
   status: ClassStatus = {},
   additionals?: string
 ): string {
-  const resultClass = [base];
+  const _classElement = [base];
 
   Object.entries(status).forEach(([key, state]) => {
-    if (state) {
-      typeof state === 'string'
-        ? resultClass.push(`${base}--${state}`)
-        : resultClass.push(`${base}--${key}`);
-    }
+    state &&
+      (typeof state === 'string'
+        ? _classElement.push(`${base}--${state}`)
+        : _classElement.push(`${base}--${key}`));
   });
 
-  if (additionals) {
-    resultClass.push(additionals);
-  }
+  additionals && _classElement.push(additionals);
 
-  return resultClass.join(' ').trim();
+  return _classElement.join(' ').trim();
 }

@@ -1,9 +1,9 @@
 // Rolster Technology YearPicker Component
-// v2.0.1
+// v2.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 05/Ago/2024
+// Updated: 12/Mar/2025
 
 .rls-picker-year {
   --pvt-component-background: transparent;
@@ -67,7 +67,7 @@
     column-gap: var(--rls-sizing-x8);
   }
 
-  &__year {
+  &__element {
     position: relative;
     display: flex;
     align-items: center;
@@ -106,13 +106,13 @@
 
       pointer-events: none;
     }
+  }
 
-    &__span {
-      font-weight: var(--rls-font-weight-medium);
-      font-size: 7.5rem;
-      cursor: default;
-      pointer-events: none;
-      letter-spacing: 0.325rem;
-    }
+  &__span {
+    font-weight: var(--rls-font-weight-medium);
+    font-size: 7.5rem;
+    cursor: default;
+    pointer-events: none;
+    letter-spacing: 0.325rem;
   }
 }

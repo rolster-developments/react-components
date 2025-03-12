@@ -19,7 +19,7 @@ import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
 import { RlsPickerDay } from '../../molecules/PickerDay/PickerDay';
 import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
-import { RlsPickerMonthTitle } from '../../molecules/PickerMonthTitle/PickerMonthTitle';
+import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
 
@@ -137,7 +137,7 @@ export function RlsPickerDate({
           <span onClick={onVisibilityYear}>{yearControl.value}</span>
         </div>
 
-        <RlsPickerMonthTitle
+        <RlsPickerSelectorTitle
           monthControl={monthControl}
           yearControl={yearControl}
           date={value}

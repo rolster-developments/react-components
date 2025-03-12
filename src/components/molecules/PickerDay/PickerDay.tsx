@@ -1,12 +1,13 @@
-import { itIsDefined } from '@rolster/commons';
 import {
-  WeekState,
   createDayPicker,
-  verifyDayPicker
+  DayState,
+  verifyDayPicker,
+  WeekState
 } from '@rolster/components';
+import { i18nSubscribe } from '@rolster/i18n';
 import { DAY_LABELS } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './PickerDay.css';
@@ -22,9 +23,44 @@ interface PickerDayProps extends RlsComponent {
   year?: Nulleable<number>;
 }
 
+interface PickerDayItemProps {
+  day: DayState;
+  onSelect: (value: number) => void;
+  disabled?: boolean;
+}
+
+function RlsPickerDayItem({ day, onSelect, disabled }: PickerDayItemProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-picker-day__element', {
+      disabled: day.disabled || disabled,
+      focused: day.focused,
+      forbidden: day.forbidden,
+      selected: day.selected,
+      today: day.today
+    });
+  }, [
+    day.disabled,
+    day.focused,
+    day.forbidden,
+    day.selected,
+    day.today,
+    disabled
+  ]);
+
+  const onClick = useCallback(() => {
+    day.value && !day.disabled && !disabled && onSelect(day.value);
+  }, [day.value, day.disabled, disabled, onSelect]);
+
+  return (
+    <div className={className} onClick={onClick}>
+      <span className="rls-picker-day__element__span">{day.value || '??'}</span>
+    </div>
+  );
+}
+
 export function RlsPickerDay({
-  date,
-  disabled: _disabled,
+  date: _date,
+  disabled,
   formControl,
   maxDate,
   month,
@@ -33,12 +69,46 @@ export function RlsPickerDay({
   rlsTheme,
   year
 }: PickerDayProps) {
-  const currentDate = date || new Date(); // Initial date
+  const date = useMemo(() => _date ?? new Date(), [_date]);
 
   const [weeks, setWeeks] = useState<WeekState[]>([]);
-  const [value, setValue] = useState(
-    formControl?.value || currentDate.getDate()
-  );
+  const [value, setValue] = useState(formControl?.value || date.getDate());
+
+  const [headers, setHeaders] = useState(<></>);
+  const [component, setComponent] = useState(<></>);
+
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setHeaders(
+        <div className="rls-picker-day__header">
+          {DAY_LABELS().map((title, index) => (
+            <label key={index} className="rls-picker-day__label">
+              {title}
+            </label>
+          ))}
+        </div>
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    setComponent(
+      <div className="rls-picker-day__component">
+        {weeks.map(({ days }, index) => (
+          <div key={index} className="rls-picker-day__week">
+            {days.map((day, index) => (
+              <RlsPickerDayItem
+                key={index}
+                day={day}
+                onSelect={onSelect}
+                disabled={disabled}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }, [weeks]);
 
   useEffect(() => {
     const options = createPickerOptions();
@@ -53,69 +123,40 @@ export function RlsPickerDay({
 
     day
       ? formControl?.setValue(day)
-      : setValue(formControl?.value || currentDate.getDate());
+      : setValue(formControl?.value || date.getDate());
   }, [formControl?.value]);
 
-  function createPickerOptions() {
+  const createPickerOptions = useCallback(() => {
     return {
-      date: currentDate,
-      day: formControl?.value || value,
-      month: itIsDefined(month) ? month : currentDate.getMonth(),
-      year: year || currentDate.getFullYear(),
+      date,
+      day: formControl?.value ?? value,
+      month: month ?? date.getMonth(),
+      year: year ?? date.getFullYear(),
       minDate,
       maxDate
     };
-  }
+  }, [date, value, formControl?.value, year, month, minDate, maxDate]);
 
-  function setDayValue(value: number): void {
-    formControl ? formControl.setValue(value) : setValue(value);
-  }
+  const setDayValue = useCallback(
+    (value: number) => {
+      formControl ? formControl.setValue(value) : setValue(value);
+    },
+    [formControl]
+  );
 
-  function onChange(value: number): void {
-    setDayValue(value);
-    onValue && onValue(value);
-  }
+  const onSelect = useCallback(
+    (value: number) => {
+      setDayValue(value);
+      onValue && onValue(value);
+    },
+    [setDayValue, onValue]
+  );
 
   return (
     <div className="rls-picker-day" rls-theme={rlsTheme}>
-      <div className="rls-picker-day__header">
-        {DAY_LABELS().map((title, index) => (
-          <label key={index} className="rls-picker-day__label">
-            {title}
-          </label>
-        ))}
-      </div>
+      {headers}
 
-      <div className="rls-picker-day__component">
-        {weeks.map(({ days }, index) => (
-          <div key={index} className="rls-picker-day__week">
-            {days.map(
-              (
-                { value, disabled, focused, forbidden, selected, today },
-                index
-              ) => (
-                <div
-                  key={index}
-                  className={renderClassStatus('rls-picker-day__element', {
-                    disabled: disabled || _disabled,
-                    focused,
-                    forbidden,
-                    selected,
-                    today
-                  })}
-                  onClick={
-                    value && !_disabled ? () => onChange(value) : undefined
-                  }
-                >
-                  <span className="rls-picker-day__element__span">
-                    {value || '??'}
-                  </span>
-                </div>
-              )
-            )}
-          </div>
-        ))}
-      </div>
+      {component}
     </div>
   );
 }

@@ -14,6 +14,6 @@ export * from './Pagination/Pagination';
 export * from './PickerDay/PickerDay';
 export * from './PickerDayRange/PickerDayRange';
 export * from './PickerMonth/PickerMonth';
-export * from './PickerMonthTitle/PickerMonthTitle';
+export * from './PickerSelectorTitle/PickerSelectorTitle';
 export * from './PickerYear/PickerYear';
 export * from './Toolbar/Toolbar';
