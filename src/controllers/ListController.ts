@@ -88,11 +88,6 @@ export function useListController<T = any, K = string>(
     if (listIsOpen.current && !state.modalIsVisible) {
       formControl?.touch();
     }
-
-    refreshState((state) => ({
-      ...state,
-      higher: locationListCanTop(contentRef.current, listRef.current)
-    }));
   }, [state.modalIsVisible]);
 
   useEffect(() => {
@@ -126,7 +121,14 @@ export function useListController<T = any, K = string>(
   }, [collection, formControl?.value]);
 
   const setState = useCallback((state: Partial<ListControllerState>) => {
-    refreshState((_state) => ({ ..._state, ...state }));
+    const _state = state.modalIsVisible
+      ? {
+          ...state,
+          higher: locationListCanTop(contentRef.current, listRef.current)
+        }
+      : state;
+
+    refreshState((state) => ({ ...state, ..._state }));
   }, []);
 
   const setFormValue = useCallback(

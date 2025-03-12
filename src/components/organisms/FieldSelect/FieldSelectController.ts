@@ -1,6 +1,11 @@
 import { AbstractListElement as Element } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { KeyboardEvent, KeyboardEventHandler, MouseEventHandler } from 'react';
+import {
+  KeyboardEvent,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useCallback
+} from 'react';
 import { useListController } from '../../../controllers';
 import { ListControllerState } from '../../../definitions';
 
@@ -41,37 +46,40 @@ export function useFieldSelect<
 >(props: FieldSelectProps<T, E, K>): FieldSelectControl<T, E> {
   const controller = useListController<T, K>(props);
 
-  function onFocusInput(): void {
+  const onFocusInput = useCallback(() => {
     controller.setState({ focused: true });
-  }
+  }, [controller.setState]);
 
-  function onBlurInput(): void {
+  const onBlurInput = useCallback(() => {
     controller.setState({ focused: false });
-  }
+  }, [controller.setState]);
 
-  function onClickInput(): void {
+  const onClickInput = useCallback(() => {
     controller.setState({ modalIsVisible: true });
-  }
+  }, [controller.setState]);
 
-  function onKeydownInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'Space':
-      case 'Enter':
-        controller.setState({ modalIsVisible: true });
-        break;
+  const onKeydownInput = useCallback(
+    (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'Space':
+        case 'Enter':
+          controller.setState({ modalIsVisible: true });
+          break;
 
-      case 'Escape':
-      case 'Tab':
-        controller.setState({ modalIsVisible: false });
-        break;
+        case 'Escape':
+        case 'Tab':
+          controller.setState({ modalIsVisible: false });
+          break;
 
-      default:
-        controller.navigationInput(event);
-        break;
-    }
-  }
+        default:
+          controller.navigationInput(event);
+          break;
+      }
+    },
+    [controller.setState, controller.navigationInput]
+  );
 
-  function onClickAction(): void {
+  const onClickAction = useCallback(() => {
     const removable = !props.unremovable && !!controller.value;
 
     if (removable) {
@@ -83,41 +91,57 @@ export function useFieldSelect<
       controller.setState({ modalIsVisible });
       modalIsVisible && controller.inputRef?.current?.focus();
     }
-  }
+  }, [
+    controller.modalIsVisible,
+    controller.value,
+    controller.setState,
+    controller.setFormValue,
+    props.unremovable,
+    props.onValue
+  ]);
 
-  function onClickBackdrop(): void {
+  const onClickBackdrop = useCallback(() => {
     controller.setState({ modalIsVisible: false });
-  }
+  }, [controller.setState]);
 
-  function onClickElement(element: Element<T>): MouseEventHandler {
+  const onChange = useCallback(
+    (element: Element<T>) => {
+      controller.inputRef?.current?.focus();
+
+      if (props.onSelect) {
+        controller.setState({ modalIsVisible: false });
+        element.value && props.onSelect(element.value);
+      } else {
+        controller.setFormValue(element);
+        controller.setState({ modalIsVisible: false });
+      }
+
+      props.onValue && props.onValue(element.value);
+    },
+    [
+      controller.setState,
+      controller.setFormValue,
+      props.onSelect,
+      props.onValue
+    ]
+  );
+
+  const onClickElement = useCallback((element: Element<T>) => {
     return () => {
       onChange(element);
     };
-  }
+  }, []);
 
-  function onKeydownElement(element: Element<T>): KeyboardEventHandler {
-    return (event) => {
-      event.code === 'Enter'
-        ? onChange(element)
-        : controller.navigationElement(event);
-    };
-  }
-
-  function onChange(element: Element<T>): void {
-    const { onSelect, onValue } = props;
-
-    controller.inputRef?.current?.focus();
-
-    if (onSelect) {
-      controller.setState({ modalIsVisible: false });
-      element.value && onSelect(element.value);
-    } else {
-      controller.setFormValue(element);
-      controller.setState({ modalIsVisible: false });
-    }
-
-    onValue && onValue(element.value);
-  }
+  const onKeydownElement = useCallback(
+    (element: Element<T>) => {
+      return (event: KeyboardEvent) => {
+        event.code === 'Enter'
+          ? onChange(element)
+          : controller.navigationElement(event);
+      };
+    },
+    [controller.navigationElement]
+  );
 
   return {
     ...controller,

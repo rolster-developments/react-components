@@ -8,6 +8,7 @@ import {
   KeyboardEvent,
   KeyboardEventHandler,
   MouseEventHandler,
+  useCallback,
   useEffect,
   useRef,
   useState
@@ -68,44 +69,62 @@ export function useFieldAutocomplete<
     previous: null
   });
 
+  const refreshCoincidences = useCallback(
+    (suggestions: E[], pattern: string | null, reboot = false) => {
+      const { collection, store } = createAutocompleteStore({
+        pattern,
+        suggestions,
+        reboot,
+        store: currentStore.current
+      });
+
+      currentStore.current = store;
+      setCoincidences(collection.slice(0, MAX_ELEMENTS));
+    },
+    []
+  );
+
   useEffect(() => {
-    refreshCoincidences(pattern, true);
+    refreshCoincidences(props.suggestions, pattern, true);
   }, [props.suggestions]);
 
   useEffect(() => {
-    refreshCoincidences(pattern);
+    refreshCoincidences(props.suggestions, pattern);
   }, [pattern]);
 
-  function onFocusInput(): void {
+  const onFocusInput = useCallback(() => {
     controller.setState({ focused: true });
-  }
+  }, [controller.setState]);
 
-  function onBlurInput(): void {
+  const onBlurInput = useCallback(() => {
     controller.setState({ focused: false });
-  }
+  }, [controller.setState]);
 
-  function onKeydownInput(event: KeyboardEvent): void {
-    switch (event.code) {
-      case 'Escape':
-      case 'Tab':
-        controller.setState({ modalIsVisible: false });
-        break;
+  const onKeydownInput = useCallback(
+    (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'Escape':
+        case 'Tab':
+          controller.setState({ modalIsVisible: false });
+          break;
 
-      default:
-        controller.navigationInput(event);
-        break;
-    }
-  }
+        default:
+          controller.navigationInput(event);
+          break;
+      }
+    },
+    [controller.setState, controller.navigationInput]
+  );
 
-  function onClickControl(): void {
+  const onClickControl = useCallback(() => {
     controller.setState({ modalIsVisible: true });
 
     setTimeout(() => {
       controller.inputRef?.current?.focus();
     }, DURATION_ANIMATION);
-  }
+  }, [controller.setState]);
 
-  function onClickAction(): void {
+  const onClickAction = useCallback(() => {
     if (controller.value) {
       controller.setState({ modalIsVisible: false });
       controller.setFormValue(undefined);
@@ -113,51 +132,53 @@ export function useFieldAutocomplete<
     } else {
       onClickControl();
     }
-  }
+  }, [
+    controller.value,
+    controller.setState,
+    controller.setFormValue,
+    props.onValue
+  ]);
 
-  function onClickBackdrop(): void {
+  const onClickBackdrop = useCallback(() => {
     controller.setState({ modalIsVisible: false });
-  }
+  }, [controller.setState]);
 
-  function onClickElement(element: Element<T>): MouseEventHandler {
+  const onChange = useCallback(
+    (element: Element<T>) => {
+      if (props.onSelect) {
+        controller.setState({ modalIsVisible: false });
+        element.value && props.onSelect(element.value);
+      } else {
+        controller.setState({ modalIsVisible: false });
+        controller.setFormValue(element);
+      }
+
+      props.onValue && props.onValue(element.value);
+    },
+    [
+      controller.setState,
+      controller.setFormValue,
+      props.onSelect,
+      props.onValue
+    ]
+  );
+
+  const onClickElement = useCallback((element: Element<T>) => {
     return () => {
       onChange(element);
     };
-  }
+  }, []);
 
-  function onKeydownElement(element: Element<T>): KeyboardEventHandler {
-    return (event) => {
-      event.code === 'Enter'
-        ? onChange(element)
-        : controller.navigationElement(event);
-    };
-  }
-
-  function onChange(element: Element<T>): void {
-    const { onSelect, onValue } = props;
-
-    if (onSelect) {
-      controller.setState({ modalIsVisible: false });
-      element.value && onSelect(element.value);
-    } else {
-      controller.setState({ modalIsVisible: false });
-      controller.setFormValue(element);
-    }
-
-    onValue && onValue(element.value);
-  }
-
-  function refreshCoincidences(pattern: string | null, reboot = false): void {
-    const { collection, store } = createAutocompleteStore({
-      pattern,
-      suggestions: props.suggestions,
-      reboot,
-      store: currentStore.current
-    });
-
-    currentStore.current = store;
-    setCoincidences(collection.slice(0, MAX_ELEMENTS));
-  }
+  const onKeydownElement = useCallback(
+    (element: Element<T>) => {
+      return (event: KeyboardEvent) => {
+        event.code === 'Enter'
+          ? onChange(element)
+          : controller.navigationElement(event);
+      };
+    },
+    [controller.navigationElement]
+  );
 
   return {
     ...controller,

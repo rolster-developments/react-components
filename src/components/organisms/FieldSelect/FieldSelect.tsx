@@ -3,12 +3,13 @@ import {
   ListElement
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode } from 'react';
-import { useRenderClassStatus } from '../../../controllers';
+import { ReactNode, useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
-import { RlsIcon } from '../../atoms';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
-import { RlsBallot, RlsMessageFormError } from '../../molecules';
+import { RlsBallot } from '../../molecules/Ballot/Ballot';
+import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldSelect } from './FieldSelectController';
 import './FieldSelect.css';
 
@@ -60,15 +61,31 @@ export function RlsFieldSelectTemplate<
 
   const _disabled = formControl?.disabled || props.disabled;
 
-  const className = useRenderClassStatus(
-    'rls-field-box',
-    {
-      disabled: _disabled,
-      error: formControl?.wrong,
-      focused: select.focused && !_disabled
-    },
-    'rls-field-list rls-field-select'
-  );
+  const className = useMemo(() => {
+    const _disabled = formControl?.disabled || props.disabled;
+
+    return renderClassStatus(
+      'rls-field-box',
+      {
+        disabled: _disabled,
+        error: formControl?.wrong,
+        focused: select.focused && !_disabled
+      },
+      'rls-field-list rls-field-select'
+    );
+  }, [
+    formControl?.wrong,
+    formControl?.disabled,
+    select.focused,
+    props.disabled
+  ]);
+
+  const classNameList = useMemo(() => {
+    return renderClassStatus('rls-field-list__suggestions', {
+      higher: select.higher,
+      visible: select.modalIsVisible
+    });
+  }, [select.modalIsVisible, select.higher]);
 
   return (
     <div
@@ -114,12 +131,7 @@ export function RlsFieldSelectTemplate<
         />
       )}
 
-      <div
-        className={useRenderClassStatus('rls-field-list__suggestions', {
-          higher: select.higher,
-          visible: select.modalIsVisible
-        })}
-      >
+      <div className={classNameList}>
         {select.modalIsVisible && (
           <>
             <div className="rls-field-list__suggestions__body">
