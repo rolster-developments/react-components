@@ -1,11 +1,11 @@
 import { itIsDefined } from '@rolster/commons';
 import { monthLimitTemplate } from '@rolster/components';
 import { MONTH_NAMES, Month } from '@rolster/dates';
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import './PickerSelectorTitle.css';
-import { i18nSubscribe } from '@rolster/i18n';
 
 type PickerSelectorTitleType = 'month' | 'year';
 

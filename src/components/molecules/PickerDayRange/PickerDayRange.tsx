@@ -5,11 +5,11 @@ import {
 } from '@rolster/components';
 import { i18nSubscribe } from '@rolster/i18n';
 import {
-  DAY_LABELS,
-  DateRange,
   assignDayInDate,
-  dateFormatTemplate,
+  DAY_LABELS,
   dateIsBefore,
+  dateFormatTemplate,
+  DateRange,
   normalizeMinTime
 } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
@@ -32,6 +32,18 @@ interface PickerDayRangeItemProps {
   day: DayRangeState;
   onSelect: (value: number) => void;
   disabled?: boolean;
+}
+
+function RlsPickerDayRangeHeaders() {
+  return (
+    <div className="rls-picker-day__header">
+      {DAY_LABELS().map((title, index) => (
+        <label key={index} className="rls-picker-day__label">
+          {title}
+        </label>
+      ))}
+    </div>
+  );
 }
 
 function RlsPickerDayRangeItem({
@@ -83,20 +95,12 @@ export function RlsPickerDayRange({
   const [weeks, setWeeks] = useState<WeekRangeState[]>([]);
   const [range, setRange] = useState(_range);
 
-  const [headers, setHeaders] = useState(<></>);
+  const [headers, setHeaders] = useState(<RlsPickerDayRangeHeaders />);
   const [component, setComponent] = useState(<></>);
 
   useEffect(() => {
     return i18nSubscribe(() => {
-      setHeaders(
-        <div className="rls-picker-day-range__header">
-          {DAY_LABELS().map((title, index) => (
-            <label key={index} className="rls-picker-day-range__label">
-              {title}
-            </label>
-          ))}
-        </div>
-      );
+      setHeaders(<RlsPickerDayRangeHeaders />);
     });
   }, []);
 
@@ -129,7 +133,7 @@ export function RlsPickerDayRange({
         maxDate
       })
     );
-  }, [range, date, minDate, maxDate]);
+  }, [date, range, sourceDate.current, minDate, maxDate]);
 
   const title = useMemo(() => {
     return (
@@ -152,7 +156,7 @@ export function RlsPickerDayRange({
       setRange(range);
       formControl?.setValue(range);
     },
-    [date, formControl]
+    [date, sourceDate.current, formControl]
   );
 
   return (

@@ -118,11 +118,11 @@ export function RlsPickerYear({
   );
 
   const onClickPrev = useCallback(() => {
-    setYear(year - 8);
+    setYear((year) => year - 8);
   }, []);
 
   const onClickNext = useCallback(() => {
-    setYear(year + 8);
+    setYear((year) => year + 8);
   }, []);
 
   const onSelect = useCallback(

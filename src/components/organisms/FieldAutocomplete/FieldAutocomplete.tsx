@@ -60,7 +60,9 @@ export function RlsFieldAutocompleteTemplate<
     searching
   } = props;
 
-  const _disabled = formControl?.disabled || props.disabled;
+  const _disabled = useMemo(() => {
+    return formControl?.disabled || props.disabled;
+  }, [formControl?.disabled, props.disabled]);
 
   const className = useMemo(() => {
     return renderClassStatus(
@@ -73,13 +75,7 @@ export function RlsFieldAutocompleteTemplate<
       },
       'rls-field-list rls-field-autocomplete'
     );
-  }, [
-    formControl?.wrong,
-    formControl?.disabled,
-    autocomplete.value,
-    autocomplete.focused,
-    props.disabled
-  ]);
+  }, [formControl?.wrong, autocomplete.value, autocomplete.focused, _disabled]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {

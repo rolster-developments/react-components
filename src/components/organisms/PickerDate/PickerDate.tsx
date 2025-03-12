@@ -1,18 +1,12 @@
-import { itIsDefined } from '@rolster/commons';
 import {
   PickerListener,
   PickerListenerEvent,
   dateOutRange,
   verifyDateRange
 } from '@rolster/components';
-import {
-  assignDayInDate,
-  assignMonthInDate,
-  assignYearInDate,
-  dateFormatTemplate
-} from '@rolster/dates';
+import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
@@ -23,7 +17,7 @@ import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/Pick
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
 
-const FORMAT_TITLE = '{dw}, {mx} {dd} de {aa}';
+const formatTitle = '{dw}, {mx} {dd} de {aa}';
 
 interface PickerDateProps extends RlsComponent {
   automatic?: boolean;
@@ -49,72 +43,18 @@ export function RlsPickerDate({
   onListener,
   rlsTheme
 }: PickerDateProps) {
-  const today = new Date(); // Initial current date in component
+  const today = useRef(new Date()); // Initial current date in component
 
-  const dateInitial = formControl?.value || date || today;
+  const _date = useMemo(() => {
+    return formControl?.value ?? date ?? today.current;
+  }, [formControl?.value, date]);
 
-  const yearControl = useReactControl(dateInitial.getFullYear());
-  const dayControl = useReactControl(dateInitial.getDate());
-  const monthControl = useReactControl(dateInitial.getMonth());
+  const yearControl = useReactControl(_date.getFullYear());
+  const dayControl = useReactControl(_date.getDate());
+  const monthControl = useReactControl(_date.getMonth());
 
-  const [value, setValue] = useState(dateInitial);
+  const [value, setValue] = useState(_date);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
-
-  useEffect(() => {
-    const dateRange = verifyDateRange({
-      date: formControl?.value || date || today,
-      minDate,
-      maxDate
-    });
-
-    setValue(dateRange);
-    formControl?.setValue(dateRange);
-  }, []);
-
-  useEffect(() => {
-    itIsDefined(yearControl.value) &&
-      setValue(assignYearInDate(value, yearControl.value));
-  }, [yearControl.value]);
-
-  useEffect(() => {
-    itIsDefined(monthControl.value) &&
-      setValue(assignMonthInDate(value, monthControl.value));
-  }, [monthControl.value]);
-
-  useEffect(() => {
-    itIsDefined(dayControl.value) &&
-      setValue(assignDayInDate(value, dayControl.value));
-  }, [dayControl.value]);
-
-  function onVisibilityDay(): void {
-    setVisibility('DAY');
-  }
-
-  function onVisibilityMonth(): void {
-    setVisibility('MONTH');
-  }
-
-  function onVisibilityYear(): void {
-    setVisibility('YEAR');
-  }
-
-  function onCancel(): void {
-    onListener && onListener({ event: PickerListenerEvent.Cancel });
-  }
-
-  function onToday(): void {
-    yearControl.setValue(today.getFullYear());
-    dayControl.setValue(today.getDate());
-    monthControl.setValue(today.getMonth());
-    formControl?.setValue(today);
-
-    onListener && onListener({ event: PickerListenerEvent.Now, value: today });
-  }
-
-  function onSelect(): void {
-    formControl?.setValue(value);
-    onListener && onListener({ event: PickerListenerEvent.Select, value });
-  }
 
   const classNameComponent = useMemo(() => {
     return renderClassStatus('rls-picker-date__component', {
@@ -124,13 +64,78 @@ export function RlsPickerDate({
     });
   }, [visibility]);
 
+  const title = useMemo(() => {
+    return dateFormatTemplate(_date, formatTitle);
+  }, [_date]);
+
+  const itIsDisabledToday = useMemo(
+    () =>
+      dateOutRange({
+        date: today.current,
+        maxDate,
+        minDate
+      }),
+    [today.current, maxDate, minDate]
+  );
+
+  useEffect(() => {
+    const date = verifyDateRange({
+      date: _date,
+      minDate,
+      maxDate
+    });
+
+    setValue(date);
+    formControl?.setValue(date);
+  }, []);
+
+  useEffect(() => {
+    setValue(new Date(yearControl.value, monthControl.value, dayControl.value));
+  }, [yearControl.value, monthControl.value, dayControl.value]);
+
+  const onVisibilityDay = useCallback(() => {
+    setVisibility('DAY');
+  }, []);
+
+  const onVisibilityMonth = useCallback(() => {
+    setVisibility('MONTH');
+  }, []);
+
+  const onVisibilityYear = useCallback(() => {
+    setVisibility('YEAR');
+  }, []);
+
+  const onCancel = useCallback(() => {
+    onListener && onListener({ event: PickerListenerEvent.Cancel });
+  }, [onListener]);
+
+  const onToday = useCallback(() => {
+    yearControl.setValue(today.current.getFullYear());
+    dayControl.setValue(today.current.getDate());
+    monthControl.setValue(today.current.getMonth());
+    formControl?.setValue(today.current);
+
+    onListener &&
+      onListener({
+        event: PickerListenerEvent.Now,
+        value: today.current
+      });
+  }, [today.current, formControl, onListener]);
+
+  const onSelect = useCallback(() => {
+    formControl?.setValue(value);
+    onListener &&
+      onListener({
+        event: PickerListenerEvent.Select,
+        value
+      });
+  }, [formControl, value, onListener]);
+
   return (
     <div className="rls-picker-date" rls-theme={rlsTheme}>
       <div className="rls-picker-date__header">
         <div className="rls-picker-date__title rls-picker-date__title--description">
-          <span onClick={onVisibilityDay}>
-            {dateFormatTemplate(dateInitial, FORMAT_TITLE)}
-          </span>
+          <span onClick={onVisibilityDay}>{title}</span>
         </div>
 
         <div className="rls-picker-date__title rls-picker-date__title--year">
@@ -152,7 +157,7 @@ export function RlsPickerDate({
       <div className={classNameComponent}>
         <RlsPickerDay
           formControl={dayControl}
-          date={dateInitial}
+          date={_date}
           month={monthControl.value}
           year={yearControl.value}
           maxDate={maxDate}
@@ -162,7 +167,7 @@ export function RlsPickerDate({
 
         <RlsPickerMonth
           formControl={monthControl}
-          date={dateInitial}
+          date={_date}
           year={yearControl.value}
           maxDate={maxDate}
           minDate={minDate}
@@ -172,7 +177,7 @@ export function RlsPickerDate({
 
         <RlsPickerYear
           formControl={yearControl}
-          date={dateInitial}
+          date={_date}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}
@@ -193,7 +198,7 @@ export function RlsPickerDate({
               <RlsButton
                 type="ghost"
                 onClick={onToday}
-                disabled={dateOutRange({ date: today, maxDate, minDate })}
+                disabled={itIsDisabledToday}
               >
                 {reactI18n('dateActionToday')}
               </RlsButton>

@@ -1,7 +1,7 @@
-import { PickerListenerEvent } from '@rolster/components';
+import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
@@ -52,7 +52,7 @@ export function RlsFieldDateRange(props: FormControlVoidProps): ReactNode;
 export function RlsFieldDateRange(props: FormControlEmptyProps): ReactNode;
 export function RlsFieldDateRange({
   children,
-  date: datePicker,
+  date: _date,
   disabled,
   formControl,
   identifier,
@@ -62,37 +62,58 @@ export function RlsFieldDateRange({
   onValue,
   placeholder,
   rlsTheme,
-  value: defaultValue
+  value: _value
 }: FieldDateRangeProps) {
-  const currentDate = datePicker || new Date();
+  const currentDate = useMemo(() => _date ?? new Date(), [_date]);
 
-  const [value, setValue] = useState(formControl?.value || defaultValue);
+  const [value, setValue] = useState(formControl?.value || _value);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  function onClickInput(): void {
-    setModalIsVisible(true);
-  }
-
-  function onClickAction(): void {
-    if (value) {
-      formControl?.setValue(defaultValue as DateRange);
-      formControl?.touch();
-      onChange(defaultValue);
-    } else {
-      setModalIsVisible(true);
-    }
-  }
-
-  function onChange(value?: DateRange): void {
-    setValue(value);
-    onValue && onValue(value as DateRange);
-  }
-
-  const _disabled = formControl?.disabled || disabled;
+  const _disabled = useMemo(() => {
+    return formControl?.disabled || disabled;
+  }, [formControl?.disabled, disabled]);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-field-box', { disabled: _disabled });
-  }, [formControl?.disabled, disabled]);
+  }, [_disabled]);
+
+  const { icon, valueInput } = useMemo(() => {
+    return {
+      icon: value ? 'trash-2' : 'calendar',
+      valueInput: value ? rangeFormatTemplate(value) : ''
+    };
+  }, [value]);
+
+  const onClickInput = useCallback(() => {
+    setModalIsVisible(true);
+  }, []);
+
+  const onChange = useCallback(
+    (value?: DateRange) => {
+      setValue(value);
+      onValue && onValue(value as DateRange);
+    },
+    [onValue]
+  );
+
+  const onClickAction = useCallback(() => {
+    if (value) {
+      formControl?.setValue(_value as DateRange);
+      formControl?.touch();
+      onChange(_value);
+    } else {
+      setModalIsVisible(true);
+    }
+  }, [value, formControl, _value, onChange]);
+
+  const onListener = useCallback(
+    ({ event, value }: PickerListener<DateRange>) => {
+      event !== PickerListenerEvent.Cancel && onChange(value);
+      formControl?.touch();
+      setModalIsVisible(false);
+    },
+    [formControl, onChange]
+  );
 
   return (
     <div id={identifier} className="rls-field-date-range" rls-theme={rlsTheme}>
@@ -104,7 +125,7 @@ export function RlsFieldDateRange({
             <input
               className="rls-field-date-range__control"
               type="text"
-              value={value ? rangeFormatTemplate(value) : ''}
+              value={valueInput}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
@@ -116,7 +137,7 @@ export function RlsFieldDateRange({
               onClick={onClickAction}
               disabled={_disabled}
             >
-              <RlsIcon value={value ? 'trash-2' : 'calendar'} />
+              <RlsIcon value={icon} />
             </button>
           </div>
         </div>
@@ -136,11 +157,7 @@ export function RlsFieldDateRange({
           disabled={_disabled}
           maxDate={maxDate}
           minDate={minDate}
-          onListener={({ event, value }) => {
-            event !== PickerListenerEvent.Cancel && onChange(value);
-            formControl?.touch();
-            setModalIsVisible(false);
-          }}
+          onListener={onListener}
         />
       </RlsModal>
     </div>

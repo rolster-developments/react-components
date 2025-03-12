@@ -6,7 +6,7 @@ import {
   normalizeMinTime
 } from '@rolster/dates';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
@@ -16,6 +16,7 @@ import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
 import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDateRange.css';
+import { itIsDefined } from '@rolster/commons';
 
 interface PickerDateRangeProps extends RlsComponent {
   automatic?: boolean;
@@ -33,7 +34,7 @@ type Visibility = 'DAY' | 'MONTH' | 'YEAR';
 
 export function RlsPickerDateRange({
   automatic,
-  date: datePicker,
+  date: _picker,
   disabled,
   formControl,
   maxDate,
@@ -41,58 +42,23 @@ export function RlsPickerDateRange({
   onListener,
   rlsTheme
 }: PickerDateRangeProps) {
-  const dateInitial = normalizeMinTime(datePicker || new Date());
-  const rangeInitial = formControl?.value || DateRange.now();
+  const _date = useMemo(
+    () => normalizeMinTime(_picker ?? new Date()),
+    [_picker]
+  );
 
-  const yearControl = useReactControl(dateInitial.getFullYear());
-  const monthControl = useReactControl(dateInitial.getMonth());
-  const dayControl = useReactControl(rangeInitial);
+  const _range = useMemo(
+    () => formControl?.value ?? DateRange.now(),
+    [formControl?.value]
+  );
 
-  const [value, setValue] = useState(rangeInitial);
-  const [date, setDate] = useState(dateInitial);
+  const yearControl = useReactControl(_date.getFullYear());
+  const monthControl = useReactControl(_date.getMonth());
+  const dayControl = useReactControl(_range);
+
+  const [value, setValue] = useState(_range);
+  const [date, setDate] = useState(_date);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
-
-  useEffect(() => {
-    setDate((prevValue) => {
-      return typeof yearControl.value === 'number'
-        ? assignYearInDate(prevValue, yearControl.value)
-        : prevValue;
-    });
-  }, [yearControl.value]);
-
-  useEffect(() => {
-    setDate((prevValue) => {
-      return typeof monthControl.value === 'number'
-        ? assignMonthInDate(prevValue, monthControl.value)
-        : prevValue;
-    });
-  }, [monthControl.value]);
-
-  useEffect(() => {
-    dayControl.value && setValue(dayControl.value);
-    setVisibility('DAY');
-  }, [dayControl.value]);
-
-  function onVisibilityDay(): void {
-    setVisibility('DAY');
-  }
-
-  function onVisibilityMonth(): void {
-    setVisibility('MONTH');
-  }
-
-  function onVisibilityYear(): void {
-    setVisibility('YEAR');
-  }
-
-  function onCancel(): void {
-    onListener && onListener({ event: PickerListenerEvent.Cancel });
-  }
-
-  function onSelect(): void {
-    formControl?.setValue(value);
-    onListener && onListener({ event: PickerListenerEvent.Select, value });
-  }
 
   const classNameComponent = useMemo(() => {
     return renderClassStatus('rls-picker-date-range__component', {
@@ -103,16 +69,58 @@ export function RlsPickerDateRange({
   }, [visibility]);
 
   const classNameFooter = useMemo(() => {
-    return renderClassStatus('rls-picker-date-range__footer', {
-      automatic
-    });
+    return renderClassStatus('rls-picker-date-range__footer', { automatic });
   }, [automatic]);
+
+  const title = useMemo(() => rangeFormatTemplate(value), [value]);
+
+  useEffect(() => {
+    setDate((date) => {
+      return itIsDefined(yearControl.value)
+        ? assignYearInDate(date, yearControl.value)
+        : date;
+    });
+  }, [yearControl.value]);
+
+  useEffect(() => {
+    setDate((date) => {
+      return itIsDefined(monthControl.value)
+        ? assignMonthInDate(date, monthControl.value)
+        : date;
+    });
+  }, [monthControl.value]);
+
+  useEffect(() => {
+    dayControl.value && setValue(dayControl.value);
+    setVisibility('DAY');
+  }, [dayControl.value]);
+
+  const onVisibilityDay = useCallback(() => {
+    setVisibility('DAY');
+  }, []);
+
+  const onVisibilityMonth = useCallback(() => {
+    setVisibility('MONTH');
+  }, []);
+
+  const onVisibilityYear = useCallback(() => {
+    setVisibility('YEAR');
+  }, []);
+
+  const onCancel = useCallback(() => {
+    onListener && onListener({ event: PickerListenerEvent.Cancel });
+  }, [onListener]);
+
+  const onSelect = useCallback(() => {
+    formControl?.setValue(value);
+    onListener && onListener({ event: PickerListenerEvent.Select, value });
+  }, [formControl, value, onListener]);
 
   return (
     <div className="rls-picker-date-range" rls-theme={rlsTheme}>
       <div className="rls-picker-date-range__header">
         <div className="rls-picker-date-range__title rls-picker-date-range__title--description">
-          <span onClick={onVisibilityDay}>{rangeFormatTemplate(value)}</span>
+          <span onClick={onVisibilityDay}>{title}</span>
         </div>
 
         <div className="rls-picker-date-range__title rls-picker-date-range__title--year">

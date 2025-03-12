@@ -58,6 +58,18 @@ function RlsPickerDayItem({ day, onSelect, disabled }: PickerDayItemProps) {
   );
 }
 
+function RlsPickerDayHeaders() {
+  return (
+    <div className="rls-picker-day__header">
+      {DAY_LABELS().map((title, index) => (
+        <label key={index} className="rls-picker-day__label">
+          {title}
+        </label>
+      ))}
+    </div>
+  );
+}
+
 export function RlsPickerDay({
   date: _date,
   disabled,
@@ -74,20 +86,12 @@ export function RlsPickerDay({
   const [weeks, setWeeks] = useState<WeekState[]>([]);
   const [value, setValue] = useState(formControl?.value || date.getDate());
 
-  const [headers, setHeaders] = useState(<></>);
+  const [headers, setHeaders] = useState(<RlsPickerDayHeaders />);
   const [component, setComponent] = useState(<></>);
 
   useEffect(() => {
     return i18nSubscribe(() => {
-      setHeaders(
-        <div className="rls-picker-day__header">
-          {DAY_LABELS().map((title, index) => (
-            <label key={index} className="rls-picker-day__label">
-              {title}
-            </label>
-          ))}
-        </div>
-      );
+      setHeaders(<RlsPickerDayHeaders />);
     });
   }, []);
 
@@ -135,7 +139,7 @@ export function RlsPickerDay({
       minDate,
       maxDate
     };
-  }, [date, value, formControl?.value, year, month, minDate, maxDate]);
+  }, [date, formControl?.value, value, month, year, minDate, maxDate]);
 
   const setDayValue = useCallback(
     (value: number) => {

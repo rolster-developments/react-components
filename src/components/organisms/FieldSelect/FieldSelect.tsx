@@ -59,11 +59,11 @@ export function RlsFieldSelectTemplate<
     unremovable
   } = props;
 
-  const _disabled = formControl?.disabled || props.disabled;
+  const _disabled = useMemo(() => {
+    return formControl?.disabled || props.disabled;
+  }, [formControl?.disabled, props.disabled]);
 
   const className = useMemo(() => {
-    const _disabled = formControl?.disabled || props.disabled;
-
     return renderClassStatus(
       'rls-field-box',
       {
@@ -73,12 +73,7 @@ export function RlsFieldSelectTemplate<
       },
       'rls-field-list rls-field-select'
     );
-  }, [
-    formControl?.wrong,
-    formControl?.disabled,
-    select.focused,
-    props.disabled
-  ]);
+  }, [formControl?.wrong, select.focused, _disabled]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
