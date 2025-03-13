@@ -16,6 +16,7 @@ import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
 import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
+import { i18nSubscribe } from '@rolster/i18n';
 
 const formatTitle = '{dw}, {mx} {dd} de {aa}';
 
@@ -55,6 +56,11 @@ export function RlsPickerDate({
 
   const [value, setValue] = useState(_date);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
+  const [labels, setLabels] = useState({
+    dateActionCancel: reactI18n('dateActionCancel'),
+    dateActionSelect: reactI18n('dateActionSelect'),
+    dateActionToday: reactI18n('dateActionToday')
+  });
 
   const classNameComponent = useMemo(() => {
     return renderClassStatus('rls-picker-date__component', {
@@ -79,14 +85,18 @@ export function RlsPickerDate({
   );
 
   useEffect(() => {
-    const date = verifyDateRange({
-      date: _date,
-      minDate,
-      maxDate
-    });
+    const date = verifyDateRange({ date: _date, minDate, maxDate });
 
     setValue(date);
     formControl?.setValue(date);
+
+    return i18nSubscribe(() => {
+      setLabels({
+        dateActionCancel: reactI18n('dateActionCancel'),
+        dateActionSelect: reactI18n('dateActionSelect'),
+        dateActionToday: reactI18n('dateActionToday')
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -190,7 +200,7 @@ export function RlsPickerDate({
           <div className="rls-picker-date__actions">
             <div className="rls-picker-date__actions--cancel">
               <RlsButton type="ghost" onClick={onCancel}>
-                {reactI18n('dateActionCancel')}
+                {labels.dateActionCancel}
               </RlsButton>
             </div>
 
@@ -200,13 +210,13 @@ export function RlsPickerDate({
                 onClick={onToday}
                 disabled={itIsDisabledToday}
               >
-                {reactI18n('dateActionToday')}
+                {labels.dateActionToday}
               </RlsButton>
             </div>
 
             <div className="rls-picker-date__actions--ok">
               <RlsButton type="raised" onClick={onSelect}>
-                {reactI18n('dateActionSelect')}
+                {labels.dateActionSelect}
               </RlsButton>
             </div>
           </div>

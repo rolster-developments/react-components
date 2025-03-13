@@ -3,7 +3,6 @@ import {
   DayRangeState,
   WeekRangeState
 } from '@rolster/components';
-import { i18nSubscribe } from '@rolster/i18n';
 import {
   assignDayInDate,
   DAY_LABELS,
@@ -12,6 +11,7 @@ import {
   DateRange,
   normalizeMinTime
 } from '@rolster/dates';
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
@@ -88,7 +88,7 @@ export function RlsPickerDayRange({
 
   const date = useMemo(() => {
     return normalizeMinTime(_date ?? _range.minDate);
-  }, [_date, _range]);
+  }, [_date]);
 
   const sourceDate = useRef(_range.minDate);
 
@@ -133,7 +133,7 @@ export function RlsPickerDayRange({
         maxDate
       })
     );
-  }, [date, range, sourceDate.current, minDate, maxDate]);
+  }, [date, range, minDate, maxDate]);
 
   const title = useMemo(() => {
     return (
@@ -148,7 +148,7 @@ export function RlsPickerDayRange({
       const _date = assignDayInDate(date, value);
 
       const range = dateIsBefore(_date, sourceDate.current)
-        ? new DateRange(sourceDate.current, date)
+        ? new DateRange(sourceDate.current, _date)
         : new DateRange(_date, sourceDate.current);
 
       sourceDate.current = _date;

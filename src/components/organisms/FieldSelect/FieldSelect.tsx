@@ -2,8 +2,9 @@ import {
   AbstractListElement as Element,
   ListElement
 } from '@rolster/components';
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
@@ -58,6 +59,20 @@ export function RlsFieldSelectTemplate<
     rlsTheme,
     unremovable
   } = props;
+
+  const [labels, setLabels] = useState({
+    listEmptyDescription: reactI18n('listEmptyDescription'),
+    listEmptyTitle: reactI18n('listEmptyTitle')
+  });
+
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setLabels({
+        listEmptyDescription: reactI18n('listEmptyDescription'),
+        listEmptyTitle: reactI18n('listEmptyTitle')
+      });
+    });
+  }, []);
 
   const _disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -147,10 +162,10 @@ export function RlsFieldSelectTemplate<
                   <li className="rls-field-list__empty">
                     <div className="rls-field-list__empty__description">
                       <label className="rls-label-bold truncate">
-                        {reactI18n('listEmptyTitle')}
+                        {labels.listEmptyTitle}
                       </label>
                       <p className="rls-caption-regular">
-                        {reactI18n('listEmptyDescription')}
+                        {labels.listEmptyDescription}
                       </p>
                     </div>
                   </li>

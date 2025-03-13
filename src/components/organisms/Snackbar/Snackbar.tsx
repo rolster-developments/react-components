@@ -70,37 +70,48 @@ export function RlsSnackbar({
   );
 }
 
-export function useSnackbar(): SnackbarService {
-  const [config, setConfig] = useState<SnackbarConfig>({});
-  const [duration, setDuration] = useState(4000);
-  const [timeoutId, setTimeoutId] = useState<number>();
-  const [visible, setVisible] = useState(false);
+interface SnackbarState {
+  config: SnackbarConfig;
+  duration: number;
+  visible: boolean;
+  timeoutId?: number;
+}
 
-  const rlsSnackbar = <RlsSnackbar {...config} visible={visible} />;
+export function useSnackbar(): SnackbarService {
+  const [state, setState] = useState<SnackbarState>({
+    config: {},
+    duration: 4000,
+    timeoutId: undefined,
+    visible: false
+  });
+
+  const rlsSnackbar = <RlsSnackbar {...state.config} visible={state.visible} />;
 
   useEffect(() => {
-    if (visible) {
+    if (state.visible) {
       const timeoutId = setTimeout(() => {
-        setVisible(false);
-        setTimeoutId(undefined);
-      }, duration);
+        setState((state) => ({
+          ...state,
+          visible: false,
+          timeoutId: undefined
+        }));
+      }, state.duration);
 
-      setTimeoutId(timeoutId);
-    } else if (timeoutId) {
-      clearTimeout(timeoutId);
+      setState((state) => ({ ...state, timeoutId }));
+    } else if (state.timeoutId) {
+      clearTimeout(state.timeoutId);
 
-      setTimeout(() => snackbar(config), DURATION_ANIMATION);
+      setTimeout(() => snackbar(state.config), DURATION_ANIMATION);
     }
-  }, [visible]);
+  }, [state.visible]);
 
   const snackbar = useCallback((config: SnackbarConfig) => {
-    const { content } = config;
-
-    setConfig(config);
-
-    setDuration(calculateDuration(String(content)));
-
-    setVisible((visible) => !visible);
+    setState((state) => ({
+      ...state,
+      config,
+      duration: calculateDuration(String(config.content)),
+      visible: !state.visible
+    }));
   }, []);
 
   return {

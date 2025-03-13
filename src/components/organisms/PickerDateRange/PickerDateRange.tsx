@@ -1,3 +1,4 @@
+import { itIsDefined } from '@rolster/commons';
 import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import {
   DateRange,
@@ -5,6 +6,7 @@ import {
   assignYearInDate,
   normalizeMinTime
 } from '@rolster/dates';
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { rangeFormatTemplate, renderClassStatus } from '../../../helpers';
@@ -16,7 +18,6 @@ import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
 import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDateRange.css';
-import { itIsDefined } from '@rolster/commons';
 
 interface PickerDateRangeProps extends RlsComponent {
   automatic?: boolean;
@@ -54,11 +55,15 @@ export function RlsPickerDateRange({
 
   const yearControl = useReactControl(_date.getFullYear());
   const monthControl = useReactControl(_date.getMonth());
-  const dayControl = useReactControl(_range);
+  const rangeControl = useReactControl(_range);
 
   const [value, setValue] = useState(_range);
   const [date, setDate] = useState(_date);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
+  const [labels, setLabels] = useState({
+    dateActionCancel: reactI18n('dateActionCancel'),
+    dateActionSelect: reactI18n('dateActionSelect')
+  });
 
   const classNameComponent = useMemo(() => {
     return renderClassStatus('rls-picker-date-range__component', {
@@ -73,6 +78,15 @@ export function RlsPickerDateRange({
   }, [automatic]);
 
   const title = useMemo(() => rangeFormatTemplate(value), [value]);
+
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setLabels({
+        dateActionCancel: reactI18n('dateActionCancel'),
+        dateActionSelect: reactI18n('dateActionSelect')
+      });
+    });
+  }, []);
 
   useEffect(() => {
     setDate((date) => {
@@ -91,9 +105,9 @@ export function RlsPickerDateRange({
   }, [monthControl.value]);
 
   useEffect(() => {
-    dayControl.value && setValue(dayControl.value);
+    rangeControl.value && setValue(rangeControl.value);
     setVisibility('DAY');
-  }, [dayControl.value]);
+  }, [rangeControl.value]);
 
   const onVisibilityDay = useCallback(() => {
     setVisibility('DAY');
@@ -141,7 +155,7 @@ export function RlsPickerDateRange({
 
       <div className={classNameComponent}>
         <RlsPickerDayRange
-          formControl={dayControl}
+          formControl={rangeControl}
           date={date}
           maxDate={maxDate}
           minDate={minDate}
@@ -170,13 +184,13 @@ export function RlsPickerDateRange({
         <div className="rls-picker-date-range__actions">
           <div className="rls-picker-date-range__actions--cancel">
             <RlsButton type="ghost" onClick={onCancel}>
-              {reactI18n('dateActionCancel')}
+              {labels.dateActionCancel}
             </RlsButton>
           </div>
 
           <div className="rls-picker-date-range__actions--ok">
             <RlsButton type="raised" onClick={onSelect}>
-              {reactI18n('dateActionSelect')}
+              {labels.dateActionSelect}
             </RlsButton>
           </div>
         </div>
