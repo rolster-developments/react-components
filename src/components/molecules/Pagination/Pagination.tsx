@@ -10,7 +10,7 @@ import { renderClassStatus } from '../../../helpers';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import './Pagination.css';
 
-interface PaginationEvent<T> {
+export interface PaginationEvent<T> {
   firstPage: boolean;
   lastPage: boolean;
   suggestions: T[];
@@ -29,8 +29,8 @@ export function RlsPagination<T>({
   filter,
   onPagination
 }: PaginationProps<T>) {
-  const controller = useRef(new PaginationController({ suggestions, count }));
-  const [template, setTemplate] = useState(controller.current.template);
+  const [template, setTemplate] = useState<PaginationTemplate>();
+  const controller = useRef<PaginationController>();
 
   const refreshTemplate = useCallback(
     (template: PaginationTemplate, suggestions: T[]) => {
@@ -43,47 +43,45 @@ export function RlsPagination<T>({
     [onPagination]
   );
 
+  const refreshPagination = useCallback((pagination?: Pagination<T>) => {
+    pagination &&
+      refreshTemplate(pagination.template, pagination.page.collection);
+  }, []);
+
   useEffect(() => {
-    controller.current = new PaginationController({
+    const pagination = new PaginationController({
       suggestions,
       count,
-      position: template.currentPage.value
+      position: template?.currentPage.value
     });
 
-    refreshTemplate(
-      controller.current.template,
-      controller.current.page.collection
-    );
+    controller.current = pagination;
+
+    refreshTemplate(pagination.template, pagination.page.collection);
   }, [suggestions, count]);
 
   useEffect(() => {
-    refreshPagination(controller.current.filtrable(filter));
+    refreshPagination(controller.current?.filtrable(filter));
   }, [filter]);
 
-  const refreshPagination = useCallback((pagination?: Pagination<T>) => {
-    if (pagination) {
-      refreshTemplate(pagination.template, pagination.page.collection);
-    }
-  }, []);
-
   const goToPagination = useCallback((page: PageState) => {
-    refreshPagination(controller.current.goToPage(page));
+    refreshPagination(controller.current?.goToPage(page));
   }, []);
 
   const goFirstPagination = useCallback(() => {
-    refreshPagination(controller.current.goFirstPage());
+    refreshPagination(controller.current?.goFirstPage());
   }, []);
 
   const goPreviousPagination = useCallback(() => {
-    refreshPagination(controller.current.goPreviousPage());
+    refreshPagination(controller.current?.goPreviousPage());
   }, []);
 
   const goNextPagination = useCallback(() => {
-    refreshPagination(controller.current.goNextPage());
+    refreshPagination(controller.current?.goNextPage());
   }, []);
 
   const goLastPagination = useCallback(() => {
-    refreshPagination(controller.current.goLastPage());
+    refreshPagination(controller.current?.goLastPage());
   }, []);
 
   return (
@@ -92,7 +90,7 @@ export function RlsPagination<T>({
         <button
           className="rls-pagination__action"
           onClick={goFirstPagination}
-          disabled={template.firstPage}
+          disabled={template?.firstPage}
         >
           <RlsIcon value="arrowhead-left" />
         </button>
@@ -100,14 +98,14 @@ export function RlsPagination<T>({
         <button
           className="rls-pagination__action"
           onClick={goPreviousPagination}
-          disabled={template.firstPage}
+          disabled={template?.firstPage}
         >
           <RlsIcon value="arrow-ios-left" />
         </button>
       </div>
 
       <div className="rls-pagination__pages">
-        {template.pages.map((page, index) => {
+        {template?.pages.map((page, index) => {
           return (
             <div
               key={index}
@@ -124,13 +122,13 @@ export function RlsPagination<T>({
         })}
       </div>
 
-      <div className="rls-pagination__description">{template.description}</div>
+      <div className="rls-pagination__description">{template?.description}</div>
 
       <div className="rls-pagination__actions">
         <button
           className="rls-pagination__action"
           onClick={goNextPagination}
-          disabled={template.lastPage}
+          disabled={template?.lastPage}
         >
           <RlsIcon value="arrow-ios-right" />
         </button>
@@ -138,7 +136,7 @@ export function RlsPagination<T>({
         <button
           className="rls-pagination__action"
           onClick={goLastPagination}
-          disabled={template.lastPage}
+          disabled={template?.lastPage}
         >
           <RlsIcon value="arrowhead-right" />
         </button>
