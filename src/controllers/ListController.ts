@@ -113,7 +113,9 @@ export function useListController<T = any, K = string>(
 
         element && setFormValue(element);
       } else {
-        automatic && setFormValue(collection.value[0], true);
+        automatic
+          ? setFormValue(collection.value[0], true)
+          : refreshState({ ...state, value: '' });
       }
     }
 
