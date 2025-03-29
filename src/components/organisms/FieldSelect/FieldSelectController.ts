@@ -126,11 +126,14 @@ export function useFieldSelect<
     ]
   );
 
-  const onClickElement = useCallback((element: Element<T>) => {
-    return () => {
-      onChange(element);
-    };
-  }, []);
+  const onClickElement = useCallback(
+    (element: Element<T>) => {
+      return () => {
+        onChange(element);
+      };
+    },
+    [onChange]
+  );
 
   const onKeydownElement = useCallback(
     (element: Element<T>) => {
@@ -140,7 +143,7 @@ export function useFieldSelect<
           : controller.navigationElement(event);
       };
     },
-    [controller.navigationElement]
+    [onChange, controller.navigationElement]
   );
 
   return {

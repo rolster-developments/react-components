@@ -163,11 +163,14 @@ export function useFieldAutocomplete<
     ]
   );
 
-  const onClickElement = useCallback((element: Element<T>) => {
-    return () => {
-      onChange(element);
-    };
-  }, []);
+  const onClickElement = useCallback(
+    (element: Element<T>) => {
+      return () => {
+        onChange(element);
+      };
+    },
+    [onChange]
+  );
 
   const onKeydownElement = useCallback(
     (element: Element<T>) => {
@@ -177,7 +180,7 @@ export function useFieldAutocomplete<
           : controller.navigationElement(event);
       };
     },
-    [controller.navigationElement]
+    [onChange, controller.navigationElement]
   );
 
   return {
