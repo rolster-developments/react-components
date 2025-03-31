@@ -110,7 +110,7 @@ export function RlsFieldAutocompleteTemplate<
 
   const onInputSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     autocomplete.setPattern(event.target.value);
-  }, []);
+  }, [autocomplete.setPattern]);
 
   const onClickSearch = useCallback(() => {
     onSearch && onSearch(autocomplete.pattern);

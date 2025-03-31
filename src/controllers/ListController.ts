@@ -111,7 +111,7 @@ export function useListController<T = any, K = string>(
       } else if (valueProtected.current) {
         const element = collection.find(valueProtected.current);
 
-        element && setFormValue(element);
+        element ? setFormValue(element) : refreshState({ ...state, value: '' });
       } else {
         automatic
           ? setFormValue(collection.value[0], true)

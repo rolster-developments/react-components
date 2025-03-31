@@ -9,7 +9,7 @@ export const reactI18n = i18n({
     listEmptyDescription:
       'Lo sentimos, en el momento no hay elementos en el listado',
     listEmptyTitle: 'Selección no disponible',
-    listInputPlaceholder: 'Buscar...'
+    listInputPlaceholder: 'Escriba palabre clave para filtrar...'
   },
   en: {
     confirmationActionApproved: 'Approved',
@@ -18,6 +18,6 @@ export const reactI18n = i18n({
     dateActionToday: 'Today',
     listEmptyDescription: 'Sorry, there are currently no items in the list',
     listEmptyTitle: 'Selection not available',
-    listInputPlaceholder: 'Search...'
+    listInputPlaceholder: 'Enter keyword to filter...'
   }
 });
