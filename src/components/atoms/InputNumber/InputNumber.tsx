@@ -11,7 +11,9 @@ export function RlsInputNumber({
   placeholder,
   value
 }: InputProps<number>) {
-  const [valueInput, setValueInput] = useState(value ?? 0);
+  const [valueInput, setValueInput] = useState(
+    formControl?.value ?? value ?? 0
+  );
 
   const onValueInput = useCallback(
     (value: number) => {
@@ -26,12 +28,12 @@ export function RlsInputNumber({
       <RlsInput
         formControl={formControl}
         type="number"
-        value={value}
+        value={valueInput}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onValueInput}
       >
-        {formControl?.value ?? value ?? valueInput}
+        {formControl?.value ?? valueInput}
       </RlsInput>
     </div>
   );

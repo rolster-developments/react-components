@@ -1,5 +1,12 @@
 import { ReactControl } from '@rolster/react-forms';
-import { HTMLInputTypeAttribute, useCallback, useMemo, useState } from 'react';
+import {
+  ChangeEvent,
+  HTMLInputTypeAttribute,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
 import './Input.css';
@@ -23,14 +30,24 @@ export function RlsInput({
   type,
   value
 }: InputProps) {
+  const valueInitial = formControl?.value ?? value ? String(value) : '';
+
+  const [valueInput, setValueInput] = useState(valueInitial);
   const [focused, setFocused] = useState(false);
 
+  useEffect(() => {
+    const valueControl = formControl?.value ? String(formControl.value) : '';
+
+    (!focused || valueInput !== valueControl) && setValueInput(valueControl);
+  }, [formControl?.value]);
+
   const onChange = useCallback(
-    (event: any) => {
-      const value =
-        type === 'number' ? +event.target.value : event.target.value;
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const valueInput = event.target.value;
+      const value = type === 'number' ? +valueInput : valueInput;
 
       onValue && onValue(value);
+      setValueInput(valueInput);
       formControl?.setValue(value);
     },
     [formControl, onValue]
@@ -65,7 +82,7 @@ export function RlsInput({
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}
-        value={formControl?.value || value || ''}
+        value={valueInput}
       />
       <span className="rls-input__value">{children}</span>
     </div>

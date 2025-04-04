@@ -19,7 +19,9 @@ export function RlsInputMoney({
   symbol,
   value
 }: InputMoneyProps) {
-  const [valueInput, setValueInput] = useState(value || 0);
+  const [valueInput, setValueInput] = useState(
+    formControl?.value ?? value ?? 0
+  );
 
   const onValueInput = useCallback(
     (value: number) => {
@@ -34,13 +36,13 @@ export function RlsInputMoney({
       <RlsInput
         formControl={formControl}
         type="number"
-        value={value}
+        value={valueInput}
         disabled={disabled}
         placeholder={placeholder}
         onValue={onValueInput}
       >
         <RlsAmount
-          value={formControl?.value ?? value ?? valueInput}
+          value={formControl?.value ?? valueInput}
           symbol={symbol}
           decimals={decimals}
         />
