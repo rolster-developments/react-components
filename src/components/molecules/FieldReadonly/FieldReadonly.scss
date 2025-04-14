@@ -1,12 +1,13 @@
-// Rolster Technology FieldMoney Component
-// v1.0.1
+// Rolster Technology FieldReadonly Component
+// v1.0.0
 // @license MIT
 // Author: Rolster Developers
-// Created: 20/Mar/2018
-// Updated: 24/Jun/2024
+// Created: 14/Abr/2025
+// Updated: 14/Abr/2025
 
-.rls-field-money {
+.rls-field-readonly {
   --rlc-fieldbox-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
+  --pvt-component-font-color: transparent;
 
   position: relative;
   width: 100%;

@@ -5,6 +5,7 @@ export * from './ButtonToggle/ButtonToggle';
 export * from './FieldMoney/FieldMoney';
 export * from './FieldNumber/FieldNumber';
 export * from './FieldPassword/FieldPassword';
+export * from './FieldReadonly/FieldReadonly';
 export * from './FieldText/FieldText';
 export * from './LabelCheckBox/LabelCheckBox';
 export * from './LabelRadioButton/LabelRadioButton';
