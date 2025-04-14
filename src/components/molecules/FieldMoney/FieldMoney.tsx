@@ -19,8 +19,9 @@ export function RlsFieldMoney({
   msgErrorDisabled,
   onValue,
   placeholder,
-  symbol,
+  readOnly,
   rlsTheme,
+  symbol,
   value
 }: FieldMoneyProps) {
   const className = useMemo(() => {
@@ -52,6 +53,7 @@ export function RlsFieldMoney({
             formControl={formControl}
             value={value}
             disabled={disabled}
+            readOnly={readOnly}
             placeholder={placeholder}
             symbol={symbol}
             decimals={decimals}

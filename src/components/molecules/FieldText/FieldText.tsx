@@ -13,6 +13,7 @@ export function RlsFieldText({
   msgErrorDisabled,
   onValue,
   placeholder,
+  readOnly,
   rlsTheme,
   value
 }: FieldBoxProps<string>) {
@@ -45,6 +46,7 @@ export function RlsFieldText({
             formControl={formControl}
             value={value}
             disabled={disabled}
+            readOnly={readOnly}
             placeholder={placeholder}
             onValue={onValue}
           />

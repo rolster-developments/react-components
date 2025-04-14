@@ -16,6 +16,7 @@ interface InputProps extends RlsComponent {
   formControl?: ReactControl<HTMLInputElement>;
   onValue?: (value: any) => void;
   placeholder?: string;
+  readOnly?: boolean;
   type?: HTMLInputTypeAttribute;
   value?: any;
 }
@@ -27,6 +28,7 @@ export function RlsInput({
   identifier,
   onValue,
   placeholder,
+  readOnly,
   type,
   value
 }: InputProps) {
@@ -79,6 +81,7 @@ export function RlsInput({
         type={type ?? 'text'}
         placeholder={placeholder}
         disabled={formControl?.disabled || disabled}
+        readOnly={readOnly}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}

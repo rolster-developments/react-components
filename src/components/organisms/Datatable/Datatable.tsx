@@ -70,9 +70,13 @@ export function RlsDatatable({
   );
 }
 
-export function RlsDatatableHeader({ children, identifier }: RlsComponent) {
+export function RlsDatatableHeader({
+  children,
+  identifier,
+  rlsTheme
+}: RlsComponent) {
   return (
-    <tr id={identifier} className="rls-datatable__header">
+    <tr id={identifier} className="rls-datatable__header" rls-theme={rlsTheme}>
       {children}
     </tr>
   );
@@ -82,14 +86,15 @@ export function RlsDatatableTitle({
   children,
   className,
   control,
-  identifier
+  identifier,
+  rlsTheme
 }: DatatableCellProps) {
   const classNameTitle = useMemo(() => {
     return renderClassStatus('rls-datatable__title', { control }, className);
   }, [className, control]);
 
   return (
-    <th id={identifier} className={classNameTitle}>
+    <th id={identifier} className={classNameTitle} rls-theme={rlsTheme}>
       {children}
     </th>
   );
@@ -98,14 +103,15 @@ export function RlsDatatableTitle({
 export function RlsDatatableSubheader({
   children,
   className,
-  identifier
+  identifier,
+  rlsTheme
 }: DatatableSubheaderProps) {
   const classNameSubheader = useMemo(() => {
     return renderClassStatus('rls-datatable__subheader', {}, className);
   }, [className]);
 
   return (
-    <tr id={identifier} className={classNameSubheader}>
+    <tr id={identifier} className={classNameSubheader} rls-theme={rlsTheme}>
       {children}
     </tr>
   );
@@ -119,7 +125,8 @@ export function RlsDatatableRecord({
   info,
   overflow,
   successs,
-  warning
+  warning,
+  rlsTheme
 }: DatatableRecordProps) {
   const classNameRecord = useMemo(() => {
     return renderClassStatus(
@@ -130,7 +137,7 @@ export function RlsDatatableRecord({
   }, [className, error, info, overflow, successs, warning]);
 
   return (
-    <tr id={identifier} className={classNameRecord}>
+    <tr id={identifier} className={classNameRecord} rls-theme={rlsTheme}>
       {children}
     </tr>
   );
@@ -144,7 +151,8 @@ export function RlsDatatableTotals({
   info,
   overflow,
   successs,
-  warning
+  warning,
+  rlsTheme
 }: DatatableRecordProps) {
   const classNameTotals = useMemo(() => {
     return renderClassStatus(
@@ -155,7 +163,7 @@ export function RlsDatatableTotals({
   }, [className, error, info, overflow, successs, warning]);
 
   return (
-    <div id={identifier} className={classNameTotals}>
+    <div id={identifier} className={classNameTotals} rls-theme={rlsTheme}>
       {children}
     </div>
   );
@@ -166,7 +174,8 @@ export function RlsDatatableCell({
   className,
   control,
   identifier,
-  overflow
+  overflow,
+  rlsTheme
 }: DatatableCellProps) {
   const classNameCell = useMemo(() => {
     return renderClassStatus(
@@ -177,7 +186,7 @@ export function RlsDatatableCell({
   }, [className, control, overflow]);
 
   return (
-    <td id={identifier} className={classNameCell}>
+    <td id={identifier} className={classNameCell} rls-theme={rlsTheme}>
       {children}
     </td>
   );
@@ -209,7 +218,8 @@ export function RlsDatatableFloating({
   children,
   className,
   identifier,
-  invested
+  invested,
+  rlsTheme
 }: DatatableFloatingProps) {
   const classNameFloating = useMemo(() => {
     return renderClassStatus(
@@ -220,7 +230,7 @@ export function RlsDatatableFloating({
   }, [className, invested]);
 
   return (
-    <td id={identifier} className={classNameFloating}>
+    <td id={identifier} className={classNameFloating} rls-theme={rlsTheme}>
       {children}
     </td>
   );

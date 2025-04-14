@@ -12,6 +12,7 @@ interface FieldPasswordProps extends RlsComponent {
   formControl?: RolsterControl<string>;
   msgErrorDisabled?: boolean;
   placeholder?: string;
+  readOnly?: boolean;
 }
 
 export function RlsFieldPassword({
@@ -21,6 +22,7 @@ export function RlsFieldPassword({
   identifier,
   msgErrorDisabled,
   placeholder,
+  readOnly,
   rlsTheme
 }: FieldPasswordProps) {
   const [password, setPassword] = useState(true);
@@ -57,6 +59,7 @@ export function RlsFieldPassword({
           <RlsInputPassword
             formControl={formControl}
             disabled={disabled}
+            readOnly={readOnly}
             placeholder={placeholder}
             type={password ? 'password' : 'text'}
           />

@@ -11,6 +11,7 @@ interface InputPasswordProps extends RlsComponent {
   formControl?: RolsterControl<string>;
   onValue?: (value: string) => void;
   placeholder?: string;
+  readOnly?:boolean
   type?: InputPasswordType;
 }
 
@@ -20,6 +21,7 @@ export function RlsInputPassword({
   identifier,
   onValue,
   placeholder,
+  readOnly,
   type
 }: InputPasswordProps) {
   const [focused, setFocused] = useState(false);
@@ -57,6 +59,7 @@ export function RlsInputPassword({
         type={type ?? 'password'}
         placeholder={placeholder}
         disabled={disabled}
+        readOnly={readOnly}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={onChange}

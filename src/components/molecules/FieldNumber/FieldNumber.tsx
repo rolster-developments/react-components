@@ -13,6 +13,7 @@ export function RlsFieldNumber({
   msgErrorDisabled,
   onValue,
   placeholder,
+  readOnly,
   rlsTheme,
   value
 }: FieldBoxProps<number>) {
@@ -45,6 +46,7 @@ export function RlsFieldNumber({
             formControl={formControl}
             value={value}
             disabled={disabled}
+            readOnly={readOnly}
             placeholder={placeholder}
             onValue={onValue}
           />

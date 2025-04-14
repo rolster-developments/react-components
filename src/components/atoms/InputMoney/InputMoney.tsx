@@ -16,6 +16,7 @@ export function RlsInputMoney({
   identifier,
   onValue,
   placeholder,
+  readOnly,
   symbol,
   value
 }: InputMoneyProps) {
@@ -38,6 +39,7 @@ export function RlsInputMoney({
         type="number"
         value={valueInput}
         disabled={disabled}
+        readOnly={readOnly}
         placeholder={placeholder}
         onValue={onValueInput}
       >

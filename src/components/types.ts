@@ -11,6 +11,7 @@ export interface InputProps<T = any> {
   identifier?: string;
   onValue?: (value: T) => void;
   placeholder?: string;
+  readOnly?: boolean;
   value?: T;
 }
 

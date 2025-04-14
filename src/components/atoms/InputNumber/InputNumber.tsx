@@ -9,6 +9,7 @@ export function RlsInputNumber({
   identifier,
   onValue,
   placeholder,
+  readOnly,
   value
 }: InputProps<number>) {
   const [valueInput, setValueInput] = useState(
@@ -30,6 +31,7 @@ export function RlsInputNumber({
         type="number"
         value={valueInput}
         disabled={disabled}
+        readOnly={readOnly}
         placeholder={placeholder}
         onValue={onValueInput}
       >

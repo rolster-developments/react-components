@@ -9,6 +9,7 @@ export function RlsInputText({
   identifier,
   onValue,
   placeholder,
+  readOnly,
   value
 }: InputProps<string>) {
   const [valueInput, setValueInput] = useState(
@@ -30,6 +31,7 @@ export function RlsInputText({
         type="text"
         value={valueInput}
         disabled={disabled}
+        readOnly={readOnly}
         placeholder={placeholder}
         onValue={onValueInput}
       >
