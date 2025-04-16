@@ -108,9 +108,12 @@ export function RlsFieldAutocompleteTemplate<
     });
   }, [autocomplete.higher, autocomplete.modalIsVisible]);
 
-  const onInputSearch = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    autocomplete.setPattern(event.target.value);
-  }, [autocomplete.setPattern]);
+  const onInputSearch = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      autocomplete.setPattern(event.target.value);
+    },
+    [autocomplete.setPattern]
+  );
 
   const onClickSearch = useCallback(() => {
     onSearch && onSearch(autocomplete.pattern);
@@ -156,69 +159,65 @@ export function RlsFieldAutocompleteTemplate<
       )}
 
       <div className={classNameList}>
-        {autocomplete.modalIsVisible && (
-          <>
-            <div className="rls-field-list__suggestions__body">
-              <ul ref={autocomplete.listRef} className="rls-field-list__ul">
-                <div className="rls-field-list__ul__search">
-                  <input
-                    ref={autocomplete.inputRef}
-                    className="rls-field-list__ul__control"
-                    type="text"
-                    placeholder={labels.listInputPlaceholder}
-                    value={autocomplete.pattern}
-                    onChange={onInputSearch}
-                    disabled={_disabled || searching}
-                    onFocus={autocomplete.onFocusInput}
-                    onBlur={autocomplete.onBlurInput}
-                    onKeyDown={autocomplete.onKeydownInput}
-                  />
+        <div className="rls-field-list__suggestions__body">
+          <ul ref={autocomplete.listRef} className="rls-field-list__ul">
+            <div className="rls-field-list__ul__search">
+              <input
+                ref={autocomplete.inputRef}
+                className="rls-field-list__ul__control"
+                type="text"
+                placeholder={labels.listInputPlaceholder}
+                value={autocomplete.pattern}
+                onChange={onInputSearch}
+                disabled={_disabled || searching}
+                onFocus={autocomplete.onFocusInput}
+                onBlur={autocomplete.onBlurInput}
+                onKeyDown={autocomplete.onKeydownInput}
+              />
 
-                  {onSearch && (
-                    <button
-                      disabled={_disabled || searching}
-                      onClick={onClickSearch}
-                    >
-                      <RlsIcon value="search" />
-                    </button>
-                  )}
-                </div>
-
-                {searching && <RlsProgressBar indeterminate={true} />}
-
-                {autocomplete.coincidences.map((element, index) => (
-                  <li
-                    key={index}
-                    className="rls-field-list__element"
-                    tabIndex={-1}
-                    onClick={autocomplete.onClickElement(element)}
-                    onKeyDown={autocomplete.onKeydownElement(element)}
-                  >
-                    {render(element)}
-                  </li>
-                ))}
-
-                {!autocomplete.coincidences.length && (
-                  <li className="rls-field-list__empty">
-                    <div className="rls-field-list__empty__description">
-                      <label className="rls-label-bold truncate">
-                        {labels.listEmptyTitle}
-                      </label>
-                      <p className="rls-caption-regular">
-                        {labels.listEmptyDescription}
-                      </p>
-                    </div>
-                  </li>
-                )}
-              </ul>
+              {onSearch && (
+                <button
+                  disabled={_disabled || searching}
+                  onClick={onClickSearch}
+                >
+                  <RlsIcon value="search" />
+                </button>
+              )}
             </div>
 
-            <div
-              className="rls-field-list__backdrop"
-              onClick={autocomplete.onClickBackdrop}
-            ></div>
-          </>
-        )}
+            {searching && <RlsProgressBar indeterminate={true} />}
+
+            {autocomplete.coincidences.map((element, index) => (
+              <li
+                key={index}
+                className="rls-field-list__element"
+                tabIndex={-1}
+                onClick={autocomplete.onClickElement(element)}
+                onKeyDown={autocomplete.onKeydownElement(element)}
+              >
+                {render(element)}
+              </li>
+            ))}
+
+            {!autocomplete.coincidences.length && (
+              <li className="rls-field-list__empty">
+                <div className="rls-field-list__empty__description">
+                  <label className="rls-label-bold truncate">
+                    {labels.listEmptyTitle}
+                  </label>
+                  <p className="rls-caption-regular">
+                    {labels.listEmptyDescription}
+                  </p>
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <div
+          className="rls-field-list__backdrop"
+          onClick={autocomplete.onClickBackdrop}
+        ></div>
       </div>
     </div>
   );

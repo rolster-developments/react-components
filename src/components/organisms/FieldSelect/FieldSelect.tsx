@@ -142,43 +142,39 @@ export function RlsFieldSelectTemplate<
       )}
 
       <div className={classNameList}>
-        {select.modalIsVisible && (
-          <>
-            <div className="rls-field-list__suggestions__body">
-              <ul ref={select.listRef} className="rls-field-list__ul">
-                {suggestions.map((element, index) => (
-                  <li
-                    key={index}
-                    className="rls-field-list__element"
-                    tabIndex={-1}
-                    onClick={select.onClickElement(element)}
-                    onKeyDown={select.onKeydownElement(element)}
-                  >
-                    {render(element)}
-                  </li>
-                ))}
+        <div className="rls-field-list__suggestions__body">
+          <ul ref={select.listRef} className="rls-field-list__ul">
+            {suggestions.map((element, index) => (
+              <li
+                key={index}
+                className="rls-field-list__element"
+                tabIndex={-1}
+                onClick={select.onClickElement(element)}
+                onKeyDown={select.onKeydownElement(element)}
+              >
+                {render(element)}
+              </li>
+            ))}
 
-                {!suggestions.length && (
-                  <li className="rls-field-list__empty">
-                    <div className="rls-field-list__empty__description">
-                      <label className="rls-label-bold truncate">
-                        {labels.listEmptyTitle}
-                      </label>
-                      <p className="rls-caption-regular">
-                        {labels.listEmptyDescription}
-                      </p>
-                    </div>
-                  </li>
-                )}
-              </ul>
-            </div>
+            {!suggestions.length && (
+              <li className="rls-field-list__empty">
+                <div className="rls-field-list__empty__description">
+                  <label className="rls-label-bold truncate">
+                    {labels.listEmptyTitle}
+                  </label>
+                  <p className="rls-caption-regular">
+                    {labels.listEmptyDescription}
+                  </p>
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
 
-            <div
-              className="rls-field-list__backdrop"
-              onClick={select.onClickBackdrop}
-            ></div>
-          </>
-        )}
+        <div
+          className="rls-field-list__backdrop"
+          onClick={select.onClickBackdrop}
+        ></div>
       </div>
     </div>
   );

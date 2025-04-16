@@ -126,7 +126,7 @@ export function useListController<T = any, K = string>(
     const _state = state.modalIsVisible
       ? {
           ...state,
-          higher: locationListCanTop(contentRef.current, listRef.current)
+          higher: locationListCanTop(contentRef.current, listRef.current, 160)
         }
       : state;
 
