@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v2.1.0
+// v2.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 28/Feb/2025
+// Updated: 18/Abr/2025
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -23,7 +23,7 @@
   --pvt-stroked-font-color: var(--rls-theme-color-500);
   --pvt-stroked-border: var(--rls-theme-border-1-500);
   --pvt-outline-background: transparent;
-  --pvt-outline-font-color: var(--rls-app-color-300);
+  --pvt-outline-font-color: var(--rls-app-color-600);
   --pvt-outline-border: var(--rls-app-border-1-300);
   --pvt-ghost-background: none;
   --pvt-ghost-font-color: var(--rls-theme-color-500);
@@ -79,7 +79,7 @@
     --pvt-stroked-font-color: var(--rls-theme-color-300);
     --pvt-stroked-border: var(--rls-theme-border-1-300);
     --pvt-outline-background: transparent;
-    --pvt-outline-font-color: var(--rls-app-color-100);
+    --pvt-outline-font-color: var(--rls-app-color-400);
     --pvt-outline-border: var(--rls-app-border-1-100);
     --pvt-ghost-background: transparent;
     --pvt-ghost-font-color: var(--rls-theme-color-300);

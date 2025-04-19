@@ -1,9 +1,9 @@
 // Rolster Technology ButtonAction Component
-// v1.0.4
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 11/Oct/2023
+// Updated: 18/Abr/2025
 
 .rls-button-action {
   --pvt-tooltip-transition-delay: 0ms;
@@ -87,8 +87,8 @@
     white-space: nowrap;
     pointer-events: none;
     transform: translateX(-50%);
-    background: var(--rls-dark-color-500);
-    color: var(--rls-light-color-500);
+    background: var(--rls-app-color-900);
+    color: var(--rls-app-color-050);
     transition: opacity 200ms 0ms var(--rls-deceleration-curve);
     opacity: var(--pvt-tooltip-opacity);
     transition-delay: var(--pvt-tooltip-transition-delay);

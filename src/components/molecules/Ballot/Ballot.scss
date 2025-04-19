@@ -1,9 +1,9 @@
 // Rolster Technology Ballot Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 26/Oct/2024
+// Updated: 18/Abr/2025
 
 .rls-ballot {
   --rlc-avatar-width: var(--rls-sizing-x20);
@@ -45,7 +45,7 @@
 
     position: relative;
     width: 100%;
-    color: var(--rls-app-color-500);
+    color: var(--rls-app-color-900);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -65,7 +65,7 @@
 
     position: relative;
     width: var(--rlc-ballot-subtitle-width);
-    color: var(--rls-app-color-300);
+    color: var(--rls-app-color-600);
     font-weight: var(--rlc-ballot-subtitle-font-weight);
     font-size: var(--rls-ballot-subtitle-font-size);
     letter-spacing: var(--rlc-ballot-subtitle-letter-spacing);

@@ -1,9 +1,9 @@
-// Rolster Technology DateField Component
-// v1.0.4
+// Rolster Technology FieldDate Component
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 13/Jun/2024
+// Updated: 18/Abr/2025
 
 .rls-field-date {
   --rlc-fieldbox-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
@@ -26,13 +26,13 @@
     border: none;
     outline: none;
     background: transparent;
-    color: var(--rls-app-color-500);
+    color: var(--rls-app-color-900);
     font-weight: var(--rls-font-weight-medium);
     font-size: var(--rlc-input-font-size);
     letter-spacing: var(--rlc-input-letter-spacing);
 
     &::placeholder {
-      color: var(--rls-app-color-100);
+      color: var(--rls-app-color-400);
     }
 
     &:disabled {
@@ -41,7 +41,7 @@
   }
 
   &__action {
-    color: var(--rls-app-color-300);
+    color: var(--rls-app-color-600);
     width: var(--rls-sizing-x12);
     height: var(--rls-sizing-x12);
     padding: 0rem;

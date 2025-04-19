@@ -1,9 +1,9 @@
 // Rolster Technology Input Component
-// v1.0.4
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 23/Jun/2024
+// Updated: 18/Abr/2025
 
 .rls-input {
   --pvt-value-font-color: var(--rlc-input-font-color);
@@ -45,12 +45,12 @@
     }
 
     &::placeholder {
-      color: var(--rls-app-color-100);
+      color: var(--rls-app-color-400);
     }
 
     &::selection {
       background: var(--rls-theme-color-700);
-      color: var(--rls-light-color-500);
+      color: var(--rls-app-color-050);
     }
 
     &:disabled {

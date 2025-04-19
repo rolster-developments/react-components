@@ -1,9 +1,9 @@
 // Rolster Technology Snackbar Component
-// v1.0.4
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 19/Dic/2024
+// Updated: 18/Abr/2025
 
 .rls-snackbar {
   position: fixed;
@@ -18,7 +18,7 @@
   padding: var(--rls-sizing-x6);
   box-sizing: border-box;
   border-radius: var(--rls-sizing-x4);
-  background: var(--rls-app-background-500);
+  background: var(--rls-app-color-050);
   box-shadow: var(--rls-light-shadow-bottom-4);
   border: var(--rls-theme-border-1-300);
   transform: translate(-50%, 100%);
@@ -29,7 +29,7 @@
   }
 
   &__avatar {
-    --rlc-icon-color: var(--rls-light-color-500);
+    --rlc-icon-color: var(--rls-app-color-050);
 
     display: flex;
     justify-content: center;
@@ -64,7 +64,7 @@
   &__content {
     p {
       line-height: var(--rls-sizing-x10);
-      color: var(--rls-app-color-300);
+      color: var(--rls-app-color-600);
       font-size: var(--rls-label-font-size);
       font-weight: var(--rls-font-weight-medium);
       letter-spacing: var(--rls-label-letter-spacing);

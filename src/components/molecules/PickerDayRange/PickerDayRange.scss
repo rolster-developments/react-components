@@ -1,9 +1,9 @@
 // Rolster Technology DayRangePicker Component
-// v1.1.2
+// v1.1.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 05/Abr/2024
+// Updated: 18/Abr/2025
 
 .rls-picker-day-range {
   --pvt-span-nothover-background: transparent;
@@ -31,8 +31,8 @@
 
   &__header {
     display: flex;
-    background: var(--rls-app-background-100);
-    color: var(--rls-app-color-500);
+    background: var(--rls-app-color-200);
+    color: var(--rls-app-color-900);
     border-radius: var(--rls-sizing-x2);
   }
 
@@ -56,7 +56,7 @@
     &__span {
       position: relative;
       display: block;
-      color: var(--rls-app-color-500);
+      color: var(--rls-app-color-900);
       border-radius: var(--rls-sizing-x4);
       height: var(--rls-sizing-x18);
       line-height: var(--rls-sizing-x18);
@@ -70,19 +70,19 @@
       }
 
       &:hover {
-        color: var(--rls-light-color-500);
+        color: var(--rls-app-color-050);
         background: var(--rls-theme-color-900);
       }
     }
 
     &--end {
-      --pvt-span-nothover-background: var(--rls-app-color-500);
-      --pvt-span-nothover-font-color: var(--rls-app-background-500);
+      --pvt-span-nothover-background: var(--rls-app-color-900);
+      --pvt-span-nothover-font-color: var(--rls-app-color-050);
     }
 
     &--source {
       --pvt-span-nothover-background: var(--rls-theme-color-500);
-      --pvt-span-nothover-font-color: var(--rls-light-color-500);
+      --pvt-span-nothover-font-color: var(--rls-app-color-050);
     }
 
     &--ranged {
@@ -90,7 +90,7 @@
     }
 
     &--forbidden {
-      --pvt-span-background: var(--rls-app-background-100);
+      --pvt-span-background: var(--rls-app-color-200);
 
       pointer-events: none;
       opacity: 0.5;

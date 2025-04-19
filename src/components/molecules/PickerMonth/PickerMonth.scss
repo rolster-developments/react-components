@@ -1,13 +1,13 @@
 // Rolster Technology MonthPicker Component
-// v2.0.0
+// v2.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 02/Jun/2024
+// Updated: 18/Abr/2025
 
 .rls-picker-month {
   --pvt-component-background: transparent;
-  --pvt-component-font-color: var(--rls-app-color-500);
+  --pvt-component-font-color: var(--rls-app-color-900);
   --pvt-component-border: var(--rls-border-1) solid transparent;
 
   position: relative;
@@ -54,7 +54,7 @@
 
     &--disabled {
       --pvt-component-background: transparent;
-      --pvt-component-font-color: var(--rls-app-color-100);
+      --pvt-component-font-color: var(--rls-app-color-400);
       --pvt-component-border: var(--rls-border-1) solid transparent;
 
       pointer-events: none;

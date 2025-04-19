@@ -1,9 +1,9 @@
 //  Rolster Technology Toolbar Component
-//  v1.0.2
+//  v1.0.3
 //  @license MIT
 //  Author: Rolster Developers
 //  Created: 20/Mar/2018
-//  Updated: 11/Abr/2024
+// Updated: 18/Abr/2025
 
 .rls-toolbar {
   display: flex;
@@ -32,7 +32,7 @@
   }
 
   &__title {
-    color: var(--rls-app-color-500);
+    color: var(--rls-app-color-900);
     height: var(--rls-sizing-x12);
     line-height: var(--rls-sizing-x12);
     font-size: 8.125rem;
@@ -41,7 +41,7 @@
   }
 
   &__subtitle {
-    color: var(--rls-app-color-300);
+    color: var(--rls-app-color-600);
   }
 
   &__actions {

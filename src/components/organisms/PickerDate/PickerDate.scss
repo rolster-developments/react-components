@@ -1,9 +1,9 @@
 // Rolster Technology DatePicker Component
-// v2.0.3
+// v2.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 12/Mar/2025
+// Updated: 18/Abr/2025
 
 .rls-picker-date {
   position: relative;
@@ -29,7 +29,7 @@
   }
 
   &__title {
-    color: var(--rls-app-color-500);
+    color: var(--rls-app-color-900);
     text-align: center;
     cursor: default;
     font-weight: var(--rls-font-weight-bold);
@@ -48,7 +48,7 @@
       height: var(--rls-sizing-x16);
       line-height: var(--rls-sizing-x16);
       font-size: var(--rls-sizing-x12);
-      color: var(--rls-app-color-300);
+      color: var(--rls-app-color-600);
     }
   }
 

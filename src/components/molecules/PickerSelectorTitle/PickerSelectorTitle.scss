@@ -1,9 +1,9 @@
 // Rolster Technology PickerSelectorTitle Component
-// v1.0.2
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 04/May/2023
-// Updated: 12/Mar/2025
+// Updated: 18/Abr/2025
 
 .rls-picker-selector-title {
   display: flex;
@@ -11,7 +11,7 @@
   align-items: center;
 
   span {
-    color: var(--rls-app-color-300);
+    color: var(--rls-app-color-600);
     cursor: default;
     height: var(--rls-sizing-x14);
     line-height: var(--rls-sizing-x14);

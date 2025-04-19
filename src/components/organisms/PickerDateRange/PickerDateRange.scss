@@ -1,9 +1,9 @@
 // Rolster Technology DateRangePicker Component
-// v1.1.3
+// v1.1.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 17/Dic/2024
+// Updated: 18/Abr/2025
 
 .rls-picker-date-range {
   position: relative;
@@ -20,7 +20,7 @@
   }
 
   &__title {
-    color: var(--rls-app-color-500);
+    color: var(--rls-app-color-900);
     text-align: center;
     cursor: default;
     font-weight: var(--rls-font-weight-bold);
@@ -40,7 +40,7 @@
       height: var(--rls-sizing-x16);
       line-height: var(--rls-sizing-x16);
       font-size: var(--rls-sizing-x12);
-      color: var(--rls-app-color-300);
+      color: var(--rls-app-color-600);
     }
 
     &--month {
@@ -51,7 +51,7 @@
         height: var(--rls-sizing-x14);
         line-height: var(--rls-sizing-x14);
         font-size: var(--rls-sizing-x10);
-        color: var(--rls-app-color-300);
+        color: var(--rls-app-color-600);
         margin: auto 0rem;
       }
     }

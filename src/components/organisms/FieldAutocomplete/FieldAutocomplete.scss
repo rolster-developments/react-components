@@ -1,9 +1,9 @@
-// Rolster Technology AutocompleteField Component
-// v1.0.5
+// Rolster Technology FieldAutocomplete Component
+// v1.0.6s
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Oct/2024
+// Updated: 18/Abr/2025
 
 .rls-field-autocomplete {
   --pvt-control-width: 100%;
@@ -28,13 +28,13 @@
       width: 100%;
       margin-top: var(--rls-sizing-x2);
       margin-bottom: var(--rls-sizing-x6);
-      background: var(--rls-app-background-300);
+      background: var(--rls-app-color-100);
       border-radius: var(--rls-sizing-x4);
       padding: var(--rls-sizing-x4);
       box-sizing: border-box;
 
       button {
-        color: var(--rls-app-color-300);
+        color: var(--rls-app-color-600);
         background: transparent;
 
         &:not(:disabled):hover {
@@ -56,18 +56,18 @@
       border: none;
       outline: none;
       background: transparent;
-      color: var(--rls-app-color-500);
+      color: var(--rls-app-color-900);
       font-size: var(--rls-input-font-size);
       font-weight: var(--rls-font-weight-medium);
       letter-spacing: var(--rls-input-letter-spacing);
 
       &::placeholder {
-        color: var(--rls-app-color-100);
+        color: var(--rls-app-color-400);
       }
 
       &::selection {
         background: var(--rls-theme-color-700);
-        color: var(--rls-light-color-500);
+        color: var(--rls-app-color-050);
       }
 
       &:disabled {

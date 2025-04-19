@@ -1,9 +1,9 @@
 // Rolster Technology ButtonToggle Component
-// v1.1.2
+// v1.1.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 31/May/2023
-// Updated: 11/Mar/2025
+// Updated: 18/Abr/2025
 
 .rls-button-toggle {
   width: auto;
@@ -68,7 +68,7 @@
       overflow-y: auto;
       overflow-x: hidden;
       z-index: var(--rls-z-index-2);
-      background: var(--rls-app-background-500);
+      background: var(--rls-app-color-050);
       border: var(--rls-theme-border-1-500);
       transform: var(--rlc-button-toggle-ul-transform);
       transform-origin: 0% 0%;
@@ -86,11 +86,11 @@
         font-size: 6rem;
         letter-spacing: 0.825px;
         text-transform: uppercase;
-        color: var(--rls-app-color-300);
+        color: var(--rls-app-color-600);
 
         &:hover {
-          background: var(--rls-app-background-300);
-          color: var(--rls-app-color-500);
+          background: var(--rls-app-color-100);
+          color: var(--rls-app-color-900);
         }
       }
     }
