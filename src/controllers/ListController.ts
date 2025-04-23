@@ -123,10 +123,16 @@ export function useListController<T = any, K = string>(
   }, [collection, formControl?.value]);
 
   const setState = useCallback((state: Partial<ListControllerState>) => {
+    const length = suggestions.length > 6 ? 6 : suggestions.length;
+
     const _state = state.modalIsVisible
       ? {
           ...state,
-          higher: locationListCanTop(contentRef.current, listRef.current, 160)
+          higher: locationListCanTop(
+            contentRef.current,
+            listRef.current,
+            length * 48
+          )
         }
       : state;
 

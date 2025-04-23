@@ -44,7 +44,7 @@
     color: var(--rls-app-color-600);
     padding: 0rem;
     outline: none;
-    border-radius: 50%;
+    border-radius: var(--rlc-fieldbox-action-radius);
     background: var(--rlc-fieldbox-action-background);
 
     &:disabled {
