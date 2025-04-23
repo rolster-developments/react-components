@@ -1,12 +1,12 @@
 // Rolster Technology FieldDateRange Component
-// v1.0.4
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 18/Abr/2025
+// Updated: 23/Abr/2025
 
 .rls-field-date-range {
-  --rlc-fieldbox-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
+  --rlc-fieldbox-body-padding: var(--rls-sizing-x4);
 
   position: relative;
   width: 100%;
@@ -37,11 +37,22 @@
   }
 
   &__action {
+    --rlc-icon-dimesion: calc(var(--rlc-fieldbox-action-dimension) - 2rem);
+
+    width: var(--rlc-fieldbox-action-dimension);
+    height: var(--rlc-fieldbox-action-dimension);
     color: var(--rls-app-color-600);
-    width: var(--rls-sizing-x12);
-    height: var(--rls-sizing-x12);
     padding: 0rem;
-    margin-left: var(--rls-sizing-x2);
-    background: transparent;
+    outline: none;
+    border-radius: 50%;
+    background: var(--rlc-fieldbox-action-background);
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    .rls-icon {
+      margin: 1rem;
+    }
   }
 }

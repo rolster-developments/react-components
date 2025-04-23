@@ -10,7 +10,7 @@
   --pvt-control-opacity: 1;
 
   &.rls-field-box--selected {
-    --pvt-control-width: calc(100% - var(--rlc-fieldlist-action-dimension));
+    --pvt-control-width: calc(100% - var(--rlc-fieldbox-action-dimension));
   }
 
   &.rls-field-box--disabled {
