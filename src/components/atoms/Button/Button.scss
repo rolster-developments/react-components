@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v2.1.1
+// v2.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 24/Abr/2025
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -13,6 +13,9 @@
   --pvt-button-content-visibility: hidden;
   --pvt-button-ripple-background: var(--rls-theme-color-700);
 
+  --pvt-classic-background: var(--rls-app-color-200);
+  --pvt-classic-font-color: var(--rls-app-color-500);
+  --pvt-classic-border: none;
   --pvt-raised-background: var(--rls-theme-color-500);
   --pvt-raised-font-color: var(--rls-theme-font-500);
   --pvt-raised-border: none;
@@ -48,11 +51,14 @@
   }
 
   &:not(:disabled):hover {
+    --pvt-classic-background: var(--rls-theme-color-200);
+    --pvt-classic-font-color: var(--rls-theme-color-600);
+    --pvt-classic-border: none;
     --pvt-raised-background: var(--rls-theme-color-700);
     --pvt-raised-font-color: var(--rls-theme-font-900);
     --pvt-raised-border: none;
     --pvt-flat-background: var(--rls-theme-color-600);
-    --pvt-flat-font-color: var(--rls-theme-font-500);
+    --pvt-flat-font-color: var(--rls-theme-color-050);
     --pvt-flat-border: none;
     --pvt-stroked-background: var(--rls-theme-color-100);
     --pvt-stroked-font-color: var(--rls-theme-color-700);
@@ -69,6 +75,9 @@
   }
 
   &:disabled {
+    --pvt-classic-background: var(--rls-app-color-100);
+    --pvt-classic-font-color: var(--rls-app-color-400);
+    --pvt-classic-border: none;
     --pvt-raised-background: var(--rls-theme-color-200);
     --pvt-raised-font-color: var(--rls-theme-color-400);
     --pvt-raised-border: none;
@@ -122,6 +131,13 @@
       background: var(--pvt-button-ripple-background);
       animation: var(--pvt-button-content-animation);
       visibility: var(--pvt-button-content-visibility);
+    }
+
+    &--classic {
+      --pvt-button-content-background: var(--pvt-classic-background);
+      --pvt-button-content-font-color: var(--pvt-classic-font-color);
+      --pvt-button-content-border: var(--pvt-classic-border);
+      --pvt-button-ripple-background: var(--rls-theme-font-900);
     }
 
     &--raised {

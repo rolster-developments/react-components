@@ -3,7 +3,7 @@ import { ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms/Button/Button';
+import { RlsButton, RlsButtonType } from '../../atoms/Button/Button';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';
 
@@ -29,7 +29,9 @@ type Result = Promise<ConfirmationResult>;
 interface ConfirmationButton {
   label: string;
   onClick: () => void;
+  type: RlsButtonType;
   identifier?: string;
+  rlsTheme?: RlsTheme;
 }
 
 interface ConfirmationBasic {
@@ -48,6 +50,8 @@ interface ConfirmationProps extends ConfirmationBasic {
 interface ConfirmationAction {
   label: string;
   identifier?: string;
+  rlsTheme?: RlsTheme;
+  type?: RlsButtonType;
 }
 
 interface ConfirmationOptions extends ConfirmationBasic {
@@ -97,8 +101,9 @@ export function RlsConfirmation({
               {approved && (
                 <RlsButton
                   identifier={approved.identifier}
-                  type="raised"
+                  type={approved.type}
                   onClick={approved.onClick}
+                  rlsTheme={approved.rlsTheme}
                 >
                   {approved.label}
                 </RlsButton>
@@ -106,8 +111,9 @@ export function RlsConfirmation({
               {reject && (
                 <RlsButton
                   identifier={reject.identifier}
-                  type="outline"
+                  type={reject.type}
                   onClick={reject.onClick}
+                  rlsTheme={reject.rlsTheme}
                 >
                   {reject.label}
                 </RlsButton>
@@ -126,27 +132,26 @@ export function useConfirmation(): ConfirmationService {
   const [config, setConfig] = useState<ConfirmationProps>({});
   const [visible, setVisible] = useState(false);
 
-  const rlsConfirmation = ReactDOM.createPortal(
+  const component = ReactDOM.createPortal(
     <RlsConfirmation {...config} visible={visible} />,
     document.body
   );
 
   const confirmation = useCallback((options: ConfirmationOptions) => {
     return new Promise<ConfirmationResult>((resolve) => {
-      const { content, rlsTheme, subtitle, title, approved, reject } = options;
+      const { approved, reject } = options;
 
       setConfig({
-        content,
-        rlsTheme,
-        subtitle,
-        title,
+        ...options,
         approved: {
           label: approved?.label ?? reactI18n('confirmationActionApproved'),
           onClick: () => {
             setVisible(false);
             resolve(ConfirmationResult.approved());
           },
-          identifier: approved?.identifier
+          identifier: approved?.identifier,
+          rlsTheme: approved?.rlsTheme,
+          type: approved?.type ?? 'raised'
         },
         reject: reject
           ? {
@@ -155,7 +160,9 @@ export function useConfirmation(): ConfirmationService {
                 setVisible(false);
                 resolve(ConfirmationResult.reject());
               },
-              identifier: reject.identifier
+              identifier: reject.identifier,
+              rlsTheme: reject.rlsTheme,
+              type: reject?.type ?? 'classic'
             }
           : undefined
       });
@@ -165,7 +172,7 @@ export function useConfirmation(): ConfirmationService {
   }, []);
 
   return {
-    RlsConfirmation: rlsConfirmation,
+    RlsConfirmation: component,
     confirmation
   };
 }

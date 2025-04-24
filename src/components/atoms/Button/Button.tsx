@@ -5,6 +5,7 @@ import { RlsIcon } from '../Icon/Icon';
 import './Button.css';
 
 export type RlsButtonType =
+  | 'classic'
   | 'raised'
   | 'flat'
   | 'stroked'
