@@ -37,7 +37,7 @@ export function RlsApplication({ children }: RlsComponent) {
       snackbar: hasNavbar,
       'navbar-condense': isNavbarCondense
     });
-  }, [hasNavbar]);
+  }, [hasNavbar, isNavbarCondense]);
 
   return (
     <RlsContext.Provider
