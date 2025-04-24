@@ -33,6 +33,7 @@ export interface ListController<T = any> extends ListControllerState {
 }
 
 interface ListControllerProps<T = any, K = string> {
+  limit: number;
   suggestions: AbstractListElement<T>[];
   automatic?: boolean;
   formControl?:
@@ -45,7 +46,7 @@ interface ListControllerProps<T = any, K = string> {
 export function useListController<T = any, K = string>(
   props: ListControllerProps<T, K>
 ): ListController<T> {
-  const { suggestions, automatic, formControl, reference } = props;
+  const { limit, suggestions, automatic, formControl, reference } = props;
 
   const listIsOpen = useRef(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -122,22 +123,25 @@ export function useListController<T = any, K = string>(
     changeValueInternal.current = false;
   }, [collection, formControl?.value]);
 
-  const setState = useCallback((state: Partial<ListControllerState>) => {
-    const length = suggestions.length > 6 ? 6 : suggestions.length;
+  const setState = useCallback(
+    (state: Partial<ListControllerState>) => {
+      const minHeightList = limit > 0 ? (limit < 6 ? limit * 48 : 300) : 160;
 
-    const _state = state.modalIsVisible
-      ? {
-          ...state,
-          higher: locationListCanTop(
-            contentRef.current,
-            listRef.current,
-            length * 48
-          )
-        }
-      : state;
+      const _state = state.modalIsVisible
+        ? {
+            ...state,
+            higher: locationListCanTop(
+              contentRef.current,
+              listRef.current,
+              minHeightList
+            )
+          }
+        : state;
 
-    refreshState((state) => ({ ...state, ..._state }));
-  }, []);
+      refreshState((state) => ({ ...state, ..._state }));
+    },
+    [limit]
+  );
 
   const setFormValue = useCallback(
     (element?: AbstractListElement<any>, initialValue = false) => {

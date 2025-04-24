@@ -12,7 +12,8 @@ import { renderClassStatus } from './helpers';
 interface RlsState {
   confirmation: Confirmation;
   snackbar: Snackbar;
-  withNavbar: (withNavbar: boolean) => void;
+  setNavbarInApp: (hasNavbar: boolean) => void;
+  setNavbarIsCondense: (isCondense: boolean) => void;
 }
 
 export const RlsContext = createContext<RlsState>({
@@ -20,21 +21,33 @@ export const RlsContext = createContext<RlsState>({
     return Promise.resolve(ConfirmationResult.approved());
   },
   snackbar: () => {},
-  withNavbar: () => {}
+  setNavbarInApp: () => {},
+  setNavbarIsCondense: () => {}
 });
 
 export function RlsApplication({ children }: RlsComponent) {
   const { RlsConfirmation, confirmation } = useConfirmation();
   const { RlsSnackbar, snackbar } = useSnackbar();
 
-  const [_withNavbar, withNavbar] = useState(false);
+  const [hasNavbar, setNavbarInApp] = useState(false);
+  const [isNavbarCondense, setNavbarIsCondense] = useState(false);
 
   const className = useMemo(() => {
-    return renderClassStatus('rls-app__body', { snackbar: _withNavbar });
-  }, [_withNavbar]);
+    return renderClassStatus('rls-app__body', {
+      snackbar: hasNavbar,
+      'navbar-condense': isNavbarCondense
+    });
+  }, [hasNavbar]);
 
   return (
-    <RlsContext.Provider value={{ confirmation, snackbar, withNavbar }}>
+    <RlsContext.Provider
+      value={{
+        confirmation,
+        snackbar,
+        setNavbarInApp,
+        setNavbarIsCondense
+      }}
+    >
       <div className={className}>
         {children}
         {RlsSnackbar}

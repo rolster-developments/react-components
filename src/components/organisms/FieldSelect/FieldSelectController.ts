@@ -4,7 +4,9 @@ import {
   KeyboardEvent,
   KeyboardEventHandler,
   MouseEventHandler,
-  useCallback
+  useCallback,
+  useEffect,
+  useRef
 } from 'react';
 import { useListController } from '../../../controllers';
 import { ListControllerState } from '../../../definitions';
@@ -44,7 +46,16 @@ export function useFieldSelect<
   E extends Element<T> = Element<T>,
   K = string
 >(props: FieldSelectProps<T, E, K>): FieldSelectControl<T, E> {
-  const controller = useListController<T, K>(props);
+  const limit = useRef(props.suggestions.length);
+
+  const controller = useListController<T, K>({
+    ...props,
+    limit: limit.current
+  });
+
+  useEffect(() => {
+    limit.current = props.suggestions.length;
+  }, [props.suggestions]);
 
   const onFocusInput = useCallback(() => {
     controller.setState({ focused: true });

@@ -58,12 +58,17 @@ export function useFieldAutocomplete<
   E extends Element<T> = Element<T>,
   K = string
 >(props: FieldAutocompleteProps<T, E, K>): FieldAutocompleteControl<T, E> {
-  const controller = useListController<T, K>(props);
+  const limit = useRef(props.suggestions.length);
+
+  const controller = useListController<T, K>({
+    ...props,
+    limit: limit.current
+  });
 
   const [coincidences, setCoincidences] = useState<E[]>([]);
   const [pattern, setPattern] = useState('');
 
-  const currentStore = useRef<AutocompleteStore<T, E>>({
+  const _store = useRef<AutocompleteStore<T, E>>({
     coincidences: [],
     pattern: '',
     previous: null
@@ -75,11 +80,15 @@ export function useFieldAutocomplete<
         pattern,
         suggestions,
         reboot,
-        store: currentStore.current
+        store: _store.current
       });
 
-      currentStore.current = store;
-      setCoincidences(collection.slice(0, MAX_ELEMENTS));
+      _store.current = store;
+
+      const coincidences = collection.slice(0, MAX_ELEMENTS);
+
+      setCoincidences(coincidences);
+      limit.current = coincidences.length;
     },
     []
   );
