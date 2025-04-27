@@ -1,16 +1,16 @@
 // Rolster Technology Switch Component
-// v1.1.3
+// v1.1.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 27/Abr/2025
 
 .rls-switch {
   --pvt-element-left: var(--rls-sizing-x1);
   --pvt-element-background: var(--rls-app-color-050);
   --pvt-bar-background: var(--rls-app-color-200);
 
-  max-width: var(--rls-sizing-x20);
+  max-width: var(--rlc-switch-max-width);
 
   &:hover {
     cursor: pointer;
