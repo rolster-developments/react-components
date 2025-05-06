@@ -1,13 +1,15 @@
 // Rolster Technology Switch Component
-// v1.1.4
+// v1.1.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/Mar/2018
-// Updated: 27/Abr/2025
+// Updated: 06/May/2025
 
 .rls-switch {
   --pvt-element-left: var(--rls-sizing-x1);
+  --pvt-element-border-color: var(--rls-app-color-400);
   --pvt-element-background: var(--rls-app-color-050);
+  --pvt-element-item-background: transparent;
   --pvt-bar-background: var(--rls-app-color-200);
 
   max-width: var(--rlc-switch-max-width);
@@ -17,10 +19,12 @@
   }
 
   &--checked {
-    --pvt-element-background: var(--rls-theme-gradient-500);
     --pvt-element-left: calc(
       100% - var(--rlc-switch-element-size) - var(--rls-sizing-x1)
     );
+    --pvt-element-border-color: var(--rls-theme-color-500);
+    --pvt-element-background: var(--rls-theme-color-050);
+    --pvt-element-item-background: var(--rls-theme-color-500);
     --pvt-bar-background: var(--rls-theme-color-300);
   }
 
@@ -45,9 +49,9 @@
       padding: var(--rls-sizing-x2);
       box-sizing: border-box;
       border-radius: 50%;
-      background: var(--rls-app-color-050);
-      box-shadow: 0 0 2rem 0 rgba(37, 38, 65, 0.38);
-      /*transition: left 240ms var(--rls-standard-curve);*/
+      background: var(--pvt-element-background);
+      border: var(--rls-sizing-x1) solid var(--pvt-element-border-color);
+      transition: left 240ms var(--rls-standard-curve);
 
       &::before {
         display: block;
@@ -55,7 +59,7 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background: var(--pvt-element-background);
+        background: var(--pvt-element-item-background);
       }
     }
 

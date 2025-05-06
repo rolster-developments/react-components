@@ -1,11 +1,12 @@
 // Rolster Technology Radiobutton Component
-// v1.0.4
+// v1.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 27/Abr/2025
+// Updated: 06/May/2025
 
 .rls-radiobutton {
+  --pvt-component-border-color: var(--rls-app-color-500);
   --pvt-component-transform: scale(0);
 
   position: relative;
@@ -17,14 +18,15 @@
   outline: none;
   border-radius: 50%;
   box-sizing: border-box;
-  background: var(--rls-app-color-050);
-  box-shadow: 0 0 2rem 0 rgba(37, 38, 65, 0.38);
+  background: var(--rls-theme-color-050);
+  border: var(--rls-sizing-x1) solid var(--pvt-component-border-color);
 
   &:hover {
     cursor: pointer;
   }
 
   &--checked {
+    --pvt-component-border-color: var(--rls-theme-color-500);
     --pvt-component-transform: scale(1);
   }
 
@@ -35,9 +37,9 @@
 
   &__component {
     width: var(--rlc-radiobutton-children-dimension);
-    height: varr(--rlc-radiobutton-children-dimension);
+    height: var(--rlc-radiobutton-children-dimension);
     border-radius: 50%;
-    background: var(--rls-theme-gradient-500);
+    background: var(--rls-theme-color-500);
     transform: var(--pvt-component-transform);
     transform-origin: 50% 50%;
     transition: all 160ms 0ms var(--rls-standard-curve);
