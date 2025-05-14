@@ -1,17 +1,21 @@
 // Rolster Technology Skeleton Component
-// v1.0.1
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 14/May/2022
-// Updated: 14/Jul/2024
+// Updated: 14/May/2025
 
 .rls-skeleton {
+  --pvt-height: var(--rlc-skeleton-height, inherit);
+  --pvt-max-height: var(--rlc-skeleton-max-height, inherit);
+  --pvt-min-height: var(--rlc-skeleton-min-height, inherit);
+
   position: relative;
   width: 100%;
-  max-height: inherit;
-  min-height: inherit;
-  height: inherit;
-  line-height: inherit;
+  max-height: var(--pvt-max-height);
+  min-height: var(--pvt-min-height);
+  height: var(--pvt-height);
+  line-height: var(--pvt-height);
   letter-spacing: inherit;
   overflow: hidden;
   background: var(--rls-theme-color-100);

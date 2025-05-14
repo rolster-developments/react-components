@@ -1,12 +1,23 @@
 // Rolster Technology Input Component
-// v1.0.5
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 14/May/2025
 
 .rls-input {
-  --pvt-value-font-color: var(--rlc-input-font-color);
+  --pvt-font-color: var(--rlc-input-font-color, var(--rls-app-color-900));
+  --pvt-font-size: var(--rlc-input-font-size, var(--rls-input-font-size));
+
+  --pvt-letter-spacing: var(
+    --rlc-input-letter-spacing,
+    var(--rls-input-letter-spacing)
+  );
+
+  --pvt-height: var(--rlc-input-height, var(--rls-sizing-x12));
+  --pvt-text-align: var(--rlc-input-text-align, left);
+
+  --pvt-value-font-color: var(--pvt-font-color);
   --pvt-value-opacity: 1;
   --pvt-component-font-color: transparent;
 
@@ -14,7 +25,7 @@
   width: 100%;
 
   &--focused {
-    --pvt-component-font-color: var(--rlc-input-font-color);
+    --pvt-component-font-color: var(--pvt-font-color);
     --pvt-value-font-color: transparent;
   }
 
@@ -25,8 +36,8 @@
   &__component {
     position: relative;
     width: 100%;
-    height: var(--rlc-input-height);
-    line-height: var(--rlc-input-height);
+    height: var(--pvt-height);
+    line-height: var(--pvt-height);
     padding: 0rem;
     cursor: text;
     border: none;
@@ -34,9 +45,9 @@
     background: transparent;
     color: var(--pvt-component-font-color);
     font-weight: var(--rls-font-weight-medium);
-    font-size: var(--rlc-input-font-size);
-    text-align: var(--rlc-input-text-align);
-    letter-spacing: var(--rlc-input-letter-spacing);
+    font-size: var(--pvt-font-size);
+    text-align: var(--pvt-text-align);
+    letter-spacing: var(--pvt-letter-spacing);
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -63,8 +74,8 @@
     top: 0rem;
     left: 0rem;
     width: 100%;
-    height: var(--rlc-input-height);
-    line-height: var(--rlc-input-height);
+    height: var(--pvt-height);
+    line-height: var(--pvt-height);
     background: transparent;
     pointer-events: none;
     overflow: hidden;
@@ -72,8 +83,8 @@
     opacity: var(--pvt-value-opacity);
     color: var(--pvt-value-font-color);
     font-weight: var(--rls-font-weight-medium);
-    font-size: var(--rlc-input-font-size);
-    text-align: var(--rlc-input-text-align);
-    letter-spacing: var(--rlc-input-letter-spacing);
+    font-size: var(--pvt-font-size);
+    text-align: var(--pvt-text-align);
+    letter-spacing: var(--pvt-letter-spacing);
   }
 }

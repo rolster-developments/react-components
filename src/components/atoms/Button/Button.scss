@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v2.1.2
+// v2.2.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 24/Abr/2025
+// Updated: 14/May/2025
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -17,22 +17,22 @@
   --pvt-classic-font-color: var(--rls-app-color-500);
   --pvt-classic-border: none;
   --pvt-raised-background: var(--rls-theme-color-500);
-  --pvt-raised-font-color: var(--rls-theme-font-500);
+  --pvt-raised-font-color: var(--rls-theme-color-050);
   --pvt-raised-border: none;
   --pvt-flat-background: var(--rls-theme-color-200);
   --pvt-flat-font-color: var(--rls-theme-color-700);
   --pvt-flat-border: none;
   --pvt-stroked-background: transparent;
   --pvt-stroked-font-color: var(--rls-theme-color-500);
-  --pvt-stroked-border: var(--rls-theme-border-1-500);
+  --pvt-stroked-border: var(--rls-theme-border-2-500);
   --pvt-outline-background: transparent;
   --pvt-outline-font-color: var(--rls-app-color-600);
-  --pvt-outline-border: var(--rls-app-border-1-300);
+  --pvt-outline-border: var(--rls-app-border-2-300);
   --pvt-ghost-background: none;
   --pvt-ghost-font-color: var(--rls-theme-color-500);
   --pvt-ghost-border: none;
   --pvt-gradient-background: var(--rls-theme-gradient-500);
-  --pvt-gradient-font-color: var(--rls-theme-font-500);
+  --pvt-gradient-font-color: var(--rls-theme-color-050);
   --pvt-gradient-border: none;
 
   position: relative;
@@ -62,10 +62,10 @@
     --pvt-flat-border: none;
     --pvt-stroked-background: var(--rls-theme-color-100);
     --pvt-stroked-font-color: var(--rls-theme-color-700);
-    --pvt-stroked-border: var(--rls-theme-border-1-700);
+    --pvt-stroked-border: var(--rls-theme-border-2-700);
     --pvt-outline-background: transparent;
     --pvt-outline-font-color: var(--rls-theme-color-500);
-    --pvt-outline-border: var(--rls-theme-border-1-500);
+    --pvt-outline-border: var(--rls-theme-border-2-500);
     --pvt-ghost-background: var(--rls-theme-color-200);
     --pvt-ghost-font-color: var(--rls-theme-font-100);
     --pvt-ghost-border: none;
@@ -86,10 +86,10 @@
     --pvt-flat-border: none;
     --pvt-stroked-background: transparent;
     --pvt-stroked-font-color: var(--rls-theme-color-300);
-    --pvt-stroked-border: var(--rls-theme-border-1-300);
+    --pvt-stroked-border: var(--rls-theme-border-2-300);
     --pvt-outline-background: transparent;
     --pvt-outline-font-color: var(--rls-app-color-400);
-    --pvt-outline-border: var(--rls-app-border-1-100);
+    --pvt-outline-border: var(--rls-app-border-2-100);
     --pvt-ghost-background: transparent;
     --pvt-ghost-font-color: var(--rls-theme-color-300);
     --pvt-ghost-border: none;
@@ -107,9 +107,9 @@
     overflow: hidden;
     line-height: var(--rls-sizing-x20);
     height: var(--rls-sizing-x20);
-    padding: var(--rlc-button-content-padding);
+    padding: var(--rlc-button-content-padding, 0rem var(--rls-sizing-x4));
     box-sizing: border-box;
-    border-radius: var(--rlc-button-content-radius);
+    border-radius: var(--rlc-button-content-radius, var(--rls-sizing-x2));
     color: var(--pvt-button-content-font-color);
     border: var(--pvt-button-content-border);
     background: var(--pvt-button-content-background);
@@ -187,7 +187,7 @@
     font-size: var(--rls-button-font-size);
     font-weight: var(--rls-font-weight-bold);
     letter-spacing: var(--rls-button-letter-spacing);
-    text-transform: var(--rlc-button-label-text-transform);
+    text-transform: var(--rlc-button-label-text-transform, uppercase);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

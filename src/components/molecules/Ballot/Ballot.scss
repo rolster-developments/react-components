@@ -1,20 +1,45 @@
 // Rolster Technology Ballot Component
-// v1.1.2
+// v1.2.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 14/May/2025
 
 .rls-ballot {
   --rlc-avatar-width: var(--rls-sizing-x20);
   --rlc-avatar-height: var(--rls-sizing-x20);
+
+  --pvt-title-letter-spacing: var(
+    --rlc-ballot-title-letter-spacing,
+    var(--rls-label-letter-spacing)
+  );
+
+  --pvt-title-font-size: var(
+    --rlc-ballot-title-font-size,
+    var(--rls-label-font-size)
+  );
+
+  --pvt-title-height: var(
+    --rlc-ballot-title-height,
+    var(--rls-label-line-height)
+  );
+
+  --pvt-subtitle-letter-spacing: var(
+    --rlc-ballot-subtitle-letter-spacing,
+    var(--rls-smalltext-letter-spacing)
+  );
+
+  --pvt-subtitle-height: var(
+    --rlc-ballot-subtitle-height,
+    var(--rls-smalltext-line-height)
+  );
 
   position: relative;
   display: flex;
   width: 100%;
   align-items: center;
   column-gap: var(--rls-sizing-x4);
-  padding: var(--rlc-ballot-padding);
+  padding: var(--rlc-ballot-padding, var(--rls-sizing-x4));
   box-sizing: border-box;
   overflow: hidden;
 
@@ -31,7 +56,7 @@
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    row-gap: var(--rlc-ballot-component-row-gap);
+    row-gap: var(--rlc-ballot-component-row-gap, var(--rls-sizing-x2));
   }
 
   .rls-avatar + .rls-ballot__component {
@@ -39,9 +64,9 @@
   }
 
   &__title {
-    --rlc-skeleton-text-height: var(--rlc-ballot-title-height);
-    --rlc-skeleton-text-letter-spacing: var(--rlc-ballot-title-letter-spacing);
-    --rlc-skeleton-text-font-size: var(--rlc-ballot-title-font-size);
+    --rlc-skeleton-text-height: var(--pvt-title-height);
+    --rlc-skeleton-text-letter-spacing: var(--pvt-title-letter-spacing);
+    --rlc-skeleton-text-font-size: var(--pvt-title-font-size);
 
     position: relative;
     width: 100%;
@@ -49,30 +74,37 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-weight: var(--rlc-ballot-title-font-weight);
-    font-size: var(--rlc-ballot-title-font-size);
-    letter-spacing: var(--rlc-ballot-title-letter-spacing);
-    min-height: var(--rlc-ballot-title-height);
-    line-height: var(--rlc-ballot-title-height);
+    font-weight: var(
+      --rlc-ballot-title-font-weight,
+      var(--rls-font-weight-medium)
+    );
+    font-size: var(--pvt-title-font-size);
+    letter-spacing: var(--pvt-title-letter-spacing);
+    min-height: var(--pvt-title-height);
+    line-height: var(--pvt-title-height);
   }
 
   &__subtitle {
-    --rlc-skeleton-text-height: var(--rlc-ballot-subtitle-height);
-    --rlc-skeleton-text-letter-spacing: var(
-      --rlc-ballot-subtitle-letter-spacing
+    --rlc-skeleton-text-height: var(--pvt-subtitle-height);
+    --rlc-skeleton-text-letter-spacing: var(--pvt-subtitle-letter-spacing);
+    --rlc-skeleton-text-font-size: var(
+      --rlc-ballot-subtitle-font-size,
+      var(--rls-smalltext-font-size)
     );
-    --rlc-skeleton-text-font-size: var(--rlc-ballot-subtitle-font-size);
 
     position: relative;
-    width: var(--rlc-ballot-subtitle-width);
+    width: var(--rlc-ballot-subtitle-width, 100%);
     color: var(--rls-app-color-600);
-    font-weight: var(--rlc-ballot-subtitle-font-weight);
+    font-weight: var(
+      --rlc-ballot-subtitle-font-weight,
+      var(--rls-font-weight-semibold)
+    );
     font-size: var(--rls-ballot-subtitle-font-size);
-    letter-spacing: var(--rlc-ballot-subtitle-letter-spacing);
-    min-height: var(--rlc-ballot-subtitle-height);
-    line-height: var(--rlc-ballot-subtitle-height);
-    overflow: var(--rlc-ballot-subtitle-overflow);
-    text-overflow: var(--rlc-ballot-subtitle-text-overflow);
-    white-space: var(--rlc-ballot-subtitle-white-space);
+    letter-spacing: var(--pvt-subtitle-letter-spacing);
+    min-height: var(--pvt-subtitle-height);
+    line-height: var(--pvt-subtitle-height);
+    overflow: var(--rlc-ballot-subtitle-overflow, initial);
+    text-overflow: var(--rlc-ballot-subtitle-text-overflow, initial);
+    white-space: var(--rlc-ballot-subtitle-white-space, initial);
   }
 }

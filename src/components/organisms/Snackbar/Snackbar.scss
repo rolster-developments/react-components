@@ -10,7 +10,7 @@
   display: flex;
   column-gap: var(--rls-sizing-x6);
   bottom: 0rem;
-  left: var(--rlc-snackbar-left);
+  left: var(--rlc-snackbar-left, 50%);
   z-index: 32;
   width: auto;
   height: auto;

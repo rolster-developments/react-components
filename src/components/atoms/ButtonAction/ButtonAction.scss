@@ -1,11 +1,19 @@
 // Rolster Technology ButtonAction Component
-// v1.0.5
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 14/May/2025
 
 .rls-button-action {
+  --pvt-ripple-dimension: var(
+    --rlc-action-ripple-dimension,
+    var(--rls-sizing-x18)
+  );
+
+  --pvt-ripple-position: var(--rlc-action-ripple-position, -9rem);
+
+  --pvt-ripple-color: var(--rlc-action-ripple-color, var(--rls-app-color-600));
   --pvt-tooltip-transition-delay: 0ms;
   --pvt-tooltip-opacity: 0;
 
@@ -19,7 +27,7 @@
   user-select: none;
   cursor: default;
   background: transparent;
-  color: var(--rlc-action-color);
+  color: var(--rlc-action-color, var(--rls-app-color-600));
 
   &::before {
     position: absolute;
@@ -31,7 +39,7 @@
     visibility: hidden;
     border-radius: 50%;
     transform: scale(0);
-    background: var(--rlc-action-ripple-color);
+    background: var(--pvt-ripple-color);
     padding-top: calc(120% - var(--rls-sizing-x4));
     padding-left: calc(120% - var(--rls-sizing-x4));
     margin-top: calc(-60% + var(--rls-sizing-x2));
@@ -52,12 +60,12 @@
     top: 50%;
     left: 50%;
     opacity: 0.24;
-    width: var(--rlc-action-ripple-dimension);
-    height: var(--rlc-action-ripple-dimension);
-    margin-top: var(--rlc-action-ripple-position);
-    margin-left: var(--rlc-action-ripple-position);
+    width: var(--pvt-ripple-dimension);
+    height: var(--pvt-ripple-dimension);
+    margin-top: var(--pvt-ripple-position);
+    margin-left: var(--pvt-ripple-position);
     border-radius: 50%;
-    background: var(--rlc-action-ripple-color);
+    background: var(--pvt-ripple-color);
     transform: scale(0);
     transition: transform 160ms 0ms var(--rls-sharp-curve);
   }

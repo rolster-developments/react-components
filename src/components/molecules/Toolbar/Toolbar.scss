@@ -1,16 +1,16 @@
-//  Rolster Technology Toolbar Component
-//  v1.0.3
-//  @license MIT
-//  Author: Rolster Developers
-//  Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Rolster Technology Toolbar Component
+// v1.1.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 20/Mar/2018
+// Updated: 14/May/2025
 
 .rls-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   column-gap: var(--rls-sizing-x6);
-  height: var(--rlc-toolbar-height);
+  height: var(--rlc-toolbar-height, var(--rls-sizing-x28));
 
   & > * {
     width: auto;

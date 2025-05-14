@@ -1,18 +1,25 @@
 // Rolster Technology Checkbox Component
-// v1.0.5
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 06/May/2025
+// Updated: 14/May/2025
 
 .rls-checkbox {
+  --pvt-dimension: var(--rlc-checkbox-dimension, var(--rls-sizing-x12));
+
+  --pvt-component-dimension: var(
+    --rlc-checkbox-children-dimension,
+    var(--rls-sizing-x6)
+  );
+
   --pvt-component-border-color: var(--rls-app-color-500);
   --pvt-component-transform: scale(0);
 
   position: relative;
   display: flex;
-  width: var(--rlc-checkbox-dimension);
-  height: var(--rlc-checkbox-dimension);
+  width: var(--pvt-dimension);
+  height: var(--pvt-dimension);
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
@@ -36,8 +43,8 @@
   }
 
   &__component {
-    width: var(--rlc-checkbox-children-dimension);
-    height: var(--rlc-checkbox-children-dimension);
+    width: var(--pvt-component-dimension);
+    height: var(--pvt-component-dimension);
     border-radius: var(--rls-sizing-x1);
     background: var(--rls-theme-color-500);
     transform: var(--pvt-component-transform);
