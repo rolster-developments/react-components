@@ -13,6 +13,6 @@
   align-items: center;
   padding: var(--rls-sizing-x4) var(--rls-sizing-x6);
   box-sizing: border-box;
-  background: var(rlc-input-search-background, var(--rls-app-color-100));
+  background: var(--rlc-input-search-background, var(--rls-app-color-100));
   border-radius: var(--rls-sizing-x4);
 }

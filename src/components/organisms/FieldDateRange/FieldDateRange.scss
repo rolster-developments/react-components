@@ -49,7 +49,7 @@
   }
 
   &__action {
-    --rlc-icon-dimesion: calc(var(--pvt-action-dimension) - 2rem);
+    --rlc-icon-dimension: calc(var(--pvt-action-dimension) - 2rem);
 
     width: var(--pvt-action-dimension);
     height: var(--pvt-action-dimension);
