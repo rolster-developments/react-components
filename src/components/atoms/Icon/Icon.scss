@@ -1,5 +1,5 @@
 // Rolster Technology Icon Component
-// v1.1.0
+// v1.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -10,10 +10,10 @@
   --pvt-icon-display: block;
 
   position: relative;
-  font-size: var(--pvt-icon-dimesion);
-  width: var(--pvt-icon-dimesion);
-  height: var(--pvt-icon-dimesion);
-  line-height: var(--pvt-icon-dimesion);
+  font-size: var(--pvt-icon-dimension);
+  width: var(--pvt-icon-dimension);
+  height: var(--pvt-icon-dimension);
+  line-height: var(--pvt-icon-dimension);
 
   &--skeleton {
     --pvt-icon-display: none;
