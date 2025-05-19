@@ -10,20 +10,16 @@ interface FieldMoneyProps extends FieldBoxProps<number> {
   symbol?: string;
 }
 
-export function RlsFieldMoney({
-  children,
-  decimals,
-  disabled,
-  formControl,
-  identifier,
-  msgErrorDisabled,
-  onValue,
-  placeholder,
-  readOnly,
-  rlsTheme,
-  symbol,
-  value
-}: FieldMoneyProps) {
+export function RlsFieldMoney(props: FieldMoneyProps) {
+  const {
+    children,
+    disabled,
+    formControl,
+    identifier,
+    msgErrorDisabled,
+    rlsTheme
+  } = props;
+
   const className = useMemo(() => {
     const _disabled = formControl?.disabled || disabled;
 
@@ -49,16 +45,7 @@ export function RlsFieldMoney({
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <RlsInputMoney
-            formControl={formControl}
-            value={value}
-            disabled={disabled}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            symbol={symbol}
-            decimals={decimals}
-            onValue={onValue}
-          />
+          <RlsInputMoney {...props} />
         </div>
       </div>
 

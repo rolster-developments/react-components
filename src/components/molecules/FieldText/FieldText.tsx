@@ -5,18 +5,16 @@ import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldText.css';
 
-export function RlsFieldText({
-  children,
-  disabled,
-  formControl,
-  identifier,
-  msgErrorDisabled,
-  onValue,
-  placeholder,
-  readOnly,
-  rlsTheme,
-  value
-}: FieldBoxProps<string>) {
+export function RlsFieldText(props: FieldBoxProps<string>) {
+  const {
+    children,
+    disabled,
+    formControl,
+    identifier,
+    msgErrorDisabled,
+    rlsTheme
+  } = props;
+
   const className = useMemo(() => {
     const _disabled = formControl?.disabled || disabled;
 
@@ -42,14 +40,7 @@ export function RlsFieldText({
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <RlsInputText
-            formControl={formControl}
-            value={value}
-            disabled={disabled}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            onValue={onValue}
-          />
+          <RlsInputText {...props} />
         </div>
       </div>
 

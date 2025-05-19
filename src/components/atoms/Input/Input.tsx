@@ -1,7 +1,7 @@
-import { ReactControl } from '@rolster/react-forms';
 import {
   ChangeEvent,
   HTMLInputTypeAttribute,
+  KeyboardEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -9,16 +9,11 @@ import {
 } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { RlsComponent } from '../../definitions';
+import { InputProps as RolsterInputProps } from '../../types';
 import './Input.css';
 
-interface InputProps extends RlsComponent {
-  disabled?: boolean;
-  formControl?: ReactControl<HTMLInputElement>;
-  onValue?: (value: any) => void;
-  placeholder?: string;
-  readOnly?: boolean;
+interface InputProps extends RolsterInputProps<any>, RlsComponent {
   type?: HTMLInputTypeAttribute;
-  value?: any;
 }
 
 export function RlsInput({
@@ -26,6 +21,9 @@ export function RlsInput({
   disabled,
   formControl,
   identifier,
+  onEnter,
+  onKeyDown,
+  onKeyUp,
   onValue,
   placeholder,
   readOnly,
@@ -43,7 +41,7 @@ export function RlsInput({
     (!focused || valueInput !== valueControl) && setValueInput(valueControl);
   }, [formControl?.value]);
 
-  const onChange = useCallback(
+  const _onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const valueInput = event.target.value;
       const value = type === 'number' ? +valueInput : valueInput;
@@ -55,12 +53,28 @@ export function RlsInput({
     [formControl, onValue]
   );
 
-  const onFocus = useCallback(() => {
+  const _onKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      onKeyDown && onKeyDown(event);
+
+      event.key === 'Enter' && onEnter && onEnter();
+    },
+    [onKeyDown, onEnter]
+  );
+
+  const _onKeyUp = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      onKeyUp && onKeyUp(event);
+    },
+    [onKeyUp]
+  );
+
+  const _onFocus = useCallback(() => {
     formControl?.focus();
     setFocused(() => true);
   }, [formControl]);
 
-  const onBlur = useCallback(() => {
+  const _onBlur = useCallback(() => {
     formControl?.blur();
     setFocused(() => false);
   }, [formControl]);
@@ -82,9 +96,11 @@ export function RlsInput({
         placeholder={placeholder}
         disabled={formControl?.disabled || disabled}
         readOnly={readOnly}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={onChange}
+        onFocus={_onFocus}
+        onBlur={_onBlur}
+        onChange={_onChange}
+        onKeyDown={_onKeyDown}
+        onKeyUp={_onKeyUp}
         value={valueInput}
       />
       <span className="rls-input__value">{children}</span>

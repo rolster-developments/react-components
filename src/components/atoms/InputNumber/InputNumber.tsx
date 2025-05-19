@@ -3,15 +3,9 @@ import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 import './InputNumber.css';
 
-export function RlsInputNumber({
-  disabled,
-  formControl,
-  identifier,
-  onValue,
-  placeholder,
-  readOnly,
-  value
-}: InputProps<number>) {
+export function RlsInputNumber(props: InputProps<number>) {
+  const { formControl, identifier, onValue, value } = props;
+
   const [valueInput, setValueInput] = useState(
     formControl?.value ?? value ?? 0
   );
@@ -27,12 +21,9 @@ export function RlsInputNumber({
   return (
     <div id={identifier} className="rls-input-number">
       <RlsInput
-        formControl={formControl}
+        {...props}
         type="number"
         value={valueInput}
-        disabled={disabled}
-        readOnly={readOnly}
-        placeholder={placeholder}
         onValue={onValueInput}
       >
         {formControl?.value ?? valueInput}

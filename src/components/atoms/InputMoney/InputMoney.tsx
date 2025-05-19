@@ -9,17 +9,9 @@ interface InputMoneyProps extends InputProps<number> {
   symbol?: string;
 }
 
-export function RlsInputMoney({
-  decimals,
-  disabled,
-  formControl,
-  identifier,
-  onValue,
-  placeholder,
-  readOnly,
-  symbol,
-  value
-}: InputMoneyProps) {
+export function RlsInputMoney(props: InputMoneyProps) {
+  const { decimals, formControl, identifier, onValue, symbol, value } = props;
+
   const [valueInput, setValueInput] = useState(
     formControl?.value ?? value ?? 0
   );
@@ -35,12 +27,9 @@ export function RlsInputMoney({
   return (
     <div id={identifier} className="rls-input-money">
       <RlsInput
-        formControl={formControl}
+        {...props}
         type="number"
         value={valueInput}
-        disabled={disabled}
-        readOnly={readOnly}
-        placeholder={placeholder}
         onValue={onValueInput}
       >
         <RlsAmount

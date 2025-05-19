@@ -3,15 +3,9 @@ import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 import './InputText.css';
 
-export function RlsInputText({
-  disabled,
-  formControl,
-  identifier,
-  onValue,
-  placeholder,
-  readOnly,
-  value
-}: InputProps<string>) {
+export function RlsInputText(props: InputProps<string>) {
+  const { formControl, identifier, onValue, value } = props;
+
   const [valueInput, setValueInput] = useState(
     formControl?.value ?? value ?? ''
   );
@@ -27,12 +21,9 @@ export function RlsInputText({
   return (
     <div id={identifier} className="rls-input-text">
       <RlsInput
-        formControl={formControl}
+        {...props}
         type="text"
         value={valueInput}
-        disabled={disabled}
-        readOnly={readOnly}
-        placeholder={placeholder}
         onValue={onValueInput}
       >
         {formControl?.value ?? valueInput}

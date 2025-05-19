@@ -7,6 +7,7 @@ import './InputSearch.css';
 interface InputSearchProps {
   formControl?: RolsterControl<string>;
   identifier?: string;
+  onEnter?: () => void;
   onSearch?: () => void;
   placeholder?: string;
 }
@@ -14,6 +15,7 @@ interface InputSearchProps {
 export function RlsInputSearch({
   formControl,
   identifier,
+  onEnter,
   onSearch,
   placeholder
 }: InputSearchProps) {
@@ -31,6 +33,7 @@ export function RlsInputSearch({
       <RlsInput
         formControl={formControl}
         placeholder={placeholder}
+        onEnter={onEnter}
         onValue={onValue}
       >
         {formControl?.value ?? value}

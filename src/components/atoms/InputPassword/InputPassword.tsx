@@ -1,17 +1,12 @@
-import { useCallback, useMemo, useState } from 'react';
+import { KeyboardEvent, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import { RolsterControl } from '../../types';
+import { InputProps } from '../../types';
 import './InputPassword.css';
 
 type InputPasswordType = 'password' | 'text';
 
-interface InputPasswordProps extends RlsComponent {
-  disabled?: boolean;
-  formControl?: RolsterControl<string>;
-  onValue?: (value: string) => void;
-  placeholder?: string;
-  readOnly?:boolean
+interface InputPasswordProps extends InputProps<string>, RlsComponent {
   type?: InputPasswordType;
 }
 
@@ -19,6 +14,9 @@ export function RlsInputPassword({
   disabled,
   formControl,
   identifier,
+  onEnter,
+  onKeyDown,
+  onKeyUp,
   onValue,
   placeholder,
   readOnly,
@@ -26,7 +24,7 @@ export function RlsInputPassword({
 }: InputPasswordProps) {
   const [focused, setFocused] = useState(false);
 
-  const onChange = useCallback(
+  const _onChange = useCallback(
     (event: any) => {
       formControl?.setValue(event.target.value);
       onValue && onValue(event.target.value);
@@ -34,12 +32,28 @@ export function RlsInputPassword({
     [formControl, onValue]
   );
 
-  const onFocus = useCallback(() => {
+  const _onKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      onKeyDown && onKeyDown(event);
+
+      event.code === 'NumpadEnter' && onEnter && onEnter();
+    },
+    [onKeyDown, onEnter]
+  );
+
+  const _onKeyUp = useCallback(
+    (event: KeyboardEvent<HTMLInputElement>) => {
+      onKeyUp && onKeyUp(event);
+    },
+    [onKeyUp]
+  );
+
+  const _onFocus = useCallback(() => {
     formControl?.focus();
     setFocused(() => true);
   }, [formControl]);
 
-  const onBlur = useCallback(() => {
+  const _onBlur = useCallback(() => {
     formControl?.blur();
     setFocused(() => false);
   }, [formControl]);
@@ -60,9 +74,11 @@ export function RlsInputPassword({
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readOnly}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={onChange}
+        onFocus={_onFocus}
+        onBlur={_onBlur}
+        onChange={_onChange}
+        onKeyDown={_onKeyDown}
+        onKeyUp={_onKeyUp}
       />
     </div>
   );

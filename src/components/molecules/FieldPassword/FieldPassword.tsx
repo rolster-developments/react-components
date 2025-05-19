@@ -2,29 +2,20 @@ import { useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPassword } from '../../atoms/InputPassword/InputPassword';
-import { RlsComponent } from '../../definitions';
-import { RolsterControl } from '../../types';
+import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldPassword.css';
 
-interface FieldPasswordProps extends RlsComponent {
-  disabled?: boolean;
-  formControl?: RolsterControl<string>;
-  msgErrorDisabled?: boolean;
-  placeholder?: string;
-  readOnly?: boolean;
-}
+export function RlsFieldPassword(props: FieldBoxProps<string>) {
+  const {
+    children,
+    disabled,
+    formControl,
+    identifier,
+    msgErrorDisabled,
+    rlsTheme
+  } = props;
 
-export function RlsFieldPassword({
-  children,
-  disabled,
-  formControl,
-  identifier,
-  msgErrorDisabled,
-  placeholder,
-  readOnly,
-  rlsTheme
-}: FieldPasswordProps) {
   const [password, setPassword] = useState(true);
 
   const onToggleInput = useCallback(() => {
@@ -56,13 +47,7 @@ export function RlsFieldPassword({
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <RlsInputPassword
-            formControl={formControl}
-            disabled={disabled}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            type={password ? 'password' : 'text'}
-          />
+          <RlsInputPassword {...props} type={password ? 'password' : 'text'} />
 
           <RlsButtonAction
             icon={password ? 'eye' : 'eye-off'}
