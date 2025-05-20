@@ -1,9 +1,9 @@
 // Rolster Technology Checkbox Component
-// v1.1.0
+// v1.2.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 14/May/2025
+// Updated: 20/May/2025
 
 .rls-checkbox {
   --pvt-dimension: var(--rlc-checkbox-dimension, var(--rls-sizing-x12));
@@ -13,8 +13,7 @@
     var(--rls-sizing-x6)
   );
 
-  --pvt-component-border-color: var(--rls-app-color-500);
-  --pvt-component-transform: scale(0);
+  --pvt-component-background: var(--rls-app-color-050);
 
   position: relative;
   display: flex;
@@ -25,16 +24,17 @@
   box-sizing: border-box;
   outline: none;
   border-radius: var(--rls-sizing-x3);
-  background: var(--rls-theme-color-050);
-  border: var(--rls-sizing-x1) solid var(--pvt-component-border-color);
+  background: var(--rls-app-color-300);
+  transition: all 160ms 0ms var(--rls-standard-curve);
 
   &:hover {
     cursor: pointer;
   }
 
   &--checked {
-    --pvt-component-border-color: var(--rls-theme-color-500);
-    --pvt-component-transform: scale(1);
+    --pvt-component-background: var(--rls-theme-color-200);
+
+    background: var(--rls-theme-color-400);
   }
 
   &--disabled {
@@ -46,9 +46,7 @@
     width: var(--pvt-component-dimension);
     height: var(--pvt-component-dimension);
     border-radius: var(--rls-sizing-x1);
-    background: var(--rls-theme-color-500);
-    transform: var(--pvt-component-transform);
-    transform-origin: 50% 50%;
+    background: var(--pvt-component-background);
     transition: all 160ms 0ms var(--rls-standard-curve);
   }
 }

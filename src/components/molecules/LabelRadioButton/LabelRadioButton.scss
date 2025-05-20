@@ -1,9 +1,9 @@
 // Rolster Technology RadiobuttonLabel Component
-// v1.0.3
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 20/May/2025
 
 .rls-label-radiobutton {
   --pvt-text-opacity: 1;
@@ -12,9 +12,9 @@
   --pvt-text-white-space: nowrap;
   --pvt-text-text-overflow: ellipsis;
 
-  position: relative;
-  width: 100%;
   display: flex;
+  column-gap: var(--rls-sizing-x4);
+  align-items: center;
 
   &--disabled {
     --pvt-text-opacity: 0.5;

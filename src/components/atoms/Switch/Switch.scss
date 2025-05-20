@@ -1,32 +1,31 @@
 // Rolster Technology Switch Component
-// v1.2.0
+// v1.2.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/Mar/2018
-// Updated: 14/May/2025
+// Updated: 20/May/2025
 
 .rls-switch {
-  --pvt-element-size: var(--rlc-switch-element-size, var(--rls-sizing-x10));
-  --pvt-element-left: var(--rls-sizing-x1);
-  --pvt-element-border-color: var(--rls-app-color-400);
-  --pvt-element-background: var(--rls-app-color-050);
-  --pvt-element-item-background: transparent;
-  --pvt-bar-background: var(--rls-app-color-300);
+  --pvt-component-padding: var(
+    --rlc-switch-component-padding,
+    var(--rls-sizing-x4) var(--rls-sizing-x1)
+  );
 
-  max-width: var(--rlc-switch-max-width, var(--rls-sizing-x18));
+  --pvt-element-size: var(--rlc-switch-element-size, var(--rls-sizing-x12));
+  --pvt-element-left: 0rem;
+  --pvt-element-background: var(--rls-app-color-300);
+  --pvt-bar-background: var(--rls-app-color-500);
+
+  max-width: var(--rlc-switch-max-width, var(--rls-sizing-x20));
 
   &:hover {
     cursor: pointer;
   }
 
   &--checked {
-    --pvt-element-left: calc(
-      100% - var(--pvt-element-size) - var(--rls-sizing-x1)
-    );
-    --pvt-element-border-color: var(--rls-theme-color-500);
-    --pvt-element-background: var(--rls-theme-color-050);
-    --pvt-element-item-background: var(--rls-theme-color-500);
-    --pvt-bar-background: var(--rls-theme-color-300);
+    --pvt-element-left: calc(100% - var(--pvt-element-size));
+    --pvt-element-background: var(--rls-theme-color-200);
+    --pvt-bar-background: var(--rls-theme-color-400);
   }
 
   &--disabled {
@@ -37,7 +36,7 @@
   &__component {
     position: relative;
     width: 100%;
-    padding: var(--rls-sizing-x3) var(--rls-sizing-x1);
+    padding: var(--pvt-component-padding);
     box-sizing: border-box;
 
     &__element {
@@ -46,22 +45,12 @@
       left: var(--pvt-element-left);
       width: var(--pvt-element-size);
       height: var(--pvt-element-size);
-      z-index: var(--rls-z-index-2);
+      border-radius: 50%;
       padding: var(--rls-sizing-x2);
       box-sizing: border-box;
-      border-radius: 50%;
+      z-index: var(--rls-z-index-2);
       background: var(--pvt-element-background);
-      border: var(--rls-sizing-x1) solid var(--pvt-element-border-color);
-      transition: left 240ms var(--rls-standard-curve);
-
-      &::before {
-        display: block;
-        content: '';
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: var(--pvt-element-item-background);
-      }
+      transition: all 160ms var(--rls-standard-curve);
     }
 
     &__bar {
@@ -69,6 +58,7 @@
       width: 100%;
       height: var(--rlc-switch-bar-height, var(--rls-sizing-x4));
       border-radius: var(--rlc-switch-bar-radius, var(--rls-sizing-x2));
+      transition: all 160ms 0ms var(--rls-standard-curve);
     }
   }
 }
