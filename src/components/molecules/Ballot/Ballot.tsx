@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { RlsAvatar } from '../../atoms/Avatar/Avatar';
 import { RlsSkeletonText } from '../../atoms/SkeletonText/SkeletonText';
@@ -10,7 +10,7 @@ interface BallotProps extends RlsComponent {
   img?: string;
   initials?: string;
   skeleton?: boolean;
-  subtitle?: string;
+  subtitle?: ReactNode;
 }
 
 export function RlsBallot({
@@ -36,15 +36,13 @@ export function RlsBallot({
       )}
 
       <div className="rls-ballot__component">
-        <label className="rls-ballot__title">
+        <div className="rls-ballot__title">
           <RlsSkeletonText active={skeleton}>{children}</RlsSkeletonText>
-        </label>
+        </div>
         {subtitle && (
-          <label className="rls-ballot__subtitle">
-            <RlsSkeletonText active={skeleton}>
-              <span>{subtitle}</span>
-            </RlsSkeletonText>
-          </label>
+          <div className="rls-ballot__subtitle">
+            <RlsSkeletonText active={skeleton}>{subtitle}</RlsSkeletonText>
+          </div>
         )}
       </div>
     </div>

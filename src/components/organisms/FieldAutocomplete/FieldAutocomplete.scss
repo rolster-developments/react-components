@@ -1,9 +1,9 @@
 // Rolster Technology FieldAutocomplete Component
-// v1.0.6s
+// v1.0.7
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 26/May/2025
 
 .rls-field-autocomplete {
   --pvt-control-width: 100%;
@@ -72,6 +72,7 @@
 
       &:disabled {
         opacity: 0.5;
+        pointer-events: none;
       }
     }
 

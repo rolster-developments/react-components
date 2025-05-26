@@ -1,18 +1,24 @@
 // Rolster Technology Card Component
-// v1.1.0
+// v1.2.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 14/May/2025
+// Updated: 26/May/2025
 
 .rls-card {
-  background: var(--rls-app-color-050);
+  --pvt-background: var(--rls-app-color-100);
+  --pvt-border: var(--rls-app-border-2-300);
+
+  background: var(--pvt-background);
   border-radius: var(--rls-sizing-x4);
-  box-shadow: var(--rls-light-shadow-center-8);
+
+  &[rls-theme] {
+    --pvt-background: var(--rls-theme-color-100);
+  }
 
   &--outline {
-    border: var(--rls-app-border-1-100);
-    box-shadow: none;
+    border: var(--pvt-border);
+    box-sizing: border-box;
   }
 
   &__content {

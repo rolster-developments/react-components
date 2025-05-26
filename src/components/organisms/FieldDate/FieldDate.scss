@@ -1,9 +1,9 @@
 // Rolster Technology FieldDate Component
-// v1.1.0
+// v1.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 14/May/2025
+// Updated: 26/May/2025
 
 .rls-field-date {
   --rlc-fieldbox-body-padding: var(--rls-sizing-x4);
@@ -49,6 +49,7 @@
 
     &:disabled {
       opacity: 0.5;
+      pointer-events: none;
     }
   }
 
