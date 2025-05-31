@@ -4,7 +4,7 @@ import {
 } from '@rolster/components';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
@@ -74,7 +74,7 @@ export function RlsFieldSelectTemplate<
     });
   }, []);
 
-  const _disabled = useMemo(() => {
+  const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
@@ -82,13 +82,13 @@ export function RlsFieldSelectTemplate<
     return renderClassStatus(
       'rls-field-box',
       {
-        disabled: _disabled,
+        disabled: disabled,
         error: formControl?.wrong,
-        focused: select.focused && !_disabled
+        focused: select.focused && !disabled
       },
       'rls-field-list rls-field-select'
     );
-  }, [formControl?.wrong, select.focused, _disabled]);
+  }, [formControl?.wrong, select.focused, disabled]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
@@ -112,17 +112,18 @@ export function RlsFieldSelectTemplate<
             ref={select.inputRef}
             className="rls-field-list__control"
             readOnly={true}
-            disabled={_disabled}
             placeholder={placeholder}
             value={select.value}
             onFocus={select.onFocusInput}
             onBlur={select.onBlurInput}
             onClick={select.onClickInput}
             onKeyDown={select.onKeydownInput}
+            disabled={disabled}
           />
+
           <button
             className={'rls-field-list__action'}
-            disabled={_disabled}
+            disabled={disabled}
             onClick={select.onClickAction}
           >
             <RlsIcon
@@ -159,9 +160,10 @@ export function RlsFieldSelectTemplate<
             {!suggestions.length && (
               <li className="rls-field-list__empty">
                 <div className="rls-field-list__empty__description">
-                  <label className="rls-label-bold truncate">
+                  <label className="rls-label-bold rls-truncate">
                     {labels.listEmptyTitle}
                   </label>
+
                   <p className="rls-caption-regular">
                     {labels.listEmptyDescription}
                   </p>
@@ -223,18 +225,18 @@ export function RlsFieldSelect<T = any>(
 export function RlsFieldSelect<T = any>(
   props: FieldSelectProps<T, ListElement<T>>
 ) {
-  return (
-    <RlsFieldSelectTemplate
-      {...props}
-      render={(element) => (
-        <RlsBallot
-          subtitle={element.subtitle}
-          img={element.img}
-          initials={element.initials}
-        >
-          <span>{element.title}</span>
-        </RlsBallot>
-      )}
-    />
+  const render = useCallback(
+    (element: ListElement<T>) => (
+      <RlsBallot
+        subtitle={element.subtitle}
+        img={element.img}
+        initials={element.initials}
+      >
+        <span>{element.title}</span>
+      </RlsBallot>
+    ),
+    []
   );
+
+  return <RlsFieldSelectTemplate {...props} render={render} />;
 }

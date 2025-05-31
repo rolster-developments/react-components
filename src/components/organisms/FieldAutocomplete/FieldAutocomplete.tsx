@@ -32,6 +32,7 @@ interface FieldAutocompleteProps<
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  lineHeight?: number;
   msgErrorDisabled?: boolean;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: NonNullable<T>) => void;
@@ -108,14 +109,14 @@ export function RlsFieldAutocompleteTemplate<
     });
   }, [autocomplete.higher, autocomplete.modalIsVisible]);
 
-  const onInputSearch = useCallback(
+  const onChangePattern = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       autocomplete.setPattern(event.target.value);
     },
     [autocomplete.setPattern]
   );
 
-  const onClickSearch = useCallback(() => {
+  const onClickPattern = useCallback(() => {
     onSearch && onSearch(autocomplete.pattern);
   }, [onSearch, autocomplete.pattern]);
 
@@ -168,17 +169,17 @@ export function RlsFieldAutocompleteTemplate<
                 type="text"
                 placeholder={labels.listInputPlaceholder}
                 value={autocomplete.pattern}
-                onChange={onInputSearch}
-                disabled={_disabled || searching}
+                onChange={onChangePattern}
                 onFocus={autocomplete.onFocusInput}
                 onBlur={autocomplete.onBlurInput}
                 onKeyDown={autocomplete.onKeydownInput}
+                disabled={_disabled || searching}
               />
 
               {onSearch && (
                 <button
                   disabled={_disabled || searching}
-                  onClick={onClickSearch}
+                  onClick={onClickPattern}
                 >
                   <RlsIcon value="search" />
                 </button>
@@ -202,9 +203,10 @@ export function RlsFieldAutocompleteTemplate<
             {!autocomplete.coincidences.length && (
               <li className="rls-field-list__empty">
                 <div className="rls-field-list__empty__description">
-                  <label className="rls-label-bold truncate">
+                  <label className="rls-label-bold rls-truncate">
                     {labels.listEmptyTitle}
                   </label>
+
                   <p className="rls-caption-regular">
                     {labels.listEmptyDescription}
                   </p>
@@ -269,18 +271,18 @@ export function RlsFieldAutocomplete<T = any>(
 export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>
 ) {
-  return (
-    <RlsFieldAutocompleteTemplate
-      {...props}
-      render={(element) => (
-        <RlsBallot
-          subtitle={element.subtitle}
-          img={element.img}
-          initials={element.initials}
-        >
-          <span>{element.title}</span>
-        </RlsBallot>
-      )}
-    />
+  const render = useCallback(
+    (element: AutocompleteElement<T>) => (
+      <RlsBallot
+        subtitle={element.subtitle}
+        img={element.img}
+        initials={element.initials}
+      >
+        <span>{element.title}</span>
+      </RlsBallot>
+    ),
+    []
   );
+
+  return <RlsFieldAutocompleteTemplate {...props} render={render} />;
 }

@@ -47,6 +47,7 @@ interface FieldAutocompleteProps<
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  lineHeight?: number;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   reference?: (value: T) => K;
@@ -58,11 +59,11 @@ export function useFieldAutocomplete<
   E extends Element<T> = Element<T>,
   K = string
 >(props: FieldAutocompleteProps<T, E, K>): FieldAutocompleteControl<T, E> {
-  const limit = useRef(props.suggestions.length);
+  const count = useRef(props.suggestions.length);
 
   const controller = useListController<T, K>({
     ...props,
-    limit: limit.current
+    count: count.current
   });
 
   const [coincidences, setCoincidences] = useState<E[]>([]);
@@ -88,7 +89,7 @@ export function useFieldAutocomplete<
       const coincidences = collection.slice(0, MAX_ELEMENTS);
 
       setCoincidences(coincidences);
-      limit.current = coincidences.length;
+      count.current = coincidences.length;
     },
     []
   );

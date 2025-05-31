@@ -33,20 +33,26 @@ export interface ListController<T = any> extends ListControllerState {
 }
 
 interface ListControllerProps<T = any, K = string> {
-  limit: number;
+  count: number;
   suggestions: AbstractListElement<T>[];
   automatic?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  lineHeight?: number;
   reference?: (value: T) => K;
   value?: T;
+}
+
+function calculateMinHeightList(count: number, height: number): number {
+  return count <= 0 ? 160 : (count < 6 ? count : 6) * height;
 }
 
 export function useListController<T = any, K = string>(
   props: ListControllerProps<T, K>
 ): ListController<T> {
-  const { limit, suggestions, automatic, formControl, reference } = props;
+  const { count, suggestions, automatic, formControl, lineHeight, reference } =
+    props;
 
   const listIsOpen = useRef(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -125,7 +131,7 @@ export function useListController<T = any, K = string>(
 
   const setState = useCallback(
     (state: Partial<ListControllerState>) => {
-      const minHeightList = limit > 0 ? (limit < 6 ? limit * 48 : 300) : 160;
+      const minHeightList = calculateMinHeightList(count, lineHeight ?? 48);
 
       const _state = state.modalIsVisible
         ? {
@@ -140,7 +146,7 @@ export function useListController<T = any, K = string>(
 
       refreshState((state) => ({ ...state, ..._state }));
     },
-    [limit]
+    [count]
   );
 
   const setFormValue = useCallback(

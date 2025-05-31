@@ -25,22 +25,20 @@ function RlsBreadcrumbLabel({ label }: BreadcrumbLabelProps) {
   }, [label.onClick]);
 
   return (
-    <label
-      className="rls-breadcrumb__label"
-      onClick={label.onClick}
-      rls-theme={label.rlsTheme}
-    >
-      <a className={className}>{label.label}</a>
+    <label className="rls-breadcrumb__label" onClick={label.onClick}>
+      <a className={className} rls-theme={label.rlsTheme}>
+        {label.label}
+      </a>
     </label>
   );
 }
 
 export function RlsBreadcrumb({ labels }: BreadcrumbProps) {
-  return (
-    <div className="rls-breadcrumb">
-      {labels.map((label, index) => (
-        <RlsBreadcrumbLabel key={index} label={label} />
-      ))}
-    </div>
-  );
+  const children = useMemo(() => {
+    return labels.map((label, index) => (
+      <RlsBreadcrumbLabel key={index} label={label} />
+    ));
+  }, [labels]);
+
+  return <div className="rls-breadcrumb">{children}</div>;
 }

@@ -34,6 +34,7 @@ interface FieldSelectProps<
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  lineHeight?: number;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   reference?: (value: T) => K;
@@ -46,15 +47,15 @@ export function useFieldSelect<
   E extends Element<T> = Element<T>,
   K = string
 >(props: FieldSelectProps<T, E, K>): FieldSelectControl<T, E> {
-  const limit = useRef(props.suggestions.length);
+  const count = useRef(props.suggestions.length);
 
   const controller = useListController<T, K>({
     ...props,
-    limit: limit.current
+    count: count.current
   });
 
   useEffect(() => {
-    limit.current = props.suggestions.length;
+    count.current = props.suggestions.length;
   }, [props.suggestions]);
 
   const onFocusInput = useCallback(() => {
