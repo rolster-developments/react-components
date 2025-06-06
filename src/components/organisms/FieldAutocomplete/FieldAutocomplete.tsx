@@ -6,6 +6,7 @@ import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import {
   ChangeEvent,
+  KeyboardEvent,
   ReactNode,
   useCallback,
   useEffect,
@@ -85,7 +86,7 @@ export function RlsFieldAutocompleteTemplate<
     });
   }, []);
 
-  const _disabled = useMemo(() => {
+  const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
@@ -93,14 +94,14 @@ export function RlsFieldAutocompleteTemplate<
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: autocomplete.focused && !_disabled,
+        focused: autocomplete.focused && !disabled,
         error: formControl?.wrong,
-        disabled: _disabled,
+        disabled,
         selected: !!autocomplete.value
       },
       'rls-field-list rls-field-autocomplete'
     );
-  }, [formControl?.wrong, autocomplete.value, autocomplete.focused, _disabled]);
+  }, [formControl?.wrong, autocomplete.value, autocomplete.focused, disabled]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
@@ -120,6 +121,15 @@ export function RlsFieldAutocompleteTemplate<
     onSearch && onSearch(autocomplete.pattern);
   }, [onSearch, autocomplete.pattern]);
 
+  const onKeyDownPattern = useCallback(
+    (event: KeyboardEvent) => {
+      event.key === 'Enter' && onSearch && onSearch(autocomplete.pattern);
+
+      autocomplete.onKeydownInput(event);
+    },
+    [autocomplete.onKeydownInput, onSearch, autocomplete.pattern]
+  );
+
   return (
     <div
       id={props.identifier}
@@ -134,7 +144,7 @@ export function RlsFieldAutocompleteTemplate<
           <input
             className="rls-field-list__control"
             readOnly={true}
-            disabled={_disabled}
+            disabled={disabled}
             placeholder={placeholder}
             value={autocomplete.value}
             onClick={autocomplete.onClickControl}
@@ -142,7 +152,7 @@ export function RlsFieldAutocompleteTemplate<
 
           <button
             className="rls-field-list__action"
-            disabled={_disabled}
+            disabled={disabled}
             onClick={autocomplete.onClickAction}
           >
             <RlsIcon
@@ -172,13 +182,13 @@ export function RlsFieldAutocompleteTemplate<
                 onChange={onChangePattern}
                 onFocus={autocomplete.onFocusInput}
                 onBlur={autocomplete.onBlurInput}
-                onKeyDown={autocomplete.onKeydownInput}
-                disabled={_disabled || searching}
+                onKeyDown={onKeyDownPattern}
+                disabled={disabled || searching}
               />
 
               {onSearch && (
                 <button
-                  disabled={_disabled || searching}
+                  disabled={disabled || searching}
                   onClick={onClickPattern}
                 >
                   <RlsIcon value="search" />

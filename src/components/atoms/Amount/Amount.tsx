@@ -6,7 +6,7 @@ import './Amount.css';
 
 interface AmountProps {
   value: number;
-  decimals?: boolean;
+  decimals?: number;
   rlsTheme?: RlsTheme;
   symbol?: string;
 }

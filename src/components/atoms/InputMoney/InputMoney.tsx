@@ -5,7 +5,7 @@ import { RlsInput } from '../Input/Input';
 import './InputMoney.css';
 
 interface InputMoneyProps extends InputProps<number> {
-  decimals?: boolean;
+  decimals?: number;
   symbol?: string;
 }
 

@@ -6,7 +6,7 @@ import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldMoney.css';
 
 interface FieldMoneyProps extends FieldBoxProps<number> {
-  decimals?: boolean;
+  decimals?: number;
   symbol?: string;
 }
 

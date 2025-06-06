@@ -1,3 +1,4 @@
+import { floorDecimals } from '@rolster/commons';
 import {
   ChangeEvent,
   HTMLInputTypeAttribute,
@@ -5,6 +6,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react';
 import { renderClassStatus } from '../../../helpers';
@@ -13,11 +15,13 @@ import { InputProps as RolsterInputProps } from '../../types';
 import './Input.css';
 
 interface InputProps extends RolsterInputProps<any>, RlsComponent {
+  decimals?: number;
   type?: HTMLInputTypeAttribute;
 }
 
 export function RlsInput({
   children,
+  decimals,
   disabled,
   formControl,
   identifier,
@@ -35,22 +39,34 @@ export function RlsInput({
   const [valueInput, setValueInput] = useState(valueInitial);
   const [focused, setFocused] = useState(false);
 
-  useEffect(() => {
-    const valueControl = formControl?.value ? String(formControl.value) : '';
+  const isChangeInternal = useRef(false);
 
-    (!focused || valueInput !== valueControl) && setValueInput(valueControl);
+  useEffect(() => {
+    if (!isChangeInternal.current) {
+      const control = formControl?.value ? String(formControl.value) : '';
+
+      valueInput !== control && setValueInput(control);
+    }
+
+    isChangeInternal.current = false;
   }, [formControl?.value]);
 
   const _onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const valueInput = event.target.value;
-      const value = type === 'number' ? +valueInput : valueInput;
+
+      const value =
+        type === 'number'
+          ? floorDecimals(+valueInput, decimals || 0)
+          : valueInput;
+
+      isChangeInternal.current = true;
 
       onValue && onValue(value);
       setValueInput(valueInput);
       formControl?.setValue(value);
     },
-    [formControl, onValue]
+    [formControl, onValue, type, decimals]
   );
 
   const _onKeyDown = useCallback(

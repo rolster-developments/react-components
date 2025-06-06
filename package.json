@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "18.21.33",
+  "version": "18.21.34",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -30,7 +30,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rolster/commons": "^2.3.16",
+    "@rolster/commons": "^2.3.18",
     "@rolster/components": "^0.5.3",
     "@rolster/dates": "^2.1.0",
     "@rolster/forms": "^2.10.0",
