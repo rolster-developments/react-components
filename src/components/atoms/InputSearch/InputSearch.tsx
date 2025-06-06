@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
-import { RolsterControl } from '../../types';
+import { RolsterReactInputControl } from '../../types';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
 import './InputSearch.css';
 
 interface InputSearchProps {
-  formControl?: RolsterControl<string>;
+  formControl?: RolsterReactInputControl<string>;
   identifier?: string;
   onEnter?: () => void;
   onSearch?: () => void;

@@ -2,13 +2,13 @@ import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent } from 'react';
 import { RlsComponent } from './definitions';
 
-export type RolsterControl<T = any> =
+export type RolsterReactInputControl<T = any> =
   | ReactControl<HTMLInputElement, T>
   | ReactControl<HTMLInputElement, T | undefined>;
 
 export interface InputProps<T = any> {
   disabled?: boolean;
-  formControl?: RolsterControl<T>;
+  formControl?: RolsterReactInputControl<T>;
   identifier?: string;
   onEnter?: () => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;

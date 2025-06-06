@@ -3,7 +3,11 @@ import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 import './InputNumber.css';
 
-export function RlsInputNumber(props: InputProps<number>) {
+interface InputNumberProps extends InputProps<number> {
+  decimals?: number;
+}
+
+export function RlsInputNumber(props: InputNumberProps) {
   const { formControl, identifier, onValue, value } = props;
 
   const [valueInput, setValueInput] = useState(
