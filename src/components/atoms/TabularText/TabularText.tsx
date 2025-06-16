@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import { renderClassStatus } from '../../../helpers';
 import './TabularText.css';
 
 const className = 'rls-tabular-text';
@@ -11,14 +12,13 @@ function getCharClass(char: string): string {
 }
 
 interface TabularTextProps {
+  className?: string;
   value?: string;
 }
 
-export function RlsTabularText({ value }: TabularTextProps) {
-  const [codes, setCodes] = useState(<></>);
-
-  useEffect(() => {
-    setCodes(
+export function RlsTabularText({ className, value }: TabularTextProps) {
+  const codes = useMemo(() => {
+    return (
       <>
         {value?.split('').map((char, index) => (
           <span key={index} className={getCharClass(char)}>
@@ -29,5 +29,9 @@ export function RlsTabularText({ value }: TabularTextProps) {
     );
   }, [value]);
 
-  return <div className="rls-tabular-text">{codes}</div>;
+  const _className = useMemo(() => {
+    return renderClassStatus('rls-tabular-text', {}, className);
+  }, [className]);
+
+  return <div className={_className}>{codes}</div>;
 }

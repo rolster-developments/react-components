@@ -12,15 +12,32 @@ interface AmountProps {
 }
 
 export function RlsAmount({ value, decimals, rlsTheme, symbol }: AmountProps) {
-  const amount = useMemo(
-    () => currencyFormat({ value, decimals }),
-    [value, decimals]
-  );
+  const { decimal, integer } = useMemo(() => {
+    const currency = currencyFormat({ value, decimals });
+
+    if (!currency.includes(',')) {
+      return { integer: currency, decimal: '' };
+    }
+
+    const currencySplit = currency.split(',');
+
+    return {
+      integer: currencySplit[0] + (currencySplit[1] ? ',' : ''),
+      decimal: currencySplit[1] || ''
+    };
+  }, [value, decimals]);
 
   return (
     <div className="rls-amount" rls-theme={rlsTheme}>
-      {symbol && <span>{symbol}</span>}
-      <RlsTabularText value={amount} />
+      {symbol && <span className="rls-amount__symbol">{symbol}</span>}
+
+      <div className="rls-amount__content">
+        <RlsTabularText className="rls-amount__integer" value={integer} />
+
+        {decimal && (
+          <RlsTabularText className="rls-amount__decimal" value={decimal} />
+        )}
+      </div>
     </div>
   );
 }

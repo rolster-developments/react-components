@@ -1,21 +1,39 @@
 // Rolster Technology Amount Component
-// v1.1.0
+// v1.2.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 11/Sep/2023
-// Updated: 14/May/2025
+// Updated: 09/Jun/2025
 
 .rls-amount {
   --pvt-font-size: var(--rlc-amount-font-size, inherit);
-  --rlc-tabulartext-font-size: var(--pvt-font-size);
-  
+  --rlc-tabular-text-font-size: var(--pvt-font-size);
+
   display: flex;
   width: var(--rlc-amount-width, auto);
-  justify-content: var(--rlc-amount-text-align, start);
+  justify-content: var(--rlc-amount-text-align, flex-start);
   column-gap: var(--rls-sizing-x2);
   font-size: var(--pvt-font-size);
 
   &[rls-theme] {
     color: var(--rls-theme-color-500);
+  }
+
+  &__symbol {
+    display: block;
+    line-height: calc(var(--pvt-font-size) + 1rem);
+    height: calc(var(--pvt-font-size) + 1rem);
+  }
+
+  &__content {
+    display: flex;
+    justify-content: var(--rlc-amount-text-align, flex-start);
+  }
+
+  &__decimal {
+    --rlc-tabular-text-char-width: calc(var(--pvt-font-size) * 0.5);
+    --rlc-tabular-text-font-size: calc(var(--pvt-font-size) * 0.6);
+
+    align-self: flex-end;
   }
 }
