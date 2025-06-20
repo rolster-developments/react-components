@@ -5,7 +5,11 @@ import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldNumber.css';
 
-export function RlsFieldNumber(props: FieldBoxProps<number>) {
+interface FieldNumberProps extends FieldBoxProps<number> {
+  decimals?: number;
+}
+
+export function RlsFieldNumber(props: FieldNumberProps) {
   const {
     children,
     disabled,

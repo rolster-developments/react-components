@@ -1,4 +1,3 @@
-import { floorDecimals } from '@rolster/commons';
 import {
   ChangeEvent,
   HTMLInputTypeAttribute,
@@ -57,7 +56,7 @@ export function RlsInput({
 
       const value =
         type === 'number'
-          ? floorDecimals(+valueInput, decimals || 0)
+          ? parseFloat((+valueInput).toFixed(decimals))
           : valueInput;
 
       isChangeInternal.current = true;

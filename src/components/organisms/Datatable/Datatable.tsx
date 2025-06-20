@@ -20,7 +20,7 @@ interface DatatableRecordProps extends RlsComponent {
   error?: boolean;
   info?: boolean;
   overflow?: boolean;
-  successs?: boolean;
+  success?: boolean;
   warning?: boolean;
 }
 
@@ -124,17 +124,17 @@ export function RlsDatatableRecord({
   identifier,
   info,
   overflow,
-  successs,
+  success,
   warning,
   rlsTheme
 }: DatatableRecordProps) {
   const classNameRecord = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__record',
-      { error, info, overflow, successs, warning },
+      { error, info, overflow, success, warning },
       className
     );
-  }, [className, error, info, overflow, successs, warning]);
+  }, [className, error, info, overflow, success, warning]);
 
   return (
     <tr id={identifier} className={classNameRecord} rls-theme={rlsTheme}>
@@ -150,17 +150,17 @@ export function RlsDatatableTotals({
   identifier,
   info,
   overflow,
-  successs,
+  success,
   warning,
   rlsTheme
 }: DatatableRecordProps) {
   const classNameTotals = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__totals',
-      { error, info, overflow, successs, warning },
+      { error, info, overflow, success, warning },
       className
     );
-  }, [className, error, info, overflow, successs, warning]);
+  }, [className, error, info, overflow, success, warning]);
 
   return (
     <div id={identifier} className={classNameTotals} rls-theme={rlsTheme}>
