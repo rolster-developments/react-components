@@ -24,7 +24,9 @@ export function RlsInput({
   disabled,
   formControl,
   identifier,
+  onBlur,
   onEnter,
+  onFocus,
   onKeyDown,
   onKeyUp,
   onValue,
@@ -87,12 +89,14 @@ export function RlsInput({
   const _onFocus = useCallback(() => {
     formControl?.focus();
     setFocused(() => true);
-  }, [formControl]);
+    onFocus && onFocus();
+  }, [formControl, onFocus]);
 
   const _onBlur = useCallback(() => {
     formControl?.blur();
     setFocused(() => false);
-  }, [formControl]);
+    onBlur && onBlur();
+  }, [formControl, onBlur]);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-input', {

@@ -10,7 +10,9 @@ export interface InputProps<T = any> {
   disabled?: boolean;
   formControl?: RolsterReactInputControl<T>;
   identifier?: string;
+  onBlur?: () => void;
   onEnter?: () => void;
+  onFocus?: () => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
   onValue?: (value: T) => void;
