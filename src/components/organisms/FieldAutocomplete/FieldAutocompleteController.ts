@@ -51,6 +51,7 @@ interface FieldAutocompleteProps<
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   reference?: (value: T) => K;
+  selectionContinuos?: boolean;
   value?: T;
 }
 
@@ -156,11 +157,16 @@ export function useFieldAutocomplete<
   const onChange = useCallback(
     (element: Element<T>) => {
       if (props.onSelect) {
-        controller.setState({ modalIsVisible: false });
         element.value && props.onSelect(element.value);
       } else {
-        controller.setState({ modalIsVisible: false });
         controller.setFormValue(element);
+      }
+
+      if (props.selectionContinuos) {
+        setPattern('');
+        controller.inputRef?.current?.focus();
+      } else {
+        controller.setState({ modalIsVisible: false });
       }
 
       props.onValue && props.onValue(element.value);
@@ -168,6 +174,8 @@ export function useFieldAutocomplete<
     [
       controller.setState,
       controller.setFormValue,
+      setPattern,
+      props.selectionContinuos,
       props.onSelect,
       props.onValue
     ]

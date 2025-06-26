@@ -41,6 +41,7 @@ interface FieldAutocompleteProps<
   placeholder?: string;
   reference?: (value: T) => K;
   searching?: boolean;
+  selectionContinuos?: boolean;
   value?: T;
 }
 
