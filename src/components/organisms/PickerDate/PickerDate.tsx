@@ -5,6 +5,7 @@ import {
   verifyDateRange
 } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers';
@@ -16,7 +17,6 @@ import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
 import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
-import { i18nSubscribe } from '@rolster/i18n';
 
 const formatTitle = '{dw}, {mx} {dd} de {aa}';
 

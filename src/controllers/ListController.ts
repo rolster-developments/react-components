@@ -23,12 +23,12 @@ interface ListControllerState {
 }
 
 export interface ListController<T = any> extends ListControllerState {
-  contentRef: RefObject<HTMLDivElement>;
-  inputRef: RefObject<HTMLInputElement>;
-  listRef: RefObject<HTMLUListElement>;
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
   setFormValue(element?: AbstractListElement<T>): void;
+  refContent: RefObject<HTMLDivElement>;
+  refInput: RefObject<HTMLInputElement>;
+  refList: RefObject<HTMLUListElement>;
   setState: (state: Partial<ListControllerState>) => void;
 }
 
@@ -54,11 +54,11 @@ export function useListController<T = any, K = string>(
   const { count, suggestions, automatic, formControl, lineHeight, reference } =
     props;
 
-  const listIsOpen = useRef(false);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const refContent = useRef<HTMLDivElement>(null);
+  const refList = useRef<HTMLUListElement>(null);
+  const refInput = useRef<HTMLInputElement>(null);
 
+  const listIsOpen = useRef(false);
   const [collection, setCollection] = useState(
     new ListCollection<T, K>(suggestions)
   );
@@ -66,17 +66,17 @@ export function useListController<T = any, K = string>(
   const [state, refreshState] = useState<ListControllerState>({
     focused: false,
     higher: false,
-    value: '',
-    modalIsVisible: false
+    modalIsVisible: false,
+    value: ''
   });
 
+  const changeValueInternal = useRef(false);
   const position = useRef(0);
   const valueProtected = useRef<T>();
-  const changeValueInternal = useRef(false);
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
-      !contentRef?.current?.contains(target as any) &&
+      !refContent?.current?.contains(target as any) &&
         refreshState((state) => ({ ...state, modalIsVisible: false }));
     }
 
@@ -137,8 +137,8 @@ export function useListController<T = any, K = string>(
         ? {
             ...state,
             higher: locationListCanTop(
-              contentRef.current,
-              listRef.current,
+              refContent.current,
+              refList.current,
               minHeightList
             )
           }
@@ -169,9 +169,9 @@ export function useListController<T = any, K = string>(
     (event: KeyboardEvent) => {
       if (state.modalIsVisible) {
         const _position = navigationListFromInput({
-          content: contentRef.current,
+          content: refContent.current,
           event: event as any,
-          list: listRef.current
+          list: refList.current
         });
 
         position.current = _position ?? 0;
@@ -183,10 +183,10 @@ export function useListController<T = any, K = string>(
   const navigationElement = useCallback(
     (event: KeyboardEvent) => {
       position.current = navigationListFromElement({
-        content: contentRef.current,
+        content: refContent.current,
         event: event as any,
-        input: inputRef.current,
-        list: listRef.current,
+        input: refInput.current,
+        list: refList.current,
         position: position.current
       });
     },
@@ -195,11 +195,11 @@ export function useListController<T = any, K = string>(
 
   return {
     ...state,
-    contentRef,
-    inputRef,
-    listRef,
     navigationElement,
     navigationInput,
+    refContent,
+    refInput,
+    refList,
     setFormValue,
     setState
   };

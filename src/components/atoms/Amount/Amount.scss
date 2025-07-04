@@ -1,19 +1,25 @@
 // Rolster Technology Amount Component
-// v1.2.0
+// v1.2.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 11/Sep/2023
-// Updated: 09/Jun/2025
+// Updated: 01/Jul/2025
 
 .rls-amount {
   --pvt-font-size: var(--rlc-amount-font-size, inherit);
+  --pvt-font-weight: var(--rlc-amount-font-weight, inherit);
+  --pvt-decimal-width: var(--rlc-amount-decimal-width, 0.5);
+  --pvt-decimal-size: var(--rlc-amount-decimal-size, 0.6);
+
   --rlc-tabular-text-font-size: var(--pvt-font-size);
+  --rlc-tabular-text-font-weight: var(--pvt-font-weight);
 
   display: flex;
   width: var(--rlc-amount-width, auto);
   justify-content: var(--rlc-amount-text-align, flex-start);
   column-gap: var(--rls-sizing-x2);
   font-size: var(--pvt-font-size);
+  font-weight: var(--pvt-font-weight);
 
   &[rls-theme] {
     color: var(--rls-theme-color-500);
@@ -31,8 +37,13 @@
   }
 
   &__decimal {
-    --rlc-tabular-text-char-width: calc(var(--pvt-font-size) * 0.5);
-    --rlc-tabular-text-font-size: calc(var(--pvt-font-size) * 0.6);
+    --rlc-tabular-text-char-width: calc(
+      var(--pvt-font-size) * var(--pvt-decimal-width)
+    );
+
+    --rlc-tabular-text-font-size: calc(
+      var(--pvt-font-size) * var(--pvt-decimal-size)
+    );
 
     align-self: flex-end;
   }

@@ -1,11 +1,11 @@
 import { RefObject } from 'react';
 
 export interface ListControllerState {
-  contentRef: RefObject<HTMLDivElement>;
   focused: boolean;
   higher: boolean;
-  inputRef: RefObject<HTMLInputElement>;
-  listRef: RefObject<HTMLUListElement>;
   modalIsVisible: boolean;
+  refContent: RefObject<HTMLDivElement>;
+  refInput: RefObject<HTMLInputElement>;
+  refList: RefObject<HTMLUListElement>;
   value: string;
 }

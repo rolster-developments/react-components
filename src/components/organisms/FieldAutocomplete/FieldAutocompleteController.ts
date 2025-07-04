@@ -103,6 +103,10 @@ export function useFieldAutocomplete<
     refreshCoincidences(props.suggestions, pattern);
   }, [pattern]);
 
+  useEffect(() => {
+    props.disabled && controller.setState({ focused: false });
+  }, [props.disabled]);
+
   const onFocusInput = useCallback(() => {
     controller.setState({ focused: true });
   }, [controller.setState]);
@@ -131,7 +135,7 @@ export function useFieldAutocomplete<
     controller.setState({ modalIsVisible: true });
 
     setTimeout(() => {
-      controller.inputRef?.current?.focus();
+      controller.refInput?.current?.focus();
     }, DURATION_ANIMATION);
   }, [controller.setState]);
 
@@ -164,7 +168,7 @@ export function useFieldAutocomplete<
 
       if (props.selectionContinuos) {
         setPattern('');
-        controller.inputRef?.current?.focus();
+        controller.refInput?.current?.focus();
       } else {
         controller.setState({ modalIsVisible: false });
       }

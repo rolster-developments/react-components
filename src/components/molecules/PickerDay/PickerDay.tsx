@@ -23,13 +23,29 @@ interface PickerDayProps extends RlsComponent {
   year?: Nulleable<number>;
 }
 
-interface PickerDayItemProps {
+interface PickerDayElementProps {
   day: DayState;
   onSelect: (value: number) => void;
   disabled?: boolean;
 }
 
-function RlsPickerDayItem({ day, onSelect, disabled }: PickerDayItemProps) {
+function RlsPickerDayHeaders() {
+  return (
+    <div className="rls-picker-day__header">
+      {DAY_LABELS().map((title, index) => (
+        <label key={index} className="rls-picker-day__label">
+          {title}
+        </label>
+      ))}
+    </div>
+  );
+}
+
+function RlsPickerDayElement({
+  day,
+  onSelect,
+  disabled
+}: PickerDayElementProps) {
   const className = useMemo(() => {
     return renderClassStatus('rls-picker-day__element', {
       disabled: day.disabled || disabled,
@@ -58,18 +74,6 @@ function RlsPickerDayItem({ day, onSelect, disabled }: PickerDayItemProps) {
   );
 }
 
-function RlsPickerDayHeaders() {
-  return (
-    <div className="rls-picker-day__header">
-      {DAY_LABELS().map((title, index) => (
-        <label key={index} className="rls-picker-day__label">
-          {title}
-        </label>
-      ))}
-    </div>
-  );
-}
-
 export function RlsPickerDay({
   date: _date,
   disabled,
@@ -89,6 +93,21 @@ export function RlsPickerDay({
   const [headers, setHeaders] = useState(<RlsPickerDayHeaders />);
   const [component, setComponent] = useState(<></>);
 
+  const setDayValue = useCallback(
+    (value: number) => {
+      formControl ? formControl.setValue(value) : setValue(value);
+    },
+    [formControl]
+  );
+
+  const onSelect = useCallback(
+    (value: number) => {
+      setDayValue(value);
+      onValue && onValue(value);
+    },
+    [setDayValue, onValue]
+  );
+
   useEffect(() => {
     return i18nSubscribe(() => {
       setHeaders(<RlsPickerDayHeaders />);
@@ -101,7 +120,7 @@ export function RlsPickerDay({
         {weeks.map(({ days }, index) => (
           <div key={index} className="rls-picker-day__week">
             {days.map((day, index) => (
-              <RlsPickerDayItem
+              <RlsPickerDayElement
                 key={index}
                 day={day}
                 onSelect={onSelect}
@@ -112,7 +131,7 @@ export function RlsPickerDay({
         ))}
       </div>
     );
-  }, [weeks]);
+  }, [weeks, onSelect, disabled]);
 
   useEffect(() => {
     const options = createPickerOptions();
@@ -140,21 +159,6 @@ export function RlsPickerDay({
       maxDate
     };
   }, [date, formControl?.value, value, month, year, minDate, maxDate]);
-
-  const setDayValue = useCallback(
-    (value: number) => {
-      formControl ? formControl.setValue(value) : setValue(value);
-    },
-    [formControl]
-  );
-
-  const onSelect = useCallback(
-    (value: number) => {
-      setDayValue(value);
-      onValue && onValue(value);
-    },
-    [setDayValue, onValue]
-  );
 
   return (
     <div className="rls-picker-day" rls-theme={rlsTheme}>

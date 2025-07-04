@@ -134,7 +134,7 @@ export function RlsFieldAutocompleteTemplate<
   return (
     <div
       id={props.identifier}
-      ref={autocomplete.contentRef}
+      ref={autocomplete.refContent}
       className={className}
       rls-theme={rlsTheme}
     >
@@ -172,10 +172,10 @@ export function RlsFieldAutocompleteTemplate<
 
       <div className={classNameList}>
         <div className="rls-field-list__suggestions__body">
-          <ul ref={autocomplete.listRef} className="rls-field-list__ul">
+          <ul ref={autocomplete.refList} className="rls-field-list__ul">
             <div className="rls-field-list__ul__search">
               <input
-                ref={autocomplete.inputRef}
+                ref={autocomplete.refInput}
                 className="rls-field-list__ul__control"
                 type="text"
                 placeholder={labels.listInputPlaceholder}

@@ -82,9 +82,9 @@ export function RlsFieldSelectTemplate<
     return renderClassStatus(
       'rls-field-box',
       {
-        disabled: disabled,
+        focused: select.focused && !disabled,
         error: formControl?.wrong,
-        focused: select.focused && !disabled
+        disabled: disabled
       },
       'rls-field-list rls-field-select'
     );
@@ -100,7 +100,7 @@ export function RlsFieldSelectTemplate<
   return (
     <div
       id={props.identifier}
-      ref={select.contentRef}
+      ref={select.refContent}
       className={className}
       rls-theme={rlsTheme}
     >
@@ -109,7 +109,7 @@ export function RlsFieldSelectTemplate<
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
           <input
-            ref={select.inputRef}
+            ref={select.refInput}
             className="rls-field-list__control"
             readOnly={true}
             placeholder={placeholder}
@@ -144,7 +144,7 @@ export function RlsFieldSelectTemplate<
 
       <div className={classNameList}>
         <div className="rls-field-list__suggestions__body">
-          <ul ref={select.listRef} className="rls-field-list__ul">
+          <ul ref={select.refList} className="rls-field-list__ul">
             {suggestions.map((element, index) => (
               <li
                 key={index}

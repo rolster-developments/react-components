@@ -58,6 +58,10 @@ export function useFieldSelect<
     count.current = props.suggestions.length;
   }, [props.suggestions]);
 
+  useEffect(() => {
+    props.disabled && controller.setState({ focused: false });
+  }, [props.disabled]);
+
   const onFocusInput = useCallback(() => {
     controller.setState({ focused: true });
   }, [controller.setState]);
@@ -101,7 +105,7 @@ export function useFieldSelect<
     } else {
       const modalIsVisible = !controller.modalIsVisible;
       controller.setState({ modalIsVisible });
-      modalIsVisible && controller.inputRef?.current?.focus();
+      modalIsVisible && controller.refInput?.current?.focus();
     }
   }, [
     controller.modalIsVisible,
@@ -118,7 +122,7 @@ export function useFieldSelect<
 
   const onChange = useCallback(
     (element: Element<T>) => {
-      controller.inputRef?.current?.focus();
+      !props.disabled && controller.refInput?.current?.focus();
 
       if (props.onSelect) {
         controller.setState({ modalIsVisible: false });
@@ -134,7 +138,8 @@ export function useFieldSelect<
       controller.setState,
       controller.setFormValue,
       props.onSelect,
-      props.onValue
+      props.onValue,
+      props.disabled
     ]
   );
 
