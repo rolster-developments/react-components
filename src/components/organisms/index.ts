@@ -8,6 +8,8 @@ export * from './FieldDateRange/FieldDateRange';
 export * from './FieldSelect/FieldSelect';
 export * from './FieldSelect/FieldSelectController';
 export * from './FormNavigation/FormNavigation';
+export * from './ImageChooser/ImageChooser';
+export * from './ImageEditor/ImageEditor';
 export * from './Modal/Modal';
 export * from './PickerDate/PickerDate';
 export * from './PickerDateRange/PickerDateRange';

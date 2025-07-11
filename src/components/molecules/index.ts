@@ -17,4 +17,5 @@ export * from './PickerDayRange/PickerDayRange';
 export * from './PickerMonth/PickerMonth';
 export * from './PickerSelectorTitle/PickerSelectorTitle';
 export * from './PickerYear/PickerYear';
+export * from './Slider/Slider';
 export * from './Toolbar/Toolbar';
