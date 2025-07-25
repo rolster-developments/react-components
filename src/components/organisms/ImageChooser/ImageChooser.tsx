@@ -10,6 +10,7 @@ import './ImageChooser.css';
 interface ImageChooserProps {
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, ImageEditorValue>;
+  imgWidth?: number;
   onValue?: (result: ImageEditorValue) => void;
   src?: string;
 }
@@ -96,6 +97,7 @@ export function RlsImageChooser(props: ImageChooserProps) {
           <RlsImageEditor
             src={srcEditor}
             formControl={props.formControl}
+            imgWidth={props.imgWidth}
             onValue={onEditorValue}
           >
             <RlsButton

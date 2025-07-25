@@ -25,6 +25,7 @@ export interface ImageEditorValue {
 interface ImageEditorProps extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, ImageEditorValue>;
+  imgWidth?: number;
   mimeType?: ImageMymeType;
   onValue?: (result: ImageEditorValue) => void;
   rateSelection?: number;
@@ -289,7 +290,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
   const onCropImage = useCallback(() => {
     const cropProps = getCropProperties();
 
-    const width = cropProps.width;
+    const width = props.imgWidth || cropProps.width;
     const height = width * getRatioFactor(props.ratio || '1:1');
 
     refPicture.current.width = width;
@@ -329,7 +330,13 @@ export function RlsImageEditor(props: ImageEditorProps) {
       props.mimeType || 'image/jpeg',
       1
     );
-  }, [props.ratio, props.mimeType, props.onValue, props.formControl]);
+  }, [
+    props.ratio,
+    props.mimeType,
+    props.onValue,
+    props.formControl,
+    props.imgWidth
+  ]);
 
   const onRestore = useCallback(() => {
     const context = refCanvas.current.getContext('2d');

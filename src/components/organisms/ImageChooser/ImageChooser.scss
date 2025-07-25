@@ -1,9 +1,9 @@
 // Rolster Technology ImageChooser Component
-// v2.0.1
+// v2.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 03/Jul/2018
-// Updated: 11/Jul/2025
+// Updated: 25/Jul/2025
 
 .rls-image-chooser {
   position: relative;
@@ -35,10 +35,8 @@
     --rlc-image-editor-footer-padding: 0rem var(--rls-sizing-x12)
       var(--rls-sizing-x12) var(--rls-sizing-x12);
 
-    --pvt-modal-max-width: 240rem;
-
+    --rlc-modal-max-width: calc(100% - var(--rls-sizing-x16));
     width: 100%;
-    max-width: var(--pvt-modal-max-width);
   }
 }
 
@@ -47,6 +45,6 @@
     --rlc-image-editor-footer-padding: 0rem var(--rls-sizing-x8)
       var(--rls-sizing-x8) var(--rls-sizing-x8);
 
-    --pvt-modal-max-width: 160rem;
+    --rlc-modal-max-width: 160rem;
   }
 }
