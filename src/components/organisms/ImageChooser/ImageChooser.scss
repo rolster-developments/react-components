@@ -1,5 +1,5 @@
 // Rolster Technology ImageChooser Component
-// v2.0.2
+// v2.0.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 03/Jul/2018
@@ -35,12 +35,12 @@
     --rlc-image-editor-footer-padding: 0rem var(--rls-sizing-x12)
       var(--rls-sizing-x12) var(--rls-sizing-x12);
 
-    --rlc-modal-max-width: calc(100% - var(--rls-sizing-x16));
+    --rlc-modal-max-width: calc(250rem - var(--rls-sizing-x16));
     width: 100%;
   }
 }
 
-@media only screen and (max-width: 420px) {
+@media only screen and (max-width: 480px) {
   .rls-image-chooser__modal {
     --rlc-image-editor-footer-padding: 0rem var(--rls-sizing-x8)
       var(--rls-sizing-x8) var(--rls-sizing-x8);

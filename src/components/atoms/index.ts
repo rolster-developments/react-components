@@ -6,6 +6,7 @@ export * from './Button/Button';
 export * from './ButtonAction/ButtonAction';
 export * from './CheckBox/CheckBox';
 export * from './Icon/Icon';
+export * from './Image/Image';
 export * from './Input/Input';
 export * from './InputMoney/InputMoney';
 export * from './InputNumber/InputNumber';

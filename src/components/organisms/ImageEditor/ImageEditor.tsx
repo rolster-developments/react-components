@@ -24,10 +24,13 @@ export interface ImageEditorValue {
 
 interface ImageEditorProps extends RlsComponent {
   disabled?: boolean;
-  formControl?: ReactControl<HTMLElement, ImageEditorValue>;
+  formControl?:
+    | ReactControl<HTMLElement, ImageEditorValue>
+    | ReactControl<HTMLElement, ImageEditorValue | undefined>;
+  imgQuality?: number;
   imgWidth?: number;
   mimeType?: ImageMymeType;
-  onValue?: (result: ImageEditorValue) => void;
+  onValue?: (value: ImageEditorValue) => void;
   rateSelection?: number;
   ratio?: ImageRatio;
   src?: string;
@@ -127,17 +130,18 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const refreshSelectionFromWidth = useCallback(
     (rateSelection: number) => {
-      const _ratio = rateSelection * getRatioFactor(props.ratio || '1:1');
+      const ratioFactor = getRatioFactor(props.ratio || '1:1');
+      const _ratio = rateSelection * ratioFactor;
 
-      let width = (refImage.current.offsetWidth * rateSelection) / 100;
-      let height = (refImage.current.offsetWidth * _ratio) / 100;
+      const offsetWidth = refImage.current?.offsetWidth || 0;
+      const offsetHeight = refImage.current?.offsetHeight || 0;
 
-      if (height > refImage.current.offsetHeight) {
-        height = refImage.current.offsetHeight;
+      let width = (offsetWidth * rateSelection) / 100;
+      let height = (offsetWidth * _ratio) / 100;
 
-        width =
-          (height * refImage.current.offsetHeight) /
-          refImage.current.offsetHeight;
+      if (height > offsetHeight) {
+        height = offsetHeight;
+        width = height / ratioFactor;
       }
 
       return { height, width };
@@ -147,16 +151,18 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const refreshSelectionFromHeight = useCallback(
     (rateSelection: number) => {
-      const _ratio = rateSelection * getRatioFactor(props.ratio || '1:1');
+      const ratioFactor = getRatioFactor(props.ratio || '1:1');
+      const _ratio = rateSelection * ratioFactor;
 
-      let height = (refImage.current.offsetHeight * rateSelection) / 100;
-      let width = (refImage.current.offsetHeight * _ratio) / 100;
+      const offsetWidth = refImage.current?.offsetWidth || 0;
+      const offsetHeight = refImage.current?.offsetHeight || 0;
 
-      if (width > refImage.current.offsetWidth) {
-        width = refImage.current.offsetWidth;
+      let height = (offsetHeight * rateSelection) / 100;
+      let width = (offsetHeight * _ratio) / 100;
 
-        height =
-          (width * refImage.current.offsetWidth) / refImage.current.offsetWidth;
+      if (width > offsetWidth) {
+        width = offsetWidth;
+        height = width / ratioFactor;
       }
 
       return { height, width };
@@ -328,14 +334,15 @@ export function RlsImageEditor(props: ImageEditorProps) {
         }
       },
       props.mimeType || 'image/jpeg',
-      1
+      props.imgQuality || 1
     );
   }, [
     props.ratio,
     props.mimeType,
     props.onValue,
     props.formControl,
-    props.imgWidth
+    props.imgWidth,
+    props.imgQuality
   ]);
 
   const onRestore = useCallback(() => {

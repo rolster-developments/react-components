@@ -1,0 +1,16 @@
+// Rolster Technology Image Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 27/Jul/2025
+// Updated: 27/Jul/2025
+
+.rls-image {
+  content-visibility: auto;
+  background-color: var(--rls-theme-color-600);
+  opacity: 0;
+
+  &--complet {
+    opacity: 1;
+  }
+}
