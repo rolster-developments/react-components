@@ -40,7 +40,7 @@ export function RlsLabelCheckBox({
       <div className="rls-label-checkbox__component" onClick={onToggle}>
         <RlsCheckBox checked={checked} disabled={disabled} />
       </div>
-      <label className="rls-label-checkbox__text">{children}</label>
+      <div className="rls-label-checkbox__text">{children}</div>
     </div>
   );
 }

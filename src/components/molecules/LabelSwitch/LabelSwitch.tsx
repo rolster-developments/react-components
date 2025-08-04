@@ -40,7 +40,7 @@ export function RlsLabelSwitch({
       <div className="rls-label-switch__component" onClick={onToggle}>
         <RlsSwitch checked={checked} disabled={disabled} />
       </div>
-      <label className="rls-label-switch__text">{children}</label>
+      <div className="rls-label-switch__text">{children}</div>
     </div>
   );
 }

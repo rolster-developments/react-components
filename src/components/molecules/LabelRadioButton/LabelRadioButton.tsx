@@ -40,7 +40,7 @@ export function RlsLabelRadioButton<T = any>({
       <div className="rls-label-radiobutton__component" onClick={onSelect}>
         <RlsRadioButton checked={checked} disabled={disabled} />
       </div>
-      <label className="rls-label-radiobutton__text">{children}</label>
+      <div className="rls-label-radiobutton__text">{children}</div>
     </div>
   );
 }
