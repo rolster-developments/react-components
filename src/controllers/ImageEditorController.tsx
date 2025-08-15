@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { RlsButton } from '../components/atoms/Button/Button';
 import { ImageEditorValue } from '../components/organisms/ImageEditor/ImageEditor';
+import { ImageRatio } from '../components/types';
 import { RlsImageEditorModal } from '../components/organisms/ImageEditorModal/ImageEditorModal';
 import { MIME_TYPE_SUPPORTS } from '../constants/image-editor.constant';
 import { reactI18n } from '../i18n';
@@ -19,12 +20,13 @@ interface ImageEditorControllerOptions {
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
     | ReactControl<HTMLElement, ImageEditorValue | undefined>;
-  imgQuality?: number;
-  imgWidth?: number;
+  maxWidth?: number;
   onValue?: (value: ImageEditorValue) => void;
+  quality?: number;
+  ratio?: ImageRatio;
 }
 
-interface ImageEditorController {
+export interface ImageEditorController {
   onImageChooser: () => void;
   RlsImageEditorChooser: ReactNode;
 }
@@ -86,12 +88,13 @@ export function useImageEditorController(
     return (
       srcEditor && (
         <RlsImageEditorModal
+          visible={true}
           src={srcEditor}
           formControl={options.formControl}
-          imgWidth={options.imgWidth}
-          imgQuality={options.imgQuality}
+          maxWidth={options.maxWidth}
+          quality={options.quality}
+          ratio={options.ratio}
           onValue={onEditorValue}
-          visible={true}
         >
           <RlsButton
             type="flat"
@@ -108,8 +111,9 @@ export function useImageEditorController(
     srcEditor,
     labels,
     options.formControl,
-    options.imgWidth,
-    options.imgQuality,
+    options.maxWidth,
+    options.quality,
+    options.ratio,
     options.disabled,
     onEditorValue,
     onCancel

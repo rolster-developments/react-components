@@ -1,6 +1,7 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useState } from 'react';
 import { useImageEditorController } from '../../../controllers/ImageEditorController';
+import { ImageRatio } from '../../types';
 import { ImageEditorValue } from '../ImageEditor/ImageEditor';
 import './ImageChooser.css';
 
@@ -9,9 +10,10 @@ interface ImageChooserProps {
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
     | ReactControl<HTMLElement, ImageEditorValue | undefined>;
-  imgQuality?: number;
-  imgWidth?: number;
+  maxWidth?: number;
   onValue?: (value: ImageEditorValue) => void;
+  quality?: number;
+  ratio?: ImageRatio;
   src?: string;
 }
 
@@ -26,13 +28,7 @@ export function RlsImageChooser(props: ImageChooserProps) {
     [props.onValue]
   );
 
-  const { RlsImageEditorChooser, onImageChooser } = useImageEditorController({
-    disabled: props.disabled,
-    formControl: props.formControl,
-    imgQuality: props.imgQuality,
-    imgWidth: props.imgWidth,
-    onValue
-  });
+  const controller = useImageEditorController({ ...props, onValue });
 
   useEffect(() => {
     props.src && setSrc(props.src);
@@ -40,11 +36,14 @@ export function RlsImageChooser(props: ImageChooserProps) {
 
   return (
     <div className="rls-image-chooser">
-      <div className="rls-image-chooser__avatar" onClick={onImageChooser}>
+      <div
+        className="rls-image-chooser__avatar"
+        onClick={controller.onImageChooser}
+      >
         {src && <img src={src} />}
       </div>
 
-      {RlsImageEditorChooser}
+      {controller.RlsImageEditorChooser}
     </div>
   );
 }

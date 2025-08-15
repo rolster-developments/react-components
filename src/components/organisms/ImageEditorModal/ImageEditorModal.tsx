@@ -11,10 +11,10 @@ interface ImageEditorModalProps extends RlsComponent {
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
     | ReactControl<HTMLElement, ImageEditorValue | undefined>;
-  imgQuality?: number;
-  imgWidth?: number;
+  maxWidth?: number;
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
+  quality?: number;
   rateSelection?: number;
   ratio?: ImageRatio;
   src?: string;

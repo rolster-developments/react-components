@@ -20,10 +20,10 @@ interface ImageEditorProps extends RlsComponent {
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
     | ReactControl<HTMLElement, ImageEditorValue | undefined>;
-  imgQuality?: number;
-  imgWidth?: number;
+  maxWidth?: number;
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
+  quality?: number;
   rateSelection?: number;
   ratio?: ImageRatio;
   src?: string;
@@ -289,7 +289,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
   const onCropImage = useCallback(() => {
     const cropProps = getCropProperties();
 
-    const width = props.imgWidth || cropProps.width;
+    const width = props.maxWidth || cropProps.width;
     const height = width * getRatioFactor(props.ratio || '1:1');
 
     refPicture.current.width = width;
@@ -327,15 +327,15 @@ export function RlsImageEditor(props: ImageEditorProps) {
         }
       },
       props.mimeType || 'image/jpeg',
-      props.imgQuality || 1
+      props.quality || 1
     );
   }, [
     props.ratio,
     props.mimeType,
     props.onValue,
     props.formControl,
-    props.imgWidth,
-    props.imgQuality
+    props.maxWidth,
+    props.quality
   ]);
 
   const onRestore = useCallback(() => {
