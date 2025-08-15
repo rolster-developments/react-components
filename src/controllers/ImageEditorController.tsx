@@ -25,8 +25,8 @@ interface ImageEditorControllerOptions {
 }
 
 interface ImageEditorController {
-  RlsImageEditorChooser: ReactNode;
   onImageChooser: () => void;
+  RlsImageEditorChooser: ReactNode;
 }
 
 export function useImageEditorController(
@@ -44,7 +44,6 @@ export function useImageEditorController(
 
     reader.onload = function () {
       setSrcEditor(reader.result as string);
-
       refInput.current.value = '';
     };
 
@@ -54,7 +53,6 @@ export function useImageEditorController(
   useEffect(() => {
     refInput.current = document.createElement('input');
     refInput.current.type = 'file';
-    refInput.current.disabled = true;
 
     refInput.current.onchange = () => {
       if (
@@ -84,7 +82,7 @@ export function useImageEditorController(
     setSrcEditor(undefined);
   }, []);
 
-  const component = useMemo(() => {
+  const RlsImageEditorChooser = useMemo(() => {
     return (
       srcEditor && (
         <RlsImageEditorModal
@@ -118,8 +116,8 @@ export function useImageEditorController(
   ]);
 
   const onImageChooser = useCallback(() => {
-    refInput.current.click();
-  }, []);
+    !options.disabled && refInput.current.click();
+  }, [options.disabled]);
 
-  return { RlsImageEditorChooser: component, onImageChooser };
+  return { onImageChooser, RlsImageEditorChooser };
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "18.23.4",
+  "version": "18.23.5",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
