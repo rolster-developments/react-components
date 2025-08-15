@@ -15,7 +15,7 @@ interface ImageEditorModalProps extends RlsComponent {
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
   quality?: number;
-  rateSelection?: number;
+  selection?: number;
   ratio?: ImageRatio;
   src?: string;
 }

@@ -1,6 +1,6 @@
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRelocationOnComponent } from '../../../controllers/RelocationOnComponentController';
 import { useResize } from '../../../controllers/ResizeController';
 import { reactI18n } from '../../../i18n';
@@ -24,7 +24,7 @@ interface ImageEditorProps extends RlsComponent {
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
   quality?: number;
-  rateSelection?: number;
+  selection?: number;
   ratio?: ImageRatio;
   src?: string;
 }
@@ -55,7 +55,7 @@ function simpleThreeRule(
 }
 
 export function RlsImageEditor(props: ImageEditorProps) {
-  const [selection, setSelection] = useState(props.rateSelection ?? 60);
+  const [selection, setSelection] = useState(props.selection ?? 60);
 
   const [labels, setLabels] = useState({
     actionRestore: reactI18n('editorImageActionRestore'),
@@ -74,6 +74,10 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const image = useRef(new Image());
   const originalImage = useRef<ImageData>();
+
+  const ratio = useMemo(() => {
+    return props.ratio || '1:1';
+  }, [props.ratio]);
 
   const getCropProperties = useCallback(() => {
     return {
@@ -123,7 +127,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const refreshSelectionFromWidth = useCallback(
     (rateSelection: number) => {
-      const ratioFactor = getRatioFactor(props.ratio || '1:1');
+      const ratioFactor = getRatioFactor(ratio);
       const _ratio = rateSelection * ratioFactor;
 
       const offsetWidth = refImage.current?.offsetWidth || 0;
@@ -139,13 +143,13 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
       return { height, width };
     },
-    [props.ratio]
+    [ratio]
   );
 
   const refreshSelectionFromHeight = useCallback(
     (rateSelection: number) => {
-      const ratioFactor = getRatioFactor(props.ratio || '1:1');
-      const _ratio = rateSelection * ratioFactor;
+      const ratioFactor = getRatioFactor(ratio);
+      const _ratio = rateSelection / ratioFactor;
 
       const offsetWidth = refImage.current?.offsetWidth || 0;
       const offsetHeight = refImage.current?.offsetHeight || 0;
@@ -160,7 +164,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
       return { height, width };
     },
-    [props.ratio]
+    [ratio]
   );
 
   const refreshSelectionStyle = useCallback(
@@ -193,7 +197,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
         refreshOverlaysStyle();
       }
     },
-    [props.ratio]
+    [ratio]
   );
 
   const setImageStyle = useCallback((width: string, height: string) => {
@@ -290,7 +294,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
     const cropProps = getCropProperties();
 
     const width = props.maxWidth || cropProps.width;
-    const height = width * getRatioFactor(props.ratio || '1:1');
+    const height = width * getRatioFactor(ratio);
 
     refPicture.current.width = width;
     refPicture.current.height = height;
@@ -330,7 +334,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
       props.quality || 1
     );
   }, [
-    props.ratio,
+    ratio,
     props.mimeType,
     props.onValue,
     props.formControl,

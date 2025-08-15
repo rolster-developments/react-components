@@ -24,6 +24,7 @@ interface ImageEditorControllerOptions {
   onValue?: (value: ImageEditorValue) => void;
   quality?: number;
   ratio?: ImageRatio;
+  selection?: number;
 }
 
 export interface ImageEditorController {
@@ -94,6 +95,7 @@ export function useImageEditorController(
           maxWidth={options.maxWidth}
           quality={options.quality}
           ratio={options.ratio}
+          selection={options.selection}
           onValue={onEditorValue}
         >
           <RlsButton

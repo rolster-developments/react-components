@@ -14,6 +14,7 @@ interface ImageChooserProps {
   onValue?: (value: ImageEditorValue) => void;
   quality?: number;
   ratio?: ImageRatio;
+  selection?: number;
   src?: string;
 }
 
