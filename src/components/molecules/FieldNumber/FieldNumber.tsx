@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
 import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';

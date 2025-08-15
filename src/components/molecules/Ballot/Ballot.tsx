@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsAvatar } from '../../atoms/Avatar/Avatar';
 import { RlsSkeletonText } from '../../atoms/SkeletonText/SkeletonText';
 import { RlsComponent } from '../../definitions';

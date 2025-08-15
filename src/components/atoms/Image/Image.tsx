@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
+import { RlsComponent } from '../../definitions';
+import { RlsSkeleton } from '../Skeleton/Skeleton';
 import './Image.css';
 
-interface ImageProps {
+interface ImageProps extends RlsComponent {
   src: Undefined<string>;
 }
 
-export function RlsImage({ src }: ImageProps) {
+export function RlsImage({ src, rlsTheme }: ImageProps) {
   const [isComplet, setIsComplet] = useState(false);
 
   const refSrc = useRef(src);
@@ -26,5 +28,10 @@ export function RlsImage({ src }: ImageProps) {
     setIsComplet(true);
   }, []);
 
-  return <img className={className} src={src} onLoad={onLoad} />;
+  return (
+    <div className={className} rls-theme={rlsTheme}>
+      {!isComplet && <RlsSkeleton rlsTheme={rlsTheme} />}
+      <img src={src} onLoad={onLoad} />
+    </div>
+  );
 }

@@ -1,13 +1,15 @@
 import { createContext, useMemo, useState } from 'react';
-import {
-  ConfirmationResult,
-  Confirmation,
-  Snackbar,
-  useConfirmation,
-  useSnackbar
-} from './components';
 import { RlsComponent } from './components/definitions';
-import { renderClassStatus } from './helpers';
+import {
+  Confirmation,
+  ConfirmationResult,
+  useConfirmation
+} from './components/organisms/Confirmation/Confirmation';
+import {
+  Snackbar,
+  useSnackbar
+} from './components/organisms/Snackbar/Snackbar';
+import { renderClassStatus } from './helpers/css';
 
 interface RlsState {
   confirmation: Confirmation;

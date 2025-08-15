@@ -8,8 +8,8 @@ import {
   useState
 } from 'react';
 import { RlsComponent } from '../../definitions';
-import { renderClassStatus } from '../../../helpers';
-import { RlsIcon } from '../../atoms';
+import { renderClassStatus } from '../../../helpers/css';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import './Slider.css';
 
 interface SliderProps extends RlsComponent {

@@ -1,13 +1,20 @@
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms/Button/Button';
-import { ImageEditorValue } from '../ImageEditor/ImageEditor';
-import { RlsImageEditorModal } from '../ImageEditorModal/ImageEditorModal';
-import './ImageChooser.css';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
+import { RlsButton } from '../components/atoms/Button/Button';
+import { ImageEditorValue } from '../components/organisms/ImageEditor/ImageEditor';
+import { RlsImageEditorModal } from '../components/organisms/ImageEditorModal/ImageEditorModal';
+import { MIME_TYPE_SUPPORTS } from '../constants/image-editor.constant';
+import { reactI18n } from '../i18n';
 
-interface ImageChooserProps {
+interface ImageEditorControllerOptions {
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
@@ -18,29 +25,20 @@ interface ImageChooserProps {
   src?: string;
 }
 
-const mimeTypeSupports = [
-  'image/png',
-  'image/jpg',
-  'image/jpeg',
-  'image/bmp',
-  'image/webp',
-  'image/gif',
-  'image/svg+xml'
-];
+interface ImageEditorController {
+  component: ReactNode;
+  onImageChooser: () => void;
+}
 
-export function RlsImageChooser(props: ImageChooserProps) {
+export function useImageEditorController(
+  options: ImageEditorControllerOptions
+): ImageEditorController {
   const refInput = useRef<HTMLInputElement>(null!);
 
+  const [srcEditor, setSrcEditor] = useState<string>();
   const [labels, setLabels] = useState({
     actionCancel: reactI18n('chooserImageActionCancel')
   });
-
-  const [src, setSrc] = useState<string>();
-  const [srcEditor, setSrcEditor] = useState<string>();
-
-  const onSelect = useCallback(() => {
-    refInput.current.click();
-  }, []);
 
   const processImage = useCallback((file: Blob) => {
     const reader = new FileReader();
@@ -55,10 +53,14 @@ export function RlsImageChooser(props: ImageChooserProps) {
   }, []);
 
   useEffect(() => {
+    refInput.current = document.createElement('input');
+    refInput.current.type = 'file';
+    refInput.current.disabled = true;
+
     refInput.current.onchange = () => {
       if (
         refInput.current.files &&
-        mimeTypeSupports.includes(refInput.current.files[0].type)
+        MIME_TYPE_SUPPORTS.includes(refInput.current.files[0].type)
       ) {
         processImage(refInput.current.files[0]);
       }
@@ -71,36 +73,26 @@ export function RlsImageChooser(props: ImageChooserProps) {
     });
   }, []);
 
-  useEffect(() => {
-    props.src && setSrc(props.src);
-  }, [props.src]);
-
   const onEditorValue = useCallback(
     (image: ImageEditorValue) => {
-      setSrc(image.base64);
       setSrcEditor(undefined);
-
-      props.onValue && props.onValue(image);
+      options.onValue && options.onValue(image);
     },
-    [props.onValue]
+    [options.onValue]
   );
 
   const onCancel = useCallback(() => {
     setSrcEditor(undefined);
   }, []);
 
-  return (
-    <div className="rls-image-chooser">
-      <div className="rls-image-chooser__avatar" onClick={onSelect}>
-        {src && <img src={src} />}
-      </div>
-
-      {srcEditor && (
+  const component = useMemo(() => {
+    return (
+      srcEditor && (
         <RlsImageEditorModal
           src={srcEditor}
-          formControl={props.formControl}
-          imgWidth={props.imgWidth}
-          imgQuality={props.imgQuality}
+          formControl={options.formControl}
+          imgWidth={options.imgWidth}
+          imgQuality={options.imgQuality}
           onValue={onEditorValue}
           visible={true}
         >
@@ -108,14 +100,18 @@ export function RlsImageChooser(props: ImageChooserProps) {
             type="flat"
             rlsTheme="danger"
             onClick={onCancel}
-            disabled={props.disabled}
+            disabled={options.disabled}
           >
             {labels.actionCancel}
           </RlsButton>
         </RlsImageEditorModal>
-      )}
+      )
+    );
+  }, [srcEditor, labels]);
 
-      <input ref={refInput} type="file" disabled={props.disabled} />
-    </div>
-  );
+  const onImageChooser = useCallback(() => {
+    refInput.current.click();
+  }, []);
+
+  return { component, onImageChooser };
 }

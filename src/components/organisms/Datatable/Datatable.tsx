@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react';
-import { DatatableController } from '../../../controllers';
-import { renderClassStatus } from '../../../helpers';
+import { DatatableController } from '../../../controllers/DatatableController';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
 interface DatatableProps extends RlsComponent {

@@ -24,3 +24,12 @@ export interface InputProps<T = any> {
 export interface FieldBoxProps<T = any> extends InputProps<T>, RlsComponent {
   msgErrorDisabled?: boolean;
 }
+
+export type ImageRatio = '1:1' | '3:4' | '4:3' | '3:2' | '8:5' | '16:9';
+
+export type ImageMymeType =
+  | 'image/png'
+  | 'image/jpg'
+  | 'image/jpeg'
+  | 'image/bmp'
+  | 'image/webp';

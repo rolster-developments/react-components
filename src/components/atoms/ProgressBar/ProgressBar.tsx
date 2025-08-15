@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './ProgressBar.css';
 

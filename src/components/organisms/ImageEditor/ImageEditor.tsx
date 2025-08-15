@@ -1,21 +1,14 @@
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRelocationOnComponent, useResize } from '../../../controllers';
+import { useRelocationOnComponent } from '../../../controllers/RelocationOnComponentController';
+import { useResize } from '../../../controllers/ResizeController';
 import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms';
+import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
-import { RlsSlider } from '../../molecules';
+import { RlsSlider } from '../../molecules/Slider/Slider';
+import { ImageMymeType, ImageRatio } from '../../types';
 import './ImageEditor.css';
-
-type ImageRatio = '1:1' | '3:4' | '4:3' | '3:2' | '8:5' | '16:9';
-
-type ImageMymeType =
-  | 'image/png'
-  | 'image/jpg'
-  | 'image/jpeg'
-  | 'image/bmp'
-  | 'image/webp';
 
 export interface ImageEditorValue {
   base64: string;

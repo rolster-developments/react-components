@@ -8,7 +8,7 @@ import {
   useEffect,
   useRef
 } from 'react';
-import { useListController } from '../../../controllers';
+import { useListController } from '../../../controllers/ListController';
 import { ListControllerState } from '../../../definitions';
 
 export interface FieldSelectControl<T = any, E extends Element<T> = Element<T>>

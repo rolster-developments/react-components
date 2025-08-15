@@ -1,7 +1,7 @@
 import { PartialSealed } from '@rolster/commons';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton, RlsButtonType } from '../../atoms/Button/Button';
 import { RlsTheme } from '../../definitions';

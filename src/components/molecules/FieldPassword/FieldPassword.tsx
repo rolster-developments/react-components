@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPassword } from '../../atoms/InputPassword/InputPassword';
 import { FieldBoxProps } from '../../types';

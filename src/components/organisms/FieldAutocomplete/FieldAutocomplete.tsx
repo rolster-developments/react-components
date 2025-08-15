@@ -13,12 +13,13 @@ import {
   useMemo,
   useState
 } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
 import { RlsComponent } from '../../definitions';
-import { RlsBallot, RlsMessageFormError } from '../../molecules';
+import { RlsBallot } from '../../molecules/Ballot/Ballot';
+import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldAutocomplete } from './FieldAutocompleteController';
 import './FieldAutocomplete.css';
 

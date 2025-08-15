@@ -8,7 +8,7 @@ import { dateFormatTemplate } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { renderClassStatus } from '../../../helpers';
+import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';

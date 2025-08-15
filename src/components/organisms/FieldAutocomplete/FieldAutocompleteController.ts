@@ -13,7 +13,7 @@ import {
   useRef,
   useState
 } from 'react';
-import { useListController } from '../../../controllers';
+import { useListController } from '../../../controllers/ListController';
 import { ListControllerState } from '../../../definitions';
 
 const DURATION_ANIMATION = 240;
