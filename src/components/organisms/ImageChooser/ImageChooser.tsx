@@ -1,10 +1,7 @@
-import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms/Button/Button';
+import { useCallback, useEffect, useState } from 'react';
+import { useImageEditorController } from '../../../controllers/ImageEditorController';
 import { ImageEditorValue } from '../ImageEditor/ImageEditor';
-import { RlsImageEditorModal } from '../ImageEditorModal/ImageEditorModal';
 import './ImageChooser.css';
 
 interface ImageChooserProps {
@@ -18,104 +15,36 @@ interface ImageChooserProps {
   src?: string;
 }
 
-const mimeTypeSupports = [
-  'image/png',
-  'image/jpg',
-  'image/jpeg',
-  'image/bmp',
-  'image/webp',
-  'image/gif',
-  'image/svg+xml'
-];
-
 export function RlsImageChooser(props: ImageChooserProps) {
-  const refInput = useRef<HTMLInputElement>(null!);
-
-  const [labels, setLabels] = useState({
-    actionCancel: reactI18n('chooserImageActionCancel')
-  });
-
   const [src, setSrc] = useState<string>();
-  const [srcEditor, setSrcEditor] = useState<string>();
 
-  const onSelect = useCallback(() => {
-    refInput.current.click();
-  }, []);
-
-  const processImage = useCallback((file: Blob) => {
-    const reader = new FileReader();
-
-    reader.onload = function () {
-      setSrcEditor(reader.result as string);
-
-      refInput.current.value = '';
-    };
-
-    reader.readAsDataURL(file);
-  }, []);
-
-  useEffect(() => {
-    refInput.current.onchange = () => {
-      if (
-        refInput.current.files &&
-        mimeTypeSupports.includes(refInput.current.files[0].type)
-      ) {
-        processImage(refInput.current.files[0]);
-      }
-    };
-
-    return i18nSubscribe(() => {
-      setLabels({
-        actionCancel: reactI18n('chooserImageActionCancel')
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    props.src && setSrc(props.src);
-  }, [props.src]);
-
-  const onEditorValue = useCallback(
+  const onValue = useCallback(
     (image: ImageEditorValue) => {
       setSrc(image.base64);
-      setSrcEditor(undefined);
-
       props.onValue && props.onValue(image);
     },
     [props.onValue]
   );
 
-  const onCancel = useCallback(() => {
-    setSrcEditor(undefined);
-  }, []);
+  const { RlsImageEditorChooser, onImageChooser } = useImageEditorController({
+    disabled: props.disabled,
+    formControl: props.formControl,
+    imgQuality: props.imgQuality,
+    imgWidth: props.imgWidth,
+    onValue
+  });
+
+  useEffect(() => {
+    props.src && setSrc(props.src);
+  }, [props.src]);
 
   return (
     <div className="rls-image-chooser">
-      <div className="rls-image-chooser__avatar" onClick={onSelect}>
+      <div className="rls-image-chooser__avatar" onClick={onImageChooser}>
         {src && <img src={src} />}
       </div>
 
-      {srcEditor && (
-        <RlsImageEditorModal
-          src={srcEditor}
-          formControl={props.formControl}
-          imgWidth={props.imgWidth}
-          imgQuality={props.imgQuality}
-          onValue={onEditorValue}
-          visible={true}
-        >
-          <RlsButton
-            type="flat"
-            rlsTheme="danger"
-            onClick={onCancel}
-            disabled={props.disabled}
-          >
-            {labels.actionCancel}
-          </RlsButton>
-        </RlsImageEditorModal>
-      )}
-
-      <input ref={refInput} type="file" disabled={props.disabled} />
+      {RlsImageEditorChooser}
     </div>
   );
 }

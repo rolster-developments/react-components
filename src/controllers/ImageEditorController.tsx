@@ -22,11 +22,10 @@ interface ImageEditorControllerOptions {
   imgQuality?: number;
   imgWidth?: number;
   onValue?: (value: ImageEditorValue) => void;
-  src?: string;
 }
 
 interface ImageEditorController {
-  component: ReactNode;
+  RlsImageEditorChooser: ReactNode;
   onImageChooser: () => void;
 }
 
@@ -107,11 +106,20 @@ export function useImageEditorController(
         </RlsImageEditorModal>
       )
     );
-  }, [srcEditor, labels]);
+  }, [
+    srcEditor,
+    labels,
+    options.formControl,
+    options.imgWidth,
+    options.imgQuality,
+    options.disabled,
+    onEditorValue,
+    onCancel
+  ]);
 
   const onImageChooser = useCallback(() => {
     refInput.current.click();
   }, []);
 
-  return { component, onImageChooser };
+  return { RlsImageEditorChooser: component, onImageChooser };
 }
