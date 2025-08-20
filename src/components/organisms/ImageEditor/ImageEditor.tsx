@@ -15,11 +15,15 @@ export interface ImageEditorValue {
   blob: Blob;
 }
 
+const minValueSlider = 50;
+const maxValueSlider = 100;
+
 interface ImageEditorProps extends RlsComponent {
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
     | ReactControl<HTMLElement, ImageEditorValue | undefined>;
+  maxDimension?: number;
   maxWidth?: number;
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
@@ -46,12 +50,24 @@ function getRatioFactor(ratio: ImageRatio): number {
   }
 }
 
-function simpleThreeRule(
-  value1: number,
-  value2: number,
-  proportion: number
-): number {
-  return (value2 * proportion) / value1;
+function simpleThreeRule(a1: number, b1: number, a2: number): number {
+  return (b1 * a2) / a1;
+}
+
+function calculateImgDimension(image: HTMLImageElement, dimension: number) {
+  let { height, width } = image;
+
+  if (height > width) {
+    height = height > dimension ? dimension : height;
+    width = simpleThreeRule(image.height, height, width);
+
+    return { height, width };
+  }
+
+  width = width > dimension ? dimension : width;
+  height = simpleThreeRule(image.width, width, height);
+
+  return { height, width };
 }
 
 export function RlsImageEditor(props: ImageEditorProps) {
@@ -159,7 +175,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
       if (width > offsetWidth) {
         width = offsetWidth;
-        height = width / ratioFactor;
+        height = width * ratioFactor;
       }
 
       return { height, width };
@@ -169,7 +185,11 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const refreshSelectionStyle = useCallback(
     (rateSelection: number) => {
-      if (image.current.width > 0 && image.current.height > 0) {
+      if (
+        refSelection.current &&
+        image.current.width > 0 &&
+        image.current.height > 0
+      ) {
         const { height, width } =
           image.current.width >= image.current.height
             ? refreshSelectionFromHeight(rateSelection)
@@ -182,16 +202,16 @@ export function RlsImageEditor(props: ImageEditorProps) {
           refSelection.current.offsetLeft + width >
           refImage.current.offsetWidth
         ) {
-          const selectionLeft = refImage.current.offsetWidth - width;
-          refSelection.current.style.left = `${selectionLeft}px`;
+          const left = refImage.current.offsetWidth - width;
+          refSelection.current.style.left = `${left < 0 ? 0 : left}px`;
         }
 
         if (
           refSelection.current.offsetTop + height >
           refImage.current.offsetHeight
         ) {
-          const selectionTop = refImage.current.offsetHeight - height;
-          refSelection.current.style.top = `${selectionTop}px`;
+          const top = refImage.current.offsetHeight - height;
+          refSelection.current.style.top = `${top < 0 ? 0 : top}px`;
         }
 
         refreshOverlaysStyle();
@@ -209,7 +229,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const refreshImageStyle = useCallback(() => {
     if (image.current.width <= 0 || image.current.height <= 0) {
-      return setImageStyle('0%', '0%');
+      return setImageStyle('0px', '0px');
     }
 
     const height =
@@ -225,7 +245,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
       image.current.height;
 
     return setImageStyle(`${width}px`, '100%');
-  }, []);
+  }, [ratio]);
 
   useEffect(() => {
     image.current.onload = () => {
@@ -233,23 +253,16 @@ export function RlsImageEditor(props: ImageEditorProps) {
         willReadFrequently: true
       });
 
-      refCanvas.current.width = image.current.width;
-      refCanvas.current.height = image.current.height;
-
-      context?.drawImage(
+      const { height, width } = calculateImgDimension(
         image.current,
-        0,
-        0,
-        image.current.width,
-        image.current.height
+        props.maxDimension || 500
       );
 
-      originalImage.current = context?.getImageData(
-        0,
-        0,
-        refCanvas.current.width,
-        refCanvas.current.height
-      );
+      refCanvas.current.width = width;
+      refCanvas.current.height = height;
+
+      context?.drawImage(image.current, 0, 0, width, height);
+      originalImage.current = context?.getImageData(0, 0, width, height);
 
       refreshImageStyle();
       refreshSelectionStyle(selection);
@@ -276,7 +289,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   useEffect(() => {
     refreshSelectionStyle(selection);
-  }, [selection]);
+  }, [ratio, selection]);
 
   const onResizeElement = useCallback(() => {
     refreshSelectionStyle(selection);
@@ -388,8 +401,8 @@ export function RlsImageEditor(props: ImageEditorProps) {
           <RlsSlider
             prefixIcon="external-link"
             value={selection}
-            minValue={50}
-            maxValue={100}
+            minValue={minValueSlider}
+            maxValue={maxValueSlider}
             onValue={setSelection}
             disabled={props.disabled}
           />
