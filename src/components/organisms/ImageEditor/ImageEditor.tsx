@@ -54,7 +54,10 @@ function simpleThreeRule(a1: number, b1: number, a2: number): number {
   return (b1 * a2) / a1;
 }
 
-function calculateImgDimension(image: HTMLImageElement, dimension: number) {
+export function calculateImgDimension(
+  image: HTMLImageElement,
+  dimension: number
+) {
   let { height, width } = image;
 
   if (height > width) {
@@ -253,10 +256,8 @@ export function RlsImageEditor(props: ImageEditorProps) {
         willReadFrequently: true
       });
 
-      const { height, width } = calculateImgDimension(
-        image.current,
-        props.maxDimension || 500
-      );
+      const width = image.current.width;
+      const height = image.current.height;
 
       refCanvas.current.width = width;
       refCanvas.current.height = height;
