@@ -51,7 +51,7 @@ interface FieldAutocompleteProps<
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   reference?: (value: T) => K;
-  selectionContinuos?: boolean;
+  keepOpen?: boolean;
   value?: T;
 }
 
@@ -166,7 +166,7 @@ export function useFieldAutocomplete<
         controller.setFormValue(element);
       }
 
-      if (props.selectionContinuos) {
+      if (props.keepOpen) {
         setPattern('');
         controller.refInput?.current?.focus();
       } else {
@@ -179,7 +179,7 @@ export function useFieldAutocomplete<
       controller.setState,
       controller.setFormValue,
       setPattern,
-      props.selectionContinuos,
+      props.keepOpen,
       props.onSelect,
       props.onValue
     ]

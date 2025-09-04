@@ -176,7 +176,7 @@ export function RlsFieldDate({
         )}
       </div>
 
-      <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>
+      <RlsModal className='rls-field-date-modal' visible={modalIsVisible} rlsTheme={rlsTheme}>
         <RlsPickerDate
           formControl={formControl}
           date={date}

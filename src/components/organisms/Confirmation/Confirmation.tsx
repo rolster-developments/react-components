@@ -30,11 +30,13 @@ interface ConfirmationButton {
   label: string;
   onClick: () => void;
   type: RlsButtonType;
+  disabled?: boolean;
   identifier?: string;
   rlsTheme?: RlsTheme;
 }
 
 interface ConfirmationBasic {
+  className?: string;
   content?: ReactNode;
   subtitle?: string;
   title?: string;
@@ -49,6 +51,7 @@ interface ConfirmationProps extends ConfirmationBasic {
 
 interface ConfirmationAction {
   label: string;
+  disabled?: boolean;
   identifier?: string;
   rlsTheme?: RlsTheme;
   type?: RlsButtonType;
@@ -68,6 +71,7 @@ export interface ConfirmationService {
 
 export function RlsConfirmation({
   approved,
+  className,
   content,
   reject,
   rlsTheme,
@@ -75,12 +79,12 @@ export function RlsConfirmation({
   title,
   visible
 }: ConfirmationProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-confirmation', { visible });
-  }, [visible]);
+  const classConfirmation = useMemo(() => {
+    return renderClassStatus('rls-confirmation', { visible }, className);
+  }, [visible, className]);
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={classConfirmation} rls-theme={rlsTheme}>
       <div className="rls-confirmation__component">
         <div className="rls-confirmation__header">
           {title && <div className="rls-confirmation__title">{title}</div>}
@@ -91,7 +95,7 @@ export function RlsConfirmation({
 
         <div className="rls-confirmation__body">
           {content && (
-            <div className="rls-confirmation__message">{content}</div>
+            <div className="rls-confirmation__content">{content}</div>
           )}
         </div>
 
@@ -103,6 +107,7 @@ export function RlsConfirmation({
                   identifier={approved.identifier}
                   type={approved.type}
                   onClick={approved.onClick}
+                  disabled={approved.disabled}
                   rlsTheme={approved.rlsTheme}
                 >
                   {approved.label}
@@ -113,6 +118,7 @@ export function RlsConfirmation({
                   identifier={reject.identifier}
                   type={reject.type}
                   onClick={reject.onClick}
+                  disabled={reject.disabled}
                   rlsTheme={reject.rlsTheme}
                 >
                   {reject.label}
@@ -139,30 +145,31 @@ export function useConfirmation(): ConfirmationService {
 
   const confirmation = useCallback((options: ConfirmationOptions) => {
     return new Promise<ConfirmationResult>((resolve) => {
-      const { approved, reject } = options;
-
       setConfig({
         ...options,
         approved: {
-          label: approved?.label ?? reactI18n('confirmationActionApproved'),
+          label:
+            options.approved?.label ?? reactI18n('confirmationActionApproved'),
           onClick: () => {
             setVisible(false);
             resolve(ConfirmationResult.approved());
           },
-          identifier: approved?.identifier,
-          rlsTheme: approved?.rlsTheme,
-          type: approved?.type ?? 'raised'
+          type: options.approved?.type ?? 'raised',
+          disabled: options.approved?.disabled,
+          identifier: options.approved?.identifier,
+          rlsTheme: options.approved?.rlsTheme
         },
-        reject: reject
+        reject: options.reject
           ? {
-              label: reject.label,
+              label: options.reject.label,
               onClick: () => {
                 setVisible(false);
                 resolve(ConfirmationResult.reject());
               },
-              identifier: reject.identifier,
-              rlsTheme: reject.rlsTheme,
-              type: reject?.type ?? 'classic'
+              type: options.reject.type ?? 'outline',
+              disabled: options.reject.disabled,
+              identifier: options.reject.identifier,
+              rlsTheme: options.reject.rlsTheme
             }
           : undefined
       });

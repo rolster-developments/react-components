@@ -1,9 +1,9 @@
 // Rolster Technology Modal Component
-// v1.2.0
+// v1.2.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 25/Jul/2025
+// Updated: 03/Sep/2025
 
 .rls-modal {
   --pvt-component-transform: translateY(80rem) scale(0.6);
@@ -42,7 +42,6 @@
 
   &__component {
     position: absolute;
-    width: auto;
     max-width: var(--rlc-modal-max-width, calc(100% - var(--rls-sizing-x8)));
     height: var(--pvt-component-height);
     opacity: var(--pvt-component-opacity);

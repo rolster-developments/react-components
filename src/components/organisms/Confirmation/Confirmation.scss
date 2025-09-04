@@ -1,9 +1,9 @@
 // Rolster Technology Confirmation Component
-// v1.3.4
+// v1.4.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 04/Abr/2018
-// Updated: 20/May/2025
+// Updated: 01/Sep/2025
 
 .rls-confirmation {
   --pvt-component-transform: translateY(150px) scale(0.6);
@@ -109,15 +109,18 @@
     box-sizing: border-box;
   }
 
-  &__message {
-    color: var(--rls-app-color-600);
-    text-align: center;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x8);
 
-    p {
+    & > p {
       font-weight: var(--rls-font-weight-medium);
       font-size: var(--pvt-content-font-size);
       line-height: var(--pvt-content-line-height);
       letter-spacing: var(--pvt-content-letter-spacing);
+      text-align: center;
+      color: var(--rls-app-color-600);
     }
   }
 

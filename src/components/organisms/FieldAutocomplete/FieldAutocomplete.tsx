@@ -34,6 +34,7 @@ interface FieldAutocompleteProps<
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  keepOpen?: boolean;
   lineHeight?: number;
   msgErrorDisabled?: boolean;
   onSearch?: (pattern: string) => void;
@@ -42,7 +43,6 @@ interface FieldAutocompleteProps<
   placeholder?: string;
   reference?: (value: T) => K;
   searching?: boolean;
-  selectionContinuos?: boolean;
   value?: T;
 }
 

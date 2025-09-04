@@ -1,15 +1,15 @@
 // Rolster Technology FieldDate Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 26/May/2025
+// Updated: 03/Sep/2025
 
 .rls-field-date {
   --rlc-fieldbox-body-padding: var(--rls-sizing-x4);
 
   --pvt-font-size: var(--rlc-datefield-font-size, var(--rls-input-font-size));
-  
+
   --pvt-letter-spacing: var(
     --rlc-datefield-letter-spacing,
     var(--rls-input-letter-spacing)
@@ -72,4 +72,8 @@
       margin: 1rem;
     }
   }
+}
+
+.rls-field-date-modal {
+  --rlc-modal-max-width: 150rem;
 }
