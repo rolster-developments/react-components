@@ -151,7 +151,11 @@ export function RlsFieldDateRange({
         )}
       </div>
 
-      <RlsModal visible={modalIsVisible} rlsTheme={rlsTheme}>
+      <RlsModal
+        className="rls-field-date-range-modal"
+        visible={modalIsVisible}
+        rlsTheme={rlsTheme}
+      >
         <RlsPickerDateRange
           formControl={formControl}
           date={currentDate}

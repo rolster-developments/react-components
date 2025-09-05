@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v2.2.1
+// v2.2.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 25/May/2025
+// Updated: 03/Sep/2025
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -37,6 +37,7 @@
 
   position: relative;
   padding: 0rem;
+  width: var(--rlc-button-width, auto);
   overflow: hidden;
   outline: none;
   background: transparent;

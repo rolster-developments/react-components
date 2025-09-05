@@ -33,6 +33,7 @@ export interface SnackbarConfig extends SnackbarBasic {
 }
 
 interface SnackbarProps extends SnackbarConfig {
+  onClose: () => void;
   visible?: boolean;
 }
 
@@ -45,10 +46,11 @@ export interface SnackbarService {
 
 export function RlsSnackbar({
   content,
+  onClose,
   icon,
+  rlsTheme,
   title,
-  visible,
-  rlsTheme
+  visible
 }: SnackbarProps) {
   const className = useMemo(() => {
     return renderClassStatus('rls-snackbar', { visible });
@@ -63,7 +65,14 @@ export function RlsSnackbar({
       )}
 
       <div className="rls-snackbar__component">
-        {title && <div className="rls-snackbar__title">{title}</div>}
+        <div className="rls-snackbar__header">
+          <div className="rls-snackbar__title">{title}</div>
+
+          <button onClick={onClose}>
+            <RlsIcon value="close" />
+          </button>
+        </div>
+
         <div className="rls-snackbar__content">{content}</div>
       </div>
     </div>
@@ -85,15 +94,21 @@ export function useSnackbar(): SnackbarService {
     visible: false
   });
 
-  const rlsSnackbar = <RlsSnackbar {...state.config} visible={state.visible} />;
+  const onClose = useCallback(() => {
+    setState((state) => ({ ...state, timeoutId: undefined, visible: false }));
+  }, []);
+
+  const rlsSnackbar = (
+    <RlsSnackbar {...state.config} visible={state.visible} onClose={onClose} />
+  );
 
   useEffect(() => {
     if (state.visible) {
       const timeoutId = setTimeout(() => {
         setState((state) => ({
           ...state,
-          visible: false,
-          timeoutId: undefined
+          timeoutId: undefined,
+          visible: false
         }));
       }, state.duration);
 

@@ -9,7 +9,7 @@
   --rlc-fieldbox-body-padding: var(--rls-sizing-x4);
 
   --pvt-font-size: var(--rlc-datefield-font-size, var(--rls-input-font-size));
-  
+
   --pvt-letter-spacing: var(
     --rlc-datefield-letter-spacing,
     var(--rls-input-letter-spacing)
@@ -70,6 +70,6 @@
   }
 }
 
-.rls-field-date-modal {
+.rls-field-date-range-modal {
   --rlc-modal-max-width: 150rem;
 }
