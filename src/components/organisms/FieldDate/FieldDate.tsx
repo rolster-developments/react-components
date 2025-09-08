@@ -13,6 +13,7 @@ import {
   useRef,
   useState
 } from 'react';
+import { DATE_FORMAT } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
@@ -20,8 +21,6 @@ import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFor
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDate } from '../PickerDate/PickerDate';
 import './FieldDate.css';
-
-const formatDate = '{dd}/{mx}/{aa}';
 
 interface FieldDateProps extends RlsComponent {
   date?: Date;
@@ -95,7 +94,7 @@ export function RlsFieldDate({
   const { icon, valueInput } = useMemo(() => {
     return {
       icon: value ? 'trash-2' : 'calendar',
-      valueInput: value ? dateFormatTemplate(value, format || formatDate) : ''
+      valueInput: value ? dateFormatTemplate(value, format || DATE_FORMAT) : ''
     };
   }, [value]);
 
@@ -176,7 +175,11 @@ export function RlsFieldDate({
         )}
       </div>
 
-      <RlsModal className='rls-field-date-modal' visible={modalIsVisible} rlsTheme={rlsTheme}>
+      <RlsModal
+        className="rls-field-date-modal"
+        visible={modalIsVisible}
+        rlsTheme={rlsTheme}
+      >
         <RlsPickerDate
           formControl={formControl}
           date={date}
