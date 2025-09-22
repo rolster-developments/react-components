@@ -6,20 +6,18 @@ import './Modal.css';
 
 interface ModalProps extends RlsComponent {
   className?: string;
-  overflow?: boolean;
   visible?: boolean;
 }
 
 export function RlsModal({
   children,
   className,
-  overflow,
   visible,
   rlsTheme
 }: ModalProps) {
   const classNameModal = useMemo(() => {
-    return renderClassStatus('rls-modal', { overflow, visible }, className);
-  }, [className, overflow, visible]);
+    return renderClassStatus('rls-modal', { visible }, className);
+  }, [className, visible]);
 
   return ReactDOM.createPortal(
     <div className={classNameModal} rls-theme={rlsTheme}>

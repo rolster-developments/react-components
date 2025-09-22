@@ -25,11 +25,11 @@ function RlsBreadcrumbLabel({ label }: BreadcrumbLabelProps) {
   }, [label.onClick]);
 
   return (
-    <label className="rls-breadcrumb__label" onClick={label.onClick}>
+    <span className="rls-breadcrumb__label" onClick={label.onClick}>
       <a className={className} rls-theme={label.rlsTheme}>
         {label.label}
       </a>
-    </label>
+    </span>
   );
 }
 

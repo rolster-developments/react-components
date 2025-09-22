@@ -1,4 +1,4 @@
-import { itIsDefined } from '@rolster/commons';
+import { valueIsDefined } from '@rolster/commons';
 import {
   createYearPicker,
   verifyYearPicker,
@@ -124,7 +124,7 @@ export function RlsPickerYear({
   useEffect(() => {
     const year = verifyYearPicker(createPickerOptions());
 
-    itIsDefined(year)
+    valueIsDefined(year)
       ? formControl?.setValue(year)
       : setValue(formControl?.value ?? date.getFullYear());
   }, [formControl?.value]);

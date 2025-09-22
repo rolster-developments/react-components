@@ -17,10 +17,6 @@
     --pvt-control-opacity: 0.5;
   }
 
-  .rls-field-list__control {
-    width: var(--pvt-control-width);
-  }
-
   .rls-field-list__ul {
     &__search {
       display: flex;

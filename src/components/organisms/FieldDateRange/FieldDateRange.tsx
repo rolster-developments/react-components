@@ -22,6 +22,7 @@ interface FieldDateRangeProps extends RlsComponent {
   msgErrorDisabled?: boolean;
   onValue?: ((value?: DateRange) => void) | ((value: DateRange) => void);
   placeholder?: string;
+  readOnly?: boolean;
   value?: DateRange;
 }
 
@@ -62,6 +63,7 @@ export function RlsFieldDateRange({
   msgErrorDisabled,
   onValue,
   placeholder,
+  readOnly,
   rlsTheme,
   value: _value
 }: FieldDateRangeProps) {
@@ -75,8 +77,11 @@ export function RlsFieldDateRange({
   }, [formControl?.disabled, disabled]);
 
   const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', { disabled: _disabled });
-  }, [_disabled]);
+    return renderClassStatus('rls-field-box', {
+      disabled: _disabled,
+      readonly: readOnly
+    });
+  }, [_disabled, readOnly]);
 
   const { icon, valueInput } = useMemo(() => {
     return {
@@ -86,8 +91,8 @@ export function RlsFieldDateRange({
   }, [value]);
 
   const onClickInput = useCallback(() => {
-    setModalIsVisible(true);
-  }, []);
+    !readOnly && setModalIsVisible(true);
+  }, [readOnly]);
 
   const onChange = useCallback(
     (value?: DateRange) => {
@@ -133,13 +138,15 @@ export function RlsFieldDateRange({
               disabled={_disabled}
             />
 
-            <button
-              className="rls-field-date-range__action"
-              onClick={onClickAction}
-              disabled={_disabled}
-            >
-              <RlsIcon value={icon} />
-            </button>
+            {!readOnly && (
+              <button
+                className="rls-field-date-range__action"
+                onClick={onClickAction}
+                disabled={_disabled}
+              >
+                <RlsIcon value={icon} />
+              </button>
+            )}
           </div>
         </div>
 

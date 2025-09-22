@@ -48,10 +48,11 @@ interface FieldAutocompleteProps<
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
   lineHeight?: number;
+  keepOpen?: boolean;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
+  readOnly?: boolean;
   reference?: (value: T) => K;
-  keepOpen?: boolean;
   value?: T;
 }
 
@@ -132,12 +133,14 @@ export function useFieldAutocomplete<
   );
 
   const onClickControl = useCallback(() => {
-    controller.setState({ modalIsVisible: true });
+    if (!props.readOnly) {
+      controller.setState({ modalIsVisible: true });
 
-    setTimeout(() => {
-      controller.refInput?.current?.focus();
-    }, DURATION_ANIMATION);
-  }, [controller.setState]);
+      setTimeout(() => {
+        controller.refInput?.current?.focus();
+      }, DURATION_ANIMATION);
+    }
+  }, [controller.setState, props.readOnly]);
 
   const onClickAction = useCallback(() => {
     if (controller.value) {

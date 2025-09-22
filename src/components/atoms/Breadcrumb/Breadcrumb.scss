@@ -1,13 +1,25 @@
 // Rolster Technology Breadcrumb Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 26/May/2025
+// Updated: 12/Sep/2025
 
 .rls-breadcrumb {
   --pvt-height: var(--rlc-breadcrumb-height, var(--rls-sizing-x18));
   --pvt-link-font-color: var(--rls-app-color-600);
+
+  --pvt-label-font-size: var(
+    --rlc-breadcrumb-font-size,
+    var(--rls-body-font-size)
+  );
+
+  --pvt-label-font-weight: var(--rlc-breadcrumb-font-weight, inherit);
+
+  --pvt-label-letter-spacing: var(
+    --rlc-breadcrumb-letter-spacing,
+    var(--rls-body-letter-spacing)
+  );
 
   display: -webkit-box;
   width: 100%;
@@ -29,11 +41,11 @@
   &__label {
     display: block;
     height: inherit;
-    line-height: inherit;
-    font-weight: inherit;
     color: inherit;
-    font-size: var(--rls-body-font-size);
-    letter-spacing: var(--rls-body-letter-spacing);
+    line-height: inherit;
+    font-weight: var(--pvt-label-font-weight);
+    font-size: var(--pvt-label--font-size);
+    letter-spacing: var(--pvt-label--letter-spacing);
 
     &:first-child {
       &::before {

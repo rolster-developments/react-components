@@ -1,4 +1,4 @@
-import { itIsDefined } from '@rolster/commons';
+import { valueIsDefined } from '@rolster/commons';
 import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import {
   DateRange,
@@ -91,7 +91,7 @@ export function RlsPickerDateRange({
 
   useEffect(() => {
     setDate((date) => {
-      return itIsDefined(yearControl.value)
+      return valueIsDefined(yearControl.value)
         ? assignYearInDate(date, yearControl.value)
         : date;
     });
@@ -99,7 +99,7 @@ export function RlsPickerDateRange({
 
   useEffect(() => {
     setDate((date) => {
-      return itIsDefined(monthControl.value)
+      return valueIsDefined(monthControl.value)
         ? assignMonthInDate(date, monthControl.value)
         : date;
     });

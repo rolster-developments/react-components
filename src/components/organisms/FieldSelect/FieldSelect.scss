@@ -1,20 +1,12 @@
 // Rolster Technology FieldSelect Component
-// v1.0.1
+// v1.0.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 26/May/2025
+// Updated: 17/Sep/2025
 
 .rls-field-select {
-  --pvt-control-cursor: pointer;
-
-  &.rls-field-box--disabled {
-    --pvt-control-cursor: none;
-  }
-
-  .rls-field-list__control {
-    cursor: var(--pvt-control-cursor);
-  }
+  --rlc-fieldlist-control-cursor: pointer;
 
   .rls-field-list__action {
     transition: transform 160ms 0ms var(--rls-sharp-curve);

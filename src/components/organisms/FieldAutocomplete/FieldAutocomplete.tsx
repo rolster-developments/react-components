@@ -41,6 +41,7 @@ interface FieldAutocompleteProps<
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
   placeholder?: string;
+  readOnly?: boolean;
   reference?: (value: T) => K;
   searching?: boolean;
   value?: T;
@@ -68,6 +69,7 @@ export function RlsFieldAutocompleteTemplate<
     msgErrorDisabled,
     onSearch,
     placeholder,
+    readOnly,
     rlsTheme,
     searching
   } = props;
@@ -99,11 +101,18 @@ export function RlsFieldAutocompleteTemplate<
         focused: autocomplete.focused && !disabled,
         error: formControl?.wrong,
         disabled,
+        readonly: readOnly,
         selected: !!autocomplete.value
       },
       'rls-field-list rls-field-autocomplete'
     );
-  }, [formControl?.wrong, autocomplete.value, autocomplete.focused, disabled]);
+  }, [
+    formControl?.wrong,
+    autocomplete.value,
+    autocomplete.focused,
+    disabled,
+    readOnly
+  ]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
@@ -152,15 +161,17 @@ export function RlsFieldAutocompleteTemplate<
             onClick={autocomplete.onClickControl}
           />
 
-          <button
-            className="rls-field-list__action"
-            disabled={disabled}
-            onClick={autocomplete.onClickAction}
-          >
-            <RlsIcon
-              value={autocomplete.value ? 'trash-2' : 'arrow-ios-down'}
-            />
-          </button>
+          {!readOnly && (
+            <button
+              className="rls-field-list__action"
+              disabled={disabled}
+              onClick={autocomplete.onClickAction}
+            >
+              <RlsIcon
+                value={autocomplete.value ? 'trash-2' : 'arrow-ios-down'}
+              />
+            </button>
+          )}
         </div>
       </div>
 

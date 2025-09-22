@@ -1,36 +1,51 @@
 // Rolster Technology Pagination Component
-// v1.0.2
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 20/Sep/2025
 
 .rls-pagination {
+  --pvt-dimension: var(--rlc-pagination-dimension, var(--rls-sizing-x16));
+  --pvt-description-display: block;
+  --pvt-count-display: none;
+
   position: relative;
   display: flex;
-  justify-content: center;
   width: 100%;
+  column-gap: var(--rlc-pagination-column-gap, var(--rls-sizing-x4));
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
-  height: var(--rls-sizing-x20);
-  padding: 0rem var(--rls-sizing-x6);
+  height: var(
+    --rlc-pagination-height,
+    calc(var(--pvt-dimension) + var(--rls-sizing-x4))
+  );
+  padding: var(--rlc-pagination-padding, 0rem var(--rls-sizing-x6));
   box-sizing: border-box;
+
+  &__body {
+    display: flex;
+    width: auto;
+    column-gap: var(--rls-sizing-x8);
+    align-items: center;
+  }
 
   &__pages {
     display: flex;
-    gap: var(--rls-sizing-x4);
     width: auto;
-    margin: 0rem var(--rls-sizing-x4);
+    column-gap: var(--rls-sizing-x4);
+    align-items: center;
   }
 
   &__page {
     background: var(--rls-app-color-200);
     color: var(--rls-app-color-900);
     cursor: default;
-    margin: auto 0rem;
     text-align: center;
-    width: var(--rls-sizing-x16);
-    height: var(--rls-sizing-x16);
-    line-height: var(--rls-sizing-x16);
+    width: var(--pvt-dimension);
+    height: var(--pvt-dimension);
+    line-height: var(--pvt-dimension);
     border-radius: var(--rls-sizing-x2);
     font-size: var(--rls-body-font-size);
     letter-spacing: var(--rls-body-letter-spacing);
@@ -47,28 +62,35 @@
   }
 
   &__description {
-    color: var(--rls-app-color-900);
-    margin: 0rem var(--rls-sizing-x4);
+    display: var(--pvt-description-display);
     width: auto;
-    height: var(--rls-sizing-x20);
-    line-height: var(--rls-sizing-x20);
     font-size: var(--rls-body-font-size);
     font-weight: var(--rls-font-weight-bold);
     letter-spacing: var(--rls-body-letter-spacing);
+    color: var(--rls-app-color-900);
+  }
+
+  &__count {
+    display: var(--pvt-count-display);
+    font-size: var(--rls-body-font-size);
+    font-weight: var(--rls-font-weight-bold);
+    letter-spacing: var(--rls-body-letter-spacing);
+    color: var(--rls-app-color-900);
   }
 
   &__actions {
+    display: flex;
     width: auto;
+    column-gap: var(--rls-sizing-x2);
   }
 
   &__action {
+    --rlc-icon-dimension: calc(var(--pvt-dimension) - var(--rls-sizing-x4));
+
     background: none;
     outline: none;
     color: var(--rls-app-color-600);
-    height: var(--rls-sizing-x18);
-    width: var(--rls-sizing-x18);
-    padding: var(--rls-sizing-x3);
-    margin: var(--rls-sizing-x1) 0rem;
+    padding: var(--rls-sizing-x2);
 
     &:hover {
       color: var(--rls-theme-color-300);
@@ -79,5 +101,14 @@
       pointer-events: none;
       opacity: 0.5;
     }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .rls-pagination {
+    --pvt-description-display: none;
+    --pvt-count-display: block;
+
+    padding: 0rem;
   }
 }

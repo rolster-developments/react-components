@@ -1,4 +1,4 @@
-import { itIsDefined } from '@rolster/commons';
+import { valueIsDefined } from '@rolster/commons';
 import {
   MonthState,
   createMonthPicker,
@@ -50,7 +50,7 @@ function RlsPickerMonthElement({
   }, [month.disabled, month.focused, month.selected, disabled]);
 
   const onClick = useCallback(() => {
-    itIsDefined(month.value) &&
+    valueIsDefined(month.value) &&
       !month.disabled &&
       !disabled &&
       onSelect(month.value);
@@ -121,7 +121,7 @@ export function RlsPickerMonth({
 
     const month = verifyMonthPicker(options);
 
-    itIsDefined(month)
+    valueIsDefined(month)
       ? setMonthValue(month)
       : setMonths(createMonthPicker(options));
   }, [date, year, value, minDate, maxDate]);
@@ -135,7 +135,7 @@ export function RlsPickerMonth({
       maxDate
     });
 
-    itIsDefined(month)
+    valueIsDefined(month)
       ? formControl?.setValue(month)
       : setValue(formControl?.value ?? date.getMonth());
   }, [formControl?.value]);

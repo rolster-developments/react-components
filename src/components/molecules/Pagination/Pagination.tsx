@@ -104,25 +104,31 @@ export function RlsPagination<T>({
         </button>
       </div>
 
-      <div className="rls-pagination__pages">
-        {template?.pages.map((page, index) => {
-          return (
-            <div
-              key={index}
-              className={renderClassStatus('rls-pagination__page', {
-                active: page.active
-              })}
-              onClick={() => {
-                goToPagination(page);
-              }}
-            >
-              {page.label}
-            </div>
-          );
-        })}
-      </div>
+      <div className="rls-pagination__body">
+        <div className="rls-pagination__pages">
+          {template?.pages.map((page, index) => {
+            return (
+              <div
+                key={index}
+                className={renderClassStatus('rls-pagination__page', {
+                  active: page.active
+                })}
+                onClick={() => {
+                  goToPagination(page);
+                }}
+              >
+                {page.label}
+              </div>
+            );
+          })}
+        </div>
 
-      <div className="rls-pagination__description">{template?.description}</div>
+        <div className="rls-pagination__description">
+          {template?.description}
+        </div>
+
+        <span className="rls-pagination__count">{suggestions.length}</span>
+      </div>
 
       <div className="rls-pagination__actions">
         <button

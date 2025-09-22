@@ -12,7 +12,7 @@
   width: calc(100% - var(--rls-sizing-x16));
   max-width: 160rem;
   height: auto;
-  max-height: calc(100vh - var(--rls-sizing-x16));
+  max-height: calc(var(--rls-html-max-height) - var(--rls-sizing-x16));
   z-index: var(--rls-z-index-12);
   padding: var(--rls-sizing-x8) var(--rls-sizing-x8) var(--rls-sizing-x12)
     var(--rls-sizing-x8);

@@ -1,4 +1,4 @@
-import { itIsDefined } from '@rolster/commons';
+import { valueIsDefined } from '@rolster/commons';
 import { monthLimitTemplate } from '@rolster/components';
 import { MONTH_NAMES, Month } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
@@ -54,7 +54,10 @@ export function RlsPickerSelectorTitle({
   }, [monthControl.value]);
 
   const onPreviousMonth = useCallback(() => {
-    if (itIsDefined(monthControl.value) && itIsDefined(yearControl.value)) {
+    if (
+      valueIsDefined(monthControl.value) &&
+      valueIsDefined(yearControl.value)
+    ) {
       if (monthControl.value > Month.January) {
         monthControl.setValue(monthControl.value - 1);
       } else {
@@ -65,7 +68,7 @@ export function RlsPickerSelectorTitle({
   }, [monthControl.value, yearControl.value]);
 
   const onPreviousYear = useCallback(() => {
-    itIsDefined(yearControl.value) &&
+    valueIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value - 1);
   }, [yearControl.value]);
 
@@ -74,7 +77,10 @@ export function RlsPickerSelectorTitle({
   }, [type, onPreviousMonth, onPreviousYear]);
 
   const onNextMonth = useCallback(() => {
-    if (itIsDefined(monthControl.value) && itIsDefined(yearControl.value)) {
+    if (
+      valueIsDefined(monthControl.value) &&
+      valueIsDefined(yearControl.value)
+    ) {
       if (monthControl.value < Month.December) {
         monthControl.setValue(monthControl.value + 1);
       } else {
@@ -85,7 +91,7 @@ export function RlsPickerSelectorTitle({
   }, [monthControl.value, yearControl.value]);
 
   const onNextYear = useCallback(() => {
-    itIsDefined(yearControl.value) &&
+    valueIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value + 1);
   }, [yearControl.value]);
 

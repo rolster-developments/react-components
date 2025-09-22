@@ -12,6 +12,7 @@ interface LabelRadioButtonProps<T = any> extends RlsComponent {
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, T>;
   onValue?: ((value?: T) => void) | ((value: T) => void);
+  reverse?: boolean;
   value?: T;
 }
 
@@ -31,6 +32,7 @@ export function RlsLabelRadioButton<T = any>({
   identifier,
   formControl,
   onValue,
+  reverse,
   rlsTheme,
   value
 }: LabelRadioButtonProps<T>) {
@@ -46,8 +48,12 @@ export function RlsLabelRadioButton<T = any>({
   }, [formControl, value, onValue]);
 
   const className = useMemo(() => {
-    return renderClassStatus('rls-label-radiobutton', { disabled, extended });
-  }, [disabled, extended]);
+    return renderClassStatus('rls-label-radiobutton', {
+      disabled,
+      extended,
+      reverse
+    });
+  }, [disabled, extended, reverse]);
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

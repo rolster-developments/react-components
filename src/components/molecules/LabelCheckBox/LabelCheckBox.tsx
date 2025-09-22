@@ -9,6 +9,7 @@ interface LabelCheckBoxProps extends RlsComponent {
   disabled?: boolean;
   extended?: boolean;
   formControl?: ReactControl<HTMLElement, boolean>;
+  reverse?: boolean;
 }
 
 export function RlsLabelCheckBox({
@@ -17,6 +18,7 @@ export function RlsLabelCheckBox({
   extended,
   identifier,
   formControl,
+  reverse,
   rlsTheme
 }: LabelCheckBoxProps) {
   const [checked, setChecked] = useState(!!formControl?.value);
@@ -32,8 +34,12 @@ export function RlsLabelCheckBox({
   }, [formControl]);
 
   const className = useMemo(() => {
-    return renderClassStatus('rls-label-checkbox', { disabled, extended });
-  }, [disabled, extended]);
+    return renderClassStatus('rls-label-checkbox', {
+      disabled,
+      extended,
+      reverse
+    });
+  }, [disabled, extended, reverse]);
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

@@ -9,6 +9,7 @@ interface LabelSwitchProps extends RlsComponent {
   disabled?: boolean;
   extended?: boolean;
   formControl?: ReactControl<HTMLElement, boolean>;
+  reverse?: boolean;
 }
 
 export function RlsLabelSwitch({
@@ -17,6 +18,7 @@ export function RlsLabelSwitch({
   extended,
   identifier,
   formControl,
+  reverse,
   rlsTheme
 }: LabelSwitchProps) {
   const [checked, setChecked] = useState(!!formControl?.value);
@@ -32,8 +34,12 @@ export function RlsLabelSwitch({
   }, [formControl]);
 
   const className = useMemo(() => {
-    return renderClassStatus('rls-label-switch', { disabled, extended });
-  }, [disabled, extended]);
+    return renderClassStatus('rls-label-switch', {
+      disabled,
+      extended,
+      reverse
+    });
+  }, [disabled, extended, reverse]);
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

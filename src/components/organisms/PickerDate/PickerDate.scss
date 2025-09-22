@@ -1,9 +1,9 @@
 // Rolster Technology DatePicker Component
-// v2.0.4
+// v2.0.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 15/Sep/2025
 
 .rls-picker-date {
   position: relative;
@@ -12,6 +12,8 @@
   width: 150rem;
   overflow: hidden;
   row-gap: var(--rls-sizing-x4);
+  border-radius: var(--rlc-picker-date-radius, 0rem);
+  background: var(--rlc-picker-date-background, transparent);
 
   &__header {
     display: flex;
@@ -20,7 +22,6 @@
     padding: var(--rls-sizing-x4);
     box-sizing: border-box;
     background: var(--rls-theme-color-100);
-    border-radius: var(--rls-sizing-x4);
 
     .rls-picker-selector-title {
       padding: 0rem var(--rls-sizing-x6);

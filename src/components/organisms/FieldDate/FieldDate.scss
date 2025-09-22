@@ -1,5 +1,5 @@
 // Rolster Technology FieldDate Component
-// v1.1.2
+// v1.1.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -20,9 +20,15 @@
     var(--rls-sizing-x12)
   );
 
+  --pvt-control-width: calc(100% - var(--pvt-action-dimension));
+
   position: relative;
   width: 100%;
   box-sizing: border-box;
+
+  .rls-field-box--readonly {
+    --pvt-control-width: 100%;
+  }
 
   .rls-field-box__body {
     column-gap: var(--rls-sizing-x2);
@@ -30,7 +36,7 @@
 
   &__control {
     position: relative;
-    width: calc(100% - var(--pvt-action-dimension));
+    width: var(--pvt-control-width);
     height: var(--rls-sizing-x12);
     line-height: var(--rls-sizing-x12);
     padding: 0rem;
@@ -49,7 +55,7 @@
 
     &:disabled {
       opacity: 0.5;
-      pointer-events: none;
+      cursor: not-allowed;
     }
   }
 
@@ -75,5 +81,8 @@
 }
 
 .rls-field-date-modal {
+  --rlc-modal-background: transparent;
   --rlc-modal-max-width: 150rem;
+  --rlc-picker-date-radius: var(--rls-sizing-x4);
+  --rlc-picker-date-background: var(--rls-app-color-050);
 }

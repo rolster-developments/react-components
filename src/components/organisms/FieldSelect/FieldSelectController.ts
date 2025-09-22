@@ -37,6 +37,7 @@ interface FieldSelectProps<
   lineHeight?: number;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
+  readOnly?: boolean;
   reference?: (value: T) => K;
   unremovable?: boolean;
   value?: T;
@@ -71,8 +72,8 @@ export function useFieldSelect<
   }, [controller.setState]);
 
   const onClickInput = useCallback(() => {
-    controller.setState({ modalIsVisible: true });
-  }, [controller.setState]);
+    !props.readOnly && controller.setState({ modalIsVisible: true });
+  }, [controller.setState, props.readOnly]);
 
   const onKeydownInput = useCallback(
     (event: KeyboardEvent) => {

@@ -14,11 +14,10 @@ import {
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { DATE_FORMAT } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './PickerDayRange.css';
-
-const formatRange = '{dd}/{mx}/{aa}';
 
 interface PickerDayRangeProps extends RlsComponent {
   date?: Date;
@@ -154,7 +153,7 @@ export function RlsPickerDayRange({
   const title = useMemo(() => {
     return (
       <div className="rls-picker-day-range__title">
-        {dateFormatTemplate(sourceDate.current, formatRange)}
+        {dateFormatTemplate(sourceDate.current, DATE_FORMAT)}
       </div>
     );
   }, [sourceDate.current]);

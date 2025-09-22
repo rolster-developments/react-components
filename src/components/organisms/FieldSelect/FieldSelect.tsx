@@ -29,6 +29,7 @@ interface FieldSelectProps<
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
   placeholder?: string;
+  readOnly?: boolean;
   reference?: (value: T) => K;
   unremovable?: boolean;
   value?: T;
@@ -56,6 +57,7 @@ export function RlsFieldSelectTemplate<
     formControl,
     msgErrorDisabled,
     placeholder,
+    readOnly,
     rlsTheme,
     unremovable
   } = props;
@@ -84,11 +86,12 @@ export function RlsFieldSelectTemplate<
       {
         focused: select.focused && !disabled,
         error: formControl?.wrong,
-        disabled: disabled
+        disabled: disabled,
+        readonly: readOnly
       },
       'rls-field-list rls-field-select'
     );
-  }, [formControl?.wrong, select.focused, disabled]);
+  }, [formControl?.wrong, select.focused, disabled, readOnly]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
@@ -121,17 +124,19 @@ export function RlsFieldSelectTemplate<
             disabled={disabled}
           />
 
-          <button
-            className={'rls-field-list__action'}
-            disabled={disabled}
-            onClick={select.onClickAction}
-          >
-            <RlsIcon
-              value={
-                !unremovable && !!select.value ? 'close' : 'arrow-ios-down'
-              }
-            />
-          </button>
+          {!readOnly && (
+            <button
+              className={'rls-field-list__action'}
+              disabled={disabled}
+              onClick={select.onClickAction}
+            >
+              <RlsIcon
+                value={
+                  !unremovable && !!select.value ? 'close' : 'arrow-ios-down'
+                }
+              />
+            </button>
+          )}
         </div>
       </div>
 

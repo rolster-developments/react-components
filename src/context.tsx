@@ -14,8 +14,9 @@ import { renderClassStatus } from './helpers/css';
 interface RlsState {
   confirmation: Confirmation;
   snackbar: Snackbar;
-  setNavbarInApp: (hasNavbar: boolean) => void;
-  setNavbarIsCondense: (isCondense: boolean) => void;
+  setIsMobile: (appIsMobile: boolean) => void;
+  setNavbarInApp: (navbarInApp: boolean) => void;
+  setNavbarIsCondense: (navbarIsCondense: boolean) => void;
 }
 
 export const RlsContext = createContext<RlsState>({
@@ -23,6 +24,7 @@ export const RlsContext = createContext<RlsState>({
     return Promise.resolve(ConfirmationResult.approved());
   },
   snackbar: () => {},
+  setIsMobile: () => {},
   setNavbarInApp: () => {},
   setNavbarIsCondense: () => {}
 });
@@ -31,21 +33,24 @@ export function RlsApplication({ children }: RlsComponent) {
   const { RlsConfirmation, confirmation } = useConfirmation();
   const { RlsSnackbar, snackbar } = useSnackbar();
 
-  const [hasNavbar, setNavbarInApp] = useState(false);
-  const [isNavbarCondense, setNavbarIsCondense] = useState(false);
+  const [navbarInApp, setNavbarInApp] = useState(false);
+  const [navbarIsCondense, setNavbarIsCondense] = useState(false);
+  const [mobileApp, setIsMobile] = useState(false);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-app__body', {
-      snackbar: hasNavbar,
-      'navbar-condense': isNavbarCondense
+      mobile: mobileApp,
+      'navbar-snackbar': navbarInApp,
+      'navbar-condense': navbarIsCondense
     });
-  }, [hasNavbar, isNavbarCondense]);
+  }, [mobileApp, navbarInApp, navbarIsCondense]);
 
   return (
     <RlsContext.Provider
       value={{
         confirmation,
         snackbar,
+        setIsMobile,
         setNavbarInApp,
         setNavbarIsCondense
       }}
