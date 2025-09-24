@@ -30,6 +30,7 @@ interface FieldAutocompleteProps<
 > extends RlsComponent {
   suggestions: E[];
   automatic?: boolean;
+  className?: string;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
@@ -104,12 +105,13 @@ export function RlsFieldAutocompleteTemplate<
         readonly: readOnly,
         selected: !!autocomplete.value
       },
-      'rls-field-list rls-field-autocomplete'
+      `rls-field-list rls-field-autocomplete ${props.className ?? ''}`
     );
   }, [
     formControl?.wrong,
     autocomplete.value,
     autocomplete.focused,
+    props.className,
     disabled,
     readOnly
   ]);

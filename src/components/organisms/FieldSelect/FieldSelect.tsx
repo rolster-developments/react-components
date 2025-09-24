@@ -21,6 +21,7 @@ interface FieldSelectProps<
 > extends RlsComponent {
   suggestions: E[];
   automatic?: boolean;
+  className?: string;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
@@ -89,9 +90,9 @@ export function RlsFieldSelectTemplate<
         disabled: disabled,
         readonly: readOnly
       },
-      'rls-field-list rls-field-select'
+      `rls-field-list rls-field-select ${props.className ?? ''}`
     );
-  }, [formControl?.wrong, select.focused, disabled, readOnly]);
+  }, [formControl?.wrong, select.focused, props.className, disabled, readOnly]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
