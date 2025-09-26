@@ -1,13 +1,13 @@
 // Rolster Technology FieldReadonly Component
-// v1.0.3
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 14/Abr/2025
-// Updated: 19/May/2025
+// Updated: 26/Sep/2025
 
 .rls-field-readonly {
   --rlc-fieldbox-body-padding: var(--rls-sizing-x4);
-  --pvt-font-color: var(--rlc-input-font-color, var(--rls-app-color-900));
+  --pvt-font-color: var(--rlc-input-font-color, var(--rls-app-color-600));
   --pvt-font-size: var(--rlc-input-font-size, var(--rls-input-font-size));
   --pvt-letter-spacing: var(
     --rlc-input-letter-spacing,

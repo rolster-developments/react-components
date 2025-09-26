@@ -11,6 +11,7 @@
   --pvt-component-max-height: 75%;
   --pvt-component-opacity: 0;
   --pvt-component-visibility: hidden;
+  --pvt-component-transition: 320ms;
 
   --pvt-backdrop-opacity: 0;
   --pvt-backdrop-bottom: initial;
@@ -50,9 +51,12 @@
     border-radius: var(--rls-sizing-x4) var(--rls-sizing-x4) 0rem 0rem;
     background: var(--rlc-bottom-sheet-background, var(--rls-app-color-050));
     transform: var(--pvt-component-transform);
-    transition: opacity 240ms 0ms var(--rls-deceleration-curve),
-      transform 240ms 0ms var(--rls-deceleration-curve),
-      visibility 240ms 0ms var(--rls-deceleration-curve);
+    transition: opacity var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve),
+      transform var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve),
+      visibility var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve);
 
     &::before {
       display: block;

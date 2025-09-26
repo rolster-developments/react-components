@@ -70,7 +70,6 @@ export function RlsFieldAutocompleteTemplate<
     msgErrorDisabled,
     onSearch,
     placeholder,
-    readOnly,
     rlsTheme,
     searching
   } = props;
@@ -102,7 +101,7 @@ export function RlsFieldAutocompleteTemplate<
         focused: autocomplete.focused && !disabled,
         error: formControl?.wrong,
         disabled,
-        readonly: readOnly,
+        readonly: props.readOnly,
         selected: !!autocomplete.value
       },
       `rls-field-list rls-field-autocomplete ${props.className ?? ''}`
@@ -112,8 +111,8 @@ export function RlsFieldAutocompleteTemplate<
     autocomplete.value,
     autocomplete.focused,
     props.className,
-    disabled,
-    readOnly
+    props.readOnly,
+    disabled
   ]);
 
   const classNameList = useMemo(() => {
@@ -163,7 +162,7 @@ export function RlsFieldAutocompleteTemplate<
             onClick={autocomplete.onClickControl}
           />
 
-          {!readOnly && (
+          {!props.readOnly && (
             <button
               className="rls-field-list__action"
               disabled={disabled}

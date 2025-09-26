@@ -58,7 +58,6 @@ export function RlsFieldSelectTemplate<
     formControl,
     msgErrorDisabled,
     placeholder,
-    readOnly,
     rlsTheme,
     unremovable
   } = props;
@@ -88,11 +87,17 @@ export function RlsFieldSelectTemplate<
         focused: select.focused && !disabled,
         error: formControl?.wrong,
         disabled: disabled,
-        readonly: readOnly
+        readonly: props.readOnly
       },
       `rls-field-list rls-field-select ${props.className ?? ''}`
     );
-  }, [formControl?.wrong, select.focused, props.className, disabled, readOnly]);
+  }, [
+    formControl?.wrong,
+    select.focused,
+    props.className,
+    props.readOnly,
+    disabled
+  ]);
 
   const classNameList = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
@@ -125,7 +130,7 @@ export function RlsFieldSelectTemplate<
             disabled={disabled}
           />
 
-          {!readOnly && (
+          {!props.readOnly && (
             <button
               className={'rls-field-list__action'}
               disabled={disabled}

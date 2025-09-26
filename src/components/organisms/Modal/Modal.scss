@@ -10,6 +10,7 @@
   --pvt-component-height: 0rem;
   --pvt-component-opacity: 0;
   --pvt-component-visibility: hidden;
+  --pvt-component-transition: 160ms;
 
   --pvt-backdrop-opacity: 0;
   --pvt-backdrop-bottom: initial;
@@ -41,6 +42,7 @@
     display: flex;
     max-width: var(--rlc-modal-max-width, calc(100% - var(--rls-sizing-x8)));
     height: var(--pvt-component-height);
+    max-height: calc(100% - var(--rls-sizing-x12));
     flex-direction: column;
     opacity: var(--pvt-component-opacity);
     visibility: var(--pvt-component-visibility);
@@ -48,9 +50,12 @@
     border-radius: var(--rls-sizing-x4);
     background: var(--rlc-modal-background, var(--rls-app-color-050));
     transform: var(--pvt-component-transform);
-    transition: opacity 160ms 0ms var(--rls-deceleration-curve),
-      transform 160ms 0ms var(--rls-deceleration-curve),
-      visibility 160ms 0ms var(--rls-deceleration-curve);
+    transition: opacity var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve),
+      transform var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve),
+      visibility var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve);
   }
 
   &__backdrop {

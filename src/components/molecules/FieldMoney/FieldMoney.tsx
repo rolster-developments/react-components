@@ -11,33 +11,25 @@ interface FieldMoneyProps extends FieldBoxProps<number> {
 }
 
 export function RlsFieldMoney(props: FieldMoneyProps) {
-  const {
-    children,
-    disabled,
-    formControl,
-    identifier,
-    msgErrorDisabled,
-    rlsTheme
-  } = props;
+  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
+    props;
+
+  const disabled = useMemo(() => {
+    return formControl?.disabled || props.disabled;
+  }, [formControl?.disabled, props.disabled]);
 
   const className = useMemo(() => {
-    const _disabled = formControl?.disabled || disabled;
-
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: formControl?.focused && !_disabled,
+        focused: formControl?.focused && !disabled,
         error: formControl?.wrong,
-        disabled: _disabled
+        disabled,
+        readonly: props.readOnly
       },
       'rls-field-money'
     );
-  }, [
-    formControl?.focused,
-    formControl?.wrong,
-    formControl?.disabled,
-    disabled
-  ]);
+  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

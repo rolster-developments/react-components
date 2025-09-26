@@ -7,39 +7,31 @@ import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldPassword.css';
 
 export function RlsFieldPassword(props: FieldBoxProps<string>) {
-  const {
-    children,
-    disabled,
-    formControl,
-    identifier,
-    msgErrorDisabled,
-    rlsTheme
-  } = props;
+  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
+    props;
 
   const [password, setPassword] = useState(true);
+
+  const disabled = useMemo(() => {
+    return formControl?.disabled || props.disabled;
+  }, [formControl?.disabled, props.disabled]);
+
+  const className = useMemo(() => {
+    return renderClassStatus(
+      'rls-field-box',
+      {
+        focused: formControl?.focused && !disabled,
+        error: formControl?.wrong,
+        disabled,
+        readonly: props.readOnly
+      },
+      'rls-field-password'
+    );
+  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
 
   const onToggleInput = useCallback(() => {
     setPassword((password) => !password);
   }, []);
-
-  const className = useMemo(() => {
-    const _disabled = formControl?.disabled || disabled;
-
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        focused: formControl?.focused && !_disabled,
-        error: formControl?.wrong,
-        disabled: _disabled
-      },
-      'rls-field-password'
-    );
-  }, [
-    formControl?.focused,
-    formControl?.wrong,
-    formControl?.disabled,
-    disabled
-  ]);
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

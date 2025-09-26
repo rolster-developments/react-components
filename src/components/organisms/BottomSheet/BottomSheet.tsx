@@ -4,19 +4,19 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './BottomSheet.css';
 
-interface BottonSheetProps extends RlsComponent {
+interface BottomSheetProps extends RlsComponent {
   className?: string;
   onAutoClose?: () => void;
   visible?: boolean;
 }
 
-export function RlsBottonSheet({
+export function RlsBottomSheet({
   children,
   className,
   onAutoClose,
   visible,
   rlsTheme
-}: BottonSheetProps) {
+}: BottomSheetProps) {
   const classNameSheet = useMemo(() => {
     return renderClassStatus('rls-bottom-sheet', { visible }, className);
   }, [className, visible]);

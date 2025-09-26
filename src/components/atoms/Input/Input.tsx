@@ -40,16 +40,16 @@ export function RlsInput({
   const [valueInput, setValueInput] = useState(valueInitial);
   const [focused, setFocused] = useState(false);
 
-  const isChangeInternal = useRef(false);
+  const changeIsInternal = useRef(false);
 
   useEffect(() => {
-    if (!isChangeInternal.current && formControl) {
+    if (!changeIsInternal.current && formControl) {
       const valueControl = formControl.value ? String(formControl.value) : '';
 
       valueInput !== valueControl && setValueInput(valueControl);
     }
 
-    isChangeInternal.current = false;
+    changeIsInternal.current = false;
   }, [formControl?.value]);
 
   const _onChange = useCallback(
@@ -61,7 +61,7 @@ export function RlsInput({
           ? parseFloat((+valueInput).toFixed(decimals))
           : valueInput;
 
-      isChangeInternal.current = true;
+      changeIsInternal.current = true;
 
       onValue && onValue(value);
       setValueInput(valueInput);
