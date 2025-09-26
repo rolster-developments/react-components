@@ -1,0 +1,20 @@
+// Rolster Technology InputDouble Component
+// v1.0.0
+// @license MIT
+// Author: Rolster Developers
+// Created: 25/Sep/2025
+// Updated: 25/Sep/2025
+
+.rls-input-double {
+  --rlc-tabular-text-font-size: var(--rls-input-font-size);
+  --rlc-tabular-text-char-width: 5.25rem;
+
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+
+  .rls-amount {
+    height: inherit;
+    align-items: center;
+  }
+}

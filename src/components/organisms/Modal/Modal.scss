@@ -1,5 +1,5 @@
 // Rolster Technology Modal Component
-// v1.2.3
+// v1.2.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -38,17 +38,19 @@
 
   &__component {
     position: absolute;
+    display: flex;
     max-width: var(--rlc-modal-max-width, calc(100% - var(--rls-sizing-x8)));
     height: var(--pvt-component-height);
+    flex-direction: column;
     opacity: var(--pvt-component-opacity);
     visibility: var(--pvt-component-visibility);
     z-index: var(--rls-z-index-2);
     border-radius: var(--rls-sizing-x4);
     background: var(--rlc-modal-background, var(--rls-app-color-050));
     transform: var(--pvt-component-transform);
-    transition: opacity 125ms 0ms var(--rls-deceleration-curve),
-      transform 125ms 0ms var(--rls-deceleration-curve),
-      visibility 125ms 0ms var(--rls-deceleration-curve);
+    transition: opacity 160ms 0ms var(--rls-deceleration-curve),
+      transform 160ms 0ms var(--rls-deceleration-curve),
+      visibility 160ms 0ms var(--rls-deceleration-curve);
   }
 
   &__backdrop {

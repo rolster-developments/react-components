@@ -148,7 +148,7 @@ export function RlsFieldDate({
   return (
     <div id={identifier} className="rls-field-date" rls-theme={rlsTheme}>
       <div className={className}>
-        {children && <label className="rls-field-box__label">{children}</label>}
+        {children && <span className="rls-field-box__label">{children}</span>}
 
         <div className="rls-field-box__component">
           <div className="rls-field-box__body">

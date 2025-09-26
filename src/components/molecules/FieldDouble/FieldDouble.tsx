@@ -1,16 +1,17 @@
+import { Double } from '@rolster/commons';
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsInputMoney } from '../../atoms/InputMoney/InputMoney';
+import { RlsInputDouble } from '../../atoms/InputDouble/InputDouble';
 import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldMoney.css';
+import './FieldDouble.css';
 
-interface FieldMoneyProps extends FieldBoxProps<number> {
+interface FieldDoubleProps extends FieldBoxProps<Double> {
   decimals?: number;
   symbol?: string;
 }
 
-export function RlsFieldMoney(props: FieldMoneyProps) {
+export function RlsFieldDouble(props: FieldDoubleProps) {
   const {
     children,
     disabled,
@@ -30,7 +31,7 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
         error: formControl?.wrong,
         disabled: _disabled
       },
-      'rls-field-money'
+      'rls-field-double'
     );
   }, [
     formControl?.focused,
@@ -45,7 +46,7 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <RlsInputMoney {...props} />
+          <RlsInputDouble {...props} />
         </div>
       </div>
 

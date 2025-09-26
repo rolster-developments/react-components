@@ -108,7 +108,7 @@ export function RlsFieldSelectTemplate<
       className={className}
       rls-theme={rlsTheme}
     >
-      {children && <label className="rls-field-box__label">{children}</label>}
+      {children && <span className="rls-field-box__label">{children}</span>}
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">

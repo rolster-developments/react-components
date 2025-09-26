@@ -43,10 +43,10 @@ export function RlsInput({
   const isChangeInternal = useRef(false);
 
   useEffect(() => {
-    if (!isChangeInternal.current) {
-      const control = formControl?.value ? String(formControl.value) : '';
+    if (!isChangeInternal.current && formControl) {
+      const valueControl = formControl.value ? String(formControl.value) : '';
 
-      valueInput !== control && setValueInput(control);
+      valueInput !== valueControl && setValueInput(valueControl);
     }
 
     isChangeInternal.current = false;

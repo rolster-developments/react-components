@@ -2,23 +2,23 @@ import { useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './BottomSheet.css';
+import './ModalSheet.css';
 
-interface BottonSheetProps extends RlsComponent {
+interface ModalSheetProps extends RlsComponent {
   className?: string;
   onAutoClose?: () => void;
   visible?: boolean;
 }
 
-export function RlsBottonSheet({
+export function RlsModalSheet({
   children,
   className,
   onAutoClose,
   visible,
   rlsTheme
-}: BottonSheetProps) {
-  const classNameSheet = useMemo(() => {
-    return renderClassStatus('rls-bottom-sheet', { visible }, className);
+}: ModalSheetProps) {
+  const classNameModal = useMemo(() => {
+    return renderClassStatus('rls-modal-sheet', { visible }, className);
   }, [className, visible]);
 
   const onClickBackdrop = useCallback(() => {
@@ -26,11 +26,11 @@ export function RlsBottonSheet({
   }, [onAutoClose]);
 
   return ReactDOM.createPortal(
-    <div className={classNameSheet} rls-theme={rlsTheme}>
-      <div className="rls-bottom-sheet__component">{children}</div>
+    <div className={classNameModal} rls-theme={rlsTheme}>
+      <div className="rls-modal-sheet__component">{children}</div>
 
       <div
-        className="rls-bottom-sheet__backdrop"
+        className="rls-modal-sheet__backdrop"
         onClick={onClickBackdrop}
       ></div>
     </div>,
