@@ -1,9 +1,9 @@
 // Rolster Technology Checkbox Component
-// v1.2.0
+// v1.2.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 20/May/2025
+// Updated: 02/Oct/2025
 
 .rls-checkbox {
   --pvt-dimension: var(--rlc-checkbox-dimension, var(--rls-sizing-x12));
@@ -28,7 +28,7 @@
   transition: all 160ms 0ms var(--rls-standard-curve);
 
   &:hover {
-    cursor: pointer;
+    cursor: var(--rlc-checkbox-cursor, initial);
   }
 
   &--checked {

@@ -1,5 +1,5 @@
 // Rolster Technology Button Component
-// v2.2.3
+// v2.2.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
@@ -19,8 +19,8 @@
   --pvt-raised-background: var(--rls-theme-color-500);
   --pvt-raised-font-color: var(--rls-theme-color-050);
   --pvt-raised-border: none;
-  --pvt-flat-background: var(--rls-theme-color-200);
-  --pvt-flat-font-color: var(--rls-theme-color-700);
+  --pvt-flat-background: var(--rls-theme-color-100);
+  --pvt-flat-font-color: var(--rls-theme-color-600);
   --pvt-flat-border: none;
   --pvt-stroked-background: transparent;
   --pvt-stroked-font-color: var(--rls-theme-color-500);
@@ -187,8 +187,8 @@
     line-height: initial;
     width: auto;
     font-size: var(--rls-button-font-size);
-    font-weight: var(--rls-font-weight-bold);
     letter-spacing: var(--rls-button-letter-spacing);
+    font-weight: var(--rlc-button-font-weight, var(--rls-font-weight-bold));
     text-transform: var(--rlc-button-label-text-transform, uppercase);
     text-overflow: ellipsis;
     overflow: hidden;

@@ -1,17 +1,17 @@
-import { Double } from '@rolster/commons';
+import { BigDecimal } from '@rolster/commons';
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsInputDouble } from '../../atoms/InputDouble/InputDouble';
+import { RlsInputDecimal } from '../../atoms/InputDecimal/InputDecimal';
 import { FieldBoxProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldDouble.css';
+import './FieldDecimal.css';
 
-interface FieldDoubleProps extends FieldBoxProps<Double> {
+interface FieldDecimalProps extends FieldBoxProps<BigDecimal> {
   decimals?: number;
   symbol?: string;
 }
 
-export function RlsFieldDouble(props: FieldDoubleProps) {
+export function RlsFieldDecimal(props: FieldDecimalProps) {
   const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
     props;
 
@@ -28,7 +28,7 @@ export function RlsFieldDouble(props: FieldDoubleProps) {
         disabled,
         readonly: props.readOnly
       },
-      'rls-field-double'
+      'rls-field-decimal'
     );
   }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
 
@@ -38,7 +38,7 @@ export function RlsFieldDouble(props: FieldDoubleProps) {
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <RlsInputDouble {...props} />
+          <RlsInputDecimal {...props} />
         </div>
       </div>
 

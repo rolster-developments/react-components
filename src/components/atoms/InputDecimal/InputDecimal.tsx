@@ -1,33 +1,33 @@
-import { Double } from '@rolster/commons';
+import { BigDecimal } from '@rolster/commons';
 import { useCallback, useMemo, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
-import './InputDouble.css';
+import './InputDecimal.css';
 
-interface InputDoubleProps extends InputProps<Double> {
+interface InputDecimalProps extends InputProps<BigDecimal> {
   decimals?: number;
   symbol?: string;
 }
 
-export function RlsInputDouble(props: InputDoubleProps) {
+export function RlsInputDecimal(props: InputDecimalProps) {
   const { decimals, formControl, identifier, onValue, symbol, value } = props;
 
   const [valueInput, setValueInput] = useState(
-    (formControl?.value ?? value ?? Double.zero()).fixed
+    (formControl?.value ?? value ?? BigDecimal.zero()).rounded
   );
 
   const amount = useMemo(() => {
-    return formControl?.value?.fixed ?? valueInput;
+    return formControl?.value?.rounded ?? valueInput;
   }, [formControl?.value, valueInput]);
 
   const onValueInput = useCallback(
     (value: number) => {
-      const valueDouble = Double.create(value);
+      const valueDecimal = BigDecimal.create(value);
 
-      formControl ? formControl.setValue(valueDouble) : setValueInput(value);
+      formControl ? formControl.setValue(valueDecimal) : setValueInput(value);
 
-      onValue && onValue(valueDouble);
+      onValue && onValue(valueDecimal);
     },
     [formControl, onValue]
   );
@@ -35,7 +35,7 @@ export function RlsInputDouble(props: InputDoubleProps) {
   const doubleProps = { ...props, formControl: undefined };
 
   return (
-    <div id={identifier} className="rls-input-double">
+    <div id={identifier} className="rls-input-decimal">
       <RlsInput
         {...doubleProps}
         type="number"

@@ -1,4 +1,4 @@
-import { PartialSealed } from '@rolster/commons';
+import { SealedPartial } from '@rolster/commons';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
@@ -7,7 +7,7 @@ import { RlsButton, RlsButtonType } from '../../atoms/Button/Button';
 import { RlsTheme } from '../../definitions';
 import './Confirmation.css';
 
-export class ConfirmationResult extends PartialSealed<
+export class ConfirmationResult extends SealedPartial<
   void,
   void,
   {

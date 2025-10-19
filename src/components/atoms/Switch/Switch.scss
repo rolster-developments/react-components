@@ -1,9 +1,9 @@
 // Rolster Technology Switch Component
-// v1.2.1
+// v1.2.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/Mar/2018
-// Updated: 20/May/2025
+// Updated: 02/Oct/2025
 
 .rls-switch {
   --pvt-component-padding: var(
@@ -19,7 +19,7 @@
   max-width: var(--rlc-switch-max-width, var(--rls-sizing-x20));
 
   &:hover {
-    cursor: pointer;
+    cursor: var(--rlc-switch-cursor, initial);
   }
 
   &--checked {
