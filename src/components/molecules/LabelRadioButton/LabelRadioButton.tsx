@@ -1,5 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useMemo } from 'react';
+import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsRadioButton } from '../../atoms/RadioButton/RadioButton';
 import { RlsComponent } from '../../definitions';
@@ -36,16 +37,12 @@ export function RlsLabelRadioButton<T = any>({
   rlsTheme,
   value
 }: LabelRadioButtonProps<T>) {
-  const [checked, setChecked] = useState(formControl?.value === value);
-
-  useEffect(() => {
-    setChecked(formControl?.value === value);
-  }, [formControl?.value]);
-
-  const onSelect = useCallback(() => {
-    formControl && formControl?.setValue(value as T);
-    onValue && onValue(value as T);
-  }, [formControl, value, onValue]);
+  const { checked, onSelect } = useFormSingleSelectionController<T>({
+    disabled,
+    formControl,
+    onValue,
+    value
+  });
 
   const className = useMemo(() => {
     return renderClassStatus('rls-label-radiobutton', {

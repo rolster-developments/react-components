@@ -2,6 +2,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
+import { RlsIcon } from '../Icon/Icon';
 import './CheckBox.css';
 
 interface CheckBoxProps extends RlsComponent {
@@ -33,7 +34,7 @@ export function RlsCheckBox({
       onClick={onClick}
       rls-theme={rlsTheme}
     >
-      <div className="rls-checkbox__component"></div>
+      <RlsIcon value="checkmark" />
     </div>
   );
 }

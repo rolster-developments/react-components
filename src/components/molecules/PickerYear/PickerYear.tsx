@@ -7,7 +7,7 @@ import {
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import './PickerYear.css';
 
@@ -45,9 +45,7 @@ function RlsPickerYearElement({
 
   return (
     <div className={className} onClick={onClick}>
-      <span className="rls-picker-year__span rls-body1-medium">
-        {year.value || '????'}
-      </span>
+      <span className="rls-picker-year__span">{year.value || '????'}</span>
     </div>
   );
 }
@@ -140,25 +138,25 @@ export function RlsPickerYear({
   return (
     <div className="rls-picker-year" rls-theme={rlsTheme}>
       <div className="rls-picker-year__header">
-        <div className="rls-picker-year__action rls-picker-year__action--prev">
-          <RlsButtonAction
-            icon="arrow-ios-left"
-            onClick={onClickPrev}
-            disabled={!template.canPrevious || disabled}
-          />
-        </div>
+        <button
+          className="rls-picker-year__action rls-picker-year__action--prev"
+          onClick={onClickPrev}
+          disabled={!template.canPrevious || disabled}
+        >
+          <RlsIcon value="arrow-ios-left" />
+        </button>
 
-        <label className="rls-title-bold">
+        <span>
           {template.minRange} - {template.maxRange}
-        </label>
+        </span>
 
-        <div className="rls-picker-year__action rls-picker-year__action--next">
-          <RlsButtonAction
-            icon="arrow-ios-right"
-            onClick={onClickNext}
-            disabled={!template.canNext || disabled}
-          />
-        </div>
+        <button
+          className="rls-picker-year__action rls-picker-year__action--next"
+          onClick={onClickNext}
+          disabled={!template.canNext || disabled}
+        >
+          <RlsIcon value="arrow-ios-right" />
+        </button>
       </div>
 
       <div className="rls-picker-year__component">{component}</div>

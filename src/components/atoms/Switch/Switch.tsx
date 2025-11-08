@@ -6,25 +6,27 @@ import './Switch.css';
 
 interface SwitchProps extends RlsComponent {
   checked: boolean;
+  capsule?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-interface Props extends RlsComponent {
+interface SwitchControlProps extends RlsComponent {
   disabled?: boolean;
   formControl: ReactControl<HTMLElement, boolean>;
 }
 
 export function RlsSwitch({
   checked,
+  capsule,
   disabled,
   identifier,
   onClick,
   rlsTheme
 }: SwitchProps) {
   const className = useMemo(() => {
-    return renderClassStatus('rls-switch', { checked, disabled });
-  }, [checked, disabled]);
+    return renderClassStatus('rls-switch', { checked, capsule, disabled });
+  }, [checked, capsule, disabled]);
 
   return (
     <div
@@ -35,7 +37,6 @@ export function RlsSwitch({
     >
       <div className="rls-switch__component">
         <div className="rls-switch__component__element"></div>
-        <div className="rls-switch__component__bar"></div>
       </div>
     </div>
   );
@@ -46,7 +47,7 @@ export function RlsSwitchControl({
   disabled,
   identifier,
   rlsTheme
-}: Props) {
+}: SwitchControlProps) {
   const onClick = useCallback(() => {
     formControl.setValue(!formControl.value);
   }, [formControl.value]);
@@ -54,7 +55,7 @@ export function RlsSwitchControl({
   return (
     <RlsSwitch
       identifier={identifier}
-      checked={formControl.value || false}
+      checked={formControl.value}
       disabled={disabled}
       onClick={onClick}
       rlsTheme={rlsTheme}

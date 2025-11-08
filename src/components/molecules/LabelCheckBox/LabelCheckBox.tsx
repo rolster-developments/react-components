@@ -1,5 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useFormToggleController } from '../../../controllers/FormToggleController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
 import { RlsComponent } from '../../definitions';
@@ -21,17 +22,10 @@ export function RlsLabelCheckBox({
   reverse,
   rlsTheme
 }: LabelCheckBoxProps) {
-  const [checked, setChecked] = useState(!!formControl?.value);
-
-  useEffect(() => {
-    setChecked(!!formControl?.value);
-  }, [formControl?.value]);
-
-  const onToggle = useCallback(() => {
+  const { checked, onToggle } = useFormToggleController({
+    disabled,
     formControl
-      ? formControl?.setValue(!formControl.value)
-      : setChecked((checked) => !checked);
-  }, [formControl]);
+  });
 
   const className = useMemo(() => {
     return renderClassStatus('rls-label-checkbox', {
@@ -46,6 +40,7 @@ export function RlsLabelCheckBox({
       <div className="rls-label-checkbox__component" onClick={onToggle}>
         <RlsCheckBox checked={checked} disabled={disabled} />
       </div>
+
       <div className="rls-label-checkbox__text">{children}</div>
     </div>
   );

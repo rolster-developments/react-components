@@ -1,9 +1,9 @@
 // Rolster Technology DayRangePicker Component
-// v1.1.3
+// v1.2.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 18/Abr/2025
+// Updated: 28/Oct/2025
 
 .rls-picker-day-range {
   --pvt-span-nothover-background: transparent;
@@ -11,7 +11,7 @@
   --pvt-span-background: transparent;
 
   position: relative;
-  display: flex;
+  display: var(--rlc-picker-day-range-display, flex);
   width: 100%;
   max-width: 140rem;
   flex-direction: column;
@@ -20,28 +20,33 @@
   user-select: none;
 
   &__title {
-    color: var(--rls-theme-color-500);
+    color: var(--rls-app-color-600);
     text-align: center;
-    padding: var(--rls-sizing-x4) 0rem;
-    font-size: var(--rls-subtitle-font-size);
-    letter-spacing: var(--rls-subtitle-letter-spacing);
-    line-height: var(--rls-subtitle-line-height);
+    font-size: var(--rls-body-font-size);
+    letter-spacing: var(--rls-body-letter-spacing);
+    line-height: var(--rls-body-line-height);
     font-weight: var(--rls-font-weight-bold);
   }
 
   &__header {
     display: flex;
-    background: var(--rls-app-color-200);
-    color: var(--rls-app-color-900);
-    border-radius: var(--rls-sizing-x2);
   }
 
   &__label {
-    padding: var(--rls-sizing-x6) 0rem;
-    text-align: center;
     width: 100%;
-    font-size: var(--rls-sizing-x6);
-    font-weight: var(--rls-font-weight-bold);
+    height: var(--rls-sizing-x20);
+    line-height: var(--rls-sizing-x20);
+    text-align: center;
+    font-size: 5.875rem;
+    color: var(--rls-app-color-600);
+    font-weight: var(--rls-font-weight-regular);
+    letter-spacing: 0.375rem;
+  }
+
+  &__component {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x3);
   }
 
   &__week {
@@ -52,28 +57,6 @@
     text-align: center;
     padding: var(--rls-sizing-x1);
     box-sizing: border-box;
-
-    &__span {
-      position: relative;
-      display: block;
-      color: var(--rls-app-color-900);
-      border-radius: var(--rls-sizing-x4);
-      height: var(--rls-sizing-x18);
-      line-height: var(--rls-sizing-x18);
-      margin: var(--rls-sizing-x1) 0rem;
-      font-size: 7rem;
-      font-weight: var(--rls-font-weight-semibold);
-
-      &:not(:hover) {
-        background: var(--pvt-span-nothover-background);
-        color: var(--pvt-span-nothover-font-color);
-      }
-
-      &:hover {
-        color: var(--rls-app-color-050);
-        background: var(--rls-theme-color-900);
-      }
-    }
 
     &--end {
       --pvt-span-nothover-background: var(--rls-app-color-900);
@@ -99,6 +82,28 @@
     &--disabled {
       pointer-events: none;
       opacity: 0.5;
+    }
+
+    &__span {
+      position: relative;
+      display: block;
+      font-size: 7rem;
+      font-weight: var(--rls-font-weight-semibold);
+      border-radius: var(--rls-sizing-x4);
+      height: var(--rls-sizing-x18);
+      line-height: var(--rls-sizing-x18);
+      box-sizing: border-box;
+      letter-spacing: 0.475rem;
+
+      &:not(:hover) {
+        background: var(--pvt-span-nothover-background);
+        color: var(--pvt-span-nothover-font-color);
+      }
+
+      &:hover {
+        color: var(--rls-app-color-050);
+        background: var(--rls-theme-color-900);
+      }
     }
   }
 }

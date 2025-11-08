@@ -32,12 +32,12 @@ export function RlsInputDecimal(props: InputDecimalProps) {
     [formControl, onValue]
   );
 
-  const doubleProps = { ...props, formControl: undefined };
+  const decimalProps = { ...props, formControl: undefined };
 
   return (
     <div id={identifier} className="rls-input-decimal">
       <RlsInput
-        {...doubleProps}
+        {...decimalProps}
         type="number"
         value={valueInput}
         onValue={onValueInput}

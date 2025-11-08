@@ -5,18 +5,12 @@ import './Poster.css';
 
 interface PosterProps extends RlsComponent {
   contrast?: boolean;
-  outline?: boolean;
 }
 
-export function RlsPoster({
-  children,
-  contrast,
-  outline,
-  rlsTheme
-}: PosterProps) {
+export function RlsPoster({ children, contrast, rlsTheme }: PosterProps) {
   const className = useMemo(() => {
-    return renderClassStatus('rls-poster', { contrast, outline });
-  }, [contrast, outline]);
+    return renderClassStatus('rls-poster', { contrast });
+  }, [contrast]);
 
   return (
     <div className={className} rls-theme={rlsTheme}>

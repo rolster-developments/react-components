@@ -7,8 +7,11 @@ export type RlsTheme =
   | 'warning'
   | 'danger'
   | 'berry'
+  | 'hope'
   | 'mountains'
+  | 'ross'
   | 'amaizing'
+  | 'purple'
   | 'amber'
   | 'smartness'
   | 'obsidian';

@@ -4,10 +4,10 @@ import { MONTH_NAMES, Month } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import './PickerSelectorTitle.css';
 
-type PickerSelectorTitleType = 'month' | 'year';
+export type PickerSelectorTitleType = 'month' | 'year';
 
 interface PickerSelectorTitleProps {
   monthControl: ReactControl<HTMLElement, number>;
@@ -17,7 +17,7 @@ interface PickerSelectorTitleProps {
   disabled?: boolean;
   maxDate?: Date;
   minDate?: Date;
-  onClick?: () => void;
+  onClick?: (type: PickerSelectorTitleType) => void;
 }
 
 export function RlsPickerSelectorTitle({
@@ -67,6 +67,14 @@ export function RlsPickerSelectorTitle({
     }
   }, [monthControl.value, yearControl.value]);
 
+  const onMonth = useCallback(() => {
+    onClick && onClick('month');
+  }, [onClick]);
+
+  const onYear = useCallback(() => {
+    onClick && onClick('year');
+  }, [onClick]);
+
   const onPreviousYear = useCallback(() => {
     valueIsDefined(yearControl.value) &&
       yearControl.setValue(yearControl.value - 1);
@@ -101,19 +109,18 @@ export function RlsPickerSelectorTitle({
 
   return (
     <div className="rls-picker-selector-title">
-      <RlsButtonAction
-        icon="arrow-ios-left"
-        onClick={onPrevious}
-        disabled={limitPrevious || disabled}
-      />
+      <button onClick={onPrevious} disabled={limitPrevious || disabled}>
+        <RlsIcon value="arrow-ios-left" />
+      </button>
 
-      <span onClick={onClick}>{label}</span>
+      <div className="rls-picker-selector-title__label">
+        <span onClick={onMonth}>{label},</span>
+        <span onClick={onYear}>{yearControl.value}</span>
+      </div>
 
-      <RlsButtonAction
-        icon="arrow-ios-right"
-        onClick={onNext}
-        disabled={limitNext || disabled}
-      />
+      <button onClick={onNext} disabled={limitNext || disabled}>
+        <RlsIcon value="arrow-ios-right" />
+      </button>
     </div>
   );
 }

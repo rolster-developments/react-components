@@ -1,50 +1,42 @@
 // Rolster Technology Poster Component
-// v2.0.2
+// v2.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 18/Abr/2025
+// Updated: 27/Oct/2025
 
 .rls-poster {
-  --pvt-background: var(--rls-theme-color-100);
-  --pvt-height: var(--rlc-poster-height, var(--rls-body-line-height));
-  --pvt-border-content: none;
-  --pvt-border-color: var(--rls-app-color-400);
+  --pvt-height: var(--rlc-poster-height, var(--rls-smalltext-line-height));
 
   position: relative;
   display: block;
-  width: auto;
+  width: var(--rlc-poster-width, auto);
   font-weight: inherit;
-  font-size: var(--rlc-poster-font-size, var(--rls-body-font-size));
+  font-size: var(--rlc-poster-font-size, var(--rls-smalltext-font-size));
   letter-spacing: var(
     --rlc-poster-letter-spacing,
     var(--rls-body-letter-spacing)
   );
   height: var(--pvt-height);
   line-height: var(--pvt-height);
-  padding: var(--rlc-poster-padding, var(--rls-sizing-x4));
+  padding: var(--rlc-poster-padding, var(--rls-sizing-x2) var(--rls-sizing-x4));
   text-align: var(--rlc-poster-text-align, center);
-  border-radius: var(--rls-sizing-x2);
-  color: var(--rls-app-color-600);
-  background: var(--rls-app-color-200);
-  border: var(--pvt-border-content);
+  border-radius: var(--rls-sizing-x4);
+  color: var(--rls-app-color-050);
+  background: var(--rls-app-color-600);
 
   &[rls-theme] {
-    --pvt-border-color: var(--rls-theme-color-100);
-
-    color: var(--rls-theme-color-100);
+    color: var(--rls-theme-color-050);
     background: var(--rls-theme-color-500);
   }
 
-  &--contrast[rls-theme] {
-    --pvt-border-color: var(--rls-theme-color-500);
+  &--contrast {
+    color: var(--rls-app-color-700);
+    background: var(--rls-app-color-200);
 
-    color: var(--rls-theme-color-700);
-    background: var(--pvt-background);
-  }
-
-  &--outline {
-    --pvt-background: var(--rls-theme-color-050);
-    --pvt-border-content: 1px solid var(--pvt-border-color);
+    &[rls-theme] {
+      color: var(--rls-theme-color-700);
+      background: var(--rls-theme-color-100);
+    }
   }
 }

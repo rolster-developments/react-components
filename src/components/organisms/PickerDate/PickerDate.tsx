@@ -15,9 +15,13 @@ import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
 import { RlsPickerDay } from '../../molecules/PickerDay/PickerDay';
 import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
-import { RlsPickerSelectorTitle } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
+import {
+  PickerSelectorTitleType,
+  RlsPickerSelectorTitle
+} from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 
 interface PickerDateProps extends RlsComponent {
   automatic?: boolean;
@@ -106,12 +110,8 @@ export function RlsPickerDate({
     setVisibility('DAY');
   }, []);
 
-  const onVisibilityMonth = useCallback(() => {
-    setVisibility('MONTH');
-  }, []);
-
-  const onVisibilityYear = useCallback(() => {
-    setVisibility('YEAR');
+  const onVisibilityTitle = useCallback((type: PickerSelectorTitleType) => {
+    type === 'month' ? setVisibility('MONTH') : setVisibility('YEAR');
   }, []);
 
   const onCancel = useCallback(() => {
@@ -143,14 +143,6 @@ export function RlsPickerDate({
   return (
     <div className="rls-picker-date" rls-theme={rlsTheme}>
       <div className="rls-picker-date__header">
-        <div className="rls-picker-date__title rls-picker-date__title--description">
-          <span onClick={onVisibilityDay}>{title}</span>
-        </div>
-
-        <div className="rls-picker-date__title rls-picker-date__title--year">
-          <span onClick={onVisibilityYear}>{yearControl.value}</span>
-        </div>
-
         <RlsPickerSelectorTitle
           monthControl={monthControl}
           yearControl={yearControl}
@@ -159,8 +151,12 @@ export function RlsPickerDate({
           minDate={minDate}
           disabled={visibility === 'YEAR'}
           type={'month'}
-          onClick={onVisibilityMonth}
+          onClick={onVisibilityTitle}
         />
+
+        <div className="rls-picker-date__title">
+          <span onClick={onVisibilityDay}>{title}</span>
+        </div>
       </div>
 
       <div className={classNameComponent}>
@@ -198,23 +194,21 @@ export function RlsPickerDate({
         <div className="rls-picker-date__footer">
           <div className="rls-picker-date__actions">
             <div className="rls-picker-date__actions--cancel">
-              <RlsButton type="ghost" onClick={onCancel}>
+              <RlsButton type="outline" onClick={onCancel}>
                 {labels.dateActionCancel}
               </RlsButton>
             </div>
 
             <div className="rls-picker-date__actions--today">
-              <RlsButton
-                type="ghost"
+              <RlsButtonAction
+                icon="calendar"
                 onClick={onToday}
                 disabled={itIsDisabledToday}
-              >
-                {labels.dateActionToday}
-              </RlsButton>
+              />
             </div>
 
             <div className="rls-picker-date__actions--ok">
-              <RlsButton type="raised" onClick={onSelect}>
+              <RlsButton type="gradient" onClick={onSelect}>
                 {labels.dateActionSelect}
               </RlsButton>
             </div>

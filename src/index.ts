@@ -72,6 +72,8 @@ export * from './components/definitions';
 export { RolsterReactInputControl } from './components/types';
 export * from './context';
 export * from './controllers/DatatableController';
+export * from './controllers/FormSingleSelectionController';
+export * from './controllers/FormToggleController';
 export * from './controllers/ImageEditorController';
 export * from './controllers/ListController';
 export * from './controllers/RelocationOnComponentController';

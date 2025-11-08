@@ -7,14 +7,12 @@ import {
   assignDayInDate,
   DAY_LABELS,
   dateIsBefore,
-  dateFormatTemplate,
   DateRange,
   normalizeMinTime
 } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { DATE_FORMAT } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './PickerDayRange.css';
@@ -150,18 +148,8 @@ export function RlsPickerDayRange({
     );
   }, [date, range, minDate, maxDate]);
 
-  const title = useMemo(() => {
-    return (
-      <div className="rls-picker-day-range__title">
-        {dateFormatTemplate(sourceDate.current, DATE_FORMAT)}
-      </div>
-    );
-  }, [sourceDate.current]);
-
   return (
     <div className="rls-picker-day-range" rls-theme={rlsTheme}>
-      {title}
-
       {headers}
 
       {component}

@@ -17,17 +17,17 @@ interface DatatableSubheaderProps extends RlsComponent {
 
 interface DatatableRecordProps extends RlsComponent {
   className?: string;
+  contained?: boolean;
   error?: boolean;
   info?: boolean;
-  overflow?: boolean;
   success?: boolean;
   warning?: boolean;
 }
 
 interface DatatableCellProps extends RlsComponent {
   className?: string;
+  contained?: boolean;
   control?: boolean;
-  overflow?: boolean;
 }
 
 interface DatatableFloatingProps extends RlsComponent {
@@ -120,10 +120,10 @@ export function RlsDatatableSubheader({
 export function RlsDatatableRecord({
   children,
   className,
+  contained,
   error,
   identifier,
   info,
-  overflow,
   success,
   warning,
   rlsTheme
@@ -131,10 +131,10 @@ export function RlsDatatableRecord({
   const classNameRecord = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__record',
-      { error, info, overflow, success, warning },
+      { error, info, contained, success, warning },
       className
     );
-  }, [className, error, info, overflow, success, warning]);
+  }, [className, error, info, contained, success, warning]);
 
   return (
     <tr id={identifier} className={classNameRecord} rls-theme={rlsTheme}>
@@ -146,10 +146,10 @@ export function RlsDatatableRecord({
 export function RlsDatatableTotals({
   children,
   className,
+  contained,
   error,
   identifier,
   info,
-  overflow,
   success,
   warning,
   rlsTheme
@@ -157,10 +157,10 @@ export function RlsDatatableTotals({
   const classNameTotals = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__totals',
-      { error, info, overflow, success, warning },
+      { error, info, contained, success, warning },
       className
     );
-  }, [className, error, info, overflow, success, warning]);
+  }, [className, error, info, contained, success, warning]);
 
   return (
     <div id={identifier} className={classNameTotals} rls-theme={rlsTheme}>
@@ -172,18 +172,18 @@ export function RlsDatatableTotals({
 export function RlsDatatableCell({
   children,
   className,
+  contained,
   control,
   identifier,
-  overflow,
   rlsTheme
 }: DatatableCellProps) {
   const classNameCell = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__cell',
-      { control, overflow },
+      { control, contained },
       className
     );
-  }, [className, control, overflow]);
+  }, [className, control, contained]);
 
   return (
     <td id={identifier} className={classNameCell} rls-theme={rlsTheme}>
@@ -195,17 +195,17 @@ export function RlsDatatableCell({
 export function RlsDatatableData({
   children,
   className,
+  contained,
   control,
-  identifier,
-  overflow
+  identifier
 }: DatatableCellProps) {
   const classNameData = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__data',
-      { control, overflow },
+      { control, contained },
       className
     );
-  }, [className, overflow, control]);
+  }, [className, contained, control]);
 
   return (
     <div id={identifier} className={classNameData}>

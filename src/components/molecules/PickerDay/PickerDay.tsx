@@ -33,9 +33,9 @@ function RlsPickerDayHeaders() {
   return (
     <div className="rls-picker-day__header">
       {DAY_LABELS().map((title, index) => (
-        <label key={index} className="rls-picker-day__label">
+        <span key={index} className="rls-picker-day__label">
           {title}
-        </label>
+        </span>
       ))}
     </div>
   );
@@ -54,14 +54,7 @@ function RlsPickerDayElement({
       selected: day.selected,
       today: day.today
     });
-  }, [
-    day.disabled,
-    day.focused,
-    day.forbidden,
-    day.selected,
-    day.today,
-    disabled
-  ]);
+  }, [day, disabled]);
 
   const onClick = useCallback(() => {
     day.value && !day.disabled && !disabled && onSelect(day.value);
