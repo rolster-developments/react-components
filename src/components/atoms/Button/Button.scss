@@ -15,7 +15,7 @@
   --pvt-button-ripple-background: var(--rls-theme-color-700);
 
   --pvt-ghost-background: none;
-  --pvt-ghost-font-color: var(--rls-theme-color-400);
+  --pvt-ghost-font-color: var(--rls-theme-color-500);
   --pvt-ghost-border: none;
 
   --pvt-outline-background: var(--rls-app-color-050);
@@ -23,15 +23,15 @@
   --pvt-outline-border: var(--rls-app-border-1-300);
 
   --pvt-flat-background: var(--rls-theme-color-050);
-  --pvt-flat-font-color: var(--rls-theme-color-400);
+  --pvt-flat-font-color: var(--rls-theme-color-500);
   --pvt-flat-border: none;
 
   --pvt-stroked-background: var(--rls-app-color-050);
-  --pvt-stroked-font-color: var(--rls-theme-color-400);
+  --pvt-stroked-font-color: var(--rls-theme-color-500);
   --pvt-stroked-border: var(--rls-theme-border-1-300);
 
   --pvt-classic-background: var(--rls-theme-color-050);
-  --pvt-classic-font-color: var(--rls-theme-color-400);
+  --pvt-classic-font-color: var(--rls-theme-color-500);
   --pvt-classic-border: var(--rls-theme-border-1-300);
 
   --pvt-raised-background: var(--rls-theme-color-500);
@@ -131,7 +131,7 @@
     height: var(--rls-sizing-x20);
     padding: var(--rlc-button-content-padding, 0rem var(--rls-sizing-x4));
     box-sizing: border-box;
-    border-radius: var(--rlc-button-content-radius, var(--rls-sizing-x4));
+    border-radius: var(--rlc-button-content-radius, var(--rls-sizing-x2));
     box-shadow: var(--pvt-button-content-box-shadow);
     color: var(--pvt-button-content-font-color);
     border: var(--pvt-button-content-border);

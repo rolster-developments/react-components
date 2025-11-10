@@ -8,7 +8,7 @@
 .rls-card {
   --rlc-divider-background: var(--rls-app-color-300);
   --pvt-background: var(--rls-app-color-050);
-  --pvt-border: var(--rls-app-border-2-300);
+  --pvt-border: var(--rls-app-border-1-300);
   --pvt-box-shadow: var(--rlc-card-box-shadow, var(--rls-app-shadow-center-4));
 
   background: var(--pvt-background);
@@ -18,6 +18,7 @@
   &[rls-theme] {
     --rlc-divider-background: var(--rls-theme-color-300);
     --pvt-background: var(--rls-theme-color-050);
+    --pvt-border: var(--rls-theme-border-1-300);
   }
 
   &--outline {

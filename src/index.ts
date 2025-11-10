@@ -49,6 +49,7 @@ export * from './components/molecules/PickerMonth/PickerMonth';
 export * from './components/molecules/PickerSelectorTitle/PickerSelectorTitle';
 export * from './components/molecules/PickerYear/PickerYear';
 export * from './components/molecules/Slider/Slider';
+export * from './components/molecules/Tabs/Tabs';
 export * from './components/molecules/Toolbar/Toolbar';
 export * from './components/organisms/BottomSheet/BottomSheet';
 export * from './components/organisms/Card/Card';

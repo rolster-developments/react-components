@@ -1,9 +1,9 @@
 // Rolster Technology InputSearch Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 12/May/2023
-// Updated: 24/Sep/2025
+// Updated: 08/Nov/2025
 
 .rls-input-search {
   --rlc-input-height: var(--rls-sizing-x14);
@@ -13,8 +13,9 @@
   align-items: center;
   padding: var(--rls-sizing-x4) var(--rls-sizing-x6);
   box-sizing: border-box;
-  background: var(--rlc-input-search-background, var(--rls-app-color-100));
+  background: var(--rlc-input-search-background, transparent);
   border-radius: var(--rls-sizing-x4);
+  border: var(--rls-app-border-1-200);
 
   &--disabled {
     opacity: 0.5;
