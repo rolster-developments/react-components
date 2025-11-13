@@ -6,10 +6,11 @@ import {
 } from '@rolster/i18n';
 import { Interpolators } from '@rolster/strings';
 
-const errorsDictionary: I18nDictionary = {
+const errors: I18nDictionary = {
   es: {
     alphabetic: 'Campo solo permite caracteres',
     alphanumber: 'Campo solo permite caracteres y número',
+    checked: 'Campo debe ser seleccionado',
     decimal: 'Campo debe ser número decimal',
     defined: 'Campo debe estar definido',
     email: 'Campo debe ser correo electrónico',
@@ -22,18 +23,19 @@ const errorsDictionary: I18nDictionary = {
     maxValue: 'Campo debe tener un valor máximo de {thanValue}',
     minValue: 'Campo debe tener un valor mínimo de {thanValue}',
     nickname: 'Campo inválido para nombre de usuario',
-    onlynumber: 'Campo debe ser númerico',
+    onlyNumber: 'Campo debe ser númerico',
     password: 'Campo no permitido para password',
-    reqlength: 'Campo debe tener {length} caracter(es)',
     required: 'Campo es requerido',
     strMinlength: 'Campo debe tener mínimo {length} caracter(es)',
     strMaxlength: 'Campo debe tener máximo {length} caracter(es)',
+    strReqLength: 'Campo debe tener {length} caracter(es)',
     textonly: 'Campo solo permite caracteres (sin espacio)',
     _unknown: 'Campo inválido {error}'
   },
   en: {
     alphabetic: 'Field only allows characters',
     alphanumber: 'Field only allows characters and number',
+    checked: 'Field must be selected',
     decimal: 'Field must be decimal number',
     defined: 'Field must be defined',
     email: 'Field must be email',
@@ -46,9 +48,9 @@ const errorsDictionary: I18nDictionary = {
     minValue: 'Field must have a minimum value of {thanValue}',
     maxValue: 'Field must have a maximum value of {thanValue}',
     nickname: 'Invalid field for username',
-    onlynumber: 'Field must be numeric',
+    onlyNumber: 'Field must be numeric',
     password: 'Field not allowed for password',
-    reqlength: 'Field must be {length} characters',
+    strReqLength: 'Field must be {length} characters',
     required: 'Field is required',
     strMinlength: 'Field must have minimum {length} characters',
     strMaxlength: 'Field must have maximum {length} characters',
@@ -58,6 +60,7 @@ const errorsDictionary: I18nDictionary = {
   fr: {
     alphabetic: 'Field only allows characters',
     alphanumber: 'Field only allows characters and number',
+    checked: 'Field must be selected',
     decimal: 'Field must be decimal number',
     defined: 'Field must be defined',
     email: 'Field must be email',
@@ -70,9 +73,9 @@ const errorsDictionary: I18nDictionary = {
     minValue: 'Field must have a minimum value of {thanValue}',
     maxValue: 'Field must have a maximum value of {thanValue}',
     nickname: 'Invalid field for username',
-    onlynumber: 'Field must be numeric',
+    onlyNumber: 'Field must be numeric',
     password: 'Field not allowed for password',
-    reqlength: 'Field must be {length} characters',
+    strReqLength: 'Field must be {length} characters',
     required: 'Field is required',
     strMinlength: 'Field must have minimum {length} characters',
     strMaxlength: 'Field must have maximum {length} characters',
@@ -82,6 +85,7 @@ const errorsDictionary: I18nDictionary = {
   pt: {
     alphabetic: 'Field only allows characters',
     alphanumber: 'Field only allows characters and number',
+    checked: 'Field must be selected',
     decimal: 'Field must be decimal number',
     defined: 'Field must be defined',
     email: 'Field must be email',
@@ -94,25 +98,29 @@ const errorsDictionary: I18nDictionary = {
     minValue: 'Field must have a minimum value of {thanValue}',
     maxValue: 'Field must have a maximum value of {thanValue}',
     nickname: 'Invalid field for username',
-    onlynumber: 'Field must be numeric',
+    onlyNumber: 'Field must be numeric',
     password: 'Field not allowed for password',
-    reqlength: 'Field must be {thanValue} characters',
+    strReqLength: 'Field must be {length} characters',
     required: 'Field is required',
-    strMinlength: 'Field must have minimum {thanValue} characters',
-    strMaxlength: 'Field must have maximum {thanValue} characters',
+    strMinlength: 'Field must have minimum {length} characters',
+    strMaxlength: 'Field must have maximum {length} characters',
     textonly: 'Field only allows characters (no space)',
     _unknown: 'Invalid field {error}'
   }
 };
 
-let _msgErrorsI18n: I18nTranslate = i18n(errorsDictionary);
+let _msgErrorsI18n: I18nTranslate = i18n(errors);
 
 export function setErrorsI18n(dictionary: I18nDictionary) {
   _msgErrorsI18n = i18n(
-    Object.entries(errorsDictionary).reduce((_dictionary, [key, value]) => {
-      _dictionary[key] = { ...value, ...(dictionary as any)[key] };
+    Object.entries(errors).reduce((errors, [key, value]) => {
+      // Merge keys from dictionary in errors i18n
+      errors[key] = {
+        ...value,
+        ...(dictionary as any)[key]
+      };
 
-      return _dictionary;
+      return errors;
     }, {} as any)
   );
 }
