@@ -194,7 +194,7 @@ export function RlsPickerDate({
         <div className="rls-picker-date__footer">
           <div className="rls-picker-date__actions">
             <div className="rls-picker-date__actions--cancel">
-              <RlsButton type="outline" onClick={onCancel}>
+              <RlsButton type="flat" onClick={onCancel}>
                 {labels.dateActionCancel}
               </RlsButton>
             </div>

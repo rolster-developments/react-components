@@ -179,7 +179,7 @@ export function RlsPickerDateRange({
       <div className={classNameFooter}>
         <div className="rls-picker-date-range__actions">
           <div className="rls-picker-date-range__actions--cancel">
-            <RlsButton type="outline" onClick={onCancel}>
+            <RlsButton type="flat" onClick={onCancel}>
               {labels.dateActionCancel}
             </RlsButton>
           </div>

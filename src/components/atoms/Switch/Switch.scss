@@ -30,7 +30,7 @@
   }
 
   &--checked {
-    --pvt-component-background: var(--rls-theme-color-500);
+    --pvt-component-background: var(--rls-theme-gradient-500);
     --pvt-element-left: calc(
       100% - var(--pvt-element-width) - var(--rls-sizing-x2)
     );
