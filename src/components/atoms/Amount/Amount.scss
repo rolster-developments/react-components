@@ -1,9 +1,9 @@
 // Rolster Technology Amount Component
-// v1.2.2
+// v1.2.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 11/Sep/2023
-// Updated: 01/Jul/2025
+// Updated: 19/Nov/2025
 
 .rls-amount {
   --pvt-font-size: var(--rlc-amount-font-size, inherit);
@@ -13,6 +13,7 @@
 
   --rlc-tabular-text-font-size: var(--pvt-font-size);
   --rlc-tabular-text-font-weight: var(--pvt-font-weight);
+  --rlc-tabular-text-char-width: calc(var(--pvt-font-size) / 1.25);
 
   display: flex;
   width: var(--rlc-amount-width, auto);

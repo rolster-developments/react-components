@@ -24,7 +24,7 @@ export function RlsMessageFormError({
   const msgError = useMemo(() => {
     return (
       formControl?.error &&
-      (msgErrorsI18n(formControl.error.id, language, formControl.error.data) ??
+      (msgErrorsI18n(formControl.error.id, language, formControl.error.data) ||
         msgErrorsI18n('_unknown', language, { error: formControl.error.id }))
     );
   }, [formControl?.error, language]);

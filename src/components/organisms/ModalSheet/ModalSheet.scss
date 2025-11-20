@@ -1,9 +1,9 @@
 // Rolster Technology ModalSheet Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 26/Sep/2018
-// Updated: 26/Sep/2025
+// Updated: 19/Nov/2025
 
 .rls-modal-sheet {
   --pvt-component-transform: translateY(150px) scale(0.6);
@@ -14,7 +14,10 @@
   );
   --pvt-component-height: 0rem;
   --pvt-component-max-height: calc(100% - var(--rls-sizing-x12));
-  --pvt-component-border-radius: var(--rls-sizing-x4);
+  --pvt-component-border-radius: var(
+    --rlc-modal-sheet-border-radius,
+    var(--rls-sizing-x4)
+  );
   --pvt-component-opacity: 0;
   --pvt-component-visibility: hidden;
   --pvt-component-transition: 160ms;

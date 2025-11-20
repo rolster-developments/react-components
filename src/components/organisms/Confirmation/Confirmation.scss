@@ -1,9 +1,9 @@
 // Rolster Technology Confirmation Component
-// v1.4.7
+// v1.4.8
 // @license MIT
 // Author: Rolster Developers
 // Created: 04/Abr/2018
-// Updated: 13/Nov/2025
+// Updated: 14/Nov/2025
 
 .rls-confirmation {
   --pvt-component-transform: translateY(150px) scale(0.6);
@@ -21,9 +21,9 @@
   --pvt-subtitle-line-height: var(--rls-body-line-height);
   --pvt-subtitle-text-transform: initial;
 
-  --pvt-content-font-size: 7.4rem;
-  --pvt-content-letter-spacing: 0.05em;
-  --pvt-content-line-height: 10.6rem;
+  --pvt-content-font-size: var(--rls-input-font-size);
+  --pvt-content-letter-spacing: var(--rls-input-letter-spacing);
+  --pvt-content-line-height: var(--rls-input-line-height);
 
   --pvt-backdrop-opacity: 0;
   --pvt-backdrop-bottom: initial;
@@ -169,7 +169,7 @@
     --pvt-subtitle-letter-spacing: var(--rls-smalltext-letter-spacing);
     --pvt-subtitle-line-height: var(--rls-smalltext-line-height);
 
-    --pvt-content-font-size: 7.325rem;
+    --pvt-content-font-size: var(--rls-paragraph-font-size);
 
     &__header {
       row-gap: var(--rls-sizing-x2);

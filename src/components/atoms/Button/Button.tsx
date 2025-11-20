@@ -45,7 +45,9 @@ export function RlsButton({
     >
       <div className={className}>
         {prefixIcon && <RlsIcon value={prefixIcon} />}
-        {children && <div className="rls-button__label">{children}</div>}
+
+        {children && <div className="rls-button__description">{children}</div>}
+
         {suffixIcon && <RlsIcon value={suffixIcon} />}
       </div>
     </button>
