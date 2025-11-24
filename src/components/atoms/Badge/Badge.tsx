@@ -13,8 +13,8 @@ export function RlsBadge({ children, contrast, rlsTheme }: BadgeProps) {
   }, [contrast]);
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <span className={className} rls-theme={rlsTheme}>
       {children}
-    </div>
+    </span>
   );
 }
