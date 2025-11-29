@@ -54,7 +54,7 @@
       --pvt-span-background: transparent;
       --pvt-span-font-color: var(--rls-theme-color-500);
       --pvt-span-border: none;
-      --pvt-span-box-shadow: 0px 0px 0px 3px var(--rls-theme-shadow-500);
+      --pvt-span-box-shadow: var(--rls-theme-shadow-500);
     }
 
     &--selected {

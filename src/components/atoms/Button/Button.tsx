@@ -2,6 +2,7 @@ import { MouseEventHandler, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
+import { RlsSpinner } from '../Spinner/Spinner';
 import './Button.css';
 
 export type RlsButtonType =
@@ -16,9 +17,10 @@ export type RlsButtonType =
 interface ButtonProps extends RlsComponent {
   type: RlsButtonType;
   disabled?: boolean;
-  prefixIcon?: string;
-  suffixIcon?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  prefixIcon?: string;
+  requesting?: boolean;
+  suffixIcon?: string;
 }
 
 export function RlsButton({
@@ -26,10 +28,11 @@ export function RlsButton({
   children,
   disabled,
   identifier,
+  onClick,
   prefixIcon,
-  suffixIcon,
+  requesting,
   rlsTheme,
-  onClick
+  suffixIcon
 }: ButtonProps) {
   const className = useMemo(() => {
     return renderClassStatus('rls-button__content', { type });
@@ -44,6 +47,8 @@ export function RlsButton({
       disabled={disabled}
     >
       <div className={className}>
+        {requesting && <RlsSpinner />}
+
         {prefixIcon && <RlsIcon value={prefixIcon} />}
 
         {children && <div className="rls-button__description">{children}</div>}

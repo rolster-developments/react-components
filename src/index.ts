@@ -23,6 +23,7 @@ export * from './components/atoms/ProgressCircular/ProgressCircular';
 export * from './components/atoms/RadioButton/RadioButton';
 export * from './components/atoms/Skeleton/Skeleton';
 export * from './components/atoms/SkeletonText/SkeletonText';
+export * from './components/atoms/Spinner/Spinner';
 export * from './components/atoms/Switch/Switch';
 export * from './components/atoms/TabularText/TabularText';
 export * from './components/molecules/Alert/Alert';
