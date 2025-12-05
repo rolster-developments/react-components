@@ -17,14 +17,14 @@ interface LabelRadioButtonProps<T = any> extends RlsComponent {
   value?: T;
 }
 
-interface FormControlDefinedProps<T> extends LabelRadioButtonProps<T> {
+interface LabelRadioButtonDefinedProps<T> extends LabelRadioButtonProps<T> {
   formControl: ReactControl<HTMLElement, T>;
   value: T;
   onValue?: (value: T) => void;
 }
 
 export function RlsLabelRadioButton<T>(
-  props: FormControlDefinedProps<T>
+  props: LabelRadioButtonDefinedProps<T>
 ): ReactNode;
 export function RlsLabelRadioButton<T = any>({
   children,

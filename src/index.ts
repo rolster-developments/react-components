@@ -4,6 +4,7 @@ export * from './components/atoms/Badge/Badge';
 export * from './components/atoms/Breadcrumb/Breadcrumb';
 export * from './components/atoms/Button/Button';
 export * from './components/atoms/ButtonAction/ButtonAction';
+export * from './components/atoms/ButtonOption/ButtonOption';
 export * from './components/atoms/CheckBox/CheckBox';
 export * from './components/atoms/Icon/Icon';
 export * from './components/atoms/Image/Image';

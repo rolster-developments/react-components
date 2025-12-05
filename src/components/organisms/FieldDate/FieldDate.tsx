@@ -38,32 +38,32 @@ interface FieldDateProps extends RlsComponent {
   value?: Date;
 }
 
-interface FormControlDefinedProps extends FieldDateProps {
+interface FieldDateDefinedProps extends FieldDateProps {
   formControl: ReactControl<HTMLElement, Date>;
   value: Date;
   onValue?: (value: Date) => void;
 }
 
-interface FormControlUndefinedProps extends FieldDateProps {
+interface FieldDateUndefinedProps extends FieldDateProps {
   formControl: ReactControl<HTMLElement, Date | undefined>;
   value: undefined;
   onValue?: (value?: Date) => void;
 }
 
-interface FormControlVoidProps extends Omit<FieldDateProps, 'value'> {
+interface FieldDateVoidProps extends Omit<FieldDateProps, 'value'> {
   formControl: ReactControl<HTMLElement, Date | undefined>;
   onValue?: (value?: Date) => void;
 }
 
-interface FormControlEmptyProps
+interface FieldDateEmptyProps
   extends Omit<FieldDateProps, 'formControl' | 'value'> {
   onValue?: (value?: Date) => void;
 }
 
-export function RlsFieldDate(props: FormControlDefinedProps): ReactNode;
-export function RlsFieldDate(props: FormControlUndefinedProps): ReactNode;
-export function RlsFieldDate(props: FormControlVoidProps): ReactNode;
-export function RlsFieldDate(props: FormControlEmptyProps): ReactNode;
+export function RlsFieldDate(props: FieldDateDefinedProps): ReactNode;
+export function RlsFieldDate(props: FieldDateUndefinedProps): ReactNode;
+export function RlsFieldDate(props: FieldDateVoidProps): ReactNode;
+export function RlsFieldDate(props: FieldDateEmptyProps): ReactNode;
 export function RlsFieldDate({
   children,
   date,

@@ -193,46 +193,46 @@ export function RlsFieldSelectTemplate<
   );
 }
 
-interface FormControlDefinedProps<T = any>
+interface FieldSelectDefinedProps<T = any>
   extends FieldSelectProps<T, ListElement<T>> {
   formControl: ReactControl<HTMLElement, NonNullable<T>>;
   value: NonNullable<T>;
   onValue?: (value: T) => void;
 }
 
-interface FormControlUndefinedProps<T = any>
+interface FieldSelectUndefinedProps<T = any>
   extends FieldSelectProps<T, ListElement<T>> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   value: undefined;
   onValue?: (value?: T) => void;
 }
 
-interface FormControlVoidProps<T = any>
+interface FieldSelectVoidProps<T = any>
   extends Omit<FieldSelectProps<T, ListElement<T>>, 'value'> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   onValue?: (value?: T) => void;
 }
 
-interface FormControlEmptyProps<T = any>
+interface FieldSelectEmptyProps<T = any>
   extends Omit<FieldSelectProps<T, ListElement<T>>, 'formControl' | 'value'> {
   onValue?: (value?: T) => void;
 }
 
 export function RlsFieldSelect<T = any>(
-  props: FormControlUndefinedProps<T>
-): JSX.Element;
+  props: FieldSelectUndefinedProps<T>
+): ReactNode;
 export function RlsFieldSelect<T = any>(
-  props: FormControlDefinedProps<T>
-): JSX.Element;
+  props: FieldSelectDefinedProps<T>
+): ReactNode;
 export function RlsFieldSelect<T = any>(
-  props: FormControlVoidProps<T>
-): JSX.Element;
+  props: FieldSelectVoidProps<T>
+): ReactNode;
 export function RlsFieldSelect<T = any>(
-  props: FormControlEmptyProps<T>
-): JSX.Element;
+  props: FieldSelectEmptyProps<T>
+): ReactNode;
 export function RlsFieldSelect<T = any>(
   props: FieldSelectProps<T, ListElement<T>>
-): JSX.Element;
+): ReactNode;
 export function RlsFieldSelect<T = any>(
   props: FieldSelectProps<T, ListElement<T>>
 ) {

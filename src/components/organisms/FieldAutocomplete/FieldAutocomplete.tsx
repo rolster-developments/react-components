@@ -249,27 +249,27 @@ export function RlsFieldAutocompleteTemplate<
   );
 }
 
-interface FormControlDefinedProps<T = any>
+interface FieldAutocompleteDefinedProps<T = any>
   extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
   formControl: ReactControl<HTMLElement, NonNullable<T>>;
   value: NonNullable<T>;
   onValue?: (value: T) => void;
 }
 
-interface FormControlUndefinedProps<T = any>
+interface FieldAutocompleteUndefinedProps<T = any>
   extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   value: undefined;
   onValue?: (value?: T) => void;
 }
 
-interface FormControlVoidProps<T = any>
+interface FieldAutocompleteVoidProps<T = any>
   extends Omit<FieldAutocompleteProps<T, AutocompleteElement<T>>, 'value'> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   onValue?: (value: T) => void;
 }
 
-interface FormControlEmptyProps<T = any>
+interface FieldAutocompleteEmptyProps<T = any>
   extends Omit<
     FieldAutocompleteProps<T, AutocompleteElement<T>>,
     'formControl' | 'value'
@@ -278,16 +278,16 @@ interface FormControlEmptyProps<T = any>
 }
 
 export function RlsFieldAutocomplete<T = any>(
-  props: FormControlUndefinedProps<T>
+  props: FieldAutocompleteUndefinedProps<T>
 ): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
-  props: FormControlDefinedProps<T>
+  props: FieldAutocompleteDefinedProps<T>
 ): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
-  props: FormControlVoidProps<T>
+  props: FieldAutocompleteVoidProps<T>
 ): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
-  props: FormControlEmptyProps<T>
+  props: FieldAutocompleteEmptyProps<T>
 ): ReactNode;
 export function RlsFieldAutocomplete<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>

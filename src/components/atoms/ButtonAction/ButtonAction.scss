@@ -1,9 +1,9 @@
 // Rolster Technology ButtonAction Component
-// v1.1.0
+// v1.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 14/May/2025
+// Updated: 02/Dic/2025
 
 .rls-button-action {
   --pvt-ripple-dimension: var(
@@ -26,8 +26,9 @@
   box-sizing: border-box;
   user-select: none;
   cursor: default;
-  background: transparent;
+  border-radius: var(--rlc-action-radius, 50%);
   color: var(--rlc-action-color, var(--rls-app-color-600));
+  background: var(--rlc-action-background, transparent);
 
   &::before {
     position: absolute;

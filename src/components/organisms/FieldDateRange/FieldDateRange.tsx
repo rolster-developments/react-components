@@ -26,32 +26,34 @@ interface FieldDateRangeProps extends RlsComponent {
   value?: DateRange;
 }
 
-interface FormControlDefinedProps extends FieldDateRangeProps {
+interface FieldDateRangeDefinedProps extends FieldDateRangeProps {
   formControl: ReactControl<HTMLElement, DateRange>;
   value: DateRange;
   onValue?: (value: DateRange) => void;
 }
 
-interface FormControlUndefinedProps extends FieldDateRangeProps {
+interface FieldDateRangeUndefinedProps extends FieldDateRangeProps {
   formControl: ReactControl<HTMLElement, DateRange | undefined>;
   value: undefined;
   onValue?: (value?: DateRange) => void;
 }
 
-interface FormControlVoidProps extends Omit<FieldDateRangeProps, 'value'> {
+interface FieldDateRangeVoidProps extends Omit<FieldDateRangeProps, 'value'> {
   formControl: ReactControl<HTMLElement, DateRange | undefined>;
   onValue?: (value?: DateRange) => void;
 }
 
-interface FormControlEmptyProps
+interface FieldDateRangeEmptyProps
   extends Omit<FieldDateRangeProps, 'formControl' | 'value'> {
   onValue?: (value?: DateRange) => void;
 }
 
-export function RlsFieldDateRange(props: FormControlDefinedProps): ReactNode;
-export function RlsFieldDateRange(props: FormControlUndefinedProps): ReactNode;
-export function RlsFieldDateRange(props: FormControlVoidProps): ReactNode;
-export function RlsFieldDateRange(props: FormControlEmptyProps): ReactNode;
+export function RlsFieldDateRange(props: FieldDateRangeDefinedProps): ReactNode;
+export function RlsFieldDateRange(
+  props: FieldDateRangeUndefinedProps
+): ReactNode;
+export function RlsFieldDateRange(props: FieldDateRangeVoidProps): ReactNode;
+export function RlsFieldDateRange(props: FieldDateRangeEmptyProps): ReactNode;
 export function RlsFieldDateRange({
   children,
   date: _date,

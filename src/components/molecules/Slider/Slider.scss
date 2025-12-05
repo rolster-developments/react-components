@@ -1,9 +1,9 @@
 // Rolster Technology Slider Component
-// v2.0.2
+// v2.0.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 03/Jul/2018
-// Updated: 14/Nov/2025
+// Updated: 30/Nov/2025
 
 .rls-slider {
   --pvt-track-height: var(--rls-sizing-x3);
@@ -62,7 +62,7 @@
     height: var(--rls-sizing-x10);
     line-height: var(--rls-sizing-x10);
     text-align: center;
-    font-size: var(--rls-micro-font-size);
+    font-size: var(--rls-tiny-font-size);
     font-weight: var(--rls-font-weight-medium);
     color: var(--pvt-thumb-color);
     z-index: var(--rls-z-index-4);
