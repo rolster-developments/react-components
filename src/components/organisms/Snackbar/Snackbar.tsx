@@ -1,4 +1,11 @@
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsTheme } from '../../definitions';
@@ -81,21 +88,20 @@ export function RlsSnackbar({
 
 interface SnackbarState {
   config: SnackbarConfig;
-  duration: number;
   visible: boolean;
-  timeoutId?: number;
 }
 
 export function useSnackbar(): SnackbarService {
+  const timeoutId = useRef<number>();
+  const duration = useRef(4000);
+
   const [state, setState] = useState<SnackbarState>({
     config: {},
-    duration: 4000,
-    timeoutId: undefined,
     visible: false
   });
 
   const onClose = useCallback(() => {
-    setState((state) => ({ ...state, timeoutId: undefined, visible: false }));
+    setState((state) => ({ ...state, visible: false }));
   }, []);
 
   const rlsSnackbar = (
@@ -104,27 +110,26 @@ export function useSnackbar(): SnackbarService {
 
   useEffect(() => {
     if (state.visible) {
-      const timeoutId = setTimeout(() => {
-        setState((state) => ({
-          ...state,
-          timeoutId: undefined,
-          visible: false
-        }));
-      }, state.duration);
+      timeoutId.current = setTimeout(() => {
+        setState((state) => ({ ...state, visible: false }));
+        timeoutId.current = undefined;
+      }, duration.current);
+    } else if (timeoutId.current) {
+      clearTimeout(timeoutId.current);
+      timeoutId.current = undefined;
 
-      setState((state) => ({ ...state, timeoutId }));
-    } else if (state.timeoutId) {
-      clearTimeout(state.timeoutId);
-
-      setTimeout(() => snackbar(state.config), DURATION_ANIMATION);
+      setTimeout(() => {
+        snackbar(state.config);
+      }, DURATION_ANIMATION);
     }
   }, [state.visible]);
 
   const snackbar = useCallback((config: SnackbarConfig) => {
+    duration.current = calculateDuration(String(config.content));
+
     setState((state) => ({
       ...state,
       config,
-      duration: calculateDuration(String(config.content)),
       visible: !state.visible
     }));
   }, []);

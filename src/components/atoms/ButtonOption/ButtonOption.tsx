@@ -26,6 +26,9 @@ interface ButtonOptionDefinedProps<T> extends ButtonOptionProps<T> {
 export function RlsButtonOption<T>(
   props: ButtonOptionDefinedProps<T>
 ): ReactNode;
+export function RlsButtonOption<T = any>(
+  props: ButtonOptionProps<T>
+): ReactNode;
 export function RlsButtonOption<T = any>({
   icon,
   children,

@@ -26,6 +26,9 @@ interface LabelRadioButtonDefinedProps<T> extends LabelRadioButtonProps<T> {
 export function RlsLabelRadioButton<T>(
   props: LabelRadioButtonDefinedProps<T>
 ): ReactNode;
+export function RlsLabelRadioButton<T = any>(
+  props: LabelRadioButtonProps<T>
+): ReactNode;
 export function RlsLabelRadioButton<T = any>({
   children,
   disabled,
