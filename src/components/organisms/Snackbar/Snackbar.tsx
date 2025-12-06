@@ -101,6 +101,9 @@ export function useSnackbar(): SnackbarService {
   });
 
   const onClose = useCallback(() => {
+    timeoutId.current && clearTimeout(timeoutId.current);
+    timeoutId.current = undefined;
+
     setState((state) => ({ ...state, visible: false }));
   }, []);
 
@@ -111,8 +114,8 @@ export function useSnackbar(): SnackbarService {
   useEffect(() => {
     if (state.visible) {
       timeoutId.current = setTimeout(() => {
-        setState((state) => ({ ...state, visible: false }));
         timeoutId.current = undefined;
+        setState((state) => ({ ...state, visible: false }));
       }, duration.current);
     } else if (timeoutId.current) {
       clearTimeout(timeoutId.current);
