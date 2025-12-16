@@ -193,7 +193,7 @@
 
   &__table {
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     overflow: hidden;
 
     & > table {
@@ -234,7 +234,6 @@
   &__title {
     position: relative;
     display: flex;
-    flex: 0 0 auto;
     height: var(--rls-sizing-x20);
     line-height: var(--rls-sizing-x20);
     color: var(--rls-app-color-700);
