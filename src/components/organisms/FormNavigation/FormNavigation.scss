@@ -1,40 +1,71 @@
 // Rolster Technology FormNavigation Component
-// v1.0.3
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 31/May/2023
-// Updated: 18/Abr/2025
+// Updated: 16/Dic/2025
 
 .rls-form-navigation {
+  --pvt-component-transform: translateX(100%);
+  --pvt-component-opacity: 0;
+  --pvt-component-visibility: hidden;
+  --pvt-component-transition: 160ms;
+  --pvt-backdrop-opacity: 0;
+  --pvt-backdrop-bottom: initial;
+
   position: fixed;
-  top: var(--rls-sizing-x8);
-  right: var(--rls-sizing-x8);
-  width: calc(100% - var(--rls-sizing-x16));
-  max-width: 160rem;
-  height: auto;
-  max-height: calc(var(--rls-html-max-height) - var(--rls-sizing-x16));
-  z-index: var(--rls-z-index-12);
-  padding: var(--rls-sizing-x8) var(--rls-sizing-x8) var(--rls-sizing-x12)
-    var(--rls-sizing-x8);
-  box-sizing: border-box;
-  background: var(--rls-app-color-050);
-  border-radius: var(--rls-sizing-x4);
-  box-shadow: var(--rls-dark-shadow-center-8);
-  transform: translateX(calc(100% + var(--rls-sizing-x16)));
-  transition: transform 240ms 0ms var(--rls-standard-curve);
+  display: flex;
+  top: 0rem;
+  left: 0rem;
+  width: 100%;
+  height: 100%;
+  z-index: var(--rls-z-index-24);
+  visibility: hidden;
+  justify-content: flex-end;
 
   &--visible {
-    transform: translateX(0%);
+    --pvt-component-visibility: visible;
+    --pvt-component-opacity: 1;
+    --pvt-component-transform: translateX(0%);
+    --pvt-backdrop-bottom: 0rem;
+    --pvt-backdrop-opacity: 1;
+
+    visibility: visible;
   }
 
-  &__header {
-    margin-bottom: var(--rls-sizing-x8);
+  &__component {
+    position: absolute;
+    display: flex;
+    width: calc(100% - var(--rls-sizing-x16));
+    max-width: var(--rlc-form-navigation-max-width, 160rem);
+    height: 100%;
+    flex-direction: column;
+    opacity: var(--pvt-component-opacity);
+    visibility: var(--pvt-component-visibility);
+    z-index: var(--rls-z-index-2);
+    border-radius: var(--rls-sizing-x4) 0rem 0rem var(--rls-sizing-x4);
+    background: var(--rlc-form-navigation-background, var(--rls-app-color-050));
+    transform: var(--pvt-component-transform);
+    transition: opacity var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve),
+      transform var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve),
+      visibility var(--pvt-component-transition) 0ms
+        var(--rls-deceleration-curve);
+  }
 
-    .rls-button-action {
-      width: var(--rls-sizing-x12);
-      height: var(--rls-sizing-x12);
-      padding: 0rem;
-      float: right;
-    }
+  &__backdrop {
+    position: absolute;
+    display: block;
+    top: 0rem;
+    left: 0rem;
+    right: 0rem;
+    bottom: var(--pvt-backdrop-bottom);
+    opacity: var(--pvt-backdrop-opacity);
+    z-index: 1;
+    background: var(--rls-theme-backdrop-900);
+    backdrop-filter: blur(2px);
+    transition: opacity 120ms 0ms var(--rls-deceleration-curve),
+      bottom 120ms 0ms var(--rls-deceleration-curve);
   }
 }

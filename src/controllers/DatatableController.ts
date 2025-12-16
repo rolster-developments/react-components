@@ -1,8 +1,8 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
 export interface DatatableController {
+  refTable: RefObject<HTMLTableSectionElement>;
   scrolleable: boolean;
-  tableRef: RefObject<HTMLTableSectionElement>;
 }
 
 interface CreateObserverOptions {
@@ -25,19 +25,21 @@ function createObserver(options: CreateObserverOptions): ResizeObserver {
   return observer;
 }
 
-export function useDatatable(): DatatableController {
+export function useDatatable(
+  table?: HTMLTableSectionElement
+): DatatableController {
   const [scrolleable, setScrolleable] = useState(false);
-  const tableRef = useRef<HTMLTableSectionElement>(null);
+  const refTable = useRef<HTMLTableSectionElement>(table ? table : null);
 
   useEffect(() => {
     const observer =
-      tableRef?.current &&
-      createObserver({ setScrolleable, table: tableRef?.current });
+      refTable.current &&
+      createObserver({ setScrolleable, table: refTable.current });
 
     return () => {
       observer?.disconnect();
     };
   }, []);
 
-  return { scrolleable, tableRef };
+  return { refTable, scrolleable };
 }

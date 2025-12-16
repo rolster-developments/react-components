@@ -1,13 +1,14 @@
 import { ReactNode, useMemo } from 'react';
-import { DatatableController } from '../../../controllers/DatatableController';
+import { useDatatable } from '../../../controllers/DatatableController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
+import './Datatable.css';
 
 interface DatatableProps extends RlsComponent {
-  datatable?: DatatableController;
   footer?: ReactNode;
   header?: ReactNode;
   summary?: ReactNode;
+  table?: HTMLTableSectionElement;
   toolbar?: ReactNode;
 }
 
@@ -37,14 +38,16 @@ interface DatatableFloatingProps extends RlsComponent {
 
 export function RlsDatatable({
   children,
-  datatable,
   footer,
   header,
   identifier,
   rlsTheme,
   summary,
+  table,
   toolbar
 }: DatatableProps) {
+  const datatable = useDatatable(table);
+
   const className = useMemo(() => {
     return renderClassStatus('rls-datatable', {
       scrolleable: datatable?.scrolleable
@@ -55,13 +58,15 @@ export function RlsDatatable({
     <div className={className} rls-theme={rlsTheme}>
       {toolbar && <div className="rls-datatable__toolbar">{toolbar}</div>}
 
-      <table id={identifier}>
-        {header && <thead className="rls-datatable__head">{header}</thead>}
+      <div className="rls-datatable__table">
+        <table id={identifier}>
+          {header && <thead className="rls-datatable__head">{header}</thead>}
 
-        <tbody ref={datatable?.tableRef} className="rls-datatable__body">
-          {children}
-        </tbody>
-      </table>
+          <tbody ref={datatable?.refTable} className="rls-datatable__body">
+            {children}
+          </tbody>
+        </table>
+      </div>
 
       {summary && <div className="rls-datatable__summary">{summary}</div>}
 
