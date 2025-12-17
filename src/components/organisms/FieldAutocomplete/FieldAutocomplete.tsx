@@ -115,12 +115,13 @@ export function RlsFieldAutocompleteTemplate<
     disabled
   ]);
 
-  const classNameList = useMemo(() => {
+  const classNameSuggestions = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
+      disabled,
       higher: autocomplete.higher,
       visible: autocomplete.modalIsVisible
     });
-  }, [autocomplete.higher, autocomplete.modalIsVisible]);
+  }, [autocomplete.higher, autocomplete.modalIsVisible, disabled]);
 
   const onChangePattern = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -183,7 +184,7 @@ export function RlsFieldAutocompleteTemplate<
         />
       )}
 
-      <div className={classNameList}>
+      <div className={classNameSuggestions}>
         <div className="rls-field-list__suggestions__body">
           <ul ref={autocomplete.refList} className="rls-field-list__ul">
             <div className="rls-field-list__ul__search">

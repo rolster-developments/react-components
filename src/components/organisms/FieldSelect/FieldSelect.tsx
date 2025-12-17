@@ -99,12 +99,13 @@ export function RlsFieldSelectTemplate<
     disabled
   ]);
 
-  const classNameList = useMemo(() => {
+  const classNameSuggestions = useMemo(() => {
     return renderClassStatus('rls-field-list__suggestions', {
+      disabled,
       higher: select.higher,
       visible: select.modalIsVisible
     });
-  }, [select.modalIsVisible, select.higher]);
+  }, [select.modalIsVisible, select.higher, disabled]);
 
   return (
     <div
@@ -153,7 +154,7 @@ export function RlsFieldSelectTemplate<
         />
       )}
 
-      <div className={classNameList}>
+      <div className={classNameSuggestions}>
         <div className="rls-field-list__suggestions__body">
           <ul ref={select.refList} className="rls-field-list__ul">
             {suggestions.map((element, index) => (
