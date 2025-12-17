@@ -120,6 +120,13 @@
     var(--rls-app-color-900)
   );
 
+  --pvt-datatable-padding-component: 0rem;
+  --pvt-datatable-padding-scroll: var(--rlc-datatable-padding-scroll, 0rem);
+
+  --pvt-datatable-table-overflow: initial;
+  --pvt-datatable-body-overflow: initial;
+
+  --pvt-datatable-header-padding-right: var(--pvt-datatable-padding-scroll);
   --pvt-datatable-header-background: var(
     --rlc-datatable-header-background,
     var(--rls-app-color-100)
@@ -130,9 +137,6 @@
     transparent
   );
 
-  --pvt-datatable-padding-component: 0rem;
-  --pvt-datatable-padding-scroll: var(--rlc-datatable-padding-scroll, 0rem);
-  --pvt-datatable-header-padding-right: var(--pvt-datatable-padding-scroll);
   --pvt-datatable-floating-background: var(--rls-app-color-100);
 
   --rlc-amount-font-size: var(--pvt-datatable-font-size);
@@ -169,6 +173,13 @@
   border-radius: var(--rls-sizing-x4);
   box-sizing: border-box;
 
+  &--resizable {
+    --pvt-datatable-table-overflow: hidden;
+    --pvt-datatable-body-overflow: auto;
+
+    height: 100%;
+  }
+
   &--scrolleable {
     --pvt-datatable-padding-scroll: var(--rls-sizing-x4);
 
@@ -194,7 +205,7 @@
   &__table {
     display: flex;
     flex: 0 1 auto;
-    overflow: hidden;
+    overflow: var(--pvt-datatable-table-overflow);
 
     & > table {
       display: flex;
@@ -266,7 +277,7 @@
     row-gap: var(--rls-sizing-x6);
     padding-right: var(--pvt-datatable-padding-scroll);
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: var(--pvt-datatable-body-overflow);
   }
 
   &__subheader,

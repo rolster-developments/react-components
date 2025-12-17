@@ -7,6 +7,7 @@ import './Datatable.css';
 interface DatatableProps extends RlsComponent {
   footer?: ReactNode;
   header?: ReactNode;
+  resizable?: boolean;
   summary?: ReactNode;
   table?: HTMLTableSectionElement;
   toolbar?: ReactNode;
@@ -42,6 +43,7 @@ export function RlsDatatable({
   header,
   identifier,
   rlsTheme,
+  resizable,
   summary,
   table,
   toolbar
@@ -50,9 +52,10 @@ export function RlsDatatable({
 
   const className = useMemo(() => {
     return renderClassStatus('rls-datatable', {
-      scrolleable: datatable?.scrolleable
+      resizable,
+      scrolleable: resizable && datatable?.scrolleable
     });
-  }, [datatable]);
+  }, [resizable, datatable.scrolleable]);
 
   return (
     <div className={className} rls-theme={rlsTheme}>
