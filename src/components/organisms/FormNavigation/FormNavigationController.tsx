@@ -1,29 +1,23 @@
-import { ReactNode, useMemo } from 'react';
-import { usePortalController } from '../../../controllers/PortalController';
+import { ReactNode, useCallback } from 'react';
+import { PortalController } from '../../../controllers/PortalController';
+import { RlsComponent } from '../../definitions';
 import { RlsFormNavigation } from './FormNavigation';
 
-interface FormNavigationController {
-  close: () => void;
-  FormNavigation: ReactNode;
-  open: (children?: ReactNode) => void;
-}
+type FormNavigationController = (props: RlsComponent) => ReactNode;
 
 export function useFormNavigationController(
-  component?: ReactNode
+  portal: PortalController
 ): FormNavigationController {
-  const portal = usePortalController(component);
+  const FormNavigation = useCallback(
+    ({ children }: RlsComponent) => {
+      return (
+        <RlsFormNavigation visible={portal.visible}>
+          {children}
+        </RlsFormNavigation>
+      );
+    },
+    [portal.visible]
+  );
 
-  const FormNavigation = useMemo(() => {
-    return (
-      <RlsFormNavigation visible={portal.visible}>
-        {portal.children}
-      </RlsFormNavigation>
-    );
-  }, [portal.children, portal.visible]);
-
-  return {
-    close: portal.close,
-    FormNavigation,
-    open: portal.open
-  };
+  return FormNavigation;
 }

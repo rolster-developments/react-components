@@ -1,24 +1,21 @@
-import { ReactNode, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-interface PortalController {
+export interface PortalController {
   close: () => void;
-  open: (children?: ReactNode) => void;
+  open: () => void;
   visible: boolean;
-  children?: ReactNode;
 }
 
-export function usePortalController(component?: ReactNode): PortalController {
-  const [children, setChildren] = useState<ReactNode>(component);
+export function usePortalController(): PortalController {
   const [visible, setVisible] = useState(false);
 
-  const open = useCallback((children?: ReactNode) => {
+  const open = useCallback(() => {
     setVisible(true);
-    children && setChildren(children);
   }, []);
 
   const close = useCallback(() => {
     setVisible(false);
   }, []);
 
-  return { children, close, open, visible };
+  return { close, open, visible };
 }
