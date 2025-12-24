@@ -26,9 +26,9 @@ export interface ListController<T = any> extends ListControllerState {
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
   setFormValue(element?: AbstractListElement<T>): void;
-  refContent: RefObject<HTMLDivElement>;
-  refInput: RefObject<HTMLInputElement>;
-  refList: RefObject<HTMLUListElement>;
+  refContent: RefObject<HTMLDivElement | null>;
+  refInput: RefObject<HTMLInputElement | null>;
+  refList: RefObject<HTMLUListElement | null>;
   setState: (state: Partial<ListControllerState>) => void;
 }
 
@@ -72,7 +72,7 @@ export function useListController<T = any, K = string>(
 
   const changeValueInternal = useRef(false);
   const position = useRef(0);
-  const valueProtected = useRef<T>();
+  const valueProtected = useRef<T>(undefined);
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {

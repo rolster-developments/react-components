@@ -1,10 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "files": ["node_modules/@rolster/types/index.d.ts"],
-  "exclude": [
-    "src/App.tsx",
-    "src/main.tsx",
-    "src/vite-env.d.ts",
-    "src/App.scss"
-  ]
+  "files": ["node_modules/@rolster/types/index.d.ts"]
 }

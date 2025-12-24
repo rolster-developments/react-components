@@ -92,7 +92,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
   const refPicture = useRef<HTMLCanvasElement>(null!);
 
   const image = useRef(new Image());
-  const originalImage = useRef<ImageData>();
+  const originalImage = useRef<ImageData>(undefined);
 
   const ratio = useMemo(() => {
     return props.ratio || '1:1';

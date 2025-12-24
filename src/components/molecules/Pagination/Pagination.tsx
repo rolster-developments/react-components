@@ -30,7 +30,7 @@ export function RlsPagination<T>({
   onPagination
 }: PaginationProps<T>) {
   const [template, setTemplate] = useState<PaginationTemplate>();
-  const controller = useRef<PaginationController>();
+  const controller = useRef<PaginationController>(undefined);
 
   const refreshTemplate = useCallback(
     (template: PaginationTemplate, suggestions: T[]) => {

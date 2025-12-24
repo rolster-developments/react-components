@@ -92,7 +92,7 @@ interface SnackbarState {
 }
 
 export function useSnackbar(): SnackbarService {
-  const timeoutId = useRef<number>();
+  const timeoutId = useRef<number>(undefined);
   const duration = useRef(4000);
 
   const [state, setState] = useState<SnackbarState>({
