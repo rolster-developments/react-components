@@ -4,7 +4,6 @@ import { RlsComponent } from '../../definitions';
 import './Card.css';
 
 interface CardProps extends RlsComponent {
-  className?: string;
   outline?: boolean;
 }
 

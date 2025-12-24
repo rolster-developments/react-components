@@ -17,6 +17,7 @@ export type RlsTheme =
   | 'obsidian';
 
 export interface RlsComponent extends React.PropsWithChildren {
+  className?: string;
   identifier?: string;
   rlsTheme?: RlsTheme;
 }

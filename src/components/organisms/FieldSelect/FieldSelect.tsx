@@ -21,7 +21,6 @@ interface FieldSelectProps<
 > extends RlsComponent {
   suggestions: E[];
   automatic?: boolean;
-  className?: string;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>

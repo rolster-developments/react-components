@@ -5,7 +5,6 @@ import { RlsComponent } from '../../definitions';
 import './BottomSheet.css';
 
 interface BottomSheetProps extends RlsComponent {
-  className?: string;
   onAutoClose?: () => void;
   visible?: boolean;
 }

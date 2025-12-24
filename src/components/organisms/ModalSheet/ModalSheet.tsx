@@ -5,7 +5,6 @@ import { RlsComponent } from '../../definitions';
 import './ModalSheet.css';
 
 interface ModalSheetProps extends RlsComponent {
-  className?: string;
   onAutoClose?: () => void;
   visible?: boolean;
 }

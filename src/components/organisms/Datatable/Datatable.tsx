@@ -12,12 +12,9 @@ interface DatatableProps extends RlsComponent {
   toolbar?: ReactNode;
 }
 
-interface DatatableSubheaderProps extends RlsComponent {
-  className?: string;
-}
+type DatatableSubheaderProps = RlsComponent;
 
 interface DatatableRecordProps extends RlsComponent {
-  className?: string;
   contained?: boolean;
   error?: boolean;
   info?: boolean;
@@ -26,13 +23,11 @@ interface DatatableRecordProps extends RlsComponent {
 }
 
 interface DatatableCellProps extends RlsComponent {
-  className?: string;
   contained?: boolean;
   control?: boolean;
 }
 
 interface DatatableFloatingProps extends RlsComponent {
-  className?: string;
   invested?: boolean;
 }
 
