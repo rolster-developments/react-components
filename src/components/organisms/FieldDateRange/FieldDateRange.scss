@@ -1,17 +1,20 @@
 // Rolster Technology FieldDateRange Component
-// v1.1.7
+// v1.1.8
 // @license MIT
 // Author: Rolster Developers
 // Created: 25/May/2023
-// Updated: 08/Nov/2025
+// Updated: 29/Dic/2025
 
 .rls-field-date-range {
   --rlc-field-box-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
 
-  --pvt-font-size: var(--rlc-datefield-font-size, var(--rls-input-font-size));
+  --pvt-font-size: var(
+    --rlc-field-date-range-font-size,
+    var(--rls-input-font-size)
+  );
 
   --pvt-letter-spacing: var(
-    --rlc-datefield-letter-spacing,
+    --rlc-field-date-range-letter-spacing,
     var(--rls-input-letter-spacing)
   );
 

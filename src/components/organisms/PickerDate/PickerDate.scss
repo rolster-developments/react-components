@@ -1,17 +1,18 @@
-// Rolster Technology DatePicker Component
-// v2.1.0
+// Rolster Technology PickerDate Component
+// v2.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 28/Oct/2025
+// Updated: 28/Dic/2025
 
 .rls-picker-date {
   position: relative;
   display: flex;
-  flex-direction: column;
   width: 150rem;
-  overflow: hidden;
+  flex-direction: column;
   row-gap: var(--rls-sizing-x4);
+  overflow: hidden;
+  user-select: none;
   border-radius: var(--rlc-picker-date-radius, 0rem);
   background: var(--rlc-picker-date-background, transparent);
 

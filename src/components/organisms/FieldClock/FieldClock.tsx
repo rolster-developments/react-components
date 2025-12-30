@@ -1,87 +1,67 @@
-import {
-  PickerListener,
-  PickerListenerEvent,
-  verifyDateRange
-} from '@rolster/components';
-import { dateFormatTemplate } from '@rolster/dates';
+import { PickerListener, PickerListenerEvent } from '@rolster/components';
+import { Time } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
-import { DATE_FORMAT } from '../../../constants/picker.constant';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
-import { RlsPickerDate } from '../PickerDate/PickerDate';
-import './FieldDate.css';
+import { RlsPickerClock } from '../PickerClock/PickerClock';
+import './FieldClock.css';
 
-interface FieldDateProps extends RlsComponent {
-  date?: Date;
+interface FieldClockProps extends RlsComponent {
   disabled?: boolean;
   formControl?:
-    | ReactControl<HTMLElement, Date>
-    | ReactControl<HTMLElement, Date | undefined>;
-  format?: string;
-  maxDate?: Date;
-  minDate?: Date;
+    | ReactControl<HTMLElement, Time>
+    | ReactControl<HTMLElement, Time | undefined>;
   msgErrorDisabled?: boolean;
-  onValue?: ((value?: Date) => void) | ((value: Date) => void);
+  onValue?: ((value?: Time) => void) | ((value: Time) => void);
   placeholder?: string;
   readOnly?: boolean;
-  value?: Date;
+  value?: Time;
+  time?: Time;
 }
 
-interface FieldDateDefinedProps extends FieldDateProps {
-  formControl: ReactControl<HTMLElement, Date>;
-  value: Date;
-  onValue?: (value: Date) => void;
+interface FieldClockDefinedProps extends FieldClockProps {
+  formControl: ReactControl<HTMLElement, Time>;
+  value: Time;
+  onValue?: (value: Time) => void;
 }
 
-interface FieldDateUndefinedProps extends FieldDateProps {
-  formControl: ReactControl<HTMLElement, Date | undefined>;
+interface FieldClockUndefinedProps extends FieldClockProps {
+  formControl: ReactControl<HTMLElement, Time | undefined>;
   value: undefined;
-  onValue?: (value?: Date) => void;
+  onValue?: (value?: Time) => void;
 }
 
-interface FieldDateVoidProps extends Omit<FieldDateProps, 'value'> {
-  formControl: ReactControl<HTMLElement, Date | undefined>;
-  onValue?: (value?: Date) => void;
+interface FieldClockVoidProps extends Omit<FieldClockProps, 'value'> {
+  formControl: ReactControl<HTMLElement, Time | undefined>;
+  onValue?: (value?: Time) => void;
 }
 
-interface FieldDateEmptyProps
-  extends Omit<FieldDateProps, 'formControl' | 'value'> {
-  onValue?: (value?: Date) => void;
+interface FieldClockEmptyProps
+  extends Omit<FieldClockProps, 'formControl' | 'value'> {
+  onValue?: (value?: Time) => void;
 }
 
-export function RlsFieldDate(props: FieldDateDefinedProps): ReactNode;
-export function RlsFieldDate(props: FieldDateUndefinedProps): ReactNode;
-export function RlsFieldDate(props: FieldDateVoidProps): ReactNode;
-export function RlsFieldDate(props: FieldDateEmptyProps): ReactNode;
-export function RlsFieldDate({
+export function RlsFieldClock(props: FieldClockDefinedProps): ReactNode;
+export function RlsFieldClock(props: FieldClockUndefinedProps): ReactNode;
+export function RlsFieldClock(props: FieldClockVoidProps): ReactNode;
+export function RlsFieldClock(props: FieldClockEmptyProps): ReactNode;
+export function RlsFieldClock({
   children,
-  date,
   disabled,
   formControl,
-  format,
   identifier,
-  maxDate,
-  minDate,
   msgErrorDisabled,
   onValue,
   placeholder,
   readOnly,
   rlsTheme,
+  time,
   value: valueInitial
-}: FieldDateProps) {
-  const today = useRef(new Date()); // Initial current date in component
-
+}: FieldClockProps) {
   const [value, setValue] = useState(formControl?.value ?? valueInitial);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
@@ -98,37 +78,26 @@ export function RlsFieldDate({
 
   const { icon, valueInput } = useMemo(() => {
     return {
-      icon: value ? 'trash-2' : 'calendar',
-      valueInput: value ? dateFormatTemplate(value, format || DATE_FORMAT) : ''
+      icon: value ? 'trash-2' : 'timer',
+      valueInput: value?.normalizeMeridiemFormat || ''
     };
   }, [value]);
-
-  useEffect(() => {
-    const _date = verifyDateRange({
-      date: formControl?.value ?? date ?? today.current,
-      minDate,
-      maxDate
-    });
-
-    setValue(_date);
-    formControl?.setValue(_date);
-  }, []);
 
   const onClickInput = useCallback(() => {
     !readOnly && setModalIsVisible(true);
   }, [readOnly]);
 
   const onChange = useCallback(
-    (value?: Date) => {
+    (value?: Time) => {
       setValue(value);
-      onValue && onValue(value as Date);
+      onValue?.(value as Time);
     },
     [onValue]
   );
 
   const onClickAction = useCallback(() => {
     if (value) {
-      formControl?.setValue(valueInitial as Date);
+      formControl?.setValue(valueInitial as Time);
       formControl?.touch();
       onChange(valueInitial);
     } else {
@@ -137,7 +106,7 @@ export function RlsFieldDate({
   }, [value, formControl, valueInitial, onChange]);
 
   const onListener = useCallback(
-    ({ event, value }: PickerListener<Date>) => {
+    ({ event, value }: PickerListener<Time>) => {
       event !== PickerListenerEvent.Cancel && onChange(value);
       formControl?.touch();
       setModalIsVisible(false);
@@ -183,16 +152,14 @@ export function RlsFieldDate({
       </div>
 
       <RlsModal
-        className="rls-field-date-modal"
+        className="rls-field-clock-modal"
         visible={modalIsVisible}
         rlsTheme={rlsTheme}
       >
-        <RlsPickerDate
+        <RlsPickerClock
           formControl={formControl}
-          date={date}
+          time={time}
           disabled={_disabled}
-          maxDate={maxDate}
-          minDate={minDate}
           onListener={onListener}
         />
       </RlsModal>

@@ -1,17 +1,17 @@
-// Rolster Technology FieldDate Component
-// v1.1.8
+// Rolster Technology FieldClock Component
+// v1.1.0
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
 // Updated: 29/Dic/2025
 
-.rls-field-date {
+.rls-field-clock {
   --rlc-field-box-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
 
-  --pvt-font-size: var(--rlc-field-date-font-size, var(--rls-input-font-size));
+  --pvt-font-size: var(--rlc-field-clock-font-size, var(--rls-input-font-size));
 
   --pvt-letter-spacing: var(
-    --rlc-field-date-letter-spacing,
+    --rlc-field-clock-letter-spacing,
     var(--rls-input-letter-spacing)
   );
 
@@ -86,9 +86,9 @@
   }
 }
 
-.rls-field-date-modal {
+.rls-field-clock-modal {
   --rlc-modal-background: transparent;
   --rlc-modal-max-width: 150rem;
-  --rlc-picker-date-radius: var(--rls-sizing-x4);
-  --rlc-picker-date-background: var(--rls-app-color-050);
+  --rlc-picker-clock-radius: var(--rls-sizing-x4);
+  --rlc-picker-clock-background: var(--rls-app-color-050);
 }

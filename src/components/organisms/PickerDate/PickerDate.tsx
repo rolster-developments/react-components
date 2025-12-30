@@ -12,6 +12,7 @@ import { DATE_FORMAT_TITLE } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsComponent } from '../../definitions';
 import { RlsPickerDay } from '../../molecules/PickerDay/PickerDay';
 import { RlsPickerMonth } from '../../molecules/PickerMonth/PickerMonth';
@@ -21,7 +22,6 @@ import {
 } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
 import './PickerDate.css';
-import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 
 interface PickerDateProps extends RlsComponent {
   automatic?: boolean;
@@ -115,7 +115,7 @@ export function RlsPickerDate({
   }, []);
 
   const onCancel = useCallback(() => {
-    onListener && onListener({ event: PickerListenerEvent.Cancel });
+    onListener?.({ event: PickerListenerEvent.Cancel });
   }, [onListener]);
 
   const onToday = useCallback(() => {
@@ -124,20 +124,19 @@ export function RlsPickerDate({
     monthControl.setValue(today.current.getMonth());
     formControl?.setValue(today.current);
 
-    onListener &&
-      onListener({
-        event: PickerListenerEvent.Now,
-        value: today.current
-      });
-  }, [today.current, formControl, onListener]);
+    onListener?.({
+      event: PickerListenerEvent.Now,
+      value: today.current
+    });
+  }, [formControl, onListener]);
 
   const onSelect = useCallback(() => {
     formControl?.setValue(value);
-    onListener &&
-      onListener({
-        event: PickerListenerEvent.Select,
-        value
-      });
+
+    onListener?.({
+      event: PickerListenerEvent.Select,
+      value
+    });
   }, [formControl, value, onListener]);
 
   return (

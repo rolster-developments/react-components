@@ -39,7 +39,7 @@ type Visibility = 'DAY' | 'MONTH' | 'YEAR';
 
 export function RlsPickerDateRange({
   automatic,
-  date: _picker,
+  date: datePicker,
   disabled,
   formControl,
   maxDate,
@@ -48,8 +48,8 @@ export function RlsPickerDateRange({
   rlsTheme
 }: PickerDateRangeProps) {
   const _date = useMemo(
-    () => normalizeMinTime(_picker ?? new Date()),
-    [_picker]
+    () => normalizeMinTime(datePicker ?? new Date()),
+    [datePicker]
   );
 
   const _range = useMemo(
