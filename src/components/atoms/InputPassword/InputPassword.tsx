@@ -27,7 +27,7 @@ export function RlsInputPassword({
   const _onChange = useCallback(
     (event: any) => {
       formControl?.setValue(event.target.value);
-      onValue && onValue(event.target.value);
+      onValue?.(event.target.value);
     },
     [formControl, onValue]
   );

@@ -90,7 +90,7 @@ export function RlsPickerMonth({
   const onSelect = useCallback(
     (value: number) => {
       setMonthValue(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [setMonthValue, onValue]
   );

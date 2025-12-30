@@ -17,7 +17,7 @@ export function RlsInputPercentage(props: InputPercentageProps) {
   const onValueInput = useCallback(
     (value: number) => {
       !formControl && setValueInput(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [formControl, onValue]
   );

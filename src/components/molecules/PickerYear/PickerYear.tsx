@@ -91,7 +91,7 @@ export function RlsPickerYear({
   const onSelect = useCallback(
     (value: number) => {
       setYearValue(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [setYearValue, onValue]
   );

@@ -51,7 +51,7 @@ export function RlsFieldClock(props: FieldClockVoidProps): ReactNode;
 export function RlsFieldClock(props: FieldClockEmptyProps): ReactNode;
 export function RlsFieldClock({
   children,
-  disabled,
+  disabled: disabledProps,
   formControl,
   identifier,
   msgErrorDisabled,
@@ -65,23 +65,27 @@ export function RlsFieldClock({
   const [value, setValue] = useState(formControl?.value ?? valueInitial);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const _disabled = useMemo(() => {
-    return formControl?.disabled || disabled;
-  }, [formControl?.disabled, disabled]);
+  const disabled = useMemo(() => {
+    return formControl?.disabled || disabledProps;
+  }, [formControl?.disabled, disabledProps]);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-field-box', {
-      disabled: _disabled,
+      disabled,
       readonly: readOnly
     });
-  }, [_disabled, readOnly]);
+  }, [disabled, readOnly]);
 
-  const { icon, valueInput } = useMemo(() => {
+  const timeValue = useMemo(() => {
+    return formControl ? formControl.value : value;
+  }, [formControl?.value, value]);
+
+  const status = useMemo(() => {
     return {
-      icon: value ? 'trash-2' : 'timer',
-      valueInput: value?.normalizeMeridiemFormat || ''
+      icon: timeValue ? 'trash-2' : 'timer',
+      valueInput: timeValue?.normalizeMeridiemFormat || ''
     };
-  }, [value]);
+  }, [timeValue]);
 
   const onClickInput = useCallback(() => {
     !readOnly && setModalIsVisible(true);
@@ -96,14 +100,14 @@ export function RlsFieldClock({
   );
 
   const onClickAction = useCallback(() => {
-    if (value) {
+    if (timeValue) {
       formControl?.setValue(valueInitial as Time);
       formControl?.touch();
       onChange(valueInitial);
     } else {
       setModalIsVisible(true);
     }
-  }, [value, formControl, valueInitial, onChange]);
+  }, [timeValue, formControl, valueInitial, onChange]);
 
   const onListener = useCallback(
     ({ event, value }: PickerListener<Time>) => {
@@ -124,20 +128,20 @@ export function RlsFieldClock({
             <input
               className="rls-field-date__control"
               type="text"
-              value={valueInput}
+              value={status.valueInput}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
-              disabled={_disabled}
+              disabled={disabled}
             />
 
             {!readOnly && (
               <button
                 className="rls-field-date__action"
                 onClick={onClickAction}
-                disabled={_disabled}
+                disabled={disabled}
               >
-                <RlsIcon value={icon} />
+                <RlsIcon value={status.icon} />
               </button>
             )}
           </div>
@@ -159,7 +163,7 @@ export function RlsFieldClock({
         <RlsPickerClock
           formControl={formControl}
           time={time}
-          disabled={_disabled}
+          disabled={disabled}
           onListener={onListener}
         />
       </RlsModal>

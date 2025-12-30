@@ -13,7 +13,7 @@ export function RlsInputText(props: InputProps<string>) {
   const onValueInput = useCallback(
     (value: string) => {
       !formControl && setValueInput(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [formControl, onValue]
   );

@@ -67,7 +67,7 @@ export function RlsFieldDate(props: FieldDateEmptyProps): ReactNode;
 export function RlsFieldDate({
   children,
   date,
-  disabled,
+  disabled: disabledProps,
   formControl,
   format,
   identifier,
@@ -85,33 +85,39 @@ export function RlsFieldDate({
   const [value, setValue] = useState(formControl?.value ?? valueInitial);
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const _disabled = useMemo(() => {
-    return formControl?.disabled || disabled;
-  }, [formControl?.disabled, disabled]);
+  const disabled = useMemo(() => {
+    return formControl?.disabled || disabledProps;
+  }, [formControl?.disabled, disabledProps]);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-field-box', {
-      disabled: _disabled,
+      disabled,
       readonly: readOnly
     });
-  }, [_disabled, readOnly]);
+  }, [disabled, readOnly]);
 
-  const { icon, valueInput } = useMemo(() => {
+  const dateValue = useMemo(() => {
+    return formControl ? formControl.value : value;
+  }, [formControl?.value, value]);
+
+  const status = useMemo(() => {
     return {
-      icon: value ? 'trash-2' : 'calendar',
-      valueInput: value ? dateFormatTemplate(value, format || DATE_FORMAT) : ''
+      icon: dateValue ? 'trash-2' : 'calendar',
+      label: dateValue
+        ? dateFormatTemplate(dateValue, format || DATE_FORMAT)
+        : ''
     };
-  }, [value]);
+  }, [dateValue, format]);
 
   useEffect(() => {
-    const _date = verifyDateRange({
+    const dateSecure = verifyDateRange({
       date: formControl?.value ?? date ?? today.current,
       minDate,
       maxDate
     });
 
-    setValue(_date);
-    formControl?.setValue(_date);
+    setValue(dateSecure);
+    formControl?.setValue(dateSecure);
   }, []);
 
   const onClickInput = useCallback(() => {
@@ -121,20 +127,20 @@ export function RlsFieldDate({
   const onChange = useCallback(
     (value?: Date) => {
       setValue(value);
-      onValue && onValue(value as Date);
+      onValue?.(value as Date);
     },
     [onValue]
   );
 
   const onClickAction = useCallback(() => {
-    if (value) {
+    if (dateValue) {
       formControl?.setValue(valueInitial as Date);
       formControl?.touch();
       onChange(valueInitial);
     } else {
       setModalIsVisible(true);
     }
-  }, [value, formControl, valueInitial, onChange]);
+  }, [dateValue, formControl, valueInitial, onChange]);
 
   const onListener = useCallback(
     ({ event, value }: PickerListener<Date>) => {
@@ -155,20 +161,20 @@ export function RlsFieldDate({
             <input
               className="rls-field-date__control"
               type="text"
-              value={valueInput}
+              value={status.label}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
-              disabled={_disabled}
+              disabled={disabled}
             />
 
             {!readOnly && (
               <button
                 className="rls-field-date__action"
                 onClick={onClickAction}
-                disabled={_disabled}
+                disabled={disabled}
               >
-                <RlsIcon value={icon} />
+                <RlsIcon value={status.icon} />
               </button>
             )}
           </div>
@@ -190,7 +196,7 @@ export function RlsFieldDate({
         <RlsPickerDate
           formControl={formControl}
           date={date}
-          disabled={_disabled}
+          disabled={disabled}
           maxDate={maxDate}
           minDate={minDate}
           onListener={onListener}

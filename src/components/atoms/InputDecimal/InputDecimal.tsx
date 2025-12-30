@@ -27,7 +27,7 @@ export function RlsInputDecimal(props: InputDecimalProps) {
 
       formControl ? formControl.setValue(valueDecimal) : setValueInput(value);
 
-      onValue && onValue(valueDecimal);
+      onValue?.(valueDecimal);
     },
     [formControl, onValue]
   );

@@ -114,6 +114,7 @@ export function RlsPickerClock({
   const [minute, setMinute] = useState(timeInitial.minute);
   const [selectionIsHours, setSelectionIsHours] = useState(true);
 
+  const changeIsInternal = useRef(true);
   const selectionIsActive = useRef(false);
 
   const radianUnit = useMemo(() => {
@@ -172,6 +173,18 @@ export function RlsPickerClock({
   useEffect(() => {
     selectionIsHours ? refreshClockHour() : refreshClockMinute();
   }, [selectionIsHours]);
+
+  useEffect(() => {
+    if (!changeIsInternal.current && formControl?.value) {
+      const zoneIsPM = formControl.value.hour >= 12;
+
+      setZoneIsPM(zoneIsPM);
+      setHour(zoneIsPM ? formControl.value.hour - 12 : formControl.value.hour);
+      setMinute(formControl.value.minute);
+    }
+
+    changeIsInternal.current = false;
+  }, [formControl?.value]);
 
   const refreshComponent = useCallback(
     (clientX: number, clientY: number) => {
@@ -282,6 +295,7 @@ export function RlsPickerClock({
   const onCurrentTime = useCallback(() => {
     const currentTime = Time.now();
 
+    changeIsInternal.current = true;
     formControl?.setValue(currentTime);
     setHour(currentTime.hour);
     setMinute(currentTime.minute);
@@ -303,6 +317,7 @@ export function RlsPickerClock({
 
     const timeValue = new Time(hourValue, minute);
 
+    changeIsInternal.current = true;
     formControl?.setValue(timeValue);
 
     onListener?.({

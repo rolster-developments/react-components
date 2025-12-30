@@ -63,7 +63,7 @@ export function RlsInput({
 
       changeIsInternal.current = true;
 
-      onValue && onValue(value);
+      onValue?.(value);
       setValueInput(valueInput);
       formControl?.setValue(value);
     },

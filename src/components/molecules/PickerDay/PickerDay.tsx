@@ -96,7 +96,7 @@ export function RlsPickerDay({
   const onSelect = useCallback(
     (value: number) => {
       setDayValue(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [setDayValue, onValue]
   );

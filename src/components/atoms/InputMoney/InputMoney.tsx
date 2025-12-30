@@ -19,7 +19,7 @@ export function RlsInputMoney(props: InputMoneyProps) {
   const onValueInput = useCallback(
     (value: number) => {
       !formControl && setValueInput(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [formControl, onValue]
   );

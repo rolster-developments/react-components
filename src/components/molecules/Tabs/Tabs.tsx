@@ -46,7 +46,7 @@ export function RlsTabs<T = any>({ tabs, onValue, rlsTheme }: TabsProps<T>) {
   const onSelect = useCallback(
     (value: T) => {
       setValue(value);
-      onValue && onValue(value);
+      onValue?.(value);
     },
     [onValue]
   );
