@@ -35,18 +35,18 @@ export function RlsApplication({ children }: RlsComponent) {
 
   const [navbarInApp, setNavbarInApp] = useState(false);
   const [navbarIsCondense, setNavbarIsCondense] = useState(false);
-  const [mobileApp, setIsMobile] = useState(false);
+  const [appIsMobile, setIsMobile] = useState(false);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-app__body', {
-      mobile: mobileApp,
+      mobile: appIsMobile,
       'navbar-snackbar': navbarInApp,
       'navbar-condense': navbarIsCondense
     });
-  }, [mobileApp, navbarInApp, navbarIsCondense]);
+  }, [appIsMobile, navbarInApp, navbarIsCondense]);
 
   return (
-    <RlsContext.Provider
+    <RlsContext
       value={{
         confirmation,
         snackbar,
@@ -60,6 +60,6 @@ export function RlsApplication({ children }: RlsComponent) {
         {RlsSnackbar}
       </div>
       {RlsConfirmation}
-    </RlsContext.Provider>
+    </RlsContext>
   );
 }

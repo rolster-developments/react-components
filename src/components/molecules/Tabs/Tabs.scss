@@ -1,14 +1,14 @@
 // Rolster Technology Tabs Component
-// v1.0.0
+// v1.0.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 10/Nov/2025
-// Updated: 10/Nov/2025
+// Updated: 13/Ene/2026
 
 .rls-tabs {
   --pvt-background: var(--rls-app-color-100);
   --pvt-border: var(--rls-app-border-1-200);
-  --pvt-children-font-color: var(--rls-app-color-700);
+  --pvt-children-font-color: var(--rls-app-color-800);
 
   display: flex;
   background: var(--pvt-background);
@@ -31,7 +31,7 @@
 
     &--active {
       color: var(--pvt-children-font-color);
-      font-weight: var(--rls-font-weight-semibold);
+      font-weight: var(--rls-font-weight-bold);
       background: var(--rls-app-color-050);
     }
 

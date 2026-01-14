@@ -27,7 +27,7 @@ function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
       active: tab.value === value,
       disabled: tab.disabled
     });
-  }, [value, tab.disabled]);
+  }, [tab, value]);
 
   const onClick = useCallback(() => {
     !tab.disabled && onSelect(tab.value);

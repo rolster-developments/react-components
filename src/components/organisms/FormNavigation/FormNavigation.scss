@@ -1,11 +1,16 @@
 // Rolster Technology FormNavigation Component
-// v1.1.2
+// v1.1.3
 // @license MIT
 // Author: Rolster Developers
 // Created: 31/May/2023
-// Updated: 24/Dic/2025
+// Updated: 03/Ene/2026
 
 .rls-form-navigation {
+  --rlc-field-box-body-background: var(
+    --rlc-form-navigation-field-box-background,
+    var(--rls-app-color-050)
+  );
+
   --pvt-component-transition: 160ms;
 
   position: fixed;

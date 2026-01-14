@@ -150,7 +150,7 @@ export function useListController<T = any, K = string>(
   );
 
   const setFormValue = useCallback(
-    (element?: AbstractListElement<any>, initialValue = false) => {
+    (element?: AbstractListElement<any>, valueIsDefault = false) => {
       refreshState((state) => ({
         ...state,
         value: element?.description || ''
@@ -158,8 +158,8 @@ export function useListController<T = any, K = string>(
 
       changeValueInternal.current = true;
 
-      initialValue
-        ? formControl?.setInitialValue(element?.value)
+      valueIsDefault
+        ? formControl?.setDefaultValue(element?.value)
         : formControl?.setValue(element?.value);
     },
     [formControl]
