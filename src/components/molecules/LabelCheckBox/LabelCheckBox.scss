@@ -1,11 +1,14 @@
 // Rolster Technology LabelCheckBox Component
-// v1.0.9
+// v1.0.10
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 13/Nov/2025
+// Updated: 16/Ene/2026
 
 .rls-label-checkbox {
+  --pvt-dimension: var(--rlc-label-checkbox-dimension, var(--rls-sizing-x12));
+
+  --rlc-checkbox-dimension: var(--pvt-dimension);
   --rlc-checkbox-cursor: pointer;
   --rlc-ballot-padding: 0rem;
 
@@ -37,10 +40,12 @@
   }
 
   &__component {
-    width: auto;
+    width: var(--pvt-dimension);
+    flex: 0 0 auto;
   }
 
   &__text {
+    flex: 1 1 auto;
     font-size: var(--rls-label-font-size);
     font-weight: var(--rls-font-weight-medium);
     letter-spacing: var(--rls-label-letter-spacing);
@@ -48,6 +53,7 @@
     color: var(--rlc-label-checkbox-font-color, var(--rls-app-color-500));
     user-select: none;
     opacity: var(--pvt-text-opacity);
+    overflow: hidden;
 
     & > p {
       height: initial;

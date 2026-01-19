@@ -1,11 +1,17 @@
 // Rolster Technology RadiobuttonLabel Component
-// v1.0.8
+// v1.0.9
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 13/Nov/2025
+// Updated: 16/Ene/2026
 
 .rls-label-radiobutton {
+  --pvt-dimension: var(
+    --rlc-label-radiobutton-dimension,
+    var(--rls-sizing-x12)
+  );
+
+  --rlc-radiobutton-dimension: var(--pvt-dimension);
   --rlc-radiobutton-cursor: pointer;
   --rlc-ballot-padding: 0rem;
 
@@ -37,10 +43,12 @@
   }
 
   &__component {
-    width: auto;
+    width: var(--pvt-dimension);
+    flex: 0 0 auto;
   }
 
   &__text {
+    flex: 1 1 auto;
     font-size: var(--rls-label-font-size);
     font-weight: var(--rls-font-weight-medium);
     letter-spacing: var(--rls-label-letter-spacing);
@@ -48,6 +56,7 @@
     color: var(--rlc-label-radiobutton-font-color, var(--rls-app-color-500));
     user-select: none;
     opacity: var(--pvt-text-opacity);
+    overflow: hidden;
 
     & > p {
       height: initial;

@@ -1,9 +1,9 @@
 // Rolster Technology Alert Component
-// v1.1.0
+// v1.1.1
 // @license MIT
 // Author: Rolster Developers
 // Created: 04/Mar/2025
-// Updated: 27/Oct/2025
+// Updated: 17/Ene/2026
 
 .rls-alert {
   --pvt-icon-background: var(--rls-app-color-600);
@@ -12,6 +12,7 @@
 
   position: relative;
   display: flex;
+  align-items: var(--rlc-alert-align-items, flex-start);
   column-gap: var(--rls-sizing-x6);
   padding: var(--rls-sizing-x4) var(--rls-sizing-x6);
   box-sizing: border-box;

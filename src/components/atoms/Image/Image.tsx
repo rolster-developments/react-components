@@ -9,28 +9,28 @@ interface ImageProps extends RlsComponent {
 }
 
 export function RlsImage({ src, rlsTheme }: ImageProps) {
-  const [isComplet, setIsComplet] = useState(false);
+  const [srcIsComplet, setSrcIsComplet] = useState(false);
 
   const refSrc = useRef(src);
 
   const className = useMemo(() => {
-    return renderClassStatus('rls-image', { complet: isComplet });
-  }, [isComplet]);
+    return renderClassStatus('rls-image', { complet: srcIsComplet });
+  }, [srcIsComplet]);
 
   useEffect(() => {
     if (refSrc.current !== src) {
-      setIsComplet(false);
+      setSrcIsComplet(false);
       refSrc.current = src;
     }
   }, [src]);
 
   const onLoad = useCallback(() => {
-    setIsComplet(true);
+    setSrcIsComplet(true);
   }, []);
 
   return (
     <div className={className} rls-theme={rlsTheme}>
-      {!isComplet && <RlsSkeleton rlsTheme={rlsTheme} />}
+      {!srcIsComplet && <RlsSkeleton rlsTheme={rlsTheme} />}
       <img src={src} onLoad={onLoad} />
     </div>
   );
