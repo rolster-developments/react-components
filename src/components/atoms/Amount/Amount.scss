@@ -24,7 +24,7 @@
   column-gap: var(--rls-sizing-x2);
   font-size: var(--pvt-font-size);
   font-weight: var(--pvt-font-weight);
-  color: var(--rls-amount-font-color, inherit);
+  color: var(--rlc-amount-font-color, inherit);
 
   &[rls-theme] {
     color: var(--rls-theme-color-500);
