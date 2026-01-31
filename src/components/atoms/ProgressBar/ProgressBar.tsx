@@ -21,7 +21,7 @@ export function RlsProgressBar({
     <div className={className} rls-theme={rlsTheme}>
       <div
         className="rls-progress-bar__component"
-        style={{ width: `${percentage || 0}%` }}
+        style={{ width: `${percentage ?? 0}%` }}
       ></div>
     </div>
   );

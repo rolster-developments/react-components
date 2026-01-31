@@ -7,13 +7,15 @@
 
 .rls-progress-bar {
   --pvt-component-display: block;
-  --pvt-component-height: var(--rlc-progress-bar-height, --rls-sizing-x2);
+  --pvt-component-height: var(--rlc-progress-bar-height, var(--rls-sizing-x2));
+  --pvt-component-radius: var(--rlc-progress-bar-radius, 0rem);
 
   position: relative;
   width: 100%;
   height: var(--pvt-component-height);
   overflow: hidden;
-  background: var(--rls-theme-color-200);
+  background: var(--rlc-progress-bar-background, var(--rls-theme-color-100));
+  border-radius: var(--pvt-component-radius);
 
   &--indeterminate {
     --pvt-component-display: none;
@@ -26,6 +28,7 @@
       width: 0%;
       height: var(--pvt-component-height);
       background: var(--rls-theme-gradient-500);
+      border-radius: var(--pvt-component-radius);
     }
 
     &::after {
@@ -39,12 +42,13 @@
 
   &__component {
     position: absolute;
+    display: var(--pvt-component-display);
     top: 0rem;
     width: 0%;
     height: var(--pvt-component-height);
-    display: var(--pvt-component-display);
     background: var(--rls-theme-gradient-500);
     transition: width 320ms 0ms var(--rls-standard-curve);
+    border-radius: var(--pvt-component-radius);
   }
 }
 
