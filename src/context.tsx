@@ -57,8 +57,10 @@ export function RlsApplication({ children }: RlsComponent) {
     >
       <div className={className}>
         {children}
+
         {RlsSnackbar}
       </div>
+
       {RlsConfirmation}
     </RlsContext>
   );
