@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputText } from '../../atoms/InputText/InputText';
-import { FieldBoxProps } from '../../types';
+import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldText.css';
 
-export function RlsFieldText(props: FieldBoxProps<string>) {
-  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
-    props;
+export function RlsFieldText(props: FieldProps<string>) {
+  const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -17,9 +16,9 @@ export function RlsFieldText(props: FieldBoxProps<string>) {
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: formControl?.focused && !disabled,
-        error: formControl?.wrong,
         disabled,
+        error: formControl?.wrong,
+        focused: formControl?.focused && !disabled,
         readonly: props.readOnly
       },
       'rls-field-text'
@@ -36,7 +35,7 @@ export function RlsFieldText(props: FieldBoxProps<string>) {
         </div>
       </div>
 
-      {!msgErrorDisabled && (
+      {!props.msgErrorDisabled && (
         <RlsMessageFormError
           className="rls-field-box__error"
           formControl={formControl}

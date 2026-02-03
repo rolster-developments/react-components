@@ -1,20 +1,17 @@
 // Rolster Technology InputMoney Component
-// v1.0.5
+// v1.0.6
 // @license MIT
 // Author: Rolster Developers
 // Created: 06/May/2023
-// Updated: 15/Jun/2025
+// Updated: 03/Feb/2026
 
 .rls-input-money {
+  --rlc-amount-height: inherit;
+  --rlc-amount-align-items: center;
   --rlc-tabular-text-font-size: var(--rls-input-font-size);
   --rlc-tabular-text-char-width: 5.25rem;
 
   position: relative;
   width: 100%;
   box-sizing: border-box;
-
-  .rls-amount {
-    height: inherit;
-    align-items: center;
-  }
 }

@@ -21,7 +21,8 @@ export interface InputProps<T = any> {
   value?: T;
 }
 
-export interface FieldBoxProps<T = any> extends InputProps<T>, RlsComponent {
+export interface FieldProps<T = any> extends InputProps<T>, RlsComponent {
+  groupModeEnabled?: boolean;
   msgErrorDisabled?: boolean;
 }
 

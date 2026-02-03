@@ -1,13 +1,18 @@
 // Rolster Technology SwitchLabel Component
-// v1.0.11
+// v1.0.12
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 16/Ene/2026
+// Updated: 03/Feb/2026
 
 .rls-label-switch {
   --rlc-switch-cursor: pointer;
   --rlc-ballot-padding: 0rem;
+
+  --pvt-label-font-size: var(
+    --rlc-label-switch-font-size,
+    var(--rls-label-font-size)
+  );
 
   --pvt-text-opacity: 1;
   --pvt-text-height: var(--rls-sizing-x12);
@@ -37,13 +42,13 @@
   }
 
   &__component {
-    width: 20rem;
+    width: var(--rlc-switch-max-width, var(--rls-sizing-x20));
     flex: 0 0 auto;
   }
 
   &__text {
     flex: 1 1 auto;
-    font-size: var(--rls-label-font-size);
+    font-size: var(--pvt-label-font-size);
     font-weight: var(--rls-font-weight-medium);
     letter-spacing: var(--rls-label-letter-spacing);
     line-height: var(--pvt-text-height);

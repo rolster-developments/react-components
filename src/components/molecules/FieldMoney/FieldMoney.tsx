@@ -1,18 +1,17 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputMoney } from '../../atoms/InputMoney/InputMoney';
-import { FieldBoxProps } from '../../types';
+import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldMoney.css';
 
-interface FieldMoneyProps extends FieldBoxProps<number> {
+interface FieldMoneyProps extends FieldProps<number> {
   decimals?: number;
   symbol?: string;
 }
 
 export function RlsFieldMoney(props: FieldMoneyProps) {
-  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
-    props;
+  const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -22,9 +21,9 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: formControl?.focused && !disabled,
-        error: formControl?.wrong,
         disabled,
+        error: formControl?.wrong,
+        focused: formControl?.focused && !disabled,
         readonly: props.readOnly
       },
       'rls-field-money'
@@ -41,7 +40,7 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
         </div>
       </div>
 
-      {!msgErrorDisabled && (
+      {!props.msgErrorDisabled && (
         <RlsMessageFormError
           className="rls-field-box__error"
           formControl={formControl}

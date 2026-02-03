@@ -2,15 +2,14 @@ import { useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPassword } from '../../atoms/InputPassword/InputPassword';
-import { FieldBoxProps } from '../../types';
+import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldPassword.css';
 
-export function RlsFieldPassword(props: FieldBoxProps<string>) {
-  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
-    props;
+export function RlsFieldPassword(props: FieldProps<string>) {
+  const { children, formControl, identifier, rlsTheme } = props;
 
-  const [password, setPassword] = useState(true);
+  const [passwordIsActive, setPasswordIsActive] = useState(true);
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -20,17 +19,17 @@ export function RlsFieldPassword(props: FieldBoxProps<string>) {
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: formControl?.focused && !disabled,
-        error: formControl?.wrong,
         disabled,
+        error: formControl?.wrong,
+        focused: formControl?.focused && !disabled,
         readonly: props.readOnly
       },
       'rls-field-password'
     );
   }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
 
-  const onToggleInput = useCallback(() => {
-    setPassword((password) => !password);
+  const onTogglePassword = useCallback(() => {
+    setPasswordIsActive((password) => !password);
   }, []);
 
   return (
@@ -39,16 +38,19 @@ export function RlsFieldPassword(props: FieldBoxProps<string>) {
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <RlsInputPassword {...props} type={password ? 'password' : 'text'} />
+          <RlsInputPassword
+            {...props}
+            type={passwordIsActive ? 'password' : 'text'}
+          />
 
           <RlsButtonAction
-            icon={password ? 'eye' : 'eye-off'}
-            onClick={onToggleInput}
+            icon={passwordIsActive ? 'eye' : 'eye-off'}
+            onClick={onTogglePassword}
           />
         </div>
       </div>
 
-      {!msgErrorDisabled && (
+      {!props.msgErrorDisabled && (
         <RlsMessageFormError
           className="rls-field-box__error"
           formControl={formControl}

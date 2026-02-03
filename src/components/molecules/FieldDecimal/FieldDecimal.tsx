@@ -2,18 +2,17 @@ import { BigDecimal } from '@rolster/commons';
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputDecimal } from '../../atoms/InputDecimal/InputDecimal';
-import { FieldBoxProps } from '../../types';
+import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldDecimal.css';
 
-interface FieldDecimalProps extends FieldBoxProps<BigDecimal> {
+interface FieldDecimalProps extends FieldProps<BigDecimal> {
   decimals?: number;
   symbol?: string;
 }
 
 export function RlsFieldDecimal(props: FieldDecimalProps) {
-  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
-    props;
+  const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -23,9 +22,9 @@ export function RlsFieldDecimal(props: FieldDecimalProps) {
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: formControl?.focused && !disabled,
-        error: formControl?.wrong,
         disabled,
+        error: formControl?.wrong,
+        focused: formControl?.focused && !disabled,
         readonly: props.readOnly
       },
       'rls-field-decimal'
@@ -42,7 +41,7 @@ export function RlsFieldDecimal(props: FieldDecimalProps) {
         </div>
       </div>
 
-      {!msgErrorDisabled && (
+      {!props.msgErrorDisabled && (
         <RlsMessageFormError
           className="rls-field-box__error"
           formControl={formControl}

@@ -1,17 +1,16 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputPercentage } from '../../atoms/InputPercentage/InputPercentage';
-import { FieldBoxProps } from '../../types';
+import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 import './FieldPercentage.css';
 
-interface FieldPercentageProps extends FieldBoxProps<number> {
+interface FieldPercentageProps extends FieldProps<number> {
   decimals?: number;
 }
 
 export function RlsFieldPercentage(props: FieldPercentageProps) {
-  const { children, formControl, identifier, msgErrorDisabled, rlsTheme } =
-    props;
+  const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -21,9 +20,9 @@ export function RlsFieldPercentage(props: FieldPercentageProps) {
     return renderClassStatus(
       'rls-field-box',
       {
-        focused: formControl?.focused && !disabled,
-        error: formControl?.wrong,
         disabled,
+        error: formControl?.wrong,
+        focused: formControl?.focused && !disabled,
         readonly: props.readOnly
       },
       'rls-field-percentage'
@@ -40,7 +39,7 @@ export function RlsFieldPercentage(props: FieldPercentageProps) {
         </div>
       </div>
 
-      {!msgErrorDisabled && (
+      {!props.msgErrorDisabled && (
         <RlsMessageFormError
           className="rls-field-box__error"
           formControl={formControl}

@@ -74,7 +74,7 @@ export * from './components/organisms/PickerDate/PickerDate';
 export * from './components/organisms/PickerDateRange/PickerDateRange';
 export * from './components/organisms/Snackbar/Snackbar';
 export * from './components/definitions';
-export { RolsterReactInputControl } from './components/types';
+export { FieldProps as FieldBoxProps, InputProps, RolsterReactInputControl } from './components/types';
 export * from './context';
 export * from './controllers/DatatableController';
 export * from './controllers/FormSingleSelectionController';
