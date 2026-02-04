@@ -16,12 +16,16 @@
     var(--rls-label-font-size)
   );
 
+  --pvt-label-letter-spacing: var(
+    --rlc-label-radiobutton-letter-spacing,
+    var(--rls-label-letter-spacing)
+  );
+
   --rlc-radiobutton-dimension: var(--pvt-dimension);
   --rlc-radiobutton-cursor: pointer;
   --rlc-ballot-padding: 0rem;
 
   --pvt-text-opacity: 1;
-  --pvt-text-height: var(--rls-sizing-x12);
   --pvt-text-overflow: hidden;
   --pvt-text-white-space: nowrap;
   --pvt-text-text-overflow: ellipsis;
@@ -44,7 +48,6 @@
     --pvt-text-text-overflow: initial;
     --pvt-text-overflow: initial;
     --pvt-text-white-space: initial;
-    --pvt-text-height: auto;
   }
 
   &__component {
@@ -56,8 +59,11 @@
     flex: 1 1 auto;
     font-size: var(--pvt-label-font-size);
     font-weight: var(--rls-font-weight-medium);
-    letter-spacing: var(--rls-label-letter-spacing);
-    line-height: var(--pvt-text-height);
+    letter-spacing: var(--pvt-label-letter-spacing);
+    line-height: var(
+      --rlc-label-radiobutton-line-height,
+      var(--rls-sizing-x12)
+    );
     color: var(--rlc-label-radiobutton-font-color, var(--rls-app-color-500));
     user-select: none;
     opacity: var(--pvt-text-opacity);

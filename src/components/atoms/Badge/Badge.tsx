@@ -4,13 +4,13 @@ import { RlsComponent } from '../../definitions';
 import './Badge.css';
 
 interface BadgeProps extends RlsComponent {
-  contrast?: boolean;
+  contrasted?: boolean;
 }
 
-export function RlsBadge({ children, contrast, rlsTheme }: BadgeProps) {
+export function RlsBadge({ children, contrasted, rlsTheme }: BadgeProps) {
   const className = useMemo(() => {
-    return renderClassStatus('rls-badge', { contrast });
-  }, [contrast]);
+    return renderClassStatus('rls-badge', { contrasted });
+  }, [contrasted]);
 
   return (
     <span className={className} rls-theme={rlsTheme}>

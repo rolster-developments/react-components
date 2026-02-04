@@ -4,13 +4,13 @@ import { RlsComponent } from '../../definitions';
 import './Poster.css';
 
 interface PosterProps extends RlsComponent {
-  contrast?: boolean;
+  contrasted?: boolean;
 }
 
-export function RlsPoster({ children, contrast, rlsTheme }: PosterProps) {
+export function RlsPoster({ children, contrasted, rlsTheme }: PosterProps) {
   const className = useMemo(() => {
-    return renderClassStatus('rls-poster', { contrast });
-  }, [contrast]);
+    return renderClassStatus('rls-poster', { contrasted });
+  }, [contrasted]);
 
   return (
     <div className={className} rls-theme={rlsTheme}>

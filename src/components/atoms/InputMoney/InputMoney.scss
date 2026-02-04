@@ -6,7 +6,7 @@
 // Updated: 03/Feb/2026
 
 .rls-input-money {
-  --rlc-amount-height: inherit;
+  --rlc-amount-height: var(--rlc-input-height);
   --rlc-amount-align-items: center;
   --rlc-tabular-text-font-size: var(--rls-input-font-size);
   --rlc-tabular-text-char-width: 5.25rem;

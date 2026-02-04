@@ -87,13 +87,18 @@ export function RlsDatatableHeader({
 export function RlsDatatableTitle({
   children,
   className,
+  contained,
   control,
   identifier,
   rlsTheme
 }: DatatableCellProps) {
   const classNameTitle = useMemo(() => {
-    return renderClassStatus('rls-datatable__title', { control }, className);
-  }, [className, control]);
+    return renderClassStatus(
+      'rls-datatable__title',
+      { contained, control },
+      className
+    );
+  }, [className, contained, control]);
 
   return (
     <th id={identifier} className={classNameTitle} rls-theme={rlsTheme}>
@@ -136,7 +141,7 @@ export function RlsDatatableRecord({
       { error, info, contained, success, warning },
       className
     );
-  }, [className, error, info, contained, success, warning]);
+  }, [className, contained, error, info, success, warning]);
 
   return (
     <tr id={identifier} className={classNameRecord} rls-theme={rlsTheme}>
@@ -162,7 +167,7 @@ export function RlsDatatableTotals({
       { error, info, contained, success, warning },
       className
     );
-  }, [className, error, info, contained, success, warning]);
+  }, [className, contained, error, info, success, warning]);
 
   return (
     <div id={identifier} className={classNameTotals} rls-theme={rlsTheme}>
@@ -185,7 +190,7 @@ export function RlsDatatableCell({
       { control, contained },
       className
     );
-  }, [className, control, contained]);
+  }, [className, contained, control]);
 
   return (
     <td id={identifier} className={classNameCell} rls-theme={rlsTheme}>
