@@ -193,28 +193,36 @@ export function RlsFieldSelectTemplate<
   );
 }
 
-interface FieldSelectDefinedProps<T = any>
-  extends FieldSelectProps<T, ListElement<T>> {
+interface FieldSelectDefinedProps<T = any> extends FieldSelectProps<
+  T,
+  ListElement<T>
+> {
   formControl: ReactControl<HTMLElement, NonNullable<T>>;
   value: NonNullable<T>;
   onValue?: (value: T) => void;
 }
 
-interface FieldSelectUndefinedProps<T = any>
-  extends FieldSelectProps<T, ListElement<T>> {
+interface FieldSelectUndefinedProps<T = any> extends FieldSelectProps<
+  T,
+  ListElement<T>
+> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   value: undefined;
   onValue?: (value?: T) => void;
 }
 
-interface FieldSelectVoidProps<T = any>
-  extends Omit<FieldSelectProps<T, ListElement<T>>, 'value'> {
+interface FieldSelectVoidProps<T = any> extends Omit<
+  FieldSelectProps<T, ListElement<T>>,
+  'value'
+> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   onValue?: (value?: T) => void;
 }
 
-interface FieldSelectEmptyProps<T = any>
-  extends Omit<FieldSelectProps<T, ListElement<T>>, 'formControl' | 'value'> {
+interface FieldSelectEmptyProps<T = any> extends Omit<
+  FieldSelectProps<T, ListElement<T>>,
+  'formControl' | 'value'
+> {
   onValue?: (value?: T) => void;
 }
 
@@ -239,6 +247,7 @@ export function RlsFieldSelect<T = any>(
   const render = useCallback(
     (element: ListElement<T>) => (
       <RlsBallot
+        className="rls-field-list__ballot"
         subtitle={element.subtitle}
         img={element.img}
         initials={element.initials}

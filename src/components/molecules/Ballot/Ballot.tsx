@@ -15,6 +15,7 @@ interface BallotProps extends RlsComponent {
 
 export function RlsBallot({
   bordered,
+  className,
   children,
   img,
   initials,
@@ -22,12 +23,12 @@ export function RlsBallot({
   subtitle,
   rlsTheme
 }: BallotProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-ballot', { bordered, skeleton });
-  }, [bordered, skeleton]);
+  const classNameBallot = useMemo(() => {
+    return renderClassStatus('rls-ballot', { bordered, skeleton }, className);
+  }, [bordered, skeleton, className]);
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={classNameBallot} rls-theme={rlsTheme}>
       {(img || initials) && (
         <RlsAvatar skeleton={skeleton}>
           {img && <img src={img} />}

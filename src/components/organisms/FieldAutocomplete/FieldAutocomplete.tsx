@@ -249,31 +249,35 @@ export function RlsFieldAutocompleteTemplate<
   );
 }
 
-interface FieldAutocompleteDefinedProps<T = any>
-  extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
+interface FieldAutocompleteDefinedProps<T = any> extends FieldAutocompleteProps<
+  T,
+  AutocompleteElement<T>
+> {
   formControl: ReactControl<HTMLElement, NonNullable<T>>;
   value: NonNullable<T>;
   onValue?: (value: T) => void;
 }
 
-interface FieldAutocompleteUndefinedProps<T = any>
-  extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
+interface FieldAutocompleteUndefinedProps<
+  T = any
+> extends FieldAutocompleteProps<T, AutocompleteElement<T>> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   value: undefined;
   onValue?: (value?: T) => void;
 }
 
-interface FieldAutocompleteVoidProps<T = any>
-  extends Omit<FieldAutocompleteProps<T, AutocompleteElement<T>>, 'value'> {
+interface FieldAutocompleteVoidProps<T = any> extends Omit<
+  FieldAutocompleteProps<T, AutocompleteElement<T>>,
+  'value'
+> {
   formControl: ReactControl<HTMLElement, T | undefined>;
   onValue?: (value: T) => void;
 }
 
-interface FieldAutocompleteEmptyProps<T = any>
-  extends Omit<
-    FieldAutocompleteProps<T, AutocompleteElement<T>>,
-    'formControl' | 'value'
-  > {
+interface FieldAutocompleteEmptyProps<T = any> extends Omit<
+  FieldAutocompleteProps<T, AutocompleteElement<T>>,
+  'formControl' | 'value'
+> {
   onValue?: (value?: T) => void;
 }
 
@@ -298,6 +302,7 @@ export function RlsFieldAutocomplete<T = any>(
   const render = useCallback(
     (element: AutocompleteElement<T>) => (
       <RlsBallot
+        className="rls-field-list__ballot"
         subtitle={element.subtitle}
         img={element.img}
         initials={element.initials}
