@@ -1,9 +1,9 @@
 // Rolster Technology Button Component
-// v2.4.4
+// v2.4.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 16/Dic/2025
+// Updated: 14/Feb/2026
 
 .rls-button {
   --pvt-button-content-background: none;
@@ -136,6 +136,7 @@
     color: var(--pvt-button-content-font-color);
     border: var(--pvt-button-content-border);
     background: var(--pvt-button-content-background);
+    pointer-events: none;
 
     &::before {
       position: absolute;

@@ -1,9 +1,9 @@
 // Rolster Technology ButtonAction Component
-// v1.1.1
+// v1.1.2
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 02/Dic/2025
+// Updated: 14/Feb/2025
 
 .rls-button-action {
   --pvt-ripple-dimension: var(
@@ -82,6 +82,10 @@
 
   &:disabled {
     opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__content {
     pointer-events: none;
   }
 

@@ -35,7 +35,7 @@ export function RlsInput({
   type,
   value
 }: InputProps) {
-  const valueInitial = formControl?.value ?? value ? String(value) : '';
+  const valueInitial = (formControl?.value ?? value) ? String(value) : '';
 
   const [valueInput, setValueInput] = useState(valueInitial);
   const [focused, setFocused] = useState(false);
@@ -52,7 +52,7 @@ export function RlsInput({
     changeIsInternal.current = false;
   }, [formControl?.value]);
 
-  const _onChange = useCallback(
+  const onChangeInput = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const valueInput = event.target.value;
 
@@ -70,32 +70,32 @@ export function RlsInput({
     [formControl, onValue, type, decimals]
   );
 
-  const _onKeyDown = useCallback(
+  const onKeyDownInput = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      onKeyDown && onKeyDown(event);
+      onKeyDown?.(event);
 
-      event.key === 'Enter' && onEnter && onEnter();
+      event.key === 'Enter' && onEnter?.();
     },
     [onKeyDown, onEnter]
   );
 
-  const _onKeyUp = useCallback(
+  const onKeyUpInput = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      onKeyUp && onKeyUp(event);
+      onKeyUp?.(event);
     },
     [onKeyUp]
   );
 
-  const _onFocus = useCallback(() => {
+  const onFocusInput = useCallback(() => {
     formControl?.focus();
     setFocused(() => true);
-    onFocus && onFocus();
+    onFocus?.();
   }, [formControl, onFocus]);
 
-  const _onBlur = useCallback(() => {
+  const onBlurInput = useCallback(() => {
     formControl?.blur();
     setFocused(() => false);
-    onBlur && onBlur();
+    onBlur?.();
   }, [formControl, onBlur]);
 
   const className = useMemo(() => {
@@ -115,11 +115,11 @@ export function RlsInput({
         placeholder={placeholder}
         disabled={formControl?.disabled || disabled}
         readOnly={readOnly}
-        onFocus={_onFocus}
-        onBlur={_onBlur}
-        onChange={_onChange}
-        onKeyDown={_onKeyDown}
-        onKeyUp={_onKeyUp}
+        onFocus={onFocusInput}
+        onBlur={onBlurInput}
+        onChange={onChangeInput}
+        onKeyDown={onKeyDownInput}
+        onKeyUp={onKeyUpInput}
         value={valueInput}
       />
       <span className="rls-input__value">{children}</span>

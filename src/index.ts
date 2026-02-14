@@ -57,6 +57,7 @@ export * from './components/organisms/BottomSheet/BottomSheet';
 export * from './components/organisms/Card/Card';
 export * from './components/organisms/Confirmation/Confirmation';
 export * from './components/organisms/Datatable/Datatable';
+export * from './components/organisms/Dropdown/Dropdown';
 export * from './components/organisms/FieldAutocomplete/FieldAutocomplete';
 export * from './components/organisms/FieldAutocomplete/FieldAutocompleteController';
 export * from './components/organisms/FieldClock/FieldClock';
@@ -74,9 +75,14 @@ export * from './components/organisms/PickerDate/PickerDate';
 export * from './components/organisms/PickerDateRange/PickerDateRange';
 export * from './components/organisms/Snackbar/Snackbar';
 export * from './components/definitions';
-export { FieldProps as FieldBoxProps, InputProps, RolsterReactInputControl } from './components/types';
+export {
+  FieldProps,
+  InputProps,
+  RolsterReactInputControl
+} from './components/types';
 export * from './context';
 export * from './controllers/DatatableController';
+export * from './controllers/DropdownController';
 export * from './controllers/FormSingleSelectionController';
 export * from './controllers/FormToggleController';
 export * from './controllers/ImageEditorController';

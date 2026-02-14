@@ -1,28 +1,38 @@
 import { useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
+import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import './Modal.css';
 
 interface ModalProps extends RlsComponent {
-  onAutoClose?: () => void;
+  autoclose?: boolean;
+  controller?: PortalController;
+  onBackdrop?: () => void;
   visible?: boolean;
 }
 
 export function RlsModal({
+  autoclose,
   children,
   className,
-  onAutoClose,
+  controller,
+  onBackdrop,
   visible,
   rlsTheme
 }: ModalProps) {
   const classNameModal = useMemo(() => {
-    return renderClassStatus('rls-modal', { visible }, className);
-  }, [className, visible]);
+    return renderClassStatus(
+      'rls-modal',
+      { visible: controller?.visible ?? visible },
+      className
+    );
+  }, [className, visible, controller?.visible]);
 
   const onClickBackdrop = useCallback(() => {
-    onAutoClose && onAutoClose();
-  }, [onAutoClose]);
+    autoclose && controller?.close();
+    onBackdrop?.();
+  }, [autoclose, controller, onBackdrop]);
 
   return ReactDOM.createPortal(
     <div className={classNameModal} rls-theme={rlsTheme}>
