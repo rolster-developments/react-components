@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.1.13",
+  "version": "19.1.14",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "module": "dist/esm/index.js",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@rolster/commons": "^3.1.9",
     "@rolster/components": "^1.0.0",
-    "@rolster/dates": "^3.1.3",
+    "@rolster/dates": "^3.1.4",
     "@rolster/forms": "^3.1.1",
     "@rolster/i18n": "^2.2.1",
     "@rolster/react-forms": "^19.1.1",
