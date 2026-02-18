@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 export type RlsTheme =
+  | 'standard'
   | 'primary'
   | 'secondary'
   | 'tertiary'
@@ -18,11 +19,16 @@ export type RlsTheme =
   | 'smartness'
   | 'obsidian';
 
+export interface PropsWithClassName {
+  className?: string;
+}
+
 export interface PropsWithRlsTheme {
   rlsTheme?: RlsTheme;
 }
 
-export interface RlsComponent extends PropsWithChildren<PropsWithRlsTheme> {
-  className?: string;
+export interface RlsComponent extends PropsWithChildren<
+  PropsWithRlsTheme & PropsWithClassName
+> {
   identifier?: string;
 }
