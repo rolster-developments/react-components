@@ -21,7 +21,7 @@ export function RlsModalSheet({
   }, [className, visible]);
 
   const onClickBackdrop = useCallback(() => {
-    onAutoClose && onAutoClose();
+    onAutoClose?.();
   }, [onAutoClose]);
 
   return ReactDOM.createPortal(

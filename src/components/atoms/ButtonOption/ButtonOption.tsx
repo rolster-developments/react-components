@@ -52,7 +52,7 @@ export function RlsButtonOption<T = any>({
 
   const onAction = useCallback(() => {
     onSelect();
-    onClick && onClick();
+    onClick?.();
   }, [onSelect, onClick]);
 
   return (

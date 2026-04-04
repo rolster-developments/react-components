@@ -29,8 +29,8 @@ export function useFormSingleSelectionController<T>({
 
   const onSelect = useCallback(() => {
     if (!disabled) {
-      formControl && formControl.setValue(value as T);
-      onValue && onValue(value as T);
+      formControl?.setValue(value as T);
+      onValue?.(value as T);
     }
   }, [formControl, value, onValue, disabled]);
 

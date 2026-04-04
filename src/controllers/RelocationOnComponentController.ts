@@ -68,7 +68,7 @@ export function useRelocationOnComponent({
     element.current.style.top = `${clientY}px`;
     element.current.style.left = `${clientX}px`;
 
-    onDrag && onDrag();
+    onDrag?.();
   }, []);
 
   useEffect(() => {

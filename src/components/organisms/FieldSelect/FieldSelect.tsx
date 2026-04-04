@@ -2,14 +2,13 @@ import {
   AbstractListElement as Element,
   ListElement
 } from '@rolster/components';
-import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
+import { RlsFieldListSuggestions } from '../../molecules/FieldListSuggestions/FieldListSuggestions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldSelect } from './FieldSelectController';
 import './FieldSelect.css';
@@ -61,20 +60,6 @@ export function RlsFieldSelectTemplate<
     unremovable
   } = props;
 
-  const [labels, setLabels] = useState({
-    listEmptyDescription: reactI18n('listEmptyDescription'),
-    listEmptyTitle: reactI18n('listEmptyTitle')
-  });
-
-  useEffect(() => {
-    return i18nSubscribe(() => {
-      setLabels({
-        listEmptyDescription: reactI18n('listEmptyDescription'),
-        listEmptyTitle: reactI18n('listEmptyTitle')
-      });
-    });
-  }, []);
-
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
@@ -97,14 +82,6 @@ export function RlsFieldSelectTemplate<
     props.readOnly,
     disabled
   ]);
-
-  const classNameSuggestions = useMemo(() => {
-    return renderClassStatus('rls-field-list__suggestions', {
-      disabled,
-      higher: select.higher,
-      visible: select.modalIsVisible
-    });
-  }, [select.modalIsVisible, select.higher, disabled]);
 
   return (
     <div
@@ -153,42 +130,17 @@ export function RlsFieldSelectTemplate<
         />
       )}
 
-      <div className={classNameSuggestions}>
-        <div className="rls-field-list__suggestions__body">
-          <ul ref={select.refList} className="rls-field-list__ul">
-            {suggestions.map((element, index) => (
-              <li
-                key={index}
-                className="rls-field-list__element"
-                tabIndex={-1}
-                onClick={select.onClickElement(element)}
-                onKeyDown={select.onKeydownElement(element)}
-              >
-                {render(element)}
-              </li>
-            ))}
-
-            {!suggestions.length && (
-              <li className="rls-field-list__empty">
-                <div className="rls-field-list__empty__description">
-                  <label className="rls-label-bold rls-truncate">
-                    {labels.listEmptyTitle}
-                  </label>
-
-                  <p className="rls-caption-regular">
-                    {labels.listEmptyDescription}
-                  </p>
-                </div>
-              </li>
-            )}
-          </ul>
-        </div>
-
-        <div
-          className="rls-field-list__backdrop"
-          onClick={select.onClickBackdrop}
-        ></div>
-      </div>
+      <RlsFieldListSuggestions
+        elements={suggestions}
+        visible={select.listIsVisible}
+        disabled={disabled}
+        higher={select.higher}
+        render={render}
+        refList={select.refList}
+        onClickElement={select.onClickElement}
+        onKeydownElement={select.onKeydownElement}
+        onClickBackdrop={select.onClickBackdrop}
+      />
     </div>
   );
 }

@@ -5,7 +5,6 @@ import {
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import {
-  ChangeEvent,
   KeyboardEvent,
   ReactNode,
   useCallback,
@@ -16,9 +15,12 @@ import {
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
-import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
+import {
+  FieldListSearchControl,
+  RlsFieldListSuggestions
+} from '../../molecules/FieldListSuggestions/FieldListSuggestions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldAutocomplete } from './FieldAutocompleteController';
 import './FieldAutocomplete.css';
@@ -73,19 +75,13 @@ export function RlsFieldAutocompleteTemplate<
     searching
   } = props;
 
-  const [labels, setLabels] = useState({
-    listEmptyDescription: reactI18n('listEmptyDescription'),
-    listEmptyTitle: reactI18n('listEmptyTitle'),
-    listInputPlaceholder: reactI18n('listInputPlaceholder')
-  });
+  const [listInputPlaceholder, setListInputPlaceholder] = useState(
+    reactI18n('listInputPlaceholder')
+  );
 
   useEffect(() => {
     return i18nSubscribe(() => {
-      setLabels({
-        listEmptyDescription: reactI18n('listEmptyDescription'),
-        listEmptyTitle: reactI18n('listEmptyTitle'),
-        listInputPlaceholder: reactI18n('listInputPlaceholder')
-      });
+      setListInputPlaceholder(reactI18n('listInputPlaceholder'));
     });
   }, []);
 
@@ -114,32 +110,43 @@ export function RlsFieldAutocompleteTemplate<
     disabled
   ]);
 
-  const classNameSuggestions = useMemo(() => {
-    return renderClassStatus('rls-field-list__suggestions', {
-      disabled,
-      higher: autocomplete.higher,
-      visible: autocomplete.modalIsVisible
-    });
-  }, [autocomplete.higher, autocomplete.modalIsVisible, disabled]);
-
-  const onChangePattern = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      autocomplete.setPattern(event.target.value);
-    },
-    [autocomplete.setPattern]
-  );
-
   const onClickPattern = useCallback(() => {
-    onSearch && onSearch(autocomplete.pattern);
+    onSearch?.(autocomplete.pattern);
   }, [onSearch, autocomplete.pattern]);
 
   const onKeyDownPattern = useCallback(
     (event: KeyboardEvent) => {
-      event.key === 'Enter' && onSearch && onSearch(autocomplete.pattern);
+      event.key === 'Enter' && onSearch?.(autocomplete.pattern);
 
       autocomplete.onKeydownInput(event);
     },
     [autocomplete.onKeydownInput, onSearch, autocomplete.pattern]
+  );
+
+  const searchControl = useMemo<FieldListSearchControl>(
+    () => ({
+      pattern: autocomplete.pattern,
+      placeholder: listInputPlaceholder,
+      searching,
+      refInput: autocomplete.refInput,
+      onChange: autocomplete.setPattern,
+      onFocus: autocomplete.onFocusInput,
+      onBlur: autocomplete.onBlurInput,
+      onKeyDown: onKeyDownPattern,
+      onSearch: onSearch ? onClickPattern : undefined
+    }),
+    [
+      autocomplete.pattern,
+      autocomplete.refInput,
+      autocomplete.setPattern,
+      autocomplete.onFocusInput,
+      autocomplete.onBlurInput,
+      listInputPlaceholder,
+      searching,
+      onKeyDownPattern,
+      onClickPattern,
+      onSearch
+    ]
   );
 
   return (
@@ -183,68 +190,18 @@ export function RlsFieldAutocompleteTemplate<
         />
       )}
 
-      <div className={classNameSuggestions}>
-        <div className="rls-field-list__suggestions__body">
-          <ul ref={autocomplete.refList} className="rls-field-list__ul">
-            <div className="rls-field-list__ul__search">
-              <input
-                ref={autocomplete.refInput}
-                className="rls-field-list__ul__control"
-                type="text"
-                placeholder={labels.listInputPlaceholder}
-                value={autocomplete.pattern}
-                onChange={onChangePattern}
-                onFocus={autocomplete.onFocusInput}
-                onBlur={autocomplete.onBlurInput}
-                onKeyDown={onKeyDownPattern}
-                disabled={disabled || searching}
-              />
-
-              {onSearch && (
-                <button
-                  disabled={disabled || searching}
-                  onClick={onClickPattern}
-                >
-                  <RlsIcon value="search" />
-                </button>
-              )}
-            </div>
-
-            {searching && <RlsProgressBar indeterminate={true} />}
-
-            {autocomplete.coincidences.map((element, index) => (
-              <li
-                key={index}
-                className="rls-field-list__element"
-                tabIndex={-1}
-                onClick={autocomplete.onClickElement(element)}
-                onKeyDown={autocomplete.onKeydownElement(element)}
-              >
-                {render(element)}
-              </li>
-            ))}
-
-            {!autocomplete.coincidences.length && (
-              <li className="rls-field-list__empty">
-                <div className="rls-field-list__empty__description">
-                  <label className="rls-label-bold rls-truncate">
-                    {labels.listEmptyTitle}
-                  </label>
-
-                  <p className="rls-caption-regular">
-                    {labels.listEmptyDescription}
-                  </p>
-                </div>
-              </li>
-            )}
-          </ul>
-        </div>
-
-        <div
-          className="rls-field-list__backdrop"
-          onClick={autocomplete.onClickBackdrop}
-        ></div>
-      </div>
+      <RlsFieldListSuggestions
+        elements={autocomplete.coincidences}
+        visible={autocomplete.listIsVisible}
+        disabled={disabled}
+        higher={autocomplete.higher}
+        render={render}
+        refList={autocomplete.refList}
+        searchControl={searchControl}
+        onClickElement={autocomplete.onClickElement}
+        onKeydownElement={autocomplete.onKeydownElement}
+        onClickBackdrop={autocomplete.onClickBackdrop}
+      />
     </div>
   );
 }

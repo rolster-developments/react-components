@@ -36,7 +36,7 @@ export function RlsPagination<T>({
     (template: PaginationTemplate, suggestions: T[]) => {
       const { firstPage, lastPage } = template;
 
-      onPagination && onPagination({ firstPage, lastPage, suggestions });
+      onPagination?.({ firstPage, lastPage, suggestions });
 
       setTemplate(template);
     },

@@ -68,11 +68,11 @@ export function RlsPickerSelectorTitle({
   }, [monthControl.value, yearControl.value]);
 
   const onMonth = useCallback(() => {
-    onClick && onClick('month');
+    onClick?.('month');
   }, [onClick]);
 
   const onYear = useCallback(() => {
-    onClick && onClick('year');
+    onClick?.('year');
   }, [onClick]);
 
   const onPreviousYear = useCallback(() => {

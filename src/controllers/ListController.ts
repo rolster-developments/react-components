@@ -18,7 +18,7 @@ import {
 interface ListControllerState {
   focused: boolean;
   higher: boolean;
-  modalIsVisible: boolean;
+  listIsVisible: boolean;
   value: string;
 }
 
@@ -66,7 +66,7 @@ export function useListController<T = any, K = string>(
   const [state, refreshState] = useState<ListControllerState>({
     focused: false,
     higher: false,
-    modalIsVisible: false,
+    listIsVisible: false,
     value: ''
   });
 
@@ -77,7 +77,7 @@ export function useListController<T = any, K = string>(
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
       !refContent?.current?.contains(target as any) &&
-        refreshState((state) => ({ ...state, modalIsVisible: false }));
+        refreshState((state) => ({ ...state, listIsVisible: false }));
     }
 
     document.addEventListener('click', onCloseSuggestions);
@@ -88,14 +88,14 @@ export function useListController<T = any, K = string>(
   }, []);
 
   useEffect(() => {
-    if (!listIsOpen.current && state.modalIsVisible) {
+    if (!listIsOpen.current && state.listIsVisible) {
       listIsOpen.current = true;
     }
 
-    if (listIsOpen.current && !state.modalIsVisible) {
+    if (listIsOpen.current && !state.listIsVisible) {
       formControl?.touch();
     }
-  }, [state.modalIsVisible]);
+  }, [state.listIsVisible]);
 
   useEffect(() => {
     setCollection(new ListCollection(suggestions, reference));
@@ -133,7 +133,7 @@ export function useListController<T = any, K = string>(
     (state: Partial<ListControllerState>) => {
       const minHeightList = calculateMinHeightList(count, lineHeight ?? 48);
 
-      const _state = state.modalIsVisible
+      const _state = state.listIsVisible
         ? {
             ...state,
             higher: locationListCanTop(
@@ -167,7 +167,7 @@ export function useListController<T = any, K = string>(
 
   const navigationInput = useCallback(
     (event: KeyboardEvent) => {
-      if (state.modalIsVisible) {
+      if (state.listIsVisible) {
         const _position = navigationListFromInput({
           content: refContent.current,
           event: event as any,
@@ -177,7 +177,7 @@ export function useListController<T = any, K = string>(
         position.current = _position ?? 0;
       }
     },
-    [state.modalIsVisible]
+    [state.listIsVisible]
   );
 
   const navigationElement = useCallback(
@@ -190,7 +190,7 @@ export function useListController<T = any, K = string>(
         position: position.current
       });
     },
-    [state.modalIsVisible]
+    [state.listIsVisible]
   );
 
   return {

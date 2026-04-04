@@ -72,7 +72,7 @@ export function useFieldSelect<
   }, [controller.setState]);
 
   const onClickInput = useCallback(() => {
-    !props.readOnly && controller.setState({ modalIsVisible: true });
+    !props.readOnly && controller.setState({ listIsVisible: true });
   }, [controller.setState, props.readOnly]);
 
   const onKeydownInput = useCallback(
@@ -80,12 +80,12 @@ export function useFieldSelect<
       switch (event.code) {
         case 'Space':
         case 'Enter':
-          controller.setState({ modalIsVisible: true });
+          controller.setState({ listIsVisible: true });
           break;
 
         case 'Escape':
         case 'Tab':
-          controller.setState({ modalIsVisible: false });
+          controller.setState({ listIsVisible: false });
           break;
 
         default:
@@ -100,16 +100,16 @@ export function useFieldSelect<
     const removable = !props.unremovable && !!controller.value;
 
     if (removable) {
-      controller.setState({ modalIsVisible: false });
+      controller.setState({ listIsVisible: false });
       controller.setFormValue(undefined);
       props.onValue && props.onValue(props.value as T);
     } else {
-      const modalIsVisible = !controller.modalIsVisible;
-      controller.setState({ modalIsVisible });
-      modalIsVisible && controller.refInput?.current?.focus();
+      const listIsVisible = !controller.listIsVisible;
+      controller.setState({ listIsVisible });
+      listIsVisible && controller.refInput?.current?.focus();
     }
   }, [
-    controller.modalIsVisible,
+    controller.listIsVisible,
     controller.value,
     controller.setState,
     controller.setFormValue,
@@ -118,7 +118,7 @@ export function useFieldSelect<
   ]);
 
   const onClickBackdrop = useCallback(() => {
-    controller.setState({ modalIsVisible: false });
+    controller.setState({ listIsVisible: false });
   }, [controller.setState]);
 
   const onChange = useCallback(
@@ -126,11 +126,11 @@ export function useFieldSelect<
       !props.disabled && controller.refInput?.current?.focus();
 
       if (props.onSelect) {
-        controller.setState({ modalIsVisible: false });
+        controller.setState({ listIsVisible: false });
         element.value && props.onSelect(element.value);
       } else {
         controller.setFormValue(element);
-        controller.setState({ modalIsVisible: false });
+        controller.setState({ listIsVisible: false });
       }
 
       props.onValue && props.onValue(element.value);

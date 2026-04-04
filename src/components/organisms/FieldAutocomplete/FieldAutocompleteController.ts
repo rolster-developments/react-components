@@ -121,7 +121,7 @@ export function useFieldAutocomplete<
       switch (event.code) {
         case 'Escape':
         case 'Tab':
-          controller.setState({ modalIsVisible: false });
+          controller.setState({ listIsVisible: false });
           break;
 
         default:
@@ -134,7 +134,7 @@ export function useFieldAutocomplete<
 
   const onClickControl = useCallback(() => {
     if (!props.readOnly) {
-      controller.setState({ modalIsVisible: true });
+      controller.setState({ listIsVisible: true });
 
       setTimeout(() => {
         controller.refInput?.current?.focus();
@@ -144,7 +144,7 @@ export function useFieldAutocomplete<
 
   const onClickAction = useCallback(() => {
     if (controller.value) {
-      controller.setState({ modalIsVisible: false });
+      controller.setState({ listIsVisible: false });
       controller.setFormValue(undefined);
       props.onValue && props.onValue(props.value as T);
     } else {
@@ -158,7 +158,7 @@ export function useFieldAutocomplete<
   ]);
 
   const onClickBackdrop = useCallback(() => {
-    controller.setState({ modalIsVisible: false });
+    controller.setState({ listIsVisible: false });
   }, [controller.setState]);
 
   const onChange = useCallback(
@@ -173,7 +173,7 @@ export function useFieldAutocomplete<
         setPattern('');
         controller.refInput?.current?.focus();
       } else {
-        controller.setState({ modalIsVisible: false });
+        controller.setState({ listIsVisible: false });
       }
 
       props.onValue && props.onValue(element.value);

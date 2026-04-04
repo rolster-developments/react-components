@@ -122,12 +122,12 @@ export function RlsPickerDateRange({
   }, []);
 
   const onCancel = useCallback(() => {
-    onListener && onListener({ event: PickerListenerEvent.Cancel });
+    onListener?.({ event: PickerListenerEvent.Cancel });
   }, [onListener]);
 
   const onSelect = useCallback(() => {
     formControl?.setValue(value);
-    onListener && onListener({ event: PickerListenerEvent.Select, value });
+    onListener?.({ event: PickerListenerEvent.Select, value });
   }, [formControl, value, onListener]);
 
   return (

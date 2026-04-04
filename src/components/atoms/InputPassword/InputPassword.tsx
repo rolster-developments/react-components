@@ -34,16 +34,16 @@ export function RlsInputPassword({
 
   const _onKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      onKeyDown && onKeyDown(event);
+      onKeyDown?.(event);
 
-      event.key === 'Enter' && onEnter && onEnter();
+      event.key === 'Enter' && onEnter?.();
     },
     [onKeyDown, onEnter]
   );
 
   const _onKeyUp = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      onKeyUp && onKeyUp(event);
+      onKeyUp?.(event);
     },
     [onKeyUp]
   );
