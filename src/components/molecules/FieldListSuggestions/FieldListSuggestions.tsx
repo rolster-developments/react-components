@@ -1,0 +1,159 @@
+import { i18nSubscribe } from '@rolster/i18n';
+import {
+  ChangeEvent,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+import { renderClassStatus } from '../../../helpers/css';
+import { reactI18n } from '../../../i18n';
+import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
+import { PropsWithRlsTheme } from '../../definitions';
+import './FieldListSuggestions.css';
+
+export interface FieldListSearchControl {
+  onChange: (pattern: string) => void;
+  pattern: string;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  onSearch?: () => void;
+  placeholder?: string;
+  refInput?: RefObject<HTMLInputElement | null>;
+  searching?: boolean;
+}
+
+interface FieldListSuggestionsProps<E = any> extends PropsWithRlsTheme {
+  elements: E[];
+  onClickBackdrop: MouseEventHandler;
+  onClickElement: (element: E) => MouseEventHandler;
+  onKeydownElement: (element: E) => KeyboardEventHandler;
+  render: (element: E) => ReactNode;
+  visible: boolean;
+  disabled?: boolean;
+  higher?: boolean;
+  renderEmpty?: () => ReactNode;
+  refList?: RefObject<HTMLUListElement | null>;
+  searchControl?: FieldListSearchControl;
+}
+
+export function RlsFieldListSuggestions<E = any>({
+  elements,
+  disabled,
+  higher,
+  render,
+  renderEmpty,
+  searchControl,
+  visible,
+  onClickBackdrop,
+  onClickElement,
+  onKeydownElement,
+  refList,
+  rlsTheme
+}: FieldListSuggestionsProps<E>) {
+  const [labels, setLabels] = useState({
+    listEmptyDescription: reactI18n('listEmptyDescription'),
+    listEmptyTitle: reactI18n('listEmptyTitle')
+  });
+
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setLabels({
+        listEmptyDescription: reactI18n('listEmptyDescription'),
+        listEmptyTitle: reactI18n('listEmptyTitle')
+      });
+    });
+  }, []);
+
+  const className = useMemo(() => {
+    return renderClassStatus('rls-field-list__suggestions', {
+      disabled,
+      higher,
+      visible
+    });
+  }, [disabled, higher, visible]);
+
+  const onChangePattern = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      searchControl?.onChange(event.target.value);
+    },
+    [searchControl?.onChange]
+  );
+
+  const searching = searchControl?.searching ?? false;
+
+  return (
+    <div className={className} rls-theme={rlsTheme}>
+      <div className="rls-field-list__suggestions__body">
+        <ul ref={refList} className="rls-field-list__ul">
+          {searchControl && (
+            <div className="rls-field-list__ul__search">
+              <input
+                className="rls-field-list__ul__control"
+                ref={searchControl.refInput}
+                type="text"
+                placeholder={searchControl.placeholder}
+                value={searchControl.pattern}
+                onChange={onChangePattern}
+                onFocus={searchControl.onFocus}
+                onBlur={searchControl.onBlur}
+                onKeyDown={searchControl.onKeyDown}
+                disabled={disabled || searching}
+              />
+
+              {searchControl.onSearch && (
+                <button
+                  disabled={disabled || searching}
+                  onClick={searchControl.onSearch}
+                >
+                  <RlsIcon value="search" />
+                </button>
+              )}
+            </div>
+          )}
+
+          {searching && <RlsProgressBar indeterminate={true} />}
+
+          {elements.map((element, index) => (
+            <li
+              key={index}
+              className="rls-field-list__element"
+              tabIndex={-1}
+              onClick={onClickElement(element)}
+              onKeyDown={onKeydownElement(element)}
+            >
+              {render(element)}
+            </li>
+          ))}
+
+          {!elements.length && (
+            <li className="rls-field-list__empty">
+              {renderEmpty ? (
+                renderEmpty()
+              ) : (
+                <div className="rls-field-list__empty__description">
+                  <label className="rls-label-bold rls-truncate">
+                    {labels.listEmptyTitle}
+                  </label>
+
+                  <p className="rls-caption-regular">
+                    {labels.listEmptyDescription}
+                  </p>
+                </div>
+              )}
+            </li>
+          )}
+        </ul>
+      </div>
+
+      <div className="rls-field-list__backdrop" onClick={onClickBackdrop}></div>
+    </div>
+  );
+}
