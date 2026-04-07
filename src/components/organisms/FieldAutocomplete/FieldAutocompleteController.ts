@@ -77,6 +77,13 @@ export function useFieldAutocomplete<
     previous: null
   });
 
+  const focusTimeoutId = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
+
+  const rebootIsRequired = useRef(true);
+  const prevSuggestions = useRef(props.suggestions);
+
   const refreshCoincidences = useCallback(
     (suggestions: E[], pattern: string | null, reboot = false) => {
       const { collection, store } = createAutocompleteStore({
@@ -97,16 +104,18 @@ export function useFieldAutocomplete<
   );
 
   useEffect(() => {
-    refreshCoincidences(props.suggestions, pattern, true);
-  }, [props.suggestions]);
+    const reboot =
+      rebootIsRequired.current || prevSuggestions.current !== props.suggestions;
 
-  useEffect(() => {
-    refreshCoincidences(props.suggestions, pattern);
-  }, [pattern]);
+    rebootIsRequired.current = false;
+    prevSuggestions.current = props.suggestions;
+
+    refreshCoincidences(props.suggestions, pattern, reboot);
+  }, [props.suggestions, pattern]);
 
   useEffect(() => {
     props.disabled && controller.setState({ focused: false });
-  }, [props.disabled]);
+  }, [props.disabled, controller.setState]);
 
   const onFocusInput = useCallback(() => {
     controller.setState({ focused: true });
@@ -136,17 +145,25 @@ export function useFieldAutocomplete<
     if (!props.readOnly) {
       controller.setState({ listIsVisible: true });
 
-      setTimeout(() => {
+      clearTimeout(focusTimeoutId.current);
+
+      focusTimeoutId.current = setTimeout(() => {
         controller.refInput?.current?.focus();
       }, DURATION_ANIMATION);
     }
   }, [controller.setState, props.readOnly]);
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(focusTimeoutId.current);
+    };
+  }, []);
+
   const onClickAction = useCallback(() => {
     if (controller.value) {
       controller.setState({ listIsVisible: false });
       controller.setFormValue(undefined);
-      props.onValue && props.onValue(props.value as T);
+      props.onValue?.(props.value as T);
     } else {
       onClickControl();
     }
@@ -154,7 +171,9 @@ export function useFieldAutocomplete<
     controller.value,
     controller.setState,
     controller.setFormValue,
-    props.onValue
+    props.onValue,
+    props.value,
+    onClickControl
   ]);
 
   const onClickBackdrop = useCallback(() => {
@@ -176,7 +195,7 @@ export function useFieldAutocomplete<
         controller.setState({ listIsVisible: false });
       }
 
-      props.onValue && props.onValue(element.value);
+      props.onValue?.(element.value);
     },
     [
       controller.setState,

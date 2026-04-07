@@ -24,7 +24,7 @@ export function RlsImageChooser(props: ImageChooserProps) {
   const onValue = useCallback(
     (image: ImageEditorValue) => {
       setSrc(image.base64);
-      props.onValue && props.onValue(image);
+      props.onValue?.(image);
     },
     [props.onValue]
   );

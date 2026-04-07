@@ -64,7 +64,7 @@ function RlsPickerMonthElement({
 }
 
 export function RlsPickerMonth({
-  date: _date,
+  date,
   disabled,
   formControl,
   maxDate,
@@ -73,10 +73,13 @@ export function RlsPickerMonth({
   rlsTheme,
   year
 }: PickerMonthProps) {
-  const date = useMemo(() => _date || new Date(), [_date]);
+  const dateMonth = useMemo(() => date ?? new Date(), [date]);
 
   const [months, setMonths] = useState<MonthState[]>([]);
-  const [value, setValue] = useState(formControl?.value ?? date.getMonth());
+
+  const [value, setValue] = useState(
+    formControl?.value ?? dateMonth.getMonth()
+  );
 
   const [component, setComponent] = useState(<></>);
 
@@ -112,9 +115,9 @@ export function RlsPickerMonth({
 
   useEffect(() => {
     const options = {
-      date,
+      date: dateMonth,
       month: formControl?.value ?? value,
-      year: year ?? date.getFullYear(),
+      year: year ?? dateMonth.getFullYear(),
       minDate,
       maxDate
     };
@@ -124,20 +127,20 @@ export function RlsPickerMonth({
     valueIsDefined(month)
       ? setMonthValue(month)
       : setMonths(createMonthPicker(options));
-  }, [date, year, value, minDate, maxDate]);
+  }, [dateMonth, year, value, minDate, maxDate]);
 
   useEffect(() => {
     const month = verifyMonthPicker({
-      date,
+      date: dateMonth,
       month: formControl?.value ?? value,
-      year: year ?? date.getFullYear(),
+      year: year ?? dateMonth.getFullYear(),
       minDate,
       maxDate
     });
 
     valueIsDefined(month)
       ? formControl?.setValue(month)
-      : setValue(formControl?.value ?? date.getMonth());
+      : setValue(formControl?.value ?? dateMonth.getMonth());
   }, [formControl?.value]);
 
   return (

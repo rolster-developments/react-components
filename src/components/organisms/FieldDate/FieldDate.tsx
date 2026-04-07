@@ -104,7 +104,7 @@ export function RlsFieldDate({
     return {
       icon: dateValue ? 'trash-2' : 'calendar',
       label: dateValue
-        ? dateFormatTemplate(dateValue, format || DATE_FORMAT)
+        ? dateFormatTemplate(dateValue, format ?? DATE_FORMAT)
         : ''
     };
   }, [dateValue, format]);

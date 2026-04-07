@@ -51,7 +51,7 @@ function RlsPickerYearElement({
 }
 
 export function RlsPickerYear({
-  date: _date,
+  date,
   disabled,
   formControl,
   maxDate,
@@ -59,21 +59,26 @@ export function RlsPickerYear({
   onValue,
   rlsTheme
 }: PickerYearProps) {
-  const date = useMemo(() => _date || new Date(), [_date]);
+  const dateYear = useMemo(() => date ?? new Date(), [date]);
 
-  const [value, setValue] = useState(formControl?.value ?? date.getFullYear());
-  const [year, setYear] = useState(formControl?.value ?? date.getFullYear());
+  const [value, setValue] = useState(
+    formControl?.value ?? dateYear.getFullYear()
+  );
+
+  const [year, setYear] = useState(
+    formControl?.value ?? dateYear.getFullYear()
+  );
 
   const [component, setComponent] = useState(<></>);
 
   const createPickerOptions = useCallback(() => {
     return {
-      date,
+      date: dateYear,
       year,
       minDate,
       maxDate
     };
-  }, [date, year, minDate, maxDate]);
+  }, [dateYear, year, minDate, maxDate]);
 
   const [template, setTemplate] = useState(
     createYearPicker(createPickerOptions())
@@ -102,7 +107,7 @@ export function RlsPickerYear({
     const year = verifyYearPicker(options);
 
     year ? setYearValue(year) : setTemplate(createYearPicker(options));
-  }, [date, year, value, minDate, maxDate]);
+  }, [dateYear, year, value, minDate, maxDate]);
 
   useEffect(() => {
     setComponent(
@@ -124,7 +129,7 @@ export function RlsPickerYear({
 
     valueIsDefined(year)
       ? formControl?.setValue(year)
-      : setValue(formControl?.value ?? date.getFullYear());
+      : setValue(formControl?.value ?? dateYear.getFullYear());
   }, [formControl?.value]);
 
   const onClickPrev = useCallback(() => {

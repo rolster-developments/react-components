@@ -68,7 +68,7 @@ function RlsPickerDayElement({
 }
 
 export function RlsPickerDay({
-  date: _date,
+  date,
   disabled,
   formControl,
   maxDate,
@@ -78,10 +78,10 @@ export function RlsPickerDay({
   rlsTheme,
   year
 }: PickerDayProps) {
-  const date = useMemo(() => _date ?? new Date(), [_date]);
+  const dateDay = useMemo(() => date ?? new Date(), [date]);
 
   const [weeks, setWeeks] = useState<WeekState[]>([]);
-  const [value, setValue] = useState(formControl?.value || date.getDate());
+  const [value, setValue] = useState(formControl?.value ?? dateDay.getDate());
 
   const [headers, setHeaders] = useState(<RlsPickerDayHeaders />);
   const [component, setComponent] = useState(<></>);
@@ -132,26 +132,26 @@ export function RlsPickerDay({
     const day = verifyDayPicker(options);
 
     day ? setDayValue(day) : setWeeks(createDayPicker(options));
-  }, [date, month, year, value, minDate, maxDate]);
+  }, [dateDay, month, year, value, minDate, maxDate]);
 
   useEffect(() => {
     const day = verifyDayPicker(createPickerOptions());
 
     day
       ? formControl?.setValue(day)
-      : setValue(formControl?.value || date.getDate());
+      : setValue(formControl?.value || dateDay.getDate());
   }, [formControl?.value]);
 
   const createPickerOptions = useCallback(() => {
     return {
-      date,
+      date: dateDay,
       day: formControl?.value ?? value,
-      month: month ?? date.getMonth(),
-      year: year ?? date.getFullYear(),
+      month: month ?? dateDay.getMonth(),
+      year: year ?? dateDay.getFullYear(),
       minDate,
       maxDate
     };
-  }, [date, formControl?.value, value, month, year, minDate, maxDate]);
+  }, [dateDay, formControl?.value, value, month, year, minDate, maxDate]);
 
   return (
     <div className="rls-picker-day" rls-theme={rlsTheme}>

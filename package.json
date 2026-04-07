@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.4.1",
+  "version": "19.4.4",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "license": "MIT",

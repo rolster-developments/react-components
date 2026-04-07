@@ -5,7 +5,7 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import './Pagination.css';
@@ -21,6 +21,28 @@ interface PaginationProps<T> {
   count?: number;
   filter?: FilterCriteria<T>;
   onPagination?: (event: PaginationEvent<T>) => void;
+}
+
+interface PageButtonProps {
+  page: PageState;
+  onSelect: (page: PageState) => void;
+}
+
+function PageButton({ page, onSelect }: PageButtonProps) {
+  const className = useMemo(
+    () => renderClassStatus('rls-pagination__page', { active: page.active }),
+    [page.active]
+  );
+
+  const onClick = useCallback(() => {
+    onSelect(page);
+  }, [page, onSelect]);
+
+  return (
+    <button type="button" className={className} onClick={onClick}>
+      {page.label}
+    </button>
+  );
 }
 
 export function RlsPagination<T>({
@@ -43,10 +65,13 @@ export function RlsPagination<T>({
     [onPagination]
   );
 
-  const refreshPagination = useCallback((pagination?: Pagination<T>) => {
-    pagination &&
-      refreshTemplate(pagination.template, pagination.page.collection);
-  }, []);
+  const refreshPagination = useCallback(
+    (pagination?: Pagination<T>) => {
+      pagination &&
+        refreshTemplate(pagination.template, pagination.page.collection);
+    },
+    [refreshTemplate]
+  );
 
   useEffect(() => {
     const pagination = new PaginationController({
@@ -58,31 +83,34 @@ export function RlsPagination<T>({
     controller.current = pagination;
 
     refreshTemplate(pagination.template, pagination.page.collection);
-  }, [suggestions, count]);
+  }, [suggestions, count, refreshTemplate]);
 
   useEffect(() => {
     refreshPagination(controller.current?.filtrable(filter));
-  }, [filter]);
+  }, [filter, refreshPagination]);
 
-  const goToPagination = useCallback((page: PageState) => {
-    refreshPagination(controller.current?.goToPage(page));
-  }, []);
+  const goToPagination = useCallback(
+    (page: PageState) => {
+      refreshPagination(controller.current?.goToPage(page));
+    },
+    [refreshPagination]
+  );
 
   const goFirstPagination = useCallback(() => {
     refreshPagination(controller.current?.goFirstPage());
-  }, []);
+  }, [refreshPagination]);
 
   const goPreviousPagination = useCallback(() => {
     refreshPagination(controller.current?.goPreviousPage());
-  }, []);
+  }, [refreshPagination]);
 
   const goNextPagination = useCallback(() => {
     refreshPagination(controller.current?.goNextPage());
-  }, []);
+  }, [refreshPagination]);
 
   const goLastPagination = useCallback(() => {
     refreshPagination(controller.current?.goLastPage());
-  }, []);
+  }, [refreshPagination]);
 
   return (
     <div className="rls-pagination">
@@ -106,21 +134,13 @@ export function RlsPagination<T>({
 
       <div className="rls-pagination__body">
         <div className="rls-pagination__pages">
-          {template?.pages.map((page, index) => {
-            return (
-              <div
-                key={index}
-                className={renderClassStatus('rls-pagination__page', {
-                  active: page.active
-                })}
-                onClick={() => {
-                  goToPagination(page);
-                }}
-              >
-                {page.label}
-              </div>
-            );
-          })}
+          {template?.pages.map((page) => (
+            <PageButton
+              key={page.value}
+              page={page}
+              onSelect={goToPagination}
+            />
+          ))}
         </div>
 
         <div className="rls-pagination__description">

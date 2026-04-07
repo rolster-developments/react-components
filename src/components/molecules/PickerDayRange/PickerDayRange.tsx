@@ -35,9 +35,9 @@ function RlsPickerDayRangeHeaders() {
   return (
     <div className="rls-picker-day__header">
       {DAY_LABELS().map((title, index) => (
-        <label key={index} className="rls-picker-day__label">
+        <span key={index} className="rls-picker-day__label">
           {title}
-        </label>
+        </span>
       ))}
     </div>
   );
@@ -72,43 +72,43 @@ function RlsPickerDayRangeElement({
 }
 
 export function RlsPickerDayRange({
-  date: _date,
+  date,
   disabled,
   formControl,
   maxDate,
   minDate,
   rlsTheme
 }: PickerDayRangeProps) {
-  const _range = useMemo(() => {
+  const rangeDay = useMemo(() => {
     return formControl?.value ?? DateRange.now();
   }, [formControl?.value]);
 
-  const date = useMemo(() => {
-    return normalizeMinTime(_date ?? _range.minDate);
-  }, [_date]);
+  const dateDayRange = useMemo(() => {
+    return normalizeMinTime(date ?? rangeDay.minDate);
+  }, [date, rangeDay]);
 
-  const sourceDate = useRef(_range.minDate);
+  const sourceDate = useRef(rangeDay.minDate);
 
   const [weeks, setWeeks] = useState<WeekRangeState[]>([]);
-  const [range, setRange] = useState(_range);
+  const [range, setRange] = useState(rangeDay);
 
   const [headers, setHeaders] = useState(<RlsPickerDayRangeHeaders />);
   const [component, setComponent] = useState(<></>);
 
   const onSelect = useCallback(
     (value: number) => {
-      const _date = assignDayInDate(date, value);
+      const date = assignDayInDate(dateDayRange, value);
 
-      const range = dateIsBefore(_date, sourceDate.current)
-        ? new DateRange(sourceDate.current, _date)
-        : new DateRange(_date, sourceDate.current);
+      const range = dateIsBefore(date, sourceDate.current)
+        ? new DateRange(sourceDate.current, date)
+        : new DateRange(date, sourceDate.current);
 
-      sourceDate.current = _date;
+      sourceDate.current = date;
 
       setRange(range);
       formControl?.setValue(range);
     },
-    [date, sourceDate.current, formControl]
+    [dateDayRange, formControl]
   );
 
   useEffect(() => {
@@ -139,14 +139,14 @@ export function RlsPickerDayRange({
   useEffect(() => {
     setWeeks(
       createDayRangePicker({
-        date,
+        date: dateDayRange,
         range,
         sourceDate: sourceDate.current,
         minDate,
         maxDate
       })
     );
-  }, [date, range, minDate, maxDate]);
+  }, [dateDayRange, range, minDate, maxDate]);
 
   return (
     <div className="rls-picker-day-range" rls-theme={rlsTheme}>

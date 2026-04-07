@@ -84,7 +84,7 @@ export function RlsPickerDate({
         maxDate,
         minDate
       }),
-    [today.current, maxDate, minDate]
+    [maxDate, minDate]
   );
 
   useEffect(() => {

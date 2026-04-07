@@ -1,14 +1,16 @@
-// Rolster Technology FieldReadonly Component
-// v1.0.5
+// Rolster Technology FieldFile Component
+// v1.0.0
 // @license MIT
 // Author: Rolster Developers
-// Created: 14/Abr/2025
-// Updated: 28/Oct/2025
+// Created: 04/Apr/2026
+// Updated: 04/Apr/2026
 
-.rls-field-readonly {
+.rls-field-file {
   --rlc-field-box-body-padding: var(--rls-sizing-x3) var(--rls-sizing-x4);
+  --rlc-action-ripple-dimension: var(--rls-sizing-x12);
+  --rlc-action-ripple-position: -6rem;
 
-  --pvt-font-color: var(--rlc-input-font-color, var(--rls-app-color-600));
+  --pvt-font-color: var(--rlc-input-font-color, var(--rls-app-color-900));
   --pvt-font-size: var(--rlc-input-font-size, var(--rls-input-font-size));
   --pvt-letter-spacing: var(
     --rlc-input-letter-spacing,
@@ -21,4 +23,19 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
+
+  .rls-field-file__input {
+    display: none;
+  }
+
+  .rls-input__component {
+    cursor: pointer;
+  }
+
+  .rls-button-action {
+    padding: 0rem;
+    width: var(--rls-sizing-x12);
+    height: var(--rls-sizing-x12);
+    z-index: 2;
+  }
 }

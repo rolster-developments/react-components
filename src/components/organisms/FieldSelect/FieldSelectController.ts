@@ -102,7 +102,7 @@ export function useFieldSelect<
     if (removable) {
       controller.setState({ listIsVisible: false });
       controller.setFormValue(undefined);
-      props.onValue && props.onValue(props.value as T);
+      props.onValue?.(props.value as T);
     } else {
       const listIsVisible = !controller.listIsVisible;
       controller.setState({ listIsVisible });
@@ -133,7 +133,7 @@ export function useFieldSelect<
         controller.setState({ listIsVisible: false });
       }
 
-      props.onValue && props.onValue(element.value);
+      props.onValue?.(element.value);
     },
     [
       controller.setState,

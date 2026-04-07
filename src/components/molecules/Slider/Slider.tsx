@@ -41,25 +41,37 @@ function calculateInitialRate(
   return Math.ceil((rateValue / rateMax) * 100);
 }
 
-export function RlsSlider(props: SliderProps) {
-  const minValue = useMemo(() => {
-    return props.minValue ?? 0;
-  }, [props.minValue]);
+export function RlsSlider({
+  children,
+  className,
+  disabled,
+  formControl,
+  identifier,
+  maxValue,
+  minValue,
+  onValue,
+  prefixIcon,
+  rlsTheme,
+  value
+}: SliderProps) {
+  const minValueSlider = useMemo(() => {
+    return minValue ?? 0;
+  }, [minValue]);
 
-  const maxValue = useMemo(() => {
-    return props.maxValue ?? 100;
-  }, [props.maxValue]);
+  const maxValueSlider = useMemo(() => {
+    return maxValue ?? 100;
+  }, [maxValue]);
 
-  const [value, setValue] = useState(
+  const [valueSlider, setValue] = useState(
     calculateInitialValue(
-      props.formControl?.value ?? props.value ?? 0,
-      minValue,
-      maxValue
+      formControl?.value ?? value ?? 0,
+      minValueSlider,
+      maxValueSlider
     )
   );
 
   const [rate, setRate] = useState(
-    calculateInitialRate(value, minValue, maxValue)
+    calculateInitialRate(valueSlider, minValueSlider, maxValueSlider)
   );
 
   const refComponent = useRef<HTMLDivElement>(null!);
@@ -67,41 +79,45 @@ export function RlsSlider(props: SliderProps) {
   const refTrackOn = useRef<HTMLDivElement>(null!);
   const refThumb = useRef<HTMLDivElement>(null!);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-slider', {
-      complet: value === maxValue,
-      disabled: props.disabled,
-      empty: value === minValue
-    });
-  }, [value, minValue, maxValue, props.disabled]);
+  const classNameSlider = useMemo(() => {
+    return renderClassStatus(
+      'rls-slider',
+      {
+        complet: valueSlider === maxValueSlider,
+        disabled: disabled,
+        empty: valueSlider === minValueSlider
+      },
+      className
+    );
+  }, [valueSlider, minValueSlider, maxValueSlider, disabled]);
 
   useEffect(() => {
-    const valueInitial = props.formControl?.value ?? props.value ?? 0;
+    const valueInitial = formControl?.value ?? value ?? 0;
 
     refThumb.current.style.left = `${rate}%`;
     refTrackOn.current.style.width = `${rate}%`;
 
-    if (valueInitial !== value) {
-      props.formControl?.setValue(value);
-      props.onValue && props.onValue(value);
+    if (valueInitial !== valueSlider) {
+      formControl?.setValue(valueSlider);
+      onValue?.(valueSlider);
     }
   }, []);
 
   const calculateValueWithRate = useCallback(
     (rate: number) => {
-      const value = Math.ceil(((maxValue - minValue) * rate) / 100);
+      const value = Math.ceil(((maxValueSlider - minValueSlider) * rate) / 100);
 
       refThumb.current.style.left = `${rate}%`;
       refTrackOn.current.style.width = `${rate}%`;
 
-      const sliderValue = value + minValue;
+      const sliderValue = value + minValueSlider;
 
       setRate(rate);
       setValue(sliderValue);
-      props.formControl?.setValue(sliderValue);
-      props.onValue && props.onValue(sliderValue);
+      formControl?.setValue(sliderValue);
+      onValue?.(sliderValue);
     },
-    [minValue, maxValue, props.formControl, props.onValue]
+    [minValueSlider, maxValueSlider, formControl, onValue]
   );
 
   const onClickTrack = useCallback(
@@ -112,17 +128,15 @@ export function RlsSlider(props: SliderProps) {
 
       calculateValueWithRate(rate);
     },
-    [minValue, maxValue]
+    [minValueSlider, maxValueSlider]
   );
 
   return (
-    <div className={className}>
-      {props.children && (
-        <span className="rls-slider__label">{props.children}</span>
-      )}
+    <div id={identifier} className={classNameSlider} rls-theme={rlsTheme}>
+      {children && <span className="rls-slider__label">{children}</span>}
 
       <div className="rls-slider__body">
-        {props.prefixIcon && <RlsIcon value={props.prefixIcon} />}
+        {prefixIcon && <RlsIcon value={prefixIcon} />}
 
         <div ref={refComponent} className="rls-slider__component">
           <div

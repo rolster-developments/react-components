@@ -339,7 +339,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
               blob
             };
 
-            props.onValue && props.onValue(value);
+            props.onValue?.(value);
             props.formControl?.setValue(value);
           };
         }

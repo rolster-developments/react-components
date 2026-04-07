@@ -119,14 +119,14 @@ export function RlsFieldClock({
   );
 
   return (
-    <div id={identifier} className="rls-field-date" rls-theme={rlsTheme}>
+    <div id={identifier} className="rls-field-clock" rls-theme={rlsTheme}>
       <div className={className}>
         {children && <span className="rls-field-box__label">{children}</span>}
 
         <div className="rls-field-box__component">
           <div className="rls-field-box__body">
             <input
-              className="rls-field-date__control"
+              className="rls-field-clock__control"
               type="text"
               value={status.valueInput}
               readOnly={true}
@@ -137,7 +137,7 @@ export function RlsFieldClock({
 
             {!readOnly && (
               <button
-                className="rls-field-date__action"
+                className="rls-field-clock__action"
                 onClick={onClickAction}
                 disabled={disabled}
               >

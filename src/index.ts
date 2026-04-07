@@ -33,6 +33,7 @@ export * from './components/molecules/ButtonProgress/ButtonProgress';
 export * from './components/molecules/ButtonToggle/ButtonToggle';
 export * from './components/molecules/Content/Content';
 export * from './components/molecules/FieldDecimal/FieldDecimal';
+export * from './components/molecules/FieldFile/FieldFile';
 export * from './components/molecules/FieldListSuggestions/FieldListSuggestions';
 export * from './components/molecules/FieldMoney/FieldMoney';
 export * from './components/molecules/FieldNumber/FieldNumber';
