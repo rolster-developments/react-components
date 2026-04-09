@@ -1,9 +1,9 @@
 // Rolster Technology Modal Component
-// v1.2.4
+// v1.2.5
 // @license MIT
 // Author: Rolster Developers
 // Created: 20/Mar/2018
-// Updated: 03/Sep/2025
+// Updated: 08/Abr/2026
 
 .rls-modal {
   --pvt-component-transform: translateY(150px) scale(0.6);
@@ -49,8 +49,8 @@
     border-radius: var(--rls-sizing-x4);
     background: var(--rlc-modal-background, var(--rls-app-color-050));
     transform: var(--pvt-component-transform);
-    transition: opacity var(--pvt-component-transition) 0ms
-        var(--rls-deceleration-curve),
+    transition:
+      opacity var(--pvt-component-transition) 0ms var(--rls-deceleration-curve),
       transform var(--pvt-component-transition) 0ms
         var(--rls-deceleration-curve),
       visibility var(--pvt-component-transition) 0ms
@@ -65,10 +65,11 @@
     right: 0rem;
     bottom: var(--pvt-backdrop-bottom);
     opacity: var(--pvt-backdrop-opacity);
-    z-index: 1;
-    background: var(--rls-theme-backdrop-900);
-    backdrop-filter: blur(2px);
-    transition: opacity 120ms 0ms var(--rls-deceleration-curve),
+    z-index: var(--rls-z-index-1);
+    background: var(--rlc-modal-backdrop-color, var(--rls-theme-backdrop-400));
+    backdrop-filter: var(--rlc-modal-backdrop-filter, blur(2px));
+    transition:
+      opacity 120ms 0ms var(--rls-deceleration-curve),
       bottom 120ms 0ms var(--rls-deceleration-curve);
   }
 }

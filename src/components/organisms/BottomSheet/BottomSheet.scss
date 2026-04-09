@@ -1,9 +1,9 @@
 // Rolster Technology BottomSheet Component
-// v1.0.3
+// v1.0.4
 // @license MIT
 // Author: Rolster Developers
 // Created: 03/Sep/2025
-// Updated: 26/Sep/2025
+// Updated: 08/Abr/2026
 
 .rls-bottom-sheet {
   --pvt-component-transform: translateY(100%);
@@ -51,8 +51,8 @@
     border-radius: var(--rls-sizing-x4) var(--rls-sizing-x4) 0rem 0rem;
     background: var(--rlc-bottom-sheet-background, var(--rls-app-color-050));
     transform: var(--pvt-component-transform);
-    transition: opacity var(--pvt-component-transition) 0ms
-        var(--rls-deceleration-curve),
+    transition:
+      opacity var(--pvt-component-transition) 0ms var(--rls-deceleration-curve),
       transform var(--pvt-component-transition) 0ms
         var(--rls-deceleration-curve),
       visibility var(--pvt-component-transition) 0ms
@@ -77,10 +77,14 @@
     right: 0rem;
     bottom: var(--pvt-backdrop-bottom);
     opacity: var(--pvt-backdrop-opacity);
-    z-index: 1;
-    background: var(--rls-theme-backdrop-900);
-    backdrop-filter: blur(2px);
-    transition: opacity 120ms 0ms var(--rls-deceleration-curve),
+    z-index: var(--rls-z-index-1);
+    background: var(
+      --rlc-bottom-sheet-backdrop-color,
+      var(--rls-theme-backdrop-400)
+    );
+    backdrop-filter: var(--rlc-bottom-sheet-backdrop-filter, blur(2px));
+    transition:
+      opacity 120ms 0ms var(--rls-deceleration-curve),
       bottom 120ms 0ms var(--rls-deceleration-curve);
   }
 }
