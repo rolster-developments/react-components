@@ -87,8 +87,8 @@ export function RlsFieldAutocompleteTemplate<
   }, []);
 
   useEffect(() => {
-    props.onInput?.(autocomplete.value);
-  }, [autocomplete.value, props.onInput]);
+    props.onInput?.(autocomplete.pattern);
+  }, [autocomplete.pattern, props.onInput]);
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
