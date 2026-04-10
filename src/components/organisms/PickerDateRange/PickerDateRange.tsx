@@ -61,13 +61,29 @@ export function RlsPickerDateRange({
   const monthControl = useReactControl(_date.getMonth());
   const rangeControl = useReactControl(_range);
 
-  const [value, setValue] = useState(_range);
-  const [date, setDate] = useState(_date);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
   const [labels, setLabels] = useState({
     dateActionCancel: reactI18n('dateActionCancel'),
     dateActionSelect: reactI18n('dateActionSelect')
   });
+
+  const value = useMemo(() => {
+    return rangeControl.value ?? _range;
+  }, [rangeControl.value, _range]);
+
+  const date = useMemo(() => {
+    let value = _date;
+
+    if (valueIsDefined(yearControl.value)) {
+      value = assignYearInDate(value, yearControl.value);
+    }
+
+    if (valueIsDefined(monthControl.value)) {
+      value = assignMonthInDate(value, monthControl.value);
+    }
+
+    return value;
+  }, [_date, yearControl.value, monthControl.value]);
 
   const classNameComponent = useMemo(() => {
     return renderClassStatus('rls-picker-date-range__component', {
@@ -93,23 +109,6 @@ export function RlsPickerDateRange({
   }, []);
 
   useEffect(() => {
-    setDate((date) => {
-      return valueIsDefined(yearControl.value)
-        ? assignYearInDate(date, yearControl.value)
-        : date;
-    });
-  }, [yearControl.value]);
-
-  useEffect(() => {
-    setDate((date) => {
-      return valueIsDefined(monthControl.value)
-        ? assignMonthInDate(date, monthControl.value)
-        : date;
-    });
-  }, [monthControl.value]);
-
-  useEffect(() => {
-    rangeControl.value && setValue(rangeControl.value);
     setVisibility('DAY');
   }, [rangeControl.value]);
 

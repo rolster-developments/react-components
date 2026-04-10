@@ -44,6 +44,39 @@ interface FieldListSuggestionsProps<E = any> extends PropsWithRlsTheme {
   searchControl?: FieldListSearchControl;
 }
 
+interface FieldListLiProps<E = any> {
+  element: E;
+  onClickElement: (element: E) => MouseEventHandler;
+  onKeydownElement: (element: E) => KeyboardEventHandler;
+  render: (element: E) => ReactNode;
+}
+
+function RlsFieldListLi<E>({
+  element,
+  onClickElement,
+  onKeydownElement,
+  render
+}: FieldListLiProps<E>) {
+  const onClick = useMemo(() => {
+    return onClickElement(element);
+  }, [element, onClickElement]);
+
+  const onKeyDown = useMemo(() => {
+    return onKeydownElement(element);
+  }, [element, onKeydownElement]);
+
+  return (
+    <li
+      className="rls-field-list__element"
+      tabIndex={-1}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+    >
+      {render(element)}
+    </li>
+  );
+}
+
 export function RlsFieldListSuggestions<E = any>({
   elements,
   disabled,
@@ -122,15 +155,13 @@ export function RlsFieldListSuggestions<E = any>({
           {searching && <RlsProgressBar indeterminate={true} />}
 
           {elements.map((element, index) => (
-            <li
+            <RlsFieldListLi
               key={index}
-              className="rls-field-list__element"
-              tabIndex={-1}
-              onClick={onClickElement(element)}
-              onKeyDown={onKeydownElement(element)}
-            >
-              {render(element)}
-            </li>
+              element={element}
+              onClickElement={onClickElement}
+              onKeydownElement={onKeydownElement}
+              render={render}
+            />
           ))}
 
           {!elements.length && (

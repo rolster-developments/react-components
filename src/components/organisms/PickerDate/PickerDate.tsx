@@ -57,13 +57,16 @@ export function RlsPickerDate({
   const dayControl = useReactControl(_date.getDate());
   const monthControl = useReactControl(_date.getMonth());
 
-  const [value, setValue] = useState(_date);
   const [visibility, setVisibility] = useState<Visibility>('DAY');
   const [labels, setLabels] = useState({
     dateActionCancel: reactI18n('dateActionCancel'),
     dateActionSelect: reactI18n('dateActionSelect'),
     dateActionToday: reactI18n('dateActionToday')
   });
+
+  const value = useMemo(() => {
+    return new Date(yearControl.value, monthControl.value, dayControl.value);
+  }, [yearControl.value, monthControl.value, dayControl.value]);
 
   const classNameComponent = useMemo(() => {
     return renderClassStatus('rls-picker-date__component', {
@@ -74,8 +77,8 @@ export function RlsPickerDate({
   }, [visibility]);
 
   const title = useMemo(() => {
-    return dateFormatTemplate(_date, DATE_FORMAT_TITLE);
-  }, [_date]);
+    return dateFormatTemplate(value, DATE_FORMAT_TITLE);
+  }, [value]);
 
   const itIsDisabledToday = useMemo(
     () =>
@@ -90,7 +93,9 @@ export function RlsPickerDate({
   useEffect(() => {
     const date = verifyDateRange({ date: _date, minDate, maxDate });
 
-    setValue(date);
+    yearControl.setValue(date.getFullYear());
+    monthControl.setValue(date.getMonth());
+    dayControl.setValue(date.getDate());
     formControl?.setValue(date);
 
     return i18nSubscribe(() => {
@@ -101,10 +106,6 @@ export function RlsPickerDate({
       });
     });
   }, []);
-
-  useEffect(() => {
-    setValue(new Date(yearControl.value, monthControl.value, dayControl.value));
-  }, [yearControl.value, monthControl.value, dayControl.value]);
 
   const onVisibilityDay = useCallback(() => {
     setVisibility('DAY');
@@ -135,7 +136,7 @@ export function RlsPickerDate({
 
     onListener?.({
       event: PickerListenerEvent.Select,
-      value
+      value: value
     });
   }, [formControl, value, onListener]);
 
@@ -161,7 +162,7 @@ export function RlsPickerDate({
       <div className={classNameComponent}>
         <RlsPickerDay
           formControl={dayControl}
-          date={_date}
+          date={value}
           month={monthControl.value}
           year={yearControl.value}
           maxDate={maxDate}
@@ -171,7 +172,7 @@ export function RlsPickerDate({
 
         <RlsPickerMonth
           formControl={monthControl}
-          date={_date}
+          date={value}
           year={yearControl.value}
           maxDate={maxDate}
           minDate={minDate}
@@ -181,7 +182,7 @@ export function RlsPickerDate({
 
         <RlsPickerYear
           formControl={yearControl}
-          date={_date}
+          date={value}
           maxDate={maxDate}
           minDate={minDate}
           disabled={disabled}

@@ -82,9 +82,7 @@ export function RlsPickerDay({
 
   const [weeks, setWeeks] = useState<WeekState[]>([]);
   const [value, setValue] = useState(formControl?.value ?? dateDay.getDate());
-
-  const [headers, setHeaders] = useState(<RlsPickerDayHeaders />);
-  const [component, setComponent] = useState(<></>);
+  const [_, setI18nVersion] = useState(0);
 
   const setDayValue = useCallback(
     (value: number) => {
@@ -103,28 +101,9 @@ export function RlsPickerDay({
 
   useEffect(() => {
     return i18nSubscribe(() => {
-      setHeaders(<RlsPickerDayHeaders />);
+      setI18nVersion((value) => value + 1);
     });
   }, []);
-
-  useEffect(() => {
-    setComponent(
-      <div className="rls-picker-day__component">
-        {weeks.map(({ days }, index) => (
-          <div key={index} className="rls-picker-day__week">
-            {days.map((day, index) => (
-              <RlsPickerDayElement
-                key={index}
-                day={day}
-                onSelect={onSelect}
-                disabled={disabled}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    );
-  }, [weeks, onSelect, disabled]);
 
   useEffect(() => {
     const options = createPickerOptions();
@@ -155,9 +134,22 @@ export function RlsPickerDay({
 
   return (
     <div className="rls-picker-day" rls-theme={rlsTheme}>
-      {headers}
+      <RlsPickerDayHeaders />
 
-      {component}
+      <div className="rls-picker-day__component">
+        {weeks.map(({ days }, index) => (
+          <div key={index} className="rls-picker-day__week">
+            {days.map((day, index) => (
+              <RlsPickerDayElement
+                key={index}
+                day={day}
+                onSelect={onSelect}
+                disabled={disabled}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

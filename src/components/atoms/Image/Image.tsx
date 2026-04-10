@@ -10,18 +10,14 @@ interface ImageProps extends RlsComponent {
 
 export function RlsImage({ src, rlsTheme }: ImageProps) {
   const [srcIsComplet, setSrcIsComplet] = useState(false);
-
-  const refSrc = useRef(src);
+  const refImage = useRef<HTMLImageElement>(null);
 
   const className = useMemo(() => {
     return renderClassStatus('rls-image', { complet: srcIsComplet });
   }, [srcIsComplet]);
 
   useEffect(() => {
-    if (refSrc.current !== src) {
-      setSrcIsComplet(false);
-      refSrc.current = src;
-    }
+    setSrcIsComplet(!!(src && refImage.current?.complete));
   }, [src]);
 
   const onLoad = useCallback(() => {
@@ -31,7 +27,7 @@ export function RlsImage({ src, rlsTheme }: ImageProps) {
   return (
     <div className={className} rls-theme={rlsTheme}>
       {!srcIsComplet && <RlsSkeleton rlsTheme={rlsTheme} />}
-      <img src={src} onLoad={onLoad} />
+      <img ref={refImage} src={src} onLoad={onLoad} />
     </div>
   );
 }

@@ -1,35 +1,42 @@
-import { useState, useRef, useEffect, UIEvent } from 'react';
+import { ReactNode, UIEvent, useCallback, useMemo, useState } from 'react';
 
-export function RlsVirtualScroll({ items, itemHeight, containerHeight }: any) {
-  const [visibleItems, setVisibleItems] = useState([]);
-  const containerRef = useRef(null);
+interface VirtualScrollProps {
+  container: number;
+  height: number;
+  items: ReactNode[];
+}
+
+export function RlsVirtualScroll({
+  container,
+  height,
+  items
+}: VirtualScrollProps) {
   const [scrollTop, setScrollTop] = useState(0);
 
-  useEffect(() => {
-    const calculateVisibleItems = () => {
-      if (!containerRef.current) return;
+  const startIndex = useMemo(
+    () => Math.floor(scrollTop / height),
+    [scrollTop, height]
+  );
 
-      const startIndex = Math.floor(scrollTop / itemHeight);
-      const endIndex = Math.min(
-        items.length - 1,
-        Math.floor((scrollTop + containerHeight) / itemHeight)
-      );
+  const endIndex = useMemo(
+    () =>
+      Math.min(items.length - 1, Math.floor((scrollTop + container) / height)),
+    [scrollTop, items.length, height, container]
+  );
 
-      setVisibleItems(items.slice(startIndex, endIndex + 1));
-    };
+  const visibleItems = useMemo(
+    () => items.slice(startIndex, endIndex + 1),
+    [items, startIndex, endIndex]
+  );
 
-    calculateVisibleItems();
-  }, [scrollTop, items, itemHeight, containerHeight]);
-
-  const handleScroll = (e: UIEvent) => {
-    setScrollTop(e.currentTarget.scrollTop);
-  };
+  const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
+    setScrollTop(event.currentTarget.scrollTop);
+  }, []);
 
   return (
     <div
-      ref={containerRef}
       style={{
-        height: `${containerHeight}px`,
+        height: `${container}px`,
         overflowY: 'auto',
         position: 'relative'
       }}
@@ -37,19 +44,20 @@ export function RlsVirtualScroll({ items, itemHeight, containerHeight }: any) {
     >
       <div
         style={{
-          height: `${items.length * itemHeight}px`,
+          height: `${items.length * height}px`,
           position: 'relative'
         }}
       >
         {visibleItems.map((item, index) => {
-          const actualIndex = Math.floor(scrollTop / itemHeight) + index;
+          const actualIndex = startIndex + index;
+
           return (
             <div
               key={actualIndex}
               style={{
                 position: 'absolute',
-                top: `${actualIndex * itemHeight}px`,
-                height: `${itemHeight}px`,
+                top: `${actualIndex * height}px`,
+                height: `${height}px`,
                 width: '100%'
               }}
             >

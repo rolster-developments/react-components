@@ -11,15 +11,17 @@ import {
 import { useListController } from '../../../controllers/ListController';
 import { ListControllerState } from '../../../definitions';
 
-export interface FieldSelectControl<T = any, E extends Element<T> = Element<T>>
-  extends ListControllerState {
+export interface FieldSelectControl<
+  T = any,
+  E extends Element<T> = Element<T>
+> extends ListControllerState {
   onBlurInput: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
-  onClickElement: (element: E) => MouseEventHandler;
+  onClickElement: (element: E) => MouseEventHandler<HTMLElement>;
   onClickInput: () => void;
   onFocusInput: () => void;
-  onKeydownElement: (element: E) => KeyboardEventHandler;
+  onKeydownElement: (element: E) => KeyboardEventHandler<HTMLElement>;
   onKeydownInput: (event: KeyboardEvent) => void;
 }
 

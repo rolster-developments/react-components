@@ -81,8 +81,6 @@ export function RlsPickerMonth({
     formControl?.value ?? dateMonth.getMonth()
   );
 
-  const [component, setComponent] = useState(<></>);
-
   const setMonthValue = useCallback(
     (value: number) => {
       formControl ? formControl.setValue(value) : setValue(value);
@@ -97,21 +95,6 @@ export function RlsPickerMonth({
     },
     [setMonthValue, onValue]
   );
-
-  useEffect(() => {
-    setComponent(
-      <>
-        {months.map((month, index) => (
-          <RlsPickerMonthElement
-            key={index}
-            month={month}
-            onSelect={onSelect}
-            disabled={disabled}
-          />
-        ))}
-      </>
-    );
-  }, [months, onSelect, disabled]);
 
   useEffect(() => {
     const options = {
@@ -145,7 +128,14 @@ export function RlsPickerMonth({
 
   return (
     <div className="rls-picker-month" rls-theme={rlsTheme}>
-      {component}
+      {months.map((month, index) => (
+        <RlsPickerMonthElement
+          key={index}
+          month={month}
+          onSelect={onSelect}
+          disabled={disabled}
+        />
+      ))}
     </div>
   );
 }

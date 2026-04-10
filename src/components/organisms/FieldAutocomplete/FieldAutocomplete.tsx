@@ -39,6 +39,7 @@ interface FieldAutocompleteProps<
   keepOpen?: boolean;
   lineHeight?: number;
   msgErrorDisabled?: boolean;
+  onInput?: (value: string) => void;
   onSearch?: (pattern: string) => void;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
@@ -84,6 +85,10 @@ export function RlsFieldAutocompleteTemplate<
       setListInputPlaceholder(reactI18n('listInputPlaceholder'));
     });
   }, []);
+
+  useEffect(() => {
+    props.onInput?.(autocomplete.value);
+  }, [autocomplete.value, props.onInput]);
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
