@@ -1,4 +1,5 @@
 export * from './components/atoms/Amount/Amount';
+export * from './components/atoms/AreaText/AreaText';
 export * from './components/atoms/Avatar/Avatar';
 export * from './components/atoms/Badge/Badge';
 export * from './components/atoms/Breadcrumb/Breadcrumb';
@@ -33,6 +34,7 @@ export * from './components/molecules/ButtonProgress/ButtonProgress';
 export * from './components/molecules/ButtonToggle/ButtonToggle';
 export * from './components/molecules/Content/Content';
 export * from './components/molecules/FieldDecimal/FieldDecimal';
+export * from './components/molecules/FieldArea/FieldArea';
 export * from './components/molecules/FieldFile/FieldFile';
 export * from './components/molecules/FieldListSuggestions/FieldListSuggestions';
 export * from './components/molecules/FieldMoney/FieldMoney';

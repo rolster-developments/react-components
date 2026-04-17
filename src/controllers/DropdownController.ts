@@ -10,18 +10,27 @@ export interface DropdownController {
   visible: boolean;
 }
 
-export function useDropdownController(): DropdownController {
+export function useDropdownController(
+  effect: DropdownEffect = '0% 0%'
+): DropdownController {
   const [visible, setVisible] = useState(false);
 
   const component = useRef<HTMLDivElement>(null!);
 
-  const open = useCallback((positionX?: number, positionY?: number) => {
-    component.current.style.transformOrigin = '0% 0%';
-    component.current.style.top = `${positionY}px`;
-    component.current.style.left = `${positionX}px`;
+  const open = useCallback(
+    (positionX?: number, positionY?: number) => {
+      const content = component.current.querySelector(
+        '.rls-dropdown__content'
+      ) as HTMLElement;
 
-    setVisible(true);
-  }, []);
+      content.style.transformOrigin = effect;
+      component.current.style.top = `${positionY}px`;
+      component.current.style.left = `${positionX}px`;
+
+      setVisible(true);
+    },
+    [effect]
+  );
 
   const openWithEvent = useCallback((event: MouseEvent) => {
     const rectContent = component.current.getBoundingClientRect();
@@ -72,7 +81,11 @@ export function useDropdownController(): DropdownController {
         break;
     }
 
-    component.current.style.transformOrigin = effect;
+    const content = component.current.querySelector(
+      '.rls-dropdown__content'
+    ) as HTMLElement;
+
+    content.style.transformOrigin = effect;
     component.current.style.top = `${positionY}px`;
     component.current.style.left = `${positionX}px`;
 
