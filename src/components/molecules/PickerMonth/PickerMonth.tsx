@@ -10,7 +10,6 @@ import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './PickerMonth.css';
 
 interface PickerMonthProps extends RlsComponent {
   date?: Date;

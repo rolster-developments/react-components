@@ -1,6 +1,5 @@
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
-import './MessageIcon.css';
 
 interface MessageIconProps extends RlsComponent {
   icon?: string;

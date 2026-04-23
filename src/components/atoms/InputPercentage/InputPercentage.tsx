@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
-import './InputPercentage.css';
 
 interface InputPercentageProps extends InputProps<number> {
   decimals?: number;

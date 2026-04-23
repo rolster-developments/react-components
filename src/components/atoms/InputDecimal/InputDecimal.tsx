@@ -3,7 +3,6 @@ import { useCallback, useMemo, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
-import './InputDecimal.css';
 
 interface InputDecimalProps extends InputProps<BigDecimal> {
   decimals?: number;

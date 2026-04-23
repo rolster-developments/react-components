@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RlsComponent } from '../../definitions';
 import { renderClassStatus } from '../../../helpers/css';
-import './Tabs.css';
 
 export interface Tab<T = any> {
   label: string;

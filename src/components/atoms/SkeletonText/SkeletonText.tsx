@@ -1,6 +1,5 @@
 import { RlsComponent } from '../../definitions';
 import { RlsSkeleton } from '../Skeleton/Skeleton';
-import './SkeletonText.css';
 
 interface SkeletonTextProps extends RlsComponent {
   active?: boolean;

@@ -9,7 +9,6 @@ import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDateRange } from '../PickerDateRange/PickerDateRange';
-import './FieldDateRange.css';
 
 interface FieldDateRangeProps extends RlsComponent {
   date?: Date;

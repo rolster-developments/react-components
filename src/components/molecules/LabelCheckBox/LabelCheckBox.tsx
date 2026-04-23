@@ -4,7 +4,6 @@ import { useFormToggleController } from '../../../controllers/FormToggleControll
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
 import { RlsComponent } from '../../definitions';
-import './LabelCheckBox.css';
 
 interface LabelCheckBoxProps extends RlsComponent {
   disabled?: boolean;

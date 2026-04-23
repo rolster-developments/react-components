@@ -9,7 +9,6 @@ import {
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsTheme } from '../../definitions';
-import './Snackbar.css';
 
 const DURATION_ANIMATION = 240;
 const DURATION_CHAR = 75;

@@ -21,7 +21,6 @@ import {
   RlsPickerSelectorTitle
 } from '../../molecules/PickerSelectorTitle/PickerSelectorTitle';
 import { RlsPickerYear } from '../../molecules/PickerYear/PickerYear';
-import './PickerDateRange.css';
 
 interface PickerDateRangeProps extends RlsComponent {
   automatic?: boolean;

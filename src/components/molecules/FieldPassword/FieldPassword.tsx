@@ -4,7 +4,6 @@ import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPassword } from '../../atoms/InputPassword/InputPassword';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldPassword.css';
 
 export function RlsFieldPassword(props: FieldProps<string>) {
   const { children, formControl, identifier, rlsTheme } = props;

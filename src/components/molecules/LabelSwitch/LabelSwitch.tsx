@@ -4,7 +4,6 @@ import { useFormToggleController } from '../../../controllers/FormToggleControll
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsSwitch } from '../../atoms/Switch/Switch';
 import { RlsComponent } from '../../definitions';
-import './LabelSwitch.css';
 
 interface LabelSwitchProps extends RlsComponent {
   capsule?: boolean;

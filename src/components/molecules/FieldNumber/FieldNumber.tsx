@@ -3,7 +3,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldNumber.css';
 
 interface FieldNumberProps extends FieldProps<number> {
   decimals?: number;

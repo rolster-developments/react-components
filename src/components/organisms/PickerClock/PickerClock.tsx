@@ -17,7 +17,6 @@ import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsComponent } from '../../definitions';
-import './PickerClock.css';
 
 interface PickerClockProps extends RlsComponent {
   disabled?: boolean;

@@ -23,7 +23,6 @@ import {
 } from '../../molecules/FieldListSuggestions/FieldListSuggestions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldAutocomplete } from './FieldAutocompleteController';
-import './FieldAutocomplete.css';
 
 interface FieldAutocompleteProps<
   T = any,

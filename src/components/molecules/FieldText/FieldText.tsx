@@ -3,7 +3,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputText } from '../../atoms/InputText/InputText';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldText.css';
 
 export function RlsFieldText(props: FieldProps<string>) {
   const { children, formControl, identifier, rlsTheme } = props;

@@ -4,7 +4,6 @@ import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsComponent } from '../../definitions';
 import { RolsterReactInputControl } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldFile.css';
 
 interface FieldFileProps extends RlsComponent {
   accept?: string;

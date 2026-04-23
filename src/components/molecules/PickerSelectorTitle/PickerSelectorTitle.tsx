@@ -5,7 +5,6 @@ import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RlsIcon } from '../../atoms/Icon/Icon';
-import './PickerSelectorTitle.css';
 
 export type PickerSelectorTitleType = 'month' | 'year';
 

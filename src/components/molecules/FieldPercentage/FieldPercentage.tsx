@@ -3,7 +3,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputPercentage } from '../../atoms/InputPercentage/InputPercentage';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldPercentage.css';
 
 interface FieldPercentageProps extends FieldProps<number> {
   decimals?: number;

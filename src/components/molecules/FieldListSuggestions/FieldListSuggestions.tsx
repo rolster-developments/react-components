@@ -16,7 +16,6 @@ import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
 import { PropsWithRlsTheme } from '../../definitions';
-import './FieldListSuggestions.css';
 
 export interface FieldListSearchControl {
   onChange: (pattern: string) => void;

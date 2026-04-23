@@ -3,7 +3,6 @@ import { useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
-import './CheckBox.css';
 
 interface CheckBoxProps extends RlsComponent {
   checked: boolean;

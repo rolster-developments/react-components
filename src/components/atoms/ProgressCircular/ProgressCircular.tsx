@@ -1,5 +1,4 @@
 import { RlsTheme } from '../../definitions';
-import './ProgressCircular.css';
 
 interface ProgressCircularProps {
   rlsTheme?: RlsTheme;

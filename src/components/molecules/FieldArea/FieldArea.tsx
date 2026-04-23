@@ -7,7 +7,6 @@ import {
 } from '../../atoms/AreaText/AreaText';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldArea.css';
 
 interface FieldAreaProps extends AreaTextProps, RlsComponent {
   msgErrorDisabled?: boolean;

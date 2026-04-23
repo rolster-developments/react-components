@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './Card.css';
 
 interface CardProps extends RlsComponent {
   outline?: boolean;

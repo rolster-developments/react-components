@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { RlsComponent } from '../../definitions';
-import './Toolbar.css';
 
 interface ToolbarProps extends RlsComponent {
   actions?: ReactNode[];

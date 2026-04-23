@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './BottomSheet.css';
 
 interface BottomSheetProps extends RlsComponent {
   autoclose?: boolean;

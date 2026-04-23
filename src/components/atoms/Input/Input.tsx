@@ -11,7 +11,6 @@ import {
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { InputProps as RolsterInputProps } from '../../types';
-import './Input.css';
 
 interface InputProps extends RolsterInputProps<any>, RlsComponent {
   decimals?: number;

@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useImageEditorController } from '../../../controllers/ImageEditorController';
 import { ImageRatio } from '../../types';
 import { ImageEditorValue } from '../ImageEditor/ImageEditor';
-import './ImageChooser.css';
 
 interface ImageChooserProps {
   disabled?: boolean;

@@ -5,7 +5,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton, RlsButtonType } from '../../atoms/Button/Button';
 import { RlsTheme } from '../../definitions';
-import './Confirmation.css';
 
 export class ConfirmationResult extends SealedPartial<
   void,

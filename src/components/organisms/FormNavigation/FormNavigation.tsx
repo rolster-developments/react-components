@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './FormNavigation.css';
 
 export interface FormNavigationProps extends RlsComponent {
   controller?: PortalController;

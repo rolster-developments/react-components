@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
-import './InputMoney.css';
 
 interface InputMoneyProps extends InputProps<number> {
   decimals?: number;

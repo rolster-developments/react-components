@@ -3,7 +3,6 @@ import { RlsComponent } from '../../definitions';
 import { ImageMymeType, ImageRatio } from '../../types';
 import { ImageEditorValue, RlsImageEditor } from '../ImageEditor/ImageEditor';
 import { RlsModal } from '../Modal/Modal';
-import './ImageEditorModal.css';
 
 interface ImageEditorModalProps extends RlsComponent {
   visible: boolean;

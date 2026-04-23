@@ -10,7 +10,6 @@ import {
 import { RlsComponent } from '../../definitions';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
-import './Slider.css';
 
 interface SliderProps extends RlsComponent {
   disabled?: boolean;

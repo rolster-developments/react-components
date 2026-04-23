@@ -12,7 +12,6 @@ import {
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './AreaText.css';
 
 export type RolsterReactAreaTextControl<T = string> =
   | ReactControl<HTMLTextAreaElement, T>

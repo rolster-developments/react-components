@@ -20,7 +20,6 @@ import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDate } from '../PickerDate/PickerDate';
-import './FieldDate.css';
 
 interface FieldDateProps extends RlsComponent {
   date?: Date;

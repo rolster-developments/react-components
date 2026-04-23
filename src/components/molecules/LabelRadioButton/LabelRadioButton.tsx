@@ -4,7 +4,6 @@ import { useFormSingleSelectionController } from '../../../controllers/FormSingl
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsRadioButton } from '../../atoms/RadioButton/RadioButton';
 import { RlsComponent } from '../../definitions';
-import './LabelRadioButton.css';
 
 interface LabelRadioButtonProps<T = any> extends RlsComponent {
   disabled?: boolean;

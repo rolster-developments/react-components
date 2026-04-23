@@ -3,7 +3,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import { RlsSpinner } from '../Spinner/Spinner';
-import './Button.css';
 
 export type RlsButtonType =
   | 'classic'

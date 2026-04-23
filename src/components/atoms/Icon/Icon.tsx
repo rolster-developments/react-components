@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
-import './Icon.css';
 
 interface IconProps extends PropsWithClassName, PropsWithRlsTheme {
   value: string;

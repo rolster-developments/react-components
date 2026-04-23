@@ -8,7 +8,6 @@ import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
 import { RlsSlider } from '../../molecules/Slider/Slider';
 import { ImageMymeType, ImageRatio } from '../../types';
-import './ImageEditor.css';
 
 export interface ImageEditorValue {
   base64: string;

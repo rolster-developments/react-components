@@ -11,7 +11,6 @@ import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import { RlsFieldListSuggestions } from '../../molecules/FieldListSuggestions/FieldListSuggestions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldSelect } from './FieldSelectController';
-import './FieldSelect.css';
 
 interface FieldSelectProps<
   T = any,

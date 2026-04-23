@@ -1,7 +1,6 @@
 import { MouseEventHandler } from 'react';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
-import './ButtonAction.css';
 
 interface ButtonActionProps extends RlsComponent {
   icon: string;

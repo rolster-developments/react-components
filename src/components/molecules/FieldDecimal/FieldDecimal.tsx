@@ -4,7 +4,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputDecimal } from '../../atoms/InputDecimal/InputDecimal';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
-import './FieldDecimal.css';
 
 interface FieldDecimalProps extends FieldProps<BigDecimal> {
   decimals?: number;

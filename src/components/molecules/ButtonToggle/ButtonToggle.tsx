@@ -10,7 +10,6 @@ import {
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonType, RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
-import './ButtonToggle.css';
 
 export interface ButtonToggleOption {
   label: ReactNode;

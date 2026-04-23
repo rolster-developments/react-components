@@ -1,5 +1,4 @@
 import { RlsComponent } from '../../definitions';
-import './FieldReadonly.css';
 
 interface FieldReadonlyProps extends RlsComponent {
   value: string;

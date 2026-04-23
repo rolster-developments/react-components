@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsTheme } from '../../definitions';
-import './Breadcrumb.css';
 
 export interface BreadcrumbLabel {
   label: string;

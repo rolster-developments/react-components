@@ -1,4 +1,3 @@
-import './Spinner.css';
 
 export function RlsSpinner() {
   return (

@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
-import './InputText.css';
 
 export function RlsInputText(props: InputProps<string>) {
   const { formControl, identifier, onValue, value } = props;

@@ -4,7 +4,6 @@ import { useFormSingleSelectionController } from '../../../controllers/FormSingl
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
-import './ButtonOption.css';
 
 interface ButtonOptionProps<T = any> extends RlsComponent {
   icon: string;

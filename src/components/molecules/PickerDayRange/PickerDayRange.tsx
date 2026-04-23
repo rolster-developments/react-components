@@ -15,7 +15,6 @@ import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
-import './PickerDayRange.css';
 
 interface PickerDayRangeProps extends RlsComponent {
   date?: Date;

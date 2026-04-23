@@ -3,7 +3,6 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RolsterReactInputControl } from '../../types';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
-import './InputSearch.css';
 
 interface InputSearchProps {
   formControl?: RolsterReactInputControl<string>;
