@@ -136,7 +136,7 @@ export function RlsFieldClock({
 
             {!readOnly && (
               <button
-                className="rls-field-clock__action"
+                className="rls-field-box__action"
                 onClick={onClickAction}
                 disabled={disabled}
               >

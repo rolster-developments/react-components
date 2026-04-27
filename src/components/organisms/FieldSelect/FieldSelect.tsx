@@ -108,7 +108,7 @@ export function RlsFieldSelectTemplate<
 
           {!props.readOnly && (
             <button
-              className={'rls-field-list__action'}
+              className={'rls-field-box__action'}
               disabled={disabled}
               onClick={select.onClickAction}
             >

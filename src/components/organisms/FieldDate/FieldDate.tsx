@@ -169,7 +169,7 @@ export function RlsFieldDate({
 
             {!readOnly && (
               <button
-                className="rls-field-date__action"
+                className="rls-field-box__action"
                 onClick={onClickAction}
                 disabled={disabled}
               >

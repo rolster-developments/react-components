@@ -175,7 +175,7 @@ export function RlsFieldAutocompleteTemplate<
 
           {!props.readOnly && (
             <button
-              className="rls-field-list__action"
+              className="rls-field-box__action"
               disabled={disabled}
               onClick={autocomplete.onClickAction}
             >

@@ -145,7 +145,7 @@ export function RlsFieldDateRange({
 
             {!readOnly && (
               <button
-                className="rls-field-date-range__action"
+                className="rls-field-box__action"
                 onClick={onClickAction}
                 disabled={disabled}
               >
