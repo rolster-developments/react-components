@@ -28,8 +28,10 @@ export * from './components/atoms/SkeletonText/SkeletonText';
 export * from './components/atoms/Spinner/Spinner';
 export * from './components/atoms/Switch/Switch';
 export * from './components/atoms/TabularText/TabularText';
+
 export * from './components/molecules/Alert/Alert';
 export * from './components/molecules/Ballot/Ballot';
+export * from './components/molecules/Body/Body';
 export * from './components/molecules/ButtonProgress/ButtonProgress';
 export * from './components/molecules/ButtonToggle/ButtonToggle';
 export * from './components/molecules/Content/Content';
@@ -48,6 +50,7 @@ export * from './components/molecules/LabelRadioButton/LabelRadioButton';
 export * from './components/molecules/LabelSwitch/LabelSwitch';
 export * from './components/molecules/MessageFormError/MessageFormError';
 export * from './components/molecules/Navbar/Navbar';
+export * from './components/molecules/NavbarMenu/NabvarMenu';
 export * from './components/molecules/Pagination/Pagination';
 export * from './components/molecules/PickerDay/PickerDay';
 export * from './components/molecules/PickerDayRange/PickerDayRange';
@@ -57,6 +60,7 @@ export * from './components/molecules/PickerYear/PickerYear';
 export * from './components/molecules/Slider/Slider';
 export * from './components/molecules/Tabs/Tabs';
 export * from './components/molecules/Toolbar/Toolbar';
+
 export * from './components/organisms/BottomSheet/BottomSheet';
 export * from './components/organisms/Card/Card';
 export * from './components/organisms/Confirmation/Confirmation';

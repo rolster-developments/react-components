@@ -169,11 +169,11 @@ export function RlsFieldListSuggestions<E = any>({
                 renderEmpty()
               ) : (
                 <div className="rls-field-list__empty__description">
-                  <label className="rls-label-bold rls-truncate">
+                  <span className="rls-label-font-bold rls-truncate">
                     {labels.listEmptyTitle}
-                  </label>
+                  </span>
 
-                  <p className="rls-caption-regular">
+                  <p className="rls-caption-font-regular">
                     {labels.listEmptyDescription}
                   </p>
                 </div>
