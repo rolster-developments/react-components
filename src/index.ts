@@ -49,6 +49,7 @@ export * from './components/molecules/FieldText/FieldText';
 export * from './components/molecules/LabelCheckBox/LabelCheckBox';
 export * from './components/molecules/LabelRadioButton/LabelRadioButton';
 export * from './components/molecules/LabelSwitch/LabelSwitch';
+export * from './components/molecules/MessageEmpty/MessageEmpty';
 export * from './components/molecules/MessageFormError/MessageFormError';
 export * from './components/molecules/Navbar/Navbar';
 export * from './components/molecules/NavbarMenu/NabvarMenu';
