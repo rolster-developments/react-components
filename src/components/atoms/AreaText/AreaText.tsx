@@ -37,7 +37,6 @@ export interface AreaTextProps extends RlsComponent {
 
 export function RlsAreaText({
   autoComplete,
-  children,
   disabled,
   formControl,
   identifier,
@@ -50,7 +49,7 @@ export function RlsAreaText({
   placeholder,
   readOnly,
   resize,
-  rows,
+  rows = 1,
   value
 }: AreaTextProps) {
   const valueInitial = String(formControl?.value ?? value ?? '');
@@ -66,12 +65,10 @@ export function RlsAreaText({
   const refreshHeight = useCallback(() => {
     const element = areaRef.current;
 
-    if (!element) {
-      return;
+    if (element) {
+      element.style.height = 'auto';
+      element.style.height = `${element.scrollHeight}px`;
     }
-
-    element.style.height = 'auto';
-    element.style.height = `${element.scrollHeight}px`;
   }, [areaRef]);
 
   useEffect(() => {
@@ -164,7 +161,7 @@ export function RlsAreaText({
         onKeyUp={onKeyUpArea}
         value={valueArea}
       />
-      <span className="rls-area-text__value">{children ?? valueArea}</span>
+      <span className="rls-area-text__value">{valueArea}</span>
     </div>
   );
 }

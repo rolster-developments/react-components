@@ -42,7 +42,7 @@
     "@rolster/dates": "^4.1.0",
     "@rolster/forms": "^4.1.2",
     "@rolster/i18n": "^3.1.0",
-    "@rolster/react-forms": "^19.4.3",
+    "@rolster/react-forms": "^19.4.10",
     "@rolster/react-lottie": "^19.3.0",
     "@rolster/strings": "^3.1.0",
     "@rolster/validators": "^3.1.0",

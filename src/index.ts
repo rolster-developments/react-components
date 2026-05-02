@@ -29,6 +29,7 @@ export * from './components/atoms/Spinner/Spinner';
 export * from './components/atoms/Switch/Switch';
 export * from './components/atoms/TabularText/TabularText';
 
+export * from './components/molecules/Accordion/Accordion';
 export * from './components/molecules/Alert/Alert';
 export * from './components/molecules/Ballot/Ballot';
 export * from './components/molecules/Body/Body';
