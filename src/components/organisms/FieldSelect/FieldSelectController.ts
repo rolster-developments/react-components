@@ -5,8 +5,7 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   useCallback,
-  useEffect,
-  useRef
+  useEffect
 } from 'react';
 import { useListController } from '../../../controllers/ListController';
 import { ListControllerState } from '../../../definitions';
@@ -36,7 +35,6 @@ interface FieldSelectProps<
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
-  lineHeight?: number;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: (value: T) => void;
   readOnly?: boolean;
@@ -50,16 +48,7 @@ export function useFieldSelect<
   E extends Element<T> = Element<T>,
   K = string
 >(props: FieldSelectProps<T, E, K>): FieldSelectControl<T, E> {
-  const count = useRef(props.suggestions.length);
-
-  const controller = useListController<T, K>({
-    ...props,
-    count: count.current
-  });
-
-  useEffect(() => {
-    count.current = props.suggestions.length;
-  }, [props.suggestions]);
+  const controller = useListController<T, K>(props);
 
   useEffect(() => {
     props.disabled && controller.setState({ focused: false });

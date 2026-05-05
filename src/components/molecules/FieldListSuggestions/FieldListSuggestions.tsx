@@ -29,6 +29,14 @@ export interface FieldListSearchControl {
   searching?: boolean;
 }
 
+export interface FieldListAction {
+  description: string;
+  onClick: () => void;
+  disabled?: boolean;
+  icon?: string;
+  keepOpen?: boolean;
+}
+
 interface FieldListSuggestionsProps<E = any> extends PropsWithRlsTheme {
   elements: E[];
   onClickBackdrop: MouseEventHandler;
@@ -36,6 +44,7 @@ interface FieldListSuggestionsProps<E = any> extends PropsWithRlsTheme {
   onKeydownElement: (element: E) => KeyboardEventHandler;
   render: (element: E) => ReactNode;
   visible: boolean;
+  action?: FieldListAction;
   disabled?: boolean;
   higher?: boolean;
   renderEmpty?: () => ReactNode;
@@ -78,6 +87,7 @@ function RlsFieldListLi<E>({
 
 export function RlsFieldListSuggestions<E = any>({
   elements,
+  action,
   disabled,
   higher,
   render,
@@ -117,6 +127,17 @@ export function RlsFieldListSuggestions<E = any>({
       searchControl?.onChange(event.target.value);
     },
     [searchControl?.onChange]
+  );
+
+  const onClickAction = useCallback<MouseEventHandler<HTMLButtonElement>>(
+    (event) => {
+      action?.onClick();
+
+      if (!action?.keepOpen) {
+        onClickBackdrop(event);
+      }
+    },
+    [action?.onClick, action?.keepOpen, onClickBackdrop]
   );
 
   const searching = searchControl?.searching ?? false;
@@ -181,6 +202,21 @@ export function RlsFieldListSuggestions<E = any>({
             </li>
           )}
         </ul>
+
+        {action && (
+          <div className="rls-field-list__action">
+            <button
+              type="button"
+              disabled={disabled || action.disabled}
+              onClick={onClickAction}
+            >
+              {action.icon && <RlsIcon value={action.icon} />}
+              <span className="rls-field-list__action__description">
+                {action.description}
+              </span>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="rls-field-list__backdrop" onClick={onClickBackdrop}></div>

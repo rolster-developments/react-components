@@ -18,6 +18,7 @@ import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
+  FieldListAction,
   FieldListSearchControl,
   RlsFieldListSuggestions
 } from '../../molecules/FieldListSuggestions/FieldListSuggestions';
@@ -30,13 +31,13 @@ interface FieldAutocompleteProps<
   K = string
 > extends RlsComponent {
   suggestions: E[];
+  action?: FieldListAction;
   automatic?: boolean;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
   keepOpen?: boolean;
-  lineHeight?: number;
   msgErrorDisabled?: boolean;
   onInput?: (value: string) => void;
   onSearch?: (pattern: string) => void;
@@ -66,6 +67,7 @@ export function RlsFieldAutocompleteTemplate<
 
   const {
     render,
+    action,
     children,
     formControl,
     msgErrorDisabled,
@@ -197,6 +199,7 @@ export function RlsFieldAutocompleteTemplate<
       <RlsFieldListSuggestions
         elements={autocomplete.coincidences}
         visible={autocomplete.listIsVisible}
+        action={action}
         disabled={disabled}
         higher={autocomplete.higher}
         render={render}

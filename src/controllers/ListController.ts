@@ -1,7 +1,6 @@
 import {
   AbstractListElement,
   ListCollection,
-  locationListCanTop,
   navigationListFromElement,
   navigationListFromInput
 } from '@rolster/components';
@@ -14,6 +13,9 @@ import {
   useRef,
   useState
 } from 'react';
+
+const MAX_LIST_HEIGHT_REM = 90;
+const FALLBACK_REM_SIZE = 16;
 
 interface ListControllerState {
   focused: boolean;
@@ -33,26 +35,57 @@ export interface ListController<T = any> extends ListControllerState {
 }
 
 interface ListControllerProps<T = any, K = string> {
-  count: number;
   suggestions: AbstractListElement<T>[];
   automatic?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
-  lineHeight?: number;
   reference?: (value: T) => K;
   value?: T;
 }
 
-function calculateMinHeightList(count: number, height: number): number {
-  return count <= 0 ? 160 : (count < 6 ? count : 6) * height;
+function getRemSize(): number {
+  if (typeof window === 'undefined') {
+    return FALLBACK_REM_SIZE;
+  }
+
+  const fontSize = parseFloat(
+    getComputedStyle(document.documentElement).fontSize
+  );
+
+  return fontSize > 0 ? fontSize : FALLBACK_REM_SIZE;
+}
+
+function shouldDisplayHigher(
+  content: HTMLElement | null,
+  list: HTMLElement | null
+): boolean {
+  if (!content) {
+    return false;
+  }
+
+  const { top, bottom } = content.getBoundingClientRect();
+  const spaceAbove = top;
+  const spaceBelow = window.innerHeight - bottom;
+
+  const maxHeight = MAX_LIST_HEIGHT_REM * getRemSize();
+  const desiredHeight = Math.min(list?.scrollHeight || maxHeight, maxHeight);
+
+  if (spaceBelow >= desiredHeight) {
+    return false;
+  }
+
+  if (spaceAbove >= desiredHeight) {
+    return true;
+  }
+
+  return spaceAbove > spaceBelow;
 }
 
 export function useListController<T = any, K = string>(
   props: ListControllerProps<T, K>
 ): ListController<T> {
-  const { count, suggestions, automatic, formControl, lineHeight, reference } =
-    props;
+  const { suggestions, automatic, formControl, reference } = props;
 
   const refContent = useRef<HTMLDivElement>(null);
   const refList = useRef<HTMLUListElement>(null);
@@ -129,25 +162,16 @@ export function useListController<T = any, K = string>(
     changeValueInternal.current = false;
   }, [collection, formControl?.value]);
 
-  const setState = useCallback(
-    (state: Partial<ListControllerState>) => {
-      const minHeightList = calculateMinHeightList(count, lineHeight ?? 48);
+  const setState = useCallback((state: Partial<ListControllerState>) => {
+    const _state = state.listIsVisible
+      ? {
+          ...state,
+          higher: shouldDisplayHigher(refContent.current, refList.current)
+        }
+      : state;
 
-      const _state = state.listIsVisible
-        ? {
-            ...state,
-            higher: locationListCanTop(
-              refContent.current,
-              refList.current,
-              minHeightList
-            )
-          }
-        : state;
-
-      refreshState((state) => ({ ...state, ..._state }));
-    },
-    [count]
-  );
+    refreshState((state) => ({ ...state, ..._state }));
+  }, []);
 
   const setFormValue = useCallback(
     (element?: AbstractListElement<any>, valueIsDefault = false) => {

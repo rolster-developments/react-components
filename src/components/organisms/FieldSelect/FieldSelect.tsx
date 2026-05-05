@@ -8,7 +8,10 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
-import { RlsFieldListSuggestions } from '../../molecules/FieldListSuggestions/FieldListSuggestions';
+import {
+  FieldListAction,
+  RlsFieldListSuggestions
+} from '../../molecules/FieldListSuggestions/FieldListSuggestions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { useFieldSelect } from './FieldSelectController';
 
@@ -18,6 +21,7 @@ interface FieldSelectProps<
   K = string
 > extends RlsComponent {
   suggestions: E[];
+  action?: FieldListAction;
   automatic?: boolean;
   disabled?: boolean;
   formControl?:
@@ -51,6 +55,7 @@ export function RlsFieldSelectTemplate<
   const {
     render,
     suggestions,
+    action,
     children,
     formControl,
     msgErrorDisabled,
@@ -132,6 +137,7 @@ export function RlsFieldSelectTemplate<
       <RlsFieldListSuggestions
         elements={suggestions}
         visible={select.listIsVisible}
+        action={action}
         disabled={disabled}
         higher={select.higher}
         render={render}
