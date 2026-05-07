@@ -18,6 +18,7 @@ export * from './components/atoms/InputPercentage/InputPercentage';
 export * from './components/atoms/InputSearch/InputSearch';
 export * from './components/atoms/InputText/InputText';
 export * from './components/atoms/Label/Label';
+export * from './components/atoms/Led/Led';
 export * from './components/atoms/MessageIcon/MessageIcon';
 export * from './components/atoms/Poster/Poster';
 export * from './components/atoms/ProgressBar/ProgressBar';
