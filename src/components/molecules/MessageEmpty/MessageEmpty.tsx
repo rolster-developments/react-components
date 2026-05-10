@@ -56,9 +56,13 @@ export function RlsMessageEmpty({
     <div id={identifier} className={classNameMessageEmpty} rls-theme={rlsTheme}>
       {logo}
 
-      {title && <div className="rls-message-empty__title">{title}</div>}
+      <div className="rls-message-empty__body">
+        {title && <div className="rls-message-empty__title">{title}</div>}
 
-      {children && <div className="rls-message-empty__content">{children}</div>}
+        {children && (
+          <div className="rls-message-empty__content">{children}</div>
+        )}
+      </div>
     </div>
   );
 }
