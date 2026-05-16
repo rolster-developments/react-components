@@ -5,7 +5,7 @@ import {
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
@@ -112,17 +112,11 @@ export function RlsFieldSelectTemplate<
           />
 
           {!props.readOnly && (
-            <button
-              className={'rls-field-box__action'}
-              disabled={disabled}
+            <RlsButtonIcon
+              icon={!unremovable && !!select.value ? 'close' : 'arrow-ios-down'}
               onClick={select.onClickAction}
-            >
-              <RlsIcon
-                value={
-                  !unremovable && !!select.value ? 'close' : 'arrow-ios-down'
-                }
-              />
-            </button>
+              disabled={disabled}
+            />
           )}
         </div>
       </div>

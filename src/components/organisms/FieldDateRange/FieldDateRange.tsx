@@ -4,7 +4,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
@@ -144,13 +144,11 @@ export function RlsFieldDateRange({
             />
 
             {!readOnly && (
-              <button
-                className="rls-field-box__action"
+              <RlsButtonIcon
+                icon={status.icon}
                 onClick={onClickAction}
                 disabled={disabled}
-              >
-                <RlsIcon value={status.icon} />
-              </button>
+              />
             )}
           </div>
         </div>

@@ -14,7 +14,7 @@ import {
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
@@ -176,15 +176,11 @@ export function RlsFieldAutocompleteTemplate<
           />
 
           {!props.readOnly && (
-            <button
-              className="rls-field-box__action"
-              disabled={disabled}
+            <RlsButtonIcon
+              icon={autocomplete.value ? 'trash-2' : 'arrow-ios-down'}
               onClick={autocomplete.onClickAction}
-            >
-              <RlsIcon
-                value={autocomplete.value ? 'trash-2' : 'arrow-ios-down'}
-              />
-            </button>
+              disabled={disabled}
+            />
           )}
         </div>
       </div>

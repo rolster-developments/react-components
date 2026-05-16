@@ -3,7 +3,7 @@ import { ReactControl } from '@rolster/react-forms';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
@@ -141,13 +141,11 @@ export function RlsFieldColor({
             />
 
             {!readOnly && (
-              <button
-                className="rls-field-box__action"
+              <RlsButtonIcon
+                icon={colorValue ? 'trash-2' : 'color-palette'}
                 onClick={onClickAction}
                 disabled={disabled}
-              >
-                <RlsIcon value={colorValue ? 'trash-2' : 'color-palette'} />
-              </button>
+              />
             )}
           </div>
         </div>

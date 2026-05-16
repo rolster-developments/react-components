@@ -15,7 +15,7 @@ import {
 } from 'react';
 import { DATE_FORMAT } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RlsModal } from '../Modal/Modal';
@@ -168,13 +168,11 @@ export function RlsFieldDate({
             />
 
             {!readOnly && (
-              <button
-                className="rls-field-box__action"
+              <RlsButtonIcon
+                icon={status.icon}
                 onClick={onClickAction}
                 disabled={disabled}
-              >
-                <RlsIcon value={status.icon} />
-              </button>
+              />
             )}
           </div>
         </div>

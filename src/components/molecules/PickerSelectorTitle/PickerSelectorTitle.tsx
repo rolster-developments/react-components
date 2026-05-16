@@ -4,7 +4,7 @@ import { MONTH_NAMES, Month } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 
 export type PickerSelectorTitleType = 'month' | 'year';
 
@@ -108,18 +108,22 @@ export function RlsPickerSelectorTitle({
 
   return (
     <div className="rls-picker-selector-title">
-      <button onClick={onPrevious} disabled={limitPrevious || disabled}>
-        <RlsIcon value="arrow-ios-left" />
-      </button>
+      <RlsButtonIcon
+        icon="arrow-ios-left"
+        onClick={onPrevious}
+        disabled={limitPrevious || disabled}
+      />
 
       <div className="rls-picker-selector-title__label">
         <span onClick={onMonth}>{label},</span>
         <span onClick={onYear}>{yearControl.value}</span>
       </div>
 
-      <button onClick={onNext} disabled={limitNext || disabled}>
-        <RlsIcon value="arrow-ios-right" />
-      </button>
+      <RlsButtonIcon
+        icon="arrow-ios-right"
+        onClick={onNext}
+        disabled={limitNext || disabled}
+      />
     </div>
   );
 }
