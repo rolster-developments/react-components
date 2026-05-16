@@ -11,6 +11,7 @@ export * from './components/atoms/CheckBox/CheckBox';
 export * from './components/atoms/Icon/Icon';
 export * from './components/atoms/Image/Image';
 export * from './components/atoms/Input/Input';
+export * from './components/atoms/InputCounter/InputCounter';
 export * from './components/atoms/InputDecimal/InputDecimal';
 export * from './components/atoms/InputMoney/InputMoney';
 export * from './components/atoms/InputNumber/InputNumber';
