@@ -80,6 +80,8 @@ export * from './components/organisms/FieldDateRange/FieldDateRange';
 export * from './components/organisms/FieldSelect/FieldSelect';
 export * from './components/organisms/FieldSelect/FieldSelectController';
 export * from './components/organisms/FieldColor/FieldColor';
+export * from './components/organisms/FieldList/FieldList';
+export * from './components/organisms/FieldList/FieldListController';
 export * from './components/organisms/FormNavigation/FormNavigation';
 export * from './components/organisms/ImageChooser/ImageChooser';
 export * from './components/organisms/ImageEditor/ImageEditor';
