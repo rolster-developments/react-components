@@ -6,14 +6,13 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
+import { RolsterReactHtmlControl } from '../../types';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerClock } from '../PickerClock/PickerClock';
 
 interface FieldClockProps extends RlsComponent {
   disabled?: boolean;
-  formControl?:
-    | ReactControl<HTMLElement, Time>
-    | ReactControl<HTMLElement, Time | undefined>;
+  formControl?: RolsterReactHtmlControl<Time>;
   msgErrorDisabled?: boolean;
   onValue?: ((value?: Time) => void) | ((value: Time) => void);
   placeholder?: string;
@@ -39,8 +38,10 @@ interface FieldClockVoidProps extends Omit<FieldClockProps, 'value'> {
   onValue?: (value?: Time) => void;
 }
 
-interface FieldClockEmptyProps
-  extends Omit<FieldClockProps, 'formControl' | 'value'> {
+interface FieldClockEmptyProps extends Omit<
+  FieldClockProps,
+  'formControl' | 'value'
+> {
   onValue?: (value?: Time) => void;
 }
 

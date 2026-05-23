@@ -6,15 +6,14 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
+import { RolsterReactHtmlControl } from '../../types';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerColor } from '../PickerColor/PickerColor';
 
 interface FieldColorProps extends RlsComponent {
   color?: string;
   disabled?: boolean;
-  formControl?:
-    | ReactControl<HTMLElement, string>
-    | ReactControl<HTMLElement, string | undefined>;
+  formControl?: RolsterReactHtmlControl<string>;
   msgErrorDisabled?: boolean;
   onValue?: ((value?: string) => void) | ((value: string) => void);
   placeholder?: string;
@@ -39,8 +38,10 @@ interface FieldColorVoidProps extends Omit<FieldColorProps, 'value'> {
   onValue?: (value?: string) => void;
 }
 
-interface FieldColorEmptyProps
-  extends Omit<FieldColorProps, 'formControl' | 'value'> {
+interface FieldColorEmptyProps extends Omit<
+  FieldColorProps,
+  'formControl' | 'value'
+> {
   onValue?: (value?: string) => void;
 }
 

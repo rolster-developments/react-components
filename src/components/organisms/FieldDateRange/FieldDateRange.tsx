@@ -7,15 +7,14 @@ import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
+import { RolsterReactHtmlControl } from '../../types';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDateRange } from '../PickerDateRange/PickerDateRange';
 
 interface FieldDateRangeProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?:
-    | ReactControl<HTMLElement, DateRange>
-    | ReactControl<HTMLElement, DateRange | undefined>;
+  formControl?: RolsterReactHtmlControl<DateRange>;
   maxDate?: Date;
   minDate?: Date;
   msgErrorDisabled?: boolean;
@@ -42,8 +41,10 @@ interface FieldDateRangeVoidProps extends Omit<FieldDateRangeProps, 'value'> {
   onValue?: (value?: DateRange) => void;
 }
 
-interface FieldDateRangeEmptyProps
-  extends Omit<FieldDateRangeProps, 'formControl' | 'value'> {
+interface FieldDateRangeEmptyProps extends Omit<
+  FieldDateRangeProps,
+  'formControl' | 'value'
+> {
   onValue?: (value?: DateRange) => void;
 }
 

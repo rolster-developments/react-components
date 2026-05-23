@@ -6,6 +6,10 @@ export type RolsterReactInputControl<T = any> =
   | ReactControl<HTMLInputElement, T>
   | ReactControl<HTMLInputElement, T | undefined>;
 
+export type RolsterReactHtmlControl<T = any> =
+  | ReactControl<HTMLElement, T>
+  | ReactControl<HTMLElement, T | undefined>;
+
 export interface InputProps<T = any> {
   disabled?: boolean;
   formControl?: RolsterReactInputControl<T>;

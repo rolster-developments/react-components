@@ -18,15 +18,14 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
+import { RolsterReactHtmlControl } from '../../types';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerDate } from '../PickerDate/PickerDate';
 
 interface FieldDateProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?:
-    | ReactControl<HTMLElement, Date>
-    | ReactControl<HTMLElement, Date | undefined>;
+  formControl?: RolsterReactHtmlControl<Date>;
   format?: string;
   maxDate?: Date;
   minDate?: Date;
@@ -54,8 +53,10 @@ interface FieldDateVoidProps extends Omit<FieldDateProps, 'value'> {
   onValue?: (value?: Date) => void;
 }
 
-interface FieldDateEmptyProps
-  extends Omit<FieldDateProps, 'formControl' | 'value'> {
+interface FieldDateEmptyProps extends Omit<
+  FieldDateProps,
+  'formControl' | 'value'
+> {
   onValue?: (value?: Date) => void;
 }
 
