@@ -100,6 +100,7 @@ export {
 } from './components/types';
 export * from './context';
 export * from './controllers/DatatableController';
+export * from './controllers/DesingSystemController';
 export * from './controllers/DropdownController';
 export * from './controllers/FormSingleSelectionController';
 export * from './controllers/FormToggleController';
@@ -110,5 +111,7 @@ export * from './controllers/RelocationOnComponentController';
 export * from './controllers/ResizeController';
 export * from './helpers/color';
 export * from './helpers/css';
+export * from './helpers/design-system';
 export * from './helpers/date-range-picker';
 export { setErrorsI18n } from './helpers/language';
+export * from './types';

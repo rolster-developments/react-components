@@ -1,12 +1,15 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, useMemo } from 'react';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
+import { RlsButtonType } from '../../../types';
+import { renderClassStatus } from '../../../helpers/css';
 
 interface ButtonActionProps extends RlsComponent {
   icon: string;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   tooltip?: string;
+  type?: RlsButtonType;
 }
 
 export function RlsButtonAction({
@@ -14,14 +17,21 @@ export function RlsButtonAction({
   disabled,
   identifier,
   onClick,
-  tooltip
+  rlsTheme,
+  tooltip,
+  type
 }: ButtonActionProps) {
+  const className = useMemo(() => {
+    return renderClassStatus('rls-button-action', { type });
+  }, [type]);
+
   return (
     <button
       id={identifier}
-      className="rls-button-action"
+      className={className}
       onClick={onClick}
       disabled={disabled}
+      rls-theme={rlsTheme}
     >
       <div className="rls-button-action__content">
         <RlsIcon value={icon} />
