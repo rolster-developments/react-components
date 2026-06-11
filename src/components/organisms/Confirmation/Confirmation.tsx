@@ -5,7 +5,7 @@ import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButtonType } from '../../../types';
 import { RlsButton } from '../../atoms/Button/Button';
-import { RlsTheme } from '../../definitions';
+import { PropsWithRlsTheme } from '../../definitions';
 
 export class ConfirmationResult extends SealedPartial<
   void,
@@ -26,21 +26,19 @@ export class ConfirmationResult extends SealedPartial<
 
 type Result = Promise<ConfirmationResult>;
 
-interface ConfirmationButton {
+interface ConfirmationButton extends PropsWithRlsTheme {
   label: string;
   onClick: () => void;
   type: RlsButtonType;
   disabled?: boolean;
   identifier?: string;
-  rlsTheme?: RlsTheme;
 }
 
-interface ConfirmationBasic {
+interface ConfirmationBasic extends PropsWithRlsTheme {
   className?: string;
   content?: ReactNode;
   subtitle?: string;
   title?: string;
-  rlsTheme?: RlsTheme;
 }
 
 interface ConfirmationProps extends ConfirmationBasic {
@@ -49,11 +47,10 @@ interface ConfirmationProps extends ConfirmationBasic {
   visible?: boolean;
 }
 
-interface ConfirmationAction {
+interface ConfirmationAction extends PropsWithRlsTheme {
   label: string;
   disabled?: boolean;
   identifier?: string;
-  rlsTheme?: RlsTheme;
   type?: RlsButtonType;
 }
 

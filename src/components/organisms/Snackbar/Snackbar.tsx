@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
-import { RlsTheme } from '../../definitions';
+import { PropsWithRlsTheme } from '../../definitions';
 
 const DURATION_ANIMATION = 240;
 const DURATION_CHAR = 75;
@@ -33,9 +33,8 @@ interface SnackbarBasic {
   title?: ReactNode;
 }
 
-export interface SnackbarConfig extends SnackbarBasic {
+export interface SnackbarConfig extends PropsWithRlsTheme, SnackbarBasic {
   icon?: string;
-  rlsTheme?: RlsTheme;
 }
 
 interface SnackbarProps extends SnackbarConfig {

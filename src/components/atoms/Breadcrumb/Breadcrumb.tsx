@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsTheme } from '../../definitions';
+import { PropsWithRlsTheme } from '../../definitions';
 
-export interface BreadcrumbLabel {
+export interface BreadcrumbLabel extends PropsWithRlsTheme {
   label: string;
   onClick?: () => void;
-  rlsTheme?: RlsTheme;
 }
 
 interface BreadcrumbProps {

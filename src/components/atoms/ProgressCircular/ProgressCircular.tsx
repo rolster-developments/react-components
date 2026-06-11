@@ -1,10 +1,6 @@
-import { RlsTheme } from '../../definitions';
+import { PropsWithRlsTheme } from '../../definitions';
 
-interface ProgressCircularProps {
-  rlsTheme?: RlsTheme;
-}
-
-export function RlsProgressCircular({ rlsTheme }: ProgressCircularProps) {
+export function RlsProgressCircular({ rlsTheme }: PropsWithRlsTheme) {
   return (
     <div className="rls-progress-circular" rls-theme={rlsTheme}>
       <svg className="rls-progress-circular__svg" viewBox="0 0 36 36">

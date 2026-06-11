@@ -1,4 +1,4 @@
-import { RlsTheme } from '../components/definitions';
+import { RlsTheme } from '../types';
 
 export interface HSV {
   h: number;
@@ -378,9 +378,15 @@ function rgbToOklch({ r, g, b }: RGB): OKLCH {
   const lg = srgbToLinear(g);
   const lb = srgbToLinear(b);
 
-  const l = Math.cbrt(0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb);
-  const m = Math.cbrt(0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb);
-  const s = Math.cbrt(0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb);
+  const l = Math.cbrt(
+    0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb
+  );
+  const m = Math.cbrt(
+    0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb
+  );
+  const s = Math.cbrt(
+    0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb
+  );
 
   const okL = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
   const okA = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
@@ -404,14 +410,11 @@ function oklabToLinearRgb(l: number, a: number, b: number): number[] {
 const inGamut = ([r, g, b]: number[]): boolean => {
   const e = 1e-4;
 
-  return r >= -e && r <= 1 + e && g >= -e && g <= 1 + e && b >= -e && b <= 1 + e;
+  return (
+    r >= -e && r <= 1 + e && g >= -e && g <= 1 + e && b >= -e && b <= 1 + e
+  );
 };
 
-/**
- * Converts an OKLCH color to sRGB. If the requested chroma falls outside the
- * sRGB gamut, chroma is reduced (binary search) while keeping lightness and
- * hue fixed — this preserves the intended tone instead of clipping channels.
- */
 function oklchToRgb({ l, c, h }: OKLCH): RGB {
   const a = Math.cos(h);
   const b = Math.sin(h);
@@ -440,10 +443,6 @@ function oklchToRgb({ l, c, h }: OKLCH): RGB {
   return { r: linearToSrgb(lr), g: linearToSrgb(lg), b: linearToSrgb(lb) };
 }
 
-/**
- * Scales chroma down toward the lightness extremes (very light / very dark) so
- * shades do not look oversaturated at the ends. Peaks at L=0.5 (factor 1).
- */
 const chromaFactor = (lightness: number): number =>
   0.4 + 0.6 * (1 - Math.abs(lightness - 0.5) * 2);
 

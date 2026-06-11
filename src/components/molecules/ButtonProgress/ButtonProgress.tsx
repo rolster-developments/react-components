@@ -2,14 +2,13 @@ import { MouseEventHandler, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsProgressCircular } from '../../atoms/ProgressCircular/ProgressCircular';
-import { RlsTheme } from '../../definitions';
+import { PropsWithRlsTheme } from '../../definitions';
 
-interface ButtonProgressProps {
+interface ButtonProgressProps extends PropsWithRlsTheme {
   icon: string;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   progressing?: boolean;
-  rlsTheme?: RlsTheme;
 }
 
 export function RlsButtonProgress({

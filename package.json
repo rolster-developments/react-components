@@ -1,27 +1,27 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.6.3",
+  "version": "19.6.4",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "license": "MIT",
   "author": "Rolster Technology <rolster.developments@gmail.com>",
   "contributors": [
     {
-      "name": "Daniel Andrés Castillo Pedroza",
+      "name": "Daniel AndrÃ©s Castillo Pedroza",
       "email": "ing.dacastillop@gmail.com"
     }
   ],
   "types": "./dist/esm/index.d.ts",
   "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.js",
+  "module": "./dist/es/index.mjs",
   "exports": {
     ".": {
       "types": "./dist/esm/index.d.ts",
       "node": {
         "require": "./dist/cjs/index.cjs",
-        "import": "./dist/esm/index.js"
+        "import": "./dist/es/index.mjs"
       },
-      "default": "./dist/esm/index.js"
+      "default": "./dist/es/index.mjs"
     }
   },
   "files": [
@@ -37,31 +37,30 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rolster/commons": "^4.1.1",
-    "@rolster/components": "^2.1.0",
-    "@rolster/dates": "^4.1.1",
-    "@rolster/forms": "^4.1.2",
-    "@rolster/i18n": "^3.1.0",
+    "@rolster/commons": "^4.1.2",
+    "@rolster/components": "^2.1.2",
+    "@rolster/dates": "^4.1.2",
+    "@rolster/forms": "^4.1.4",
+    "@rolster/i18n": "^3.1.3",
     "@rolster/react-forms": "^19.4.12",
-    "@rolster/react-lottie": "^19.3.0",
-    "@rolster/strings": "^3.1.0",
-    "@rolster/validators": "^3.1.1",
+    "@rolster/react-lottie": "^19.3.1",
+    "@rolster/strings": "^3.1.1",
+    "@rolster/validators": "^3.1.2",
     "react-dom": "^19.2.0",
     "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.21.0",
-    "@rolster/rollup": "^2.0.0",
+    "@rolster/rollup": "^2.1.0",
     "@rolster/styles-foundations": "^3.2.0",
-    "@rolster/types": "^1.1.0",
+    "@rolster/types": "^1.1.1",
     "@types/node-sass": "^4.11.4",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@types/uuid": "^9.0.6",
-    "@typescript-eslint/eslint-plugin": "^8.54.0",
-    "@typescript-eslint/parser": "^8.54.0",
+    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/parser": "^8.61.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/ui": "^4.1.8",
     "eslint": "^9.39.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
@@ -74,9 +73,10 @@
     "rollup-plugin-swc": "^0.2.1",
     "sass": "^1.89.0",
     "sort-by": "^0.0.2",
-    "typescript": "^5.7.2",
+    "tslib": "^2.8.1",
+    "typescript": "^6.0.3",
     "vite": "^6.4.1",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.8"
   },
   "repository": {
     "type": "git",
@@ -86,6 +86,6 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=14.13"
+    "node": ">=22"
   }
 }

@@ -1,23 +1,5 @@
 import { PropsWithChildren } from 'react';
-
-export type RlsTheme =
-  | 'standard'
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'success'
-  | 'info'
-  | 'warning'
-  | 'danger'
-  | 'berry'
-  | 'hope'
-  | 'mountains'
-  | 'ross'
-  | 'amaizing'
-  | 'purple'
-  | 'amber'
-  | 'smartness'
-  | 'obsidian';
+import { RlsTheme } from '../types';
 
 export interface PropsWithClassName {
   className?: string;

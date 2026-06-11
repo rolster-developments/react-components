@@ -3,6 +3,7 @@ import css from 'rollup-plugin-import-css';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 export default rolster({
+  requiredEsm: true,
   entryFiles: ['index'],
   packages: [
     '@rolster/commons',
