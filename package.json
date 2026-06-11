@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.6.1",
+  "version": "19.6.3",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "license": "MIT",
@@ -42,17 +42,17 @@
     "@rolster/dates": "^4.1.1",
     "@rolster/forms": "^4.1.2",
     "@rolster/i18n": "^3.1.0",
-    "@rolster/react-forms": "^19.4.11",
+    "@rolster/react-forms": "^19.4.12",
     "@rolster/react-lottie": "^19.3.0",
     "@rolster/strings": "^3.1.0",
-    "@rolster/validators": "^3.1.0",
+    "@rolster/validators": "^3.1.1",
     "react-dom": "^19.2.0",
     "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.21.0",
     "@rolster/rollup": "^2.0.0",
-    "@rolster/styles-foundations": "^3.1.1",
+    "@rolster/styles-foundations": "^3.2.0",
     "@rolster/types": "^1.1.0",
     "@types/node-sass": "^4.11.4",
     "@types/react": "^19.0.0",

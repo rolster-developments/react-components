@@ -1,17 +1,9 @@
 import { MouseEventHandler, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { RlsButtonType } from '../../../types';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 import { RlsSpinner } from '../Spinner/Spinner';
-
-export type RlsButtonType =
-  | 'classic'
-  | 'raised'
-  | 'flat'
-  | 'stroked'
-  | 'outline'
-  | 'ghost'
-  | 'gradient';
 
 interface ButtonProps extends RlsComponent {
   type: RlsButtonType;

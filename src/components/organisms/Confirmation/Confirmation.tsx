@@ -3,7 +3,8 @@ import { ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
-import { RlsButton, RlsButtonType } from '../../atoms/Button/Button';
+import { RlsButtonType } from '../../../types';
+import { RlsButton } from '../../atoms/Button/Button';
 import { RlsTheme } from '../../definitions';
 
 export class ConfirmationResult extends SealedPartial<
