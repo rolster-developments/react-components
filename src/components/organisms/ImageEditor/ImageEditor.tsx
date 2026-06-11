@@ -14,8 +14,8 @@ export interface ImageEditorValue {
   blob: Blob;
 }
 
-const minValueSlider = 50;
-const maxValueSlider = 100;
+const MIN_SLIDER_VALUE = 50;
+const MAX_SLIDER_VALUE = 100;
 
 interface ImageEditorProps extends RlsComponent {
   disabled?: boolean;
@@ -92,6 +92,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
   const image = useRef(new Image());
   const originalImage = useRef<ImageData>(undefined);
+  const hasInteracted = useRef(false);
 
   const ratio = useMemo(() => {
     return props.ratio || '1:1';
@@ -194,17 +195,24 @@ export function RlsImageEditor(props: ImageEditorProps) {
       ) {
         const { height, width } =
           image.current.width >= image.current.height
-            ? refreshSelectionFromHeight(rateSelection)
-            : refreshSelectionFromWidth(rateSelection);
+            ? refreshSelectionFromWidth(rateSelection)
+            : refreshSelectionFromHeight(rateSelection);
 
         refSelection.current.style.width = `${width}px`;
         refSelection.current.style.height = `${height}px`;
+
+        const left = refImage.current.offsetWidth - width;
+        const top = refImage.current.offsetHeight - height;
+        
+        if (!hasInteracted.current) {
+          refSelection.current.style.left = `${left / 2}px`;
+          refSelection.current.style.top = `${top / 2}px`;
+        }
 
         if (
           refSelection.current.offsetLeft + width >
           refImage.current.offsetWidth
         ) {
-          const left = refImage.current.offsetWidth - width;
           refSelection.current.style.left = `${left < 0 ? 0 : left}px`;
         }
 
@@ -212,7 +220,6 @@ export function RlsImageEditor(props: ImageEditorProps) {
           refSelection.current.offsetTop + height >
           refImage.current.offsetHeight
         ) {
-          const top = refImage.current.offsetHeight - height;
           refSelection.current.style.top = `${top < 0 ? 0 : top}px`;
         }
 
@@ -247,7 +254,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
       image.current.height;
 
     return setImageStyle(`${width}px`, '100%');
-  }, [ratio]);
+  }, []);
 
   useEffect(() => {
     image.current.onload = () => {
@@ -298,7 +305,10 @@ export function RlsImageEditor(props: ImageEditorProps) {
   useRelocationOnComponent({
     container: refImage,
     element: refSelection,
-    onDrag: refreshOverlaysStyle
+    onDrag: () => {
+      hasInteracted.current = true;
+      refreshOverlaysStyle();
+    }
   });
 
   useResize({ refElement: refImage, onResize: onResizeElement });
@@ -401,8 +411,8 @@ export function RlsImageEditor(props: ImageEditorProps) {
           <RlsSlider
             prefixIcon="external-link"
             value={selection}
-            minValue={minValueSlider}
-            maxValue={maxValueSlider}
+            minValue={MIN_SLIDER_VALUE}
+            maxValue={MAX_SLIDER_VALUE}
             onValue={setSelection}
             disabled={props.disabled}
           />
@@ -412,7 +422,8 @@ export function RlsImageEditor(props: ImageEditorProps) {
           {props.children}
 
           <RlsButton
-            type="classic"
+            type="flat"
+            rlsTheme="standard"
             prefixIcon="refresh"
             onClick={onRestore}
             disabled={props.disabled}
@@ -422,6 +433,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
           <RlsButton
             type="raised"
+            rlsTheme="primary"
             prefixIcon="crop"
             onClick={onCropImage}
             disabled={props.disabled}
