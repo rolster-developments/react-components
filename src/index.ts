@@ -91,6 +91,7 @@ export * from './components/organisms/PickerClock/PickerClock';
 export * from './components/organisms/PickerColor/PickerColor';
 export * from './components/organisms/PickerDate/PickerDate';
 export * from './components/organisms/PickerDateRange/PickerDateRange';
+export * from './components/organisms/Notifications/Notifications';
 export * from './components/organisms/Snackbar/Snackbar';
 export * from './components/definitions';
 export {

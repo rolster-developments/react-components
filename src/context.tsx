@@ -1,10 +1,13 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { RlsComponent } from './components/definitions';
 import {
   Confirmation,
-  ConfirmationResult,
   useConfirmation
 } from './components/organisms/Confirmation/Confirmation';
+import {
+  Notify,
+  useNotifications
+} from './components/organisms/Notifications/Notifications';
 import {
   Snackbar,
   useSnackbar
@@ -13,24 +16,28 @@ import { renderClassStatus } from './helpers/css';
 
 interface RlsState {
   confirmation: Confirmation;
+  notify: Notify;
   snackbar: Snackbar;
   setIsMobile: (appIsMobile: boolean) => void;
   setNavbarInApp: (navbarInApp: boolean) => void;
   setNavbarIsCondense: (navbarIsCondense: boolean) => void;
 }
 
-export const RlsContext = createContext<RlsState>({
-  confirmation: () => {
-    return Promise.resolve(ConfirmationResult.approved());
-  },
-  snackbar: () => {},
-  setIsMobile: () => {},
-  setNavbarInApp: () => {},
-  setNavbarIsCondense: () => {}
-});
+export const RlsContext = createContext<RlsState | null>(null);
+
+export function useRlsContext(): RlsState {
+  const state = useContext(RlsContext);
+
+  if (!state) {
+    throw new Error('RlsApplication not wrapped in Project');
+  }
+
+  return state;
+}
 
 export function RlsApplication({ children }: RlsComponent) {
   const { RlsConfirmation, confirmation } = useConfirmation();
+  const { RlsNotifications, notify } = useNotifications();
   const { RlsSnackbar, snackbar } = useSnackbar();
 
   const [navbarInApp, setNavbarInApp] = useState(false);
@@ -49,6 +56,7 @@ export function RlsApplication({ children }: RlsComponent) {
     <RlsContext
       value={{
         confirmation,
+        notify,
         snackbar,
         setIsMobile,
         setNavbarInApp,
@@ -61,6 +69,7 @@ export function RlsApplication({ children }: RlsComponent) {
         {RlsSnackbar}
       </div>
 
+      {RlsNotifications}
       {RlsConfirmation}
     </RlsContext>
   );
