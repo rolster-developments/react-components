@@ -19,7 +19,7 @@ interface FieldFileProps extends RlsComponent {
 export function RlsFieldFile({
   accept,
   children,
-  disabled: disabledProp,
+  disabled: _disabled,
   formControl,
   identifier,
   msgErrorDisabled,
@@ -32,8 +32,8 @@ export function RlsFieldFile({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const disabled = useMemo(
-    () => formControl?.disabled || disabledProp,
-    [formControl?.disabled, disabledProp]
+    () => formControl?.disabled || _disabled,
+    [formControl?.disabled, _disabled]
   );
 
   const className = useMemo(
@@ -116,7 +116,7 @@ export function RlsFieldFile({
           />
 
           <RlsButtonAction
-            icon={currentFile ? 'close' : 'attach-2'}
+            icon={currentFile ? 'close' : 'attach'}
             disabled={disabled}
             onClick={onClickAction}
           />
