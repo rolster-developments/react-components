@@ -1,6 +1,8 @@
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import { useRelocationOnComponent } from '../../../controllers/RelocationOnComponentController';
 import { useResize } from '../../../controllers/ResizeController';
 import { reactI18n } from '../../../i18n';
@@ -27,8 +29,8 @@ interface ImageEditorProps extends RlsComponent {
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
   quality?: number;
-  selection?: number;
   ratio?: ImageRatio;
+  selection?: number;
   src?: string;
 }
 

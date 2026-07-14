@@ -1,7 +1,8 @@
 import { ReactControl } from '@rolster/react-forms';
+
 import {
-  CSSProperties,
   ChangeEvent,
+  CSSProperties,
   KeyboardEvent,
   TextareaHTMLAttributes,
   useCallback,
@@ -10,6 +11,7 @@ import {
   useRef,
   useState
 } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 

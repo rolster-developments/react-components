@@ -1,6 +1,8 @@
 import { PickerListenerEvent } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
+
 import { ReactNode, useCallback, useMemo, useState } from 'react';
+
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';

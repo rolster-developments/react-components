@@ -1,5 +1,7 @@
 import { ReactControl } from '@rolster/react-forms';
+
 import { useCallback, useMemo } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -11,8 +13,8 @@ interface SwitchProps extends RlsComponent {
 }
 
 interface SwitchControlProps extends RlsComponent {
-  disabled?: boolean;
   formControl: ReactControl<HTMLElement, boolean>;
+  disabled?: boolean;
 }
 
 export function RlsSwitch({

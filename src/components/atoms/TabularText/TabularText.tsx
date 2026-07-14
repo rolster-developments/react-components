@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 
 const className = 'rls-tabular-text';

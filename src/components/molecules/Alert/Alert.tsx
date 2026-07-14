@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 
 interface RlsAlertProps extends RlsComponent {
-  icon?: string;
   bordered?: boolean;
+  icon?: string;
 }
 
 export function RlsAlert({

@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react';
+
 import { RlsComponent } from './components/definitions';
 import {
   Confirmation,
@@ -17,10 +18,10 @@ import { renderClassStatus } from './helpers/css';
 interface RlsState {
   confirmation: Confirmation;
   notify: Notify;
-  snackbar: Snackbar;
   setIsMobile: (appIsMobile: boolean) => void;
   setNavbarInApp: (navbarInApp: boolean) => void;
   setNavbarIsCondense: (navbarIsCondense: boolean) => void;
+  snackbar: Snackbar;
 }
 
 export const RlsContext = createContext<RlsState | null>(null);

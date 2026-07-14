@@ -4,10 +4,12 @@ import {
   verifyDayPicker,
   WeekState
 } from '@rolster/components';
-import { i18nSubscribe } from '@rolster/i18n';
 import { DAY_LABELS } from '@rolster/dates';
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -16,8 +18,8 @@ interface PickerDayProps extends RlsComponent {
   disabled?: boolean;
   formControl?: ReactControl<HTMLElement, number>;
   maxDate?: Date;
-  month?: Nulleable<number>;
   minDate?: Date;
+  month?: Nulleable<number>;
   onValue?: (value: number) => void;
   year?: Nulleable<number>;
 }

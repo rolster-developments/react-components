@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import {
   AreaTextProps,
-  RolsterReactAreaTextControl,
-  RlsAreaText
-} from '../../atoms/AreaText/AreaText';
+  RlsAreaText,
+  RolsterReactAreaTextControl} from '../../atoms/AreaText/AreaText';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 
 interface FieldAreaProps extends AreaTextProps, RlsComponent {
-  msgErrorDisabled?: boolean;
   formControl?: RolsterReactAreaTextControl<string>;
+  msgErrorDisabled?: boolean;
 }
 
 export function RlsFieldArea(props: FieldAreaProps) {

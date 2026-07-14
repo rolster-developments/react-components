@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+
 import { RlsDesignSystem } from './types';
 
 export const DEFAULT_DESIGN_SYSTEM: RlsDesignSystem = 'bordered';

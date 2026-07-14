@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { PropsWithRlsTheme } from '../../definitions';
+
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
+import { PropsWithRlsTheme } from '../../definitions';
 
 interface RlsLedProps extends PropsWithRlsTheme {
   color?: string;

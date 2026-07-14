@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { RlsIcon } from '../../atoms/Icon/Icon';
 
 export interface NavbarMenuOption {

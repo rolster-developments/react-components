@@ -1,5 +1,6 @@
 import { AbstractListElement as Element } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
+
 import {
   KeyboardEvent,
   MouseEvent,
@@ -57,17 +58,17 @@ interface FieldListControllerState {
 
 export interface FieldListControl<T = any, E extends Element<T> = Element<T>> {
   higher: boolean;
-  listIsVisible: boolean;
-  selected: E[];
-  refContent: React.RefObject<HTMLDivElement | null>;
-  refList: React.RefObject<HTMLUListElement | null>;
   isSelected: (element: E) => boolean;
+  listIsVisible: boolean;
   onClickAction: () => void;
   onClickBackdrop: () => void;
   onClickElement: (element: E) => () => void;
   onClickInput: () => void;
   onKeydownElement: (element: E) => (event: KeyboardEvent) => void;
   onRemoveElement: (element: E) => (event: MouseEvent) => void;
+  refContent: React.RefObject<HTMLDivElement | null>;
+  refList: React.RefObject<HTMLUListElement | null>;
+  selected: E[];
 }
 
 interface FieldListControllerProps<T = any, E extends Element<T> = Element<T>> {
@@ -77,9 +78,9 @@ interface FieldListControllerProps<T = any, E extends Element<T> = Element<T>> {
     | ReactControl<HTMLElement, T[]>
     | ReactControl<HTMLElement, NonNullable<T>[]>
     | ReactControl<HTMLElement, T[] | undefined>;
+  onValue?: (value: T[]) => void;
   readOnly?: boolean;
   value?: T[];
-  onValue?: (value: T[]) => void;
 }
 
 export function useFieldList<T = any, E extends Element<T> = Element<T>>(

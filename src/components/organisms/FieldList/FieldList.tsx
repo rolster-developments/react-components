@@ -3,10 +3,12 @@ import {
   ListElement
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
+
 import { ReactNode, useCallback, useMemo } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
-import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
+import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';

@@ -7,15 +7,15 @@ export interface HSV {
 }
 
 export interface RGB {
-  r: number;
-  g: number;
   b: number;
+  g: number;
+  r: number;
 }
 
 export interface HSL {
   h: number;
-  s: number;
   l: number;
+  s: number;
 }
 
 function msgInvalidColor(color: string): string {
@@ -282,10 +282,10 @@ const BACKDROP_LABELS: ShadeLabel[] = [
 export type ThemeShades = Record<ShadeLabel, string>;
 
 export interface ThemePalette {
-  theme: RlsTheme;
   colors: ThemeShades;
   css: string;
   properties: { name: string; value: string }[];
+  theme: RlsTheme;
 }
 
 function parseHex(color: string): RGB {
@@ -353,9 +353,9 @@ function generateThemeCSS(
 }
 
 interface OKLCH {
-  l: number; // perceptual lightness, 0–1
   c: number; // chroma, 0+
   h: number; // hue, radians
+  l: number; // perceptual lightness, 0–1
 }
 
 const srgbToLinear = (channel: number): number => {

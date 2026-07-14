@@ -1,5 +1,6 @@
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
+
 import {
   ReactNode,
   useCallback,
@@ -8,10 +9,11 @@ import {
   useRef,
   useState
 } from 'react';
+
 import { RlsButton } from '../components/atoms/Button/Button';
 import { ImageEditorValue } from '../components/organisms/ImageEditor/ImageEditor';
-import { ImageRatio } from '../components/types';
 import { RlsImageEditorModal } from '../components/organisms/ImageEditorModal/ImageEditorModal';
+import { ImageRatio } from '../components/types';
 import { MIME_TYPE_SUPPORTS } from '../constants/image-editor.constant';
 import { reactI18n } from '../i18n';
 

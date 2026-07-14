@@ -7,6 +7,7 @@ import {
   useState
 } from 'react';
 import ReactDOM from 'react-dom';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { PropsWithRlsTheme } from '../../definitions';
@@ -27,13 +28,13 @@ interface NotificationsBasic {
 
 export interface NotificationsConfig
   extends PropsWithRlsTheme, NotificationsBasic {
-  icon?: string;
   duration?: number;
+  icon?: string;
 }
 
 interface NotificationData {
-  id: string;
   config: NotificationsConfig;
+  id: string;
   visible: boolean;
 }
 
@@ -45,8 +46,8 @@ interface NotificationProps extends NotificationsConfig {
 export type Notify = (config: NotificationsConfig) => void;
 
 export interface NotificationsService {
-  RlsNotifications: ReactNode;
   notify: Notify;
+  RlsNotifications: ReactNode;
 }
 
 function RlsNotification({

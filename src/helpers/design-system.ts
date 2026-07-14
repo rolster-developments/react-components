@@ -1,5 +1,5 @@
-import { RlsDesignSystem } from '../types';
 import { DEFAULT_DESIGN_SYSTEM } from '../definitions';
+import { RlsDesignSystem } from '../types';
 
 const DESIGN_SYSTEM_PREFIX = 'rls-design-system';
 

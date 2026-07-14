@@ -1,4 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
+
 import { RlsComponent } from '../../definitions';
 import { ImageMymeType, ImageRatio } from '../../types';
 import { ImageEditorValue, RlsImageEditor } from '../ImageEditor/ImageEditor';
@@ -14,8 +15,8 @@ interface ImageEditorModalProps extends RlsComponent {
   mimeType?: ImageMymeType;
   onValue?: (value: ImageEditorValue) => void;
   quality?: number;
-  selection?: number;
   ratio?: ImageRatio;
+  selection?: number;
   src?: string;
 }
 

@@ -5,7 +5,9 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 
@@ -23,8 +25,8 @@ interface PaginationProps<T> {
 }
 
 interface PageButtonProps {
-  page: PageState;
   onSelect: (page: PageState) => void;
+  page: PageState;
 }
 
 function PageButton({ page, onSelect }: PageButtonProps) {

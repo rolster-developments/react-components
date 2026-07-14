@@ -1,4 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
+
 import {
   MouseEvent,
   useCallback,
@@ -7,9 +8,10 @@ import {
   useRef,
   useState
 } from 'react';
-import { RlsComponent } from '../../definitions';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsComponent } from '../../definitions';
 
 interface SliderProps extends RlsComponent {
   disabled?: boolean;

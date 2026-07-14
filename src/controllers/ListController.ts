@@ -5,6 +5,7 @@ import {
   navigationListFromInput
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
+
 import {
   KeyboardEvent,
   RefObject,
@@ -27,10 +28,10 @@ interface ListControllerState {
 export interface ListController<T = any> extends ListControllerState {
   navigationElement: (event: KeyboardEvent) => void;
   navigationInput: (event: KeyboardEvent) => void;
-  setFormValue(element?: AbstractListElement<T>): void;
   refContent: RefObject<HTMLDivElement | null>;
   refInput: RefObject<HTMLInputElement | null>;
   refList: RefObject<HTMLUListElement | null>;
+  setFormValue(element?: AbstractListElement<T>): void;
   setState: (state: Partial<ListControllerState>) => void;
 }
 

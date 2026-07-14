@@ -1,6 +1,7 @@
 import { PickerListenerEvent } from '@rolster/components';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
+
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -13,10 +14,11 @@ import {
   useRef,
   useState
 } from 'react';
+
 import {
   DEFAULT_COLOR,
-  HSV,
   hexToHsv,
+  HSV,
   hsvToHex,
   hsvToRgb,
   normalizeHex

@@ -1,6 +1,8 @@
 import { SealedPartial } from '@rolster/commons';
+
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButtonType } from '../../../types';
@@ -62,8 +64,8 @@ interface ConfirmationOptions extends ConfirmationBasic {
 export type Confirmation = (options: ConfirmationOptions) => Result;
 
 export interface ConfirmationService {
-  RlsConfirmation: ReactNode;
   confirmation: Confirmation;
+  RlsConfirmation: ReactNode;
 }
 
 export function RlsConfirmation({

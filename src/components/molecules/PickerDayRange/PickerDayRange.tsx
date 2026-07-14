@@ -5,14 +5,16 @@ import {
 } from '@rolster/components';
 import {
   assignDayInDate,
-  DAY_LABELS,
   dateIsBefore,
   DateRange,
+  DAY_LABELS,
   normalizeMinTime
 } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 

@@ -5,6 +5,7 @@ import {
 } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
+
 import {
   ReactNode,
   useCallback,
@@ -13,6 +14,7 @@ import {
   useRef,
   useState
 } from 'react';
+
 import { DATE_FORMAT } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
@@ -25,8 +27,8 @@ import { RlsPickerDate } from '../PickerDate/PickerDate';
 interface FieldDateProps extends RlsComponent {
   date?: Date;
   disabled?: boolean;
-  formControl?: RolsterReactHtmlControl<Date>;
   format?: string;
+  formControl?: RolsterReactHtmlControl<Date>;
   maxDate?: Date;
   minDate?: Date;
   msgErrorDisabled?: boolean;

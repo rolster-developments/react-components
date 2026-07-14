@@ -1,7 +1,9 @@
 import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { Time } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
+
 import { ReactNode, useCallback, useMemo, useState } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
@@ -17,8 +19,8 @@ interface FieldClockProps extends RlsComponent {
   onValue?: ((value?: Time) => void) | ((value: Time) => void);
   placeholder?: string;
   readOnly?: boolean;
-  value?: Time;
   time?: Time;
+  value?: Time;
 }
 
 interface FieldClockDefinedProps extends FieldClockProps {

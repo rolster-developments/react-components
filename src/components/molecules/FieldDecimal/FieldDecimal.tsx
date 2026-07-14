@@ -1,5 +1,7 @@
 import { BigDecimal } from '@rolster/commons';
+
 import { useMemo } from 'react';
+
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputDecimal } from '../../atoms/InputDecimal/InputDecimal';
 import { FieldProps } from '../../types';
