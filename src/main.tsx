@@ -1,18 +1,17 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { RlsApplication } from './context';
-import { Demo } from './demo/Demo';
-import { setDesignSystem } from './helpers/design-system';
+import { DesignSystemFilled } from './demo/DesignSystemFilled';
+import { RlsApplication, setDesignSystem } from './index';
 
-import './demo/demo.scss';
+import './demo/design-system.scss';
 
 setDesignSystem('filled');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RlsApplication>
-      <Demo />
+      <DesignSystemFilled />
     </RlsApplication>
   </StrictMode>
 );

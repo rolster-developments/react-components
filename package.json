@@ -50,6 +50,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolster/rollup": "^2.1.1",
+    "@rolster/styles-foundations": "^3.3.4",
     "@rolster/types": "^1.1.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
@@ -62,6 +63,7 @@
     "rimraf": "^6.1.3",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-swc": "^0.2.1",
+    "sass": "^1.101.0",
     "tslib": "^2.8.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.64.0",

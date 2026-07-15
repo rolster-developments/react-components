@@ -1,0 +1,96 @@
+@use '@rolster/styles-foundations';
+@use '@rolster/styles-foundations/components';
+@use '@rolster/styles-foundations/design-system-filled';
+@use '@rolster/styles-foundations/design-system-bordered';
+@use './fonts/Mont';
+@use './icons/rolster-icons';
+
+body {
+  --rlc-button-label-text-transform: none;
+  --rlc-image-width: 32rem;
+  --rlc-image-height: 32rem;
+
+  --rlc-app-navbar-width: 140rem;
+}
+
+.rls-app__page__nav__menu {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x4);
+  padding: var(--rls-sizing-x8);
+  box-sizing: border-box;
+}
+
+.rls-app__page__content {
+  animation: animation 360ms var(--rls-acceleration-curve) both;
+}
+
+@keyframes animation {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--rls-sizing-x24);
+
+  h6 {
+    flex: 0 0 auto;
+  }
+}
+
+.dashboard__section {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x8);
+}
+
+.dashboard__section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard__course__header {
+  --rlc-avatar-width: 18rem;
+  --rlc-avatar-height: 18rem;
+  --rlc-icon-dimension: var(--rls-sizing-x10);
+
+  display: flex;
+  column-gap: var(--rls-sizing-x2);
+  align-items: center;
+}
+
+.dashboard__course__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x2);
+  }
+
+  &__value {
+    --rlc-icon-dimension: var(--rls-sizing-x8);
+
+    display: flex;
+    align-items: center;
+    column-gap: var(--rls-sizing-x2);
+  }
+}
+
+.dashboard__inputs {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x8);
+}

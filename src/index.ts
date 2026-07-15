@@ -92,7 +92,7 @@ export * from './components/organisms/PickerColor/PickerColor';
 export * from './components/organisms/PickerDate/PickerDate';
 export * from './components/organisms/PickerDateRange/PickerDateRange';
 export * from './components/organisms/Snackbar/Snackbar';
-export {
+export type {
   FieldProps,
   InputProps,
   RolsterReactInputControl
