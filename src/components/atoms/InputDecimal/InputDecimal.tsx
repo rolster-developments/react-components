@@ -1,5 +1,4 @@
 import { BigDecimal } from '@rolster/commons';
-
 import { useCallback, useMemo, useState } from 'react';
 
 import { InputProps } from '../../types';

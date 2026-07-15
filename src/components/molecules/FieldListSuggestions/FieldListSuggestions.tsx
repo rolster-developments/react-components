@@ -1,5 +1,4 @@
 import { i18nSubscribe } from '@rolster/i18n';
-
 import {
   ChangeEvent,
   FocusEventHandler,

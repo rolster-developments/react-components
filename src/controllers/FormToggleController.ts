@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import { useCallback, useEffect, useState } from 'react';
 
 interface FormToggleControllerProps {

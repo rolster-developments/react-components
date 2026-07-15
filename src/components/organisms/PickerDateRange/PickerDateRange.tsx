@@ -8,7 +8,6 @@ import {
 } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { renderClassStatus } from '../../../helpers/css';

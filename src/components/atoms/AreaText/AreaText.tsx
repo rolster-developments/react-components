@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import {
   ChangeEvent,
   CSSProperties,

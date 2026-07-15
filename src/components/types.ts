@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import { KeyboardEvent } from 'react';
 
 import { RlsComponent } from './definitions';

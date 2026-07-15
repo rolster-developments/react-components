@@ -5,7 +5,6 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
-
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { renderClassStatus } from '../../../helpers/css';

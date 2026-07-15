@@ -1,5 +1,4 @@
 import { BigDecimal } from '@rolster/commons';
-
 import { useMemo } from 'react';
 
 import { renderClassStatus } from '../../../helpers/css';

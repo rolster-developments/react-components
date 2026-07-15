@@ -2,7 +2,6 @@ import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { Time } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-
 import {
   MouseEvent,
   TouchEvent,

@@ -1,6 +1,5 @@
 import { AbstractListElement as Element } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-
 import {
   KeyboardEvent,
   KeyboardEventHandler,

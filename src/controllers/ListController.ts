@@ -5,7 +5,6 @@ import {
   navigationListFromInput
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-
 import {
   KeyboardEvent,
   RefObject,

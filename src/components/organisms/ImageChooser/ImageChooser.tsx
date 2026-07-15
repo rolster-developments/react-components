@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import { useCallback, useEffect, useState } from 'react';
 
 import { useImageEditorController } from '../../../controllers/ImageEditorController';

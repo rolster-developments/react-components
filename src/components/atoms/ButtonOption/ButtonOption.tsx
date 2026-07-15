@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import { ReactNode, useCallback, useMemo } from 'react';
 
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';

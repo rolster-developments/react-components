@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import { useCallback, useMemo } from 'react';
 
 import { renderClassStatus } from '../../../helpers/css';
