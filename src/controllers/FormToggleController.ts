@@ -23,9 +23,13 @@ export function useFormToggleController({
 
   const onToggle = useCallback(() => {
     if (!disabled) {
-      formControl
-        ? formControl.enabled && formControl.setValue(!formControl.value)
-        : setChecked((checked) => !checked);
+      if (formControl) {
+        if (formControl.enabled) {
+          formControl.setValue(!formControl.value);
+        }
+      } else {
+        setChecked((checked) => !checked);
+      }
     }
   }, [formControl, disabled]);
 

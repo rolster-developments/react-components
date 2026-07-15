@@ -116,7 +116,9 @@ export function RlsPickerColor({
   }, [alpha, hexColor]);
 
   useEffect(() => {
-    !hexEditing.current && setHexInput(hexColor);
+    if (!hexEditing.current) {
+      setHexInput(hexColor);
+    }
   }, [hexColor]);
 
   useEffect(() => {
@@ -290,7 +292,9 @@ export function RlsPickerColor({
     if (normalized) {
       const hsv = hexToHsv(normalized);
 
-      hsv && setHsv(hsv);
+      if (hsv) {
+        setHsv(hsv);
+      }
     }
   }, []);
 
@@ -312,7 +316,9 @@ export function RlsPickerColor({
 
   const onHexKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      event.key === 'Enter' && onHexBlur();
+      if (event.key === 'Enter') {
+        onHexBlur();
+      }
     },
     [onHexBlur]
   );

@@ -12,7 +12,10 @@ export function RlsInputText(props: InputProps<string>) {
 
   const onValueInput = useCallback(
     (value: string) => {
-      !formControl && setValueInput(value);
+      if (!formControl) {
+        setValueInput(value);
+      }
+
       onValue?.(value);
     },
     [formControl, onValue]

@@ -171,7 +171,11 @@ export function RlsPickerClock({
   }, []);
 
   useEffect(() => {
-    selectionIsHours ? refreshClockHour() : refreshClockMinute();
+    if (selectionIsHours) {
+      refreshClockHour();
+    } else {
+      refreshClockMinute();
+    }
   }, [selectionIsHours]);
 
   useEffect(() => {
@@ -201,7 +205,11 @@ export function RlsPickerClock({
 
       refreshClock(value);
 
-      selectionIsHours ? setHour(value === 0 ? 12 : value) : setMinute(value);
+      if (selectionIsHours) {
+        setHour(value === 0 ? 12 : value);
+      } else {
+        setMinute(value);
+      }
     },
     [selectionIsHours, radianUnit]
   );
@@ -312,8 +320,8 @@ export function RlsPickerClock({
         ? hour + 12
         : 12
       : hour === 12
-      ? 0
-      : hour;
+        ? 0
+        : hour;
 
     const timeValue = new Time(hourValue, minute);
 

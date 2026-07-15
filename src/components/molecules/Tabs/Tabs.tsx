@@ -30,7 +30,9 @@ function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
   }, [tab, value]);
 
   const onClick = useCallback(() => {
-    !tab.disabled && onSelect(tab.value);
+    if (!tab.disabled) {
+      onSelect(tab.value);
+    }
   }, [tab.disabled]);
 
   return (
@@ -54,7 +56,9 @@ export function RlsTabs<T = any>({ tabs, onValue, rlsTheme }: TabsProps<T>) {
   useEffect(() => {
     const initial = tabs.find((tab) => tab.defaultActive) ?? tabs[0];
 
-    initial && onSelect(initial.value);
+    if (initial) {
+      onSelect(initial.value);
+    }
   }, []);
 
   return (

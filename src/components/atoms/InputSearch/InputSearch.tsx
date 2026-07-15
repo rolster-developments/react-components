@@ -30,7 +30,9 @@ export function RlsInputSearch({
 
   const onValue = useCallback(
     (value: string) => {
-      !formControl && setValue(() => value);
+      if (!formControl) {
+        setValue(() => value);
+      }
     },
     [formControl]
   );

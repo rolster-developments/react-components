@@ -98,7 +98,9 @@ export function RlsFieldDateRange({
   }, [dateRangeValue]);
 
   const onClickInput = useCallback(() => {
-    !readOnly && setModalIsVisible(true);
+    if (!readOnly) {
+      setModalIsVisible(true);
+    }
   }, [readOnly]);
 
   const onChange = useCallback(
@@ -121,7 +123,9 @@ export function RlsFieldDateRange({
 
   const onListener = useCallback(
     ({ event, value }: PickerListener<DateRange>) => {
-      event !== PickerListenerEvent.Cancel && onChange(value);
+      if (event !== PickerListenerEvent.Cancel) {
+        onChange(value);
+      }
       formControl?.touch();
       setModalIsVisible(false);
     },

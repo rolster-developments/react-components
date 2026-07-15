@@ -41,7 +41,9 @@ export function RlsButtonToggle({
 
   useEffect(() => {
     function onCloseMenu({ target }: any) {
-      !componentRef?.current?.contains(target) && setVisible(false);
+      if (!componentRef?.current?.contains(target)) {
+        setVisible(false);
+      }
     }
 
     document.addEventListener('click', onCloseMenu);
@@ -66,13 +68,17 @@ export function RlsButtonToggle({
       setAction(() => action);
       setVisible(() => false);
 
-      automatic && onAction(action.value);
+      if (automatic) {
+        onAction(action.value);
+      }
     },
     [onAction, automatic]
   );
 
   const onClickAction = useCallback(() => {
-    action && onAction(action.value);
+    if (action) {
+      onAction(action.value);
+    }
   }, [action, onAction]);
 
   const onClickOption = useCallback(
@@ -80,7 +86,9 @@ export function RlsButtonToggle({
       const index = Number(event.currentTarget.dataset.index);
       const option = options[index];
 
-      option && onSelectAction(option);
+      if (option) {
+        onSelectAction(option);
+      }
     },
     [options, onSelectAction]
   );
@@ -90,11 +98,7 @@ export function RlsButtonToggle({
       <div className="rls-button-toggle__content">
         {action && (
           <div className="rls-button-toggle__action">
-            <RlsButton
-              disabled={disabled}
-              type={type}
-              onClick={onClickAction}
-            >
+            <RlsButton disabled={disabled} type={type} onClick={onClickAction}>
               {action.label}
             </RlsButton>
           </div>

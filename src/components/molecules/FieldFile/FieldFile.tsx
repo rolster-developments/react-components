@@ -90,7 +90,9 @@ export function RlsFieldFile({
   );
 
   const onClickControl = useCallback(() => {
-    !readOnly && !disabled && inputRef.current?.click();
+    if (!readOnly && !disabled) {
+      inputRef.current?.click();
+    }
   }, [readOnly, disabled]);
 
   return (

@@ -117,7 +117,11 @@ export function RlsPickerDateRange({
   }, []);
 
   const onVisibilityTitle = useCallback((type: PickerSelectorTitleType) => {
-    type === 'month' ? setVisibility('MONTH') : setVisibility('YEAR');
+    if (type === 'month') {
+      setVisibility('MONTH');
+    } else {
+      setVisibility('YEAR');
+    }
   }, []);
 
   const onCancel = useCallback(() => {

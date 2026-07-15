@@ -25,7 +25,11 @@ export function RlsInputDecimal(props: InputDecimalProps) {
     (value: number) => {
       const valueDecimal = BigDecimal.create(value);
 
-      formControl ? formControl.setValue(valueDecimal) : setValueInput(value);
+      if (formControl) {
+        formControl.setValue(valueDecimal);
+      } else {
+        setValueInput(value);
+      }
 
       onValue?.(valueDecimal);
     },

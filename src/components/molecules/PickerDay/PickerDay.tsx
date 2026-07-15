@@ -57,7 +57,9 @@ function RlsPickerDayElement({
   }, [day, disabled]);
 
   const onClick = useCallback(() => {
-    day.value && !day.disabled && !disabled && onSelect(day.value);
+    if (day.value && !day.disabled && !disabled) {
+      onSelect(day.value);
+    }
   }, [day.value, day.disabled, disabled, onSelect]);
 
   return (
@@ -86,7 +88,11 @@ export function RlsPickerDay({
 
   const setDayValue = useCallback(
     (value: number) => {
-      formControl ? formControl.setValue(value) : setValue(value);
+      if (formControl) {
+        formControl.setValue(value);
+      } else {
+        setValue(value);
+      }
     },
     [formControl]
   );
@@ -110,15 +116,21 @@ export function RlsPickerDay({
 
     const day = verifyDayPicker(options);
 
-    day ? setDayValue(day) : setWeeks(createDayPicker(options));
+    if (day) {
+      setDayValue(day);
+    } else {
+      setWeeks(createDayPicker(options));
+    }
   }, [dateDay, month, year, value, minDate, maxDate]);
 
   useEffect(() => {
     const day = verifyDayPicker(createPickerOptions());
 
-    day
-      ? formControl?.setValue(day)
-      : setValue(formControl?.value || dateDay.getDate());
+    if (day) {
+      formControl?.setValue(day);
+    } else {
+      setValue(formControl?.value || dateDay.getDate());
+    }
   }, [formControl?.value]);
 
   const createPickerOptions = useCallback(() => {

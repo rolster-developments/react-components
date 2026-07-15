@@ -4,7 +4,8 @@ import { renderClassStatus } from '../../../helpers/css';
 import {
   AreaTextProps,
   RlsAreaText,
-  RolsterReactAreaTextControl} from '../../atoms/AreaText/AreaText';
+  RolsterReactAreaTextControl
+} from '../../atoms/AreaText/AreaText';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 

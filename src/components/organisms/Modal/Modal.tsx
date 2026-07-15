@@ -30,7 +30,9 @@ export function RlsModal({
   }, [className, visible, controller?.visible]);
 
   const onClickBackdrop = useCallback(() => {
-    autoclose && controller?.close();
+    if (autoclose) {
+      controller?.close();
+    }
     onBackdrop?.();
   }, [autoclose, controller, onBackdrop]);
 

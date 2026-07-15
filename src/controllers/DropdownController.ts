@@ -36,9 +36,9 @@ export function useDropdownController(
     const rectContent = component.current.getBoundingClientRect();
     const rectElement = (event.target as HTMLElement).getBoundingClientRect();
 
-    let positionX = 0;
-    let positionY = 0;
-    let effect: DropdownEffect = '0% 0%';
+    let positionX: number;
+    let positionY: number;
+    let effect: DropdownEffect;
     let transform = 0;
 
     const elementX = rectElement.x + rectElement.width / 2;

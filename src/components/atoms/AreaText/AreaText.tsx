@@ -76,7 +76,9 @@ export function RlsAreaText({
     if (!changeIsInternal.current) {
       const nextValue = String(formControl?.value ?? value ?? '');
 
-      valueArea !== nextValue && setValueArea(nextValue);
+      if (valueArea !== nextValue) {
+        setValueArea(nextValue);
+      }
     }
 
     changeIsInternal.current = false;
@@ -106,7 +108,9 @@ export function RlsAreaText({
     (event: KeyboardEvent<HTMLTextAreaElement>) => {
       onKeyDown?.(event);
 
-      event.key === 'Enter' && onEnter?.();
+      if (event.key === 'Enter') {
+        onEnter?.();
+      }
     },
     [onKeyDown, onEnter]
   );

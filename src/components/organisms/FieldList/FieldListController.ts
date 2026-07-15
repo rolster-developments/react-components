@@ -103,8 +103,9 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
-      !refContent?.current?.contains(target as any) &&
+      if (!refContent?.current?.contains(target as any)) {
         setState((state) => ({ ...state, listIsVisible: false }));
+      }
     }
 
     document.addEventListener('click', onCloseSuggestions as any);
@@ -224,7 +225,9 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
   const onKeydownElement = useCallback(
     (element: E) => {
       return (event: KeyboardEvent) => {
-        event.code === 'Enter' && toggleElement(element);
+        if (event.code === 'Enter') {
+          toggleElement(element);
+        }
       };
     },
     [toggleElement]

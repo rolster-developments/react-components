@@ -59,7 +59,9 @@ function RlsPickerDayRangeElement({
   }, [day.disabled, day.end, day.forbidden, day.ranged, day.source, disabled]);
 
   const onClick = useCallback(() => {
-    day.value && !day.disabled && !disabled && onSelect(day.value);
+    if (day.value && !day.disabled && !disabled) {
+      onSelect(day.value);
+    }
   }, [day.value, day.disabled, disabled, onSelect]);
 
   return (

@@ -1,4 +1,3 @@
-
 export function RlsSpinner() {
   return (
     <div className="rls-spinner">

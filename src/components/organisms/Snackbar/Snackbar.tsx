@@ -100,7 +100,9 @@ export function useSnackbar(): SnackbarService {
   });
 
   const onClose = useCallback(() => {
-    timeoutId.current && clearTimeout(timeoutId.current);
+    if (timeoutId.current) {
+      clearTimeout(timeoutId.current);
+    }
     timeoutId.current = undefined;
 
     setState((state) => ({ ...state, visible: false }));

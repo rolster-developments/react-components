@@ -36,7 +36,9 @@ export function RlsInputPassword({
     (event: KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(event);
 
-      event.key === 'Enter' && onEnter?.();
+      if (event.key === 'Enter') {
+        onEnter?.();
+      }
     },
     [onKeyDown, onEnter]
   );

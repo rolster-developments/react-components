@@ -89,7 +89,9 @@ export function RlsFieldClock({
   }, [timeValue]);
 
   const onClickInput = useCallback(() => {
-    !readOnly && setModalIsVisible(true);
+    if (!readOnly) {
+      setModalIsVisible(true);
+    }
   }, [readOnly]);
 
   const onChange = useCallback(
@@ -112,7 +114,9 @@ export function RlsFieldClock({
 
   const onListener = useCallback(
     ({ event, value }: PickerListener<Time>) => {
-      event !== PickerListenerEvent.Cancel && onChange(value);
+      if (event !== PickerListenerEvent.Cancel) {
+        onChange(value);
+      }
       formControl?.touch();
       setModalIsVisible(false);
     },

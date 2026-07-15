@@ -30,7 +30,9 @@ export function RlsModalSheet({
   }, [className, visible, controller?.visible]);
 
   const onClickBackdrop = useCallback(() => {
-    autoclose && controller?.close();
+    if (autoclose) {
+      controller?.close();
+    }
     onAutoClose?.();
   }, [autoclose, controller, onAutoClose]);
 

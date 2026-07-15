@@ -50,10 +50,9 @@ function RlsPickerMonthElement({
   }, [month.disabled, month.focused, month.selected, disabled]);
 
   const onClick = useCallback(() => {
-    valueIsDefined(month.value) &&
-      !month.disabled &&
-      !disabled &&
+    if (valueIsDefined(month.value) && !month.disabled && !disabled) {
       onSelect(month.value);
+    }
   }, [month.value, month.disabled, disabled, onSelect]);
 
   return (
@@ -83,7 +82,11 @@ export function RlsPickerMonth({
 
   const setMonthValue = useCallback(
     (value: number) => {
-      formControl ? formControl.setValue(value) : setValue(value);
+      if (formControl) {
+        formControl.setValue(value);
+      } else {
+        setValue(value);
+      }
     },
     [formControl]
   );
@@ -107,9 +110,11 @@ export function RlsPickerMonth({
 
     const month = verifyMonthPicker(options);
 
-    valueIsDefined(month)
-      ? setMonthValue(month)
-      : setMonths(createMonthPicker(options));
+    if (valueIsDefined(month)) {
+      setMonthValue(month);
+    } else {
+      setMonths(createMonthPicker(options));
+    }
   }, [dateMonth, year, value, minDate, maxDate]);
 
   useEffect(() => {
@@ -121,9 +126,11 @@ export function RlsPickerMonth({
       maxDate
     });
 
-    valueIsDefined(month)
-      ? formControl?.setValue(month)
-      : setValue(formControl?.value ?? dateMonth.getMonth());
+    if (valueIsDefined(month)) {
+      formControl?.setValue(month);
+    } else {
+      setValue(formControl?.value ?? dateMonth.getMonth());
+    }
   }, [formControl?.value]);
 
   return (

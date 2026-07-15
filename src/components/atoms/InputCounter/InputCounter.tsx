@@ -59,9 +59,9 @@ export function RlsInputCounter({
     if (!changeIsInternal.current && formControl) {
       const counterValue = formControl.value;
 
-      counterValue !== undefined &&
-        counterValue !== value &&
+      if (counterValue !== undefined && counterValue !== value) {
         setValue(counterValue);
+      }
     }
 
     changeIsInternal.current = false;
@@ -105,7 +105,9 @@ export function RlsInputCounter({
     (event: ChangeEvent<HTMLInputElement>) => {
       const parsed = parseFloat(event.target.value);
 
-      !isNaN(parsed) && onUpdate(parsed);
+      if (!isNaN(parsed)) {
+        onUpdate(parsed);
+      }
     },
     [onUpdate]
   );

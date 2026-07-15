@@ -8,13 +8,16 @@ export function renderClassStatus(
   const _classElement = [base];
 
   Object.entries(status).forEach(([key, state]) => {
-    state &&
-      (typeof state === 'string'
-        ? _classElement.push(`${base}--${state}`)
-        : _classElement.push(`${base}--${key}`));
+    if (state) {
+      _classElement.push(
+        typeof state === 'string' ? `${base}--${state}` : `${base}--${key}`
+      );
+    }
   });
 
-  additionals && _classElement.push(additionals);
+  if (additionals) {
+    _classElement.push(additionals);
+  }
 
   return _classElement.join(' ').trim();
 }

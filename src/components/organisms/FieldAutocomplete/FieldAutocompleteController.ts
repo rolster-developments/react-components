@@ -108,7 +108,9 @@ export function useFieldAutocomplete<
   }, [props.suggestions, pattern]);
 
   useEffect(() => {
-    props.disabled && controller.setState({ focused: false });
+    if (props.disabled) {
+      controller.setState({ focused: false });
+    }
   }, [props.disabled, controller.setState]);
 
   const onFocusInput = useCallback(() => {
@@ -177,7 +179,9 @@ export function useFieldAutocomplete<
   const onChange = useCallback(
     (element: Element<T>) => {
       if (props.onSelect) {
-        element.value && props.onSelect(element.value);
+        if (element.value) {
+          props.onSelect(element.value);
+        }
       } else {
         controller.setFormValue(element);
       }
@@ -213,9 +217,11 @@ export function useFieldAutocomplete<
   const onKeydownElement = useCallback(
     (element: Element<T>) => {
       return (event: KeyboardEvent) => {
-        event.code === 'Enter'
-          ? onChange(element)
-          : controller.navigationElement(event);
+        if (event.code === 'Enter') {
+          onChange(element);
+        } else {
+          controller.navigationElement(event);
+        }
       };
     },
     [onChange, controller.navigationElement]

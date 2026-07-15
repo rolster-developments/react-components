@@ -2,7 +2,8 @@ import {
   i18n,
   I18nDictionary,
   I18nTranslate,
-  LanguageCode} from '@rolster/i18n';
+  LanguageCode
+} from '@rolster/i18n';
 import { Interpolators } from '@rolster/strings';
 
 const errors: I18nDictionary = {

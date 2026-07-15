@@ -16,7 +16,10 @@ export function RlsInputNumber(props: InputNumberProps) {
 
   const onValueInput = useCallback(
     (value: number) => {
-      !formControl && setValueInput(value);
+      if (!formControl) {
+        setValueInput(value);
+      }
+
       onValue?.(value);
     },
     [formControl, onValue]

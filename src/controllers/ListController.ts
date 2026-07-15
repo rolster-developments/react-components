@@ -109,8 +109,9 @@ export function useListController<T = any, K = string>(
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
-      !refContent?.current?.contains(target as any) &&
+      if (!refContent?.current?.contains(target as any)) {
         refreshState((state) => ({ ...state, listIsVisible: false }));
+      }
     }
 
     document.addEventListener('click', onCloseSuggestions);
@@ -142,20 +143,28 @@ export function useListController<T = any, K = string>(
         if (!element) {
           valueProtected.current = formControl.value;
 
-          automatic
-            ? setFormValue(collection.value[0], true)
-            : setFormValue(undefined);
+          if (automatic) {
+            setFormValue(collection.value[0], true);
+          } else {
+            setFormValue(undefined);
+          }
         } else {
           refreshState((state) => ({ ...state, value: element.description }));
         }
       } else if (valueProtected.current) {
         const element = collection.find(valueProtected.current);
 
-        element ? setFormValue(element) : refreshState({ ...state, value: '' });
+        if (element) {
+          setFormValue(element);
+        } else {
+          refreshState({ ...state, value: '' });
+        }
       } else {
-        automatic
-          ? setFormValue(collection.value[0], true)
-          : refreshState({ ...state, value: '' });
+        if (automatic) {
+          setFormValue(collection.value[0], true);
+        } else {
+          refreshState({ ...state, value: '' });
+        }
       }
     }
 
@@ -182,9 +191,11 @@ export function useListController<T = any, K = string>(
 
       changeValueInternal.current = true;
 
-      valueIsDefault
-        ? formControl?.setDefaultValue(element?.value)
-        : formControl?.setValue(element?.value);
+      if (valueIsDefault) {
+        formControl?.setDefaultValue(element?.value);
+      } else {
+        formControl?.setValue(element?.value);
+      }
     },
     [formControl]
   );

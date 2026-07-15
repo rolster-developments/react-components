@@ -52,7 +52,9 @@ export function useFieldSelect<
   const controller = useListController<T, K>(props);
 
   useEffect(() => {
-    props.disabled && controller.setState({ focused: false });
+    if (props.disabled) {
+      controller.setState({ focused: false });
+    }
   }, [props.disabled]);
 
   const onFocusInput = useCallback(() => {
@@ -64,7 +66,9 @@ export function useFieldSelect<
   }, [controller.setState]);
 
   const onClickInput = useCallback(() => {
-    !props.readOnly && controller.setState({ listIsVisible: true });
+    if (!props.readOnly) {
+      controller.setState({ listIsVisible: true });
+    }
   }, [controller.setState, props.readOnly]);
 
   const onKeydownInput = useCallback(
@@ -98,7 +102,9 @@ export function useFieldSelect<
     } else {
       const listIsVisible = !controller.listIsVisible;
       controller.setState({ listIsVisible });
-      listIsVisible && controller.refInput?.current?.focus();
+      if (listIsVisible) {
+        controller.refInput?.current?.focus();
+      }
     }
   }, [
     controller.listIsVisible,
@@ -115,11 +121,15 @@ export function useFieldSelect<
 
   const onChange = useCallback(
     (element: Element<T>) => {
-      !props.disabled && controller.refInput?.current?.focus();
+      if (!props.disabled) {
+        controller.refInput?.current?.focus();
+      }
 
       if (props.onSelect) {
         controller.setState({ listIsVisible: false });
-        element.value && props.onSelect(element.value);
+        if (element.value) {
+          props.onSelect(element.value);
+        }
       } else {
         controller.setFormValue(element);
         controller.setState({ listIsVisible: false });
@@ -148,9 +158,11 @@ export function useFieldSelect<
   const onKeydownElement = useCallback(
     (element: Element<T>) => {
       return (event: KeyboardEvent) => {
-        event.code === 'Enter'
-          ? onChange(element)
-          : controller.navigationElement(event);
+        if (event.code === 'Enter') {
+          onChange(element);
+        } else {
+          controller.navigationElement(event);
+        }
       };
     },
     [onChange, controller.navigationElement]

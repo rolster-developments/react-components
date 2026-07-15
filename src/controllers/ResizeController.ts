@@ -23,7 +23,7 @@ export function useResize(props: ResizeProps): void {
   const observer = useCallback((entries: ResizeObserverEntry[]) => {
     const { height, width } = entries[0].contentRect;
 
-    onResize &&
+    if (onResize) {
       onResize({
         current: dimension.current,
         dimension: {
@@ -31,6 +31,7 @@ export function useResize(props: ResizeProps): void {
           width
         }
       });
+    }
 
     dimension.current = { height, width };
   }, []);

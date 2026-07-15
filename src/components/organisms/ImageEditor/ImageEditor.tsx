@@ -204,7 +204,7 @@ export function RlsImageEditor(props: ImageEditorProps) {
 
         const left = refImage.current.offsetWidth - width;
         const top = refImage.current.offsetHeight - height;
-        
+
         if (!hasInteracted.current) {
           refSelection.current.style.left = `${left / 2}px`;
           refSelection.current.style.top = `${top / 2}px`;

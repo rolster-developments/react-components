@@ -32,7 +32,9 @@ export function RlsImageChooser(props: ImageChooserProps) {
   const controller = useImageEditorController({ ...props, onValue });
 
   useEffect(() => {
-    props.src && setSrc(props.src);
+    if (props.src) {
+      setSrc(props.src);
+    }
   }, [props.src]);
 
   return (

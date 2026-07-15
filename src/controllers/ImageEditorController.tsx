@@ -77,7 +77,9 @@ export function useImageEditorController(
   const onEditorValue = useCallback(
     (image: ImageEditorValue) => {
       setSrcEditor(undefined);
-      options.onValue && options.onValue(image);
+      if (options.onValue) {
+        options.onValue(image);
+      }
     },
     [options.onValue]
   );
@@ -123,7 +125,9 @@ export function useImageEditorController(
   ]);
 
   const onImageChooser = useCallback(() => {
-    !options.disabled && refInput.current.click();
+    if (!options.disabled) {
+      refInput.current.click();
+    }
   }, [options.disabled]);
 
   return { onImageChooser, RlsImageEditorChooser };

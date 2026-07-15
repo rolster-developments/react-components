@@ -67,8 +67,9 @@ export function RlsPagination<T>({
 
   const refreshPagination = useCallback(
     (pagination?: Pagination<T>) => {
-      pagination &&
+      if (pagination) {
         refreshTemplate(pagination.template, pagination.page.collection);
+      }
     },
     [refreshTemplate]
   );

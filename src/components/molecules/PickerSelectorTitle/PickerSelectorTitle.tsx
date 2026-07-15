@@ -1,6 +1,6 @@
 import { valueIsDefined } from '@rolster/commons';
 import { monthLimitTemplate } from '@rolster/components';
-import { Month,MONTH_NAMES } from '@rolster/dates';
+import { Month, MONTH_NAMES } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -76,12 +76,17 @@ export function RlsPickerSelectorTitle({
   }, [onClick]);
 
   const onPreviousYear = useCallback(() => {
-    valueIsDefined(yearControl.value) &&
+    if (valueIsDefined(yearControl.value)) {
       yearControl.setValue(yearControl.value - 1);
+    }
   }, [yearControl.value]);
 
   const onPrevious = useCallback(() => {
-    type === 'month' ? onPreviousMonth() : onPreviousYear();
+    if (type === 'month') {
+      onPreviousMonth();
+    } else {
+      onPreviousYear();
+    }
   }, [type, onPreviousMonth, onPreviousYear]);
 
   const onNextMonth = useCallback(() => {
@@ -99,12 +104,17 @@ export function RlsPickerSelectorTitle({
   }, [monthControl.value, yearControl.value]);
 
   const onNextYear = useCallback(() => {
-    valueIsDefined(yearControl.value) &&
+    if (valueIsDefined(yearControl.value)) {
       yearControl.setValue(yearControl.value + 1);
+    }
   }, [yearControl.value]);
 
   const onNext = useCallback(() => {
-    type === 'month' ? onNextMonth() : onNextYear();
+    if (type === 'month') {
+      onNextMonth();
+    } else {
+      onNextYear();
+    }
   }, [type, onNextMonth, onNextYear]);
 
   return (

@@ -40,7 +40,9 @@ function RlsPickerYearElement({
   }, [year.disabled, year.focused, year.selected, disabled]);
 
   const onClick = useCallback(() => {
-    year.value && !year.disabled && !disabled && onSelect(year.value);
+    if (year.value && !year.disabled && !disabled) {
+      onSelect(year.value);
+    }
   }, [year.value, year.disabled, disabled, onSelect]);
 
   return (
@@ -82,18 +84,28 @@ export function RlsPickerYear({
     const options = createPickerOptions();
     const validYear = verifyYearPicker(options);
 
-    validYear ? setYear(validYear) : setTemplate(createYearPicker(options));
+    if (validYear) {
+      setYear(validYear);
+    } else {
+      setTemplate(createYearPicker(options));
+    }
   }, [dateYear, year, minDate, maxDate]);
 
   useEffect(() => {
     const yearValue = formControl?.value;
 
-    valueIsDefined(yearValue) && yearValue !== year && setYear(yearValue);
+    if (valueIsDefined(yearValue) && yearValue !== year) {
+      setYear(yearValue);
+    }
   }, [formControl?.value]);
 
   const onSelect = useCallback(
     (value: number) => {
-      formControl ? formControl.setValue(value) : setYear(value);
+      if (formControl) {
+        formControl.setValue(value);
+      } else {
+        setYear(value);
+      }
       onValue?.(value);
     },
     [formControl, onValue]

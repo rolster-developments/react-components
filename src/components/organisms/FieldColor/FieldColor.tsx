@@ -88,7 +88,9 @@ export function RlsFieldColor({
   }, [colorValue]);
 
   const onClickInput = useCallback(() => {
-    !readOnly && setModalIsVisible(true);
+    if (!readOnly) {
+      setModalIsVisible(true);
+    }
   }, [readOnly]);
 
   const onChange = useCallback(
@@ -111,7 +113,9 @@ export function RlsFieldColor({
 
   const onListener = useCallback(
     ({ event, value }: { event: PickerListenerEvent; value?: string }) => {
-      event !== PickerListenerEvent.Cancel && onChange(value);
+      if (event !== PickerListenerEvent.Cancel) {
+        onChange(value);
+      }
       formControl?.touch();
       setModalIsVisible(false);
     },

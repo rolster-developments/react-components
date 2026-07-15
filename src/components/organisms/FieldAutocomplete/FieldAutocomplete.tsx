@@ -123,7 +123,9 @@ export function RlsFieldAutocompleteTemplate<
 
   const onKeyDownPattern = useCallback(
     (event: KeyboardEvent) => {
-      event.key === 'Enter' && onSearch?.(autocomplete.pattern);
+      if (event.key === 'Enter') {
+        onSearch?.(autocomplete.pattern);
+      }
 
       autocomplete.onKeydownInput(event);
     },

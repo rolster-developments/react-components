@@ -46,7 +46,9 @@ export function RlsInput({
     if (!changeIsInternal.current && formControl) {
       const valueControl = formControl.value ? String(formControl.value) : '';
 
-      valueInput !== valueControl && setValueInput(valueControl);
+      if (valueInput !== valueControl) {
+        setValueInput(valueControl);
+      }
     }
 
     changeIsInternal.current = false;
@@ -74,7 +76,9 @@ export function RlsInput({
     (event: KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(event);
 
-      event.key === 'Enter' && onEnter?.();
+      if (event.key === 'Enter') {
+        onEnter?.();
+      }
     },
     [onKeyDown, onEnter]
   );

@@ -17,8 +17,9 @@ export function RlsDropdown({ children, controller, rlsTheme }: DropdownProps) {
 
   useEffect(() => {
     function onCloseDropdown({ target }: MouseEvent) {
-      !controller.component.current.contains(target as any) &&
+      if (!controller.component.current.contains(target as any)) {
         controller.close();
+      }
     }
 
     document.addEventListener('click', onCloseDropdown);
