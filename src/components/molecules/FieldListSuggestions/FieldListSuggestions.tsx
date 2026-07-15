@@ -11,7 +11,6 @@ import {
   useMemo,
   useState
 } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';

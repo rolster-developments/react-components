@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
 import { PropsWithRlsTheme } from '../../definitions';
 

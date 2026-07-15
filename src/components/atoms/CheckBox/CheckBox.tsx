@@ -1,6 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useMemo } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';

@@ -1,6 +1,5 @@
 import { currencyFormat } from '@rolster/commons';
 import { useMemo } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
 import { RlsTabularText } from '../TabularText/TabularText';

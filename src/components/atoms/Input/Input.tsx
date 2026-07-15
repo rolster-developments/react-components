@@ -8,7 +8,6 @@ import {
   useRef,
   useState
 } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { InputProps as RolsterInputProps } from '../../types';

@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 

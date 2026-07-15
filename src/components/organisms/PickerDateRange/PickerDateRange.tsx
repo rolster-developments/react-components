@@ -9,7 +9,6 @@ import {
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
 import { reactI18n } from '../../../i18n';

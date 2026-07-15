@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-
 import { RlsComponent } from '../../definitions';
 
 interface ToolbarProps extends RlsComponent {

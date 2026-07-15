@@ -1,5 +1,4 @@
 import { ReactControl } from '@rolster/react-forms';
-
 import { RlsComponent } from '../../definitions';
 import { ImageMymeType, ImageRatio } from '../../types';
 import { ImageEditorValue, RlsImageEditor } from '../ImageEditor/ImageEditor';

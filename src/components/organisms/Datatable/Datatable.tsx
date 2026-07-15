@@ -1,5 +1,4 @@
 import { ReactNode, useMemo } from 'react';
-
 import { useDatatable } from '../../../controllers/DatatableController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';

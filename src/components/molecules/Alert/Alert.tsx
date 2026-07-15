@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';

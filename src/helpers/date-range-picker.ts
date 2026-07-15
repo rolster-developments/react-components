@@ -1,5 +1,4 @@
 import { dateFormatTemplate, DateRange } from '@rolster/dates';
-
 import { DATE_RANGE_FORMAT } from '../constants/picker.constant';
 
 export function rangeFormatTemplate({ maxDate, minDate }: DateRange): string {

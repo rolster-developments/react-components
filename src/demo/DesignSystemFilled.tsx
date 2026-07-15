@@ -1,7 +1,6 @@
 import { RolsterAutocompleteElement } from '@rolster/components';
 import { useFormControl, useInputControl } from '@rolster/react-forms';
 import { useCallback } from 'react';
-
 import {
   NavbarMenuOption,
   RlsAvatar,

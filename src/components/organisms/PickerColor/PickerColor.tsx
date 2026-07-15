@@ -13,7 +13,6 @@ import {
   useRef,
   useState
 } from 'react';
-
 import {
   DEFAULT_COLOR,
   hexToHsv,

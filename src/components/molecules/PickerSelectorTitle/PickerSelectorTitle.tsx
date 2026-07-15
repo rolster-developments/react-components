@@ -4,7 +4,6 @@ import { Month, MONTH_NAMES } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 
 export type PickerSelectorTitleType = 'month' | 'year';

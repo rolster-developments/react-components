@@ -12,7 +12,6 @@ import {
   useRef,
   useState
 } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';

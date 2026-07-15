@@ -7,7 +7,6 @@ import {
   useState
 } from 'react';
 import ReactDOM from 'react-dom';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { PropsWithRlsTheme } from '../../definitions';

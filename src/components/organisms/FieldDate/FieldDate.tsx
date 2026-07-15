@@ -13,7 +13,6 @@ import {
   useRef,
   useState
 } from 'react';
-
 import { DATE_FORMAT } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';

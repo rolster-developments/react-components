@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
 import { FieldProps } from '../../types';

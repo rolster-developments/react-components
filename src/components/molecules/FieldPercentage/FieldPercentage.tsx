@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputPercentage } from '../../atoms/InputPercentage/InputPercentage';
 import { FieldProps } from '../../types';

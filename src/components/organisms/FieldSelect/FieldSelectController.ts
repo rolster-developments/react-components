@@ -7,7 +7,6 @@ import {
   useCallback,
   useEffect
 } from 'react';
-
 import { useListController } from '../../../controllers/ListController';
 import { ListControllerState } from '../../../definitions';
 

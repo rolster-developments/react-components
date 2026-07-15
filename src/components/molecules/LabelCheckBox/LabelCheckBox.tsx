@@ -1,6 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
 import { useMemo } from 'react';
-
 import { useFormToggleController } from '../../../controllers/FormToggleController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';

@@ -1,5 +1,4 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-
 import { RlsComponent } from './components/definitions';
 import {
   Confirmation,

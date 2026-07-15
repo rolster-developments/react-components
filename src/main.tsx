@@ -1,6 +1,5 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-
 import { DesignSystemFilled } from './demo/DesignSystemFilled';
 import { RlsApplication, setDesignSystem } from './index';
 

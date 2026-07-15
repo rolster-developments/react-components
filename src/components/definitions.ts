@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react';
-
 import { RlsTheme } from '../types';
 
 export interface PropsWithClassName {

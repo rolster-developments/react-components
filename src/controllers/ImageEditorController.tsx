@@ -8,7 +8,6 @@ import {
   useRef,
   useState
 } from 'react';
-
 import { RlsButton } from '../components/atoms/Button/Button';
 import { ImageEditorValue } from '../components/organisms/ImageEditor/ImageEditor';
 import { RlsImageEditorModal } from '../components/organisms/ImageEditorModal/ImageEditorModal';
