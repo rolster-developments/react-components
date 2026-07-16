@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPercentage } from '../../atoms/InputPercentage/InputPercentage';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
@@ -9,7 +10,7 @@ interface FieldPercentageProps extends FieldProps<number> {
 }
 
 export function RlsFieldPercentage(props: FieldPercentageProps) {
-  const { children, formControl, identifier, rlsTheme } = props;
+  const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -35,6 +36,14 @@ export function RlsFieldPercentage(props: FieldPercentageProps) {
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
           <RlsInputPercentage {...props} />
+
+          {action && (
+            <RlsButtonAction
+              icon={action.icon}
+              disabled={disabled}
+              onClick={action.onClick}
+            />
+          )}
         </div>
       </div>
 

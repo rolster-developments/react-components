@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputMoney } from '../../atoms/InputMoney/InputMoney';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
@@ -10,7 +11,7 @@ interface FieldMoneyProps extends FieldProps<number> {
 }
 
 export function RlsFieldMoney(props: FieldMoneyProps) {
-  const { children, formControl, identifier, rlsTheme } = props;
+  const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -36,6 +37,14 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
           <RlsInputMoney {...props} />
+
+          {action && (
+            <RlsButtonAction
+              icon={action.icon}
+              disabled={disabled}
+              onClick={action.onClick}
+            />
+          )}
         </div>
       </div>
 

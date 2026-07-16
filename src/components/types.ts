@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent, MouseEventHandler } from 'react';
 import { RlsComponent } from './definitions';
 
 export type RolsterReactInputControl<T = any> =
@@ -25,7 +25,13 @@ export interface InputProps<T = any> {
   value?: T;
 }
 
+export interface FieldAction {
+  icon: string;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
+
 export interface FieldProps<T = any> extends InputProps<T>, RlsComponent {
+  action?: FieldAction;
   groupModeEnabled?: boolean;
   msgErrorDisabled?: boolean;
 }

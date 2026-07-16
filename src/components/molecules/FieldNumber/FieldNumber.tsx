@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
@@ -9,7 +10,7 @@ interface FieldNumberProps extends FieldProps<number> {
 }
 
 export function RlsFieldNumber(props: FieldNumberProps) {
-  const { children, formControl, identifier, rlsTheme } = props;
+  const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -35,6 +36,14 @@ export function RlsFieldNumber(props: FieldNumberProps) {
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
           <RlsInputNumber {...props} />
+
+          {action && (
+            <RlsButtonAction
+              icon={action.icon}
+              disabled={disabled}
+              onClick={action.onClick}
+            />
+          )}
         </div>
       </div>
 
