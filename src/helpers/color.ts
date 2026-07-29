@@ -352,106 +352,13 @@ function generateThemeCSS(
   ];
 }
 
-interface OKLCH {
-  c: number; // chroma, 0+
-  h: number; // hue, radians
-  l: number; // perceptual lightness, 0–1
-}
-
-const srgbToLinear = (channel: number): number => {
-  const x = channel / 255;
-
-  return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
-};
-
-const linearToSrgb = (channel: number): number => {
-  const v =
-    channel <= 0.0031308
-      ? 12.92 * channel
-      : 1.055 * channel ** (1 / 2.4) - 0.055;
-
-  return clamp(Math.round(v * 255), 0, 255);
-};
-
-function rgbToOklch({ r, g, b }: RGB): OKLCH {
-  const lr = srgbToLinear(r);
-  const lg = srgbToLinear(g);
-  const lb = srgbToLinear(b);
-
-  const l = Math.cbrt(
-    0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb
-  );
-  const m = Math.cbrt(
-    0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb
-  );
-  const s = Math.cbrt(
-    0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb
-  );
-
-  const okL = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
-  const okA = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
-  const okB = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
-
-  return { l: okL, c: Math.hypot(okA, okB), h: Math.atan2(okB, okA) };
-}
-
-function oklabToLinearRgb(l: number, a: number, b: number): number[] {
-  const l_ = (l + 0.3963377774 * a + 0.2158037573 * b) ** 3;
-  const m_ = (l - 0.1055613458 * a - 0.0638541728 * b) ** 3;
-  const s_ = (l - 0.0894841775 * a - 1.291485548 * b) ** 3;
-
-  return [
-    4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
-    -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
-    -0.0041960863 * l_ - 0.7034186147 * m_ + 1.707614701 * s_
-  ];
-}
-
-const inGamut = ([r, g, b]: number[]): boolean => {
-  const e = 1e-4;
-
-  return (
-    r >= -e && r <= 1 + e && g >= -e && g <= 1 + e && b >= -e && b <= 1 + e
-  );
-};
-
-function oklchToRgb({ l, c, h }: OKLCH): RGB {
-  const a = Math.cos(h);
-  const b = Math.sin(h);
-  const linearAt = (chroma: number): number[] =>
-    oklabToLinearRgb(l, a * chroma, b * chroma);
-
-  if (!inGamut(linearAt(c))) {
-    let lo = 0;
-    let hi = c;
-
-    for (let i = 0; i < 20; i++) {
-      const mid = (lo + hi) / 2;
-
-      if (inGamut(linearAt(mid))) {
-        lo = mid;
-      } else {
-        hi = mid;
-      }
-    }
-
-    c = lo;
-  }
-
-  const [lr, lg, lb] = linearAt(c);
-
-  return { r: linearToSrgb(lr), g: linearToSrgb(lg), b: linearToSrgb(lb) };
-}
-
-const chromaFactor = (lightness: number): number =>
-  0.4 + 0.6 * (1 - Math.abs(lightness - 0.5) * 2);
-
-function detectShadeLevel(lightness: number): ShadeLabel {
+function detectShadeLevel(hsl: HSL): ShadeLabel {
   let bestLevel: ShadeLabel = '500';
   let minDiff = Infinity;
 
-  SHADE_LABELS.forEach((level) => {
-    const diff = Math.abs(lightness - STANDARD_LUMINANCE[level]);
+  (Object.keys(STANDARD_LUMINANCE) as ShadeLabel[]).forEach((level) => {
+    const targetL = STANDARD_LUMINANCE[level];
+    const diff = Math.abs(hsl.l - targetL);
 
     if (diff < minDiff) {
       minDiff = diff;
@@ -466,39 +373,65 @@ export function generateThemePalette(
   baseColor: string,
   theme: RlsTheme = 'primary'
 ): ThemePalette {
-  const rgb = hexToRgb(baseColor);
+  const hsl = hexToHsl(baseColor);
 
-  if (!rgb) {
+  if (!hsl) {
     throw new Error(msgInvalidColor(baseColor));
   }
 
-  const base = rgbToOklch(rgb);
-  const matchedLevel = detectShadeLevel(base.l * 100);
+  const matchedLevel = detectShadeLevel(hsl);
+  const targetL = STANDARD_LUMINANCE[matchedLevel];
+  const inputL = hsl.l;
 
-  const colors = {} as ThemeShades;
+  const colors: Record<string, string> = {};
 
-  SHADE_LABELS.forEach((label) => {
+  const matchedIndex = SHADE_LABELS.indexOf(matchedLevel);
+
+  SHADE_LABELS.forEach((label: ShadeLabel) => {
     if (label === matchedLevel) {
-      colors[label] = rgbToHex(rgb); // preserve the base color exactly
+      colors[label] = baseColor.toUpperCase();
       return;
     }
 
-    const lightness = STANDARD_LUMINANCE[label] / 100;
+    const shadeTargetL = STANDARD_LUMINANCE[label];
+    const labelIndex = SHADE_LABELS.indexOf(label);
 
-    colors[label] = rgbToHex(
-      oklchToRgb({
-        l: lightness,
-        c: base.c * chromaFactor(lightness),
-        h: base.h
-      })
-    );
+    let lightL: number;
+
+    if (labelIndex < matchedIndex) {
+      const ratio = inputL / targetL;
+
+      lightL = shadeTargetL * ratio;
+    } else {
+      const remainingInput = 100 - inputL;
+      const remainingTarget = 100 - targetL;
+      const progress = (shadeTargetL - targetL) / remainingTarget;
+
+      lightL = inputL + progress * remainingInput;
+    }
+
+    lightL = Math.min(100, Math.max(0, lightL));
+
+    const satFactor =
+      lightL > 60
+        ? Math.max(0.2, (100 - lightL) / 40)
+        : lightL < 30
+          ? Math.max(0.2, lightL / 30)
+          : 1;
+
+    colors[label] = hslToHex({
+      h: hsl.h,
+      s: Math.round(Math.min(100, hsl.s * satFactor)),
+      l: Math.round(lightL)
+    });
   });
 
-  const properties = generateThemeCSS(colors, theme);
+  const shades = colors as ThemeShades;
+  const properties = generateThemeCSS(shades, theme);
 
   return {
     theme,
-    colors,
+    colors: shades,
     css: properties.map((p) => `${p.name}: ${p.value};`).join('\n'),
     properties
   };
