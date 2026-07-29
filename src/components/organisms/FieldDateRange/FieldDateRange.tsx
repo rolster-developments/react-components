@@ -1,4 +1,3 @@
-import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
@@ -8,8 +7,7 @@ import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RolsterReactHtmlControl } from '../../types';
-import { RlsModal } from '../Modal/Modal';
-import { RlsPickerDateRange } from '../PickerDateRange/PickerDateRange';
+import { RlsModalDateRange } from '../ModalDateRange/ModalDateRange';
 
 interface FieldDateRangeProps extends RlsComponent {
   date?: Date;
@@ -120,10 +118,10 @@ export function RlsFieldDateRange({
     }
   }, [dateRangeValue, formControl, valueInitial, onChange]);
 
-  const onListener = useCallback(
-    ({ event, value }: PickerListener<DateRange>) => {
-      if (event !== PickerListenerEvent.Cancel) {
-        onChange(value);
+  const onCloseModal = useCallback(
+    (dateRange?: DateRange) => {
+      if (dateRange) {
+        onChange(dateRange);
       }
       formControl?.touch();
       setModalIsVisible(false);
@@ -166,20 +164,15 @@ export function RlsFieldDateRange({
         )}
       </div>
 
-      <RlsModal
-        className="rls-field-date-range-modal"
+      <RlsModalDateRange
         visible={modalIsVisible}
+        date={currentDate}
+        disabled={disabled}
+        maxDate={maxDate}
+        minDate={minDate}
+        onClose={onCloseModal}
         rlsTheme={rlsTheme}
-      >
-        <RlsPickerDateRange
-          formControl={formControl}
-          date={currentDate}
-          disabled={disabled}
-          maxDate={maxDate}
-          minDate={minDate}
-          onListener={onListener}
-        />
-      </RlsModal>
+      />
     </div>
   );
 }

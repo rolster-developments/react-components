@@ -1,4 +1,3 @@
-import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { Time } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import { ReactNode, useCallback, useMemo, useState } from 'react';
@@ -7,8 +6,7 @@ import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 import { RlsMessageFormError } from '../../molecules/MessageFormError/MessageFormError';
 import { RolsterReactHtmlControl } from '../../types';
-import { RlsModal } from '../Modal/Modal';
-import { RlsPickerClock } from '../PickerClock/PickerClock';
+import { RlsModalClock } from '../ModalClock/ModalClock';
 
 interface FieldClockProps extends RlsComponent {
   disabled?: boolean;
@@ -111,10 +109,10 @@ export function RlsFieldClock({
     }
   }, [timeValue, formControl, valueInitial, onChange]);
 
-  const onListener = useCallback(
-    ({ event, value }: PickerListener<Time>) => {
-      if (event !== PickerListenerEvent.Cancel) {
-        onChange(value);
+  const onCloseModal = useCallback(
+    (time?: Time) => {
+      if (time) {
+        onChange(time);
       }
       formControl?.touch();
       setModalIsVisible(false);
@@ -157,18 +155,13 @@ export function RlsFieldClock({
         )}
       </div>
 
-      <RlsModal
-        className="rls-field-clock-modal"
+      <RlsModalClock
         visible={modalIsVisible}
+        time={time}
+        disabled={disabled}
+        onClose={onCloseModal}
         rlsTheme={rlsTheme}
-      >
-        <RlsPickerClock
-          formControl={formControl}
-          time={time}
-          disabled={disabled}
-          onListener={onListener}
-        />
-      </RlsModal>
+      />
     </div>
   );
 }
