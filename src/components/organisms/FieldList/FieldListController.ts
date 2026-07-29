@@ -119,23 +119,24 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
     const formValue = formControl?.value;
 
     if (formValue !== undefined && formValue !== null && formValue.length) {
-      const selectedElements = suggestions.filter((state) =>
-        formValue.some((value) => state.compareTo(value))
+      setSelected(
+        suggestions.filter((state) =>
+          formValue.some((value) => state.compareTo(value))
+        )
       );
-      setSelected(selectedElements);
     } else {
       setSelected([]);
     }
   }, [formControl?.value, suggestions]);
 
   const setListState = useCallback(
-    (updates: Partial<FieldListControllerState>) => {
+    (controllerState: Partial<FieldListControllerState>) => {
       setState((state) => {
-        const _updates =
-          updates.listIsVisible !== undefined
+        const newState =
+          controllerState.listIsVisible !== undefined
             ? {
-                ...updates,
-                ...(updates.listIsVisible
+                ...controllerState,
+                ...(controllerState.listIsVisible
                   ? {
                       higher: shouldDisplayHigher(
                         refContent.current,
@@ -144,9 +145,9 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
                     }
                   : {})
               }
-            : updates;
+            : controllerState;
 
-        return { ...state, ..._updates };
+        return { ...state, ...newState };
       });
     },
     []
