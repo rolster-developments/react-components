@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { memo, ReactNode, useMemo } from 'react';
 import { useDatatable } from '../../../controllers/DatatableController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -32,7 +32,7 @@ interface DatatableFloatingProps extends RlsComponent {
   invested?: boolean;
 }
 
-export function RlsDatatable({
+function RlsDatatableComponent({
   children,
   footer,
   header,
@@ -73,7 +73,9 @@ export function RlsDatatable({
   );
 }
 
-export function RlsDatatableHeader({
+export const RlsDatatable = memo(RlsDatatableComponent);
+
+function RlsDatatableHeaderComponent({
   children,
   identifier,
   rlsTheme
@@ -85,7 +87,9 @@ export function RlsDatatableHeader({
   );
 }
 
-export function RlsDatatableTitle({
+export const RlsDatatableHeader = memo(RlsDatatableHeaderComponent);
+
+function RlsDatatableTitleComponent({
   actions,
   children,
   className,
@@ -109,7 +113,9 @@ export function RlsDatatableTitle({
   );
 }
 
-export function RlsDatatableSubheader({
+export const RlsDatatableTitle = memo(RlsDatatableTitleComponent);
+
+function RlsDatatableSubheaderComponent({
   children,
   className,
   identifier,
@@ -126,7 +132,9 @@ export function RlsDatatableSubheader({
   );
 }
 
-export function RlsDatatableRecord({
+export const RlsDatatableSubheader = memo(RlsDatatableSubheaderComponent);
+
+function RlsDatatableRecordComponent({
   children,
   className,
   error,
@@ -152,7 +160,9 @@ export function RlsDatatableRecord({
   );
 }
 
-export function RlsDatatableTotals({
+export const RlsDatatableRecord = memo(RlsDatatableRecordComponent);
+
+function RlsDatatableTotalsComponent({
   children,
   className,
   error,
@@ -178,7 +188,9 @@ export function RlsDatatableTotals({
   );
 }
 
-export function RlsDatatableCell({
+export const RlsDatatableTotals = memo(RlsDatatableTotalsComponent);
+
+function RlsDatatableCellComponent({
   actions,
   children,
   className,
@@ -202,7 +214,9 @@ export function RlsDatatableCell({
   );
 }
 
-export function RlsDatatableData({
+export const RlsDatatableCell = memo(RlsDatatableCellComponent);
+
+function RlsDatatableDataComponent({
   actions,
   children,
   className,
@@ -225,7 +239,9 @@ export function RlsDatatableData({
   );
 }
 
-export function RlsDatatableFloating({
+export const RlsDatatableData = memo(RlsDatatableDataComponent);
+
+function RlsDatatableFloatingComponent({
   children,
   className,
   identifier,
@@ -246,3 +262,5 @@ export function RlsDatatableFloating({
     </td>
   );
 }
+
+export const RlsDatatableFloating = memo(RlsDatatableFloatingComponent);

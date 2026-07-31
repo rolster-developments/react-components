@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -9,7 +9,7 @@ export interface FormNavigationProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsFormNavigation({
+function RlsFormNavigationComponent({
   children,
   className,
   controller,
@@ -31,3 +31,5 @@ export function RlsFormNavigation({
     document.body
   );
 }
+
+export const RlsFormNavigation = memo(RlsFormNavigationComponent);

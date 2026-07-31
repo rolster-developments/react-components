@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -11,7 +11,7 @@ interface ModalProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsModal({
+function RlsModalComponent({
   autoclose,
   children,
   className,
@@ -44,3 +44,5 @@ export function RlsModal({
     document.body
   );
 }
+
+export const RlsModal = memo(RlsModalComponent);

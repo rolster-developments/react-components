@@ -8,7 +8,7 @@ import {
 } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
 import { reactI18n } from '../../../i18n';
@@ -36,7 +36,7 @@ interface PickerDateRangeProps extends RlsComponent {
 
 type Visibility = 'DAY' | 'MONTH' | 'YEAR';
 
-export function RlsPickerDateRange({
+function RlsPickerDateRangeComponent({
   automatic,
   date: datePicker,
   disabled,
@@ -196,3 +196,5 @@ export function RlsPickerDateRange({
     </div>
   );
 }
+
+export const RlsPickerDateRange = memo(RlsPickerDateRangeComponent);

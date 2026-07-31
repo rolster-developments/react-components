@@ -1,7 +1,7 @@
 import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { Time } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { PortalController } from '../../../controllers/PortalController';
 import { RlsComponent } from '../../definitions';
 import { RlsModal } from '../Modal/Modal';
@@ -18,7 +18,7 @@ interface ModalClockProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsModalClock({
+function RlsModalClockComponent({
   controller,
   disabled,
   formControl,
@@ -51,3 +51,5 @@ export function RlsModalClock({
     </RlsModal>
   );
 }
+
+export const RlsModalClock = memo(RlsModalClockComponent);

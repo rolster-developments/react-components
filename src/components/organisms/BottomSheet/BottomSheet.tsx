@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -11,7 +11,7 @@ interface BottomSheetProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsBottomSheet({
+function RlsBottomSheetComponent({
   autoclose,
   children,
   className,
@@ -47,3 +47,5 @@ export function RlsBottomSheet({
     document.body
   );
 }
+
+export const RlsBottomSheet = memo(RlsBottomSheetComponent);

@@ -1,4 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
+import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 import { ImageMymeType, ImageRatio } from '../../types';
 import { ImageEditorValue, RlsImageEditor } from '../ImageEditor/ImageEditor';
@@ -19,10 +20,12 @@ interface ImageEditorModalProps extends RlsComponent {
   src?: string;
 }
 
-export function RlsImageEditorModal(props: ImageEditorModalProps) {
+function RlsImageEditorModalComponent(props: ImageEditorModalProps) {
   return (
     <RlsModal className="rls-image-editor-modal" visible={props.visible}>
       <RlsImageEditor {...props}>{props.children}</RlsImageEditor>
     </RlsModal>
   );
 }
+
+export const RlsImageEditorModal = memo(RlsImageEditorModalComponent);

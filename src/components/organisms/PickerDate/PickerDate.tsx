@@ -7,7 +7,14 @@ import {
 import { dateFormatTemplate } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { DATE_FORMAT_TITLE } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
@@ -36,7 +43,7 @@ interface PickerDateProps extends RlsComponent {
 
 type Visibility = 'DAY' | 'MONTH' | 'YEAR';
 
-export function RlsPickerDate({
+function RlsPickerDateComponent({
   automatic,
   date,
   disabled,
@@ -221,3 +228,5 @@ export function RlsPickerDate({
     </div>
   );
 }
+
+export const RlsPickerDate = memo(RlsPickerDateComponent);

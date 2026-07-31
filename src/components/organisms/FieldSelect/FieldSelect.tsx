@@ -3,7 +3,7 @@ import {
   ListElement
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useMemo } from 'react';
+import { memo, ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
@@ -45,7 +45,7 @@ interface FieldSelectTemplateProps<
   render: (element: E) => ReactNode;
 }
 
-export function RlsFieldSelectTemplate<
+function RlsFieldSelectTemplateComponent<
   T = any,
   E extends ListElement<T> = ListElement<T>,
   K = string
@@ -144,6 +144,10 @@ export function RlsFieldSelectTemplate<
   );
 }
 
+export const RlsFieldSelectTemplate = memo(
+  RlsFieldSelectTemplateComponent
+) as typeof RlsFieldSelectTemplateComponent;
+
 interface FieldSelectDefinedProps<T = any> extends FieldSelectProps<
   T,
   ListElement<T>
@@ -177,22 +181,22 @@ interface FieldSelectEmptyProps<T = any> extends Omit<
   onValue?: (value?: T) => void;
 }
 
-export function RlsFieldSelect<T = any>(
+function RlsFieldSelectComponent<T = any>(
   props: FieldSelectUndefinedProps<T>
 ): ReactNode;
-export function RlsFieldSelect<T = any>(
+function RlsFieldSelectComponent<T = any>(
   props: FieldSelectDefinedProps<T>
 ): ReactNode;
-export function RlsFieldSelect<T = any>(
+function RlsFieldSelectComponent<T = any>(
   props: FieldSelectVoidProps<T>
 ): ReactNode;
-export function RlsFieldSelect<T = any>(
+function RlsFieldSelectComponent<T = any>(
   props: FieldSelectEmptyProps<T>
 ): ReactNode;
-export function RlsFieldSelect<T = any>(
+function RlsFieldSelectComponent<T = any>(
   props: FieldSelectProps<T, ListElement<T>>
 ): ReactNode;
-export function RlsFieldSelect<T = any>(
+function RlsFieldSelectComponent<T = any>(
   props: FieldSelectProps<T, ListElement<T>>
 ) {
   const render = useCallback(
@@ -211,3 +215,7 @@ export function RlsFieldSelect<T = any>(
 
   return <RlsFieldSelectTemplate {...props} render={render} />;
 }
+
+export const RlsFieldSelect = memo(
+  RlsFieldSelectComponent
+) as typeof RlsFieldSelectComponent;

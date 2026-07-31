@@ -1,4 +1,5 @@
 import {
+  memo,
   ReactNode,
   useCallback,
   useEffect,
@@ -49,7 +50,7 @@ export interface SnackbarService {
   snackbar: Snackbar;
 }
 
-export function RlsSnackbar({
+function RlsSnackbarComponent({
   content,
   onClose,
   icon,
@@ -83,6 +84,8 @@ export function RlsSnackbar({
     </div>
   );
 }
+
+export const RlsSnackbar = memo(RlsSnackbarComponent);
 
 interface SnackbarState {
   config: SnackbarConfig;

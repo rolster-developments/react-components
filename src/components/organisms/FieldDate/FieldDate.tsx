@@ -2,6 +2,7 @@ import { verifyDateRange } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import {
+  memo,
   ReactNode,
   useCallback,
   useEffect,
@@ -55,11 +56,11 @@ interface FieldDateEmptyProps extends Omit<
   onValue?: (value?: Date) => void;
 }
 
-export function RlsFieldDate(props: FieldDateDefinedProps): ReactNode;
-export function RlsFieldDate(props: FieldDateUndefinedProps): ReactNode;
-export function RlsFieldDate(props: FieldDateVoidProps): ReactNode;
-export function RlsFieldDate(props: FieldDateEmptyProps): ReactNode;
-export function RlsFieldDate({
+function RlsFieldDateComponent(props: FieldDateDefinedProps): ReactNode;
+function RlsFieldDateComponent(props: FieldDateUndefinedProps): ReactNode;
+function RlsFieldDateComponent(props: FieldDateVoidProps): ReactNode;
+function RlsFieldDateComponent(props: FieldDateEmptyProps): ReactNode;
+function RlsFieldDateComponent({
   children,
   date,
   disabled: disabledProps,
@@ -198,3 +199,7 @@ export function RlsFieldDate({
     </div>
   );
 }
+
+export const RlsFieldDate = memo(
+  RlsFieldDateComponent
+) as typeof RlsFieldDateComponent;

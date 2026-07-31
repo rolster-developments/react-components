@@ -1,7 +1,7 @@
 import { PickerListener, PickerListenerEvent } from '@rolster/components';
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { PortalController } from '../../../controllers/PortalController';
 import { RlsComponent } from '../../definitions';
 import { RlsModal } from '../Modal/Modal';
@@ -21,7 +21,7 @@ interface ModalDateRangeProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsModalDateRange({
+function RlsModalDateRangeComponent({
   automatic,
   controller,
   date,
@@ -60,3 +60,5 @@ export function RlsModalDateRange({
     </RlsModal>
   );
 }
+
+export const RlsModalDateRange = memo(RlsModalDateRangeComponent);

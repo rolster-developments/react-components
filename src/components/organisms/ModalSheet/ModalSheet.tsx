@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -11,7 +11,7 @@ interface ModalSheetProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsModalSheet({
+function RlsModalSheetComponent({
   autoclose,
   children,
   className,
@@ -32,6 +32,7 @@ export function RlsModalSheet({
     if (autoclose) {
       controller?.close();
     }
+
     onAutoClose?.();
   }, [autoclose, controller, onAutoClose]);
 
@@ -47,3 +48,5 @@ export function RlsModalSheet({
     document.body
   );
 }
+
+export const RlsModalSheet = memo(RlsModalSheetComponent);

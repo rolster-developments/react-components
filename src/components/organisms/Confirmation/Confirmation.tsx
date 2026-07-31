@@ -1,5 +1,5 @@
 import { SealedPartial } from '@rolster/commons';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
@@ -66,7 +66,7 @@ export interface ConfirmationService {
   RlsConfirmation: ReactNode;
 }
 
-export function RlsConfirmation({
+function RlsConfirmationComponent({
   approved,
   className,
   content,
@@ -130,6 +130,8 @@ export function RlsConfirmation({
     </div>
   );
 }
+
+export const RlsConfirmation = memo(RlsConfirmationComponent);
 
 export function useConfirmation(): ConfirmationService {
   const [config, setConfig] = useState<ConfirmationProps>({});

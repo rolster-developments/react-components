@@ -1,6 +1,13 @@
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { useRelocationOnComponent } from '../../../controllers/RelocationOnComponentController';
 import { useResize } from '../../../controllers/ResizeController';
 import { reactI18n } from '../../../i18n';
@@ -72,7 +79,7 @@ export function calculateImgDimension(
   return { height, width };
 }
 
-export function RlsImageEditor(props: ImageEditorProps) {
+function RlsImageEditorComponent(props: ImageEditorProps) {
   const [selection, setSelection] = useState(props.selection ?? 60);
 
   const [labels, setLabels] = useState({
@@ -447,3 +454,5 @@ export function RlsImageEditor(props: ImageEditorProps) {
     </div>
   );
 }
+
+export const RlsImageEditor = memo(RlsImageEditorComponent);

@@ -4,6 +4,7 @@ import { ReactControl } from '@rolster/react-forms';
 import {
   ChangeEvent,
   KeyboardEvent,
+  memo,
   MouseEvent,
   TouchEvent,
   useCallback,
@@ -39,7 +40,7 @@ interface PickerColorProps extends RlsComponent {
   onListener?: (listener: ColorPickerListener) => void;
 }
 
-export function RlsPickerColor({
+function RlsPickerColorComponent({
   color,
   formControl,
   onListener,
@@ -448,3 +449,5 @@ export function RlsPickerColor({
     </div>
   );
 }
+
+export const RlsPickerColor = memo(RlsPickerColorComponent);

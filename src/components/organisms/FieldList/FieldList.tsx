@@ -3,7 +3,7 @@ import {
   ListElement
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useMemo } from 'react';
+import { memo, ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
@@ -167,7 +167,7 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
   );
 }
 
-export function RlsFieldListTemplate<
+function RlsFieldListTemplateComponent<
   T = any,
   E extends Element<T> = Element<T>
 >(props: FieldListTemplateProps<T, E>) {
@@ -175,6 +175,10 @@ export function RlsFieldListTemplate<
 
   return <RlsFieldListInner {...props} fieldList={fieldList} />;
 }
+
+export const RlsFieldListTemplate = memo(
+  RlsFieldListTemplateComponent
+) as typeof RlsFieldListTemplateComponent;
 
 interface FieldListDefinedProps<T = any> extends FieldListProps<
   T,
@@ -209,18 +213,18 @@ interface FieldListEmptyProps<T = any> extends Omit<
   onValue?: (value?: T[]) => void;
 }
 
-export function RlsFieldList<T = any>(
+function RlsFieldListComponent<T = any>(
   props: FieldListUndefinedProps<T>
 ): ReactNode;
-export function RlsFieldList<T = any>(
+function RlsFieldListComponent<T = any>(
   props: FieldListDefinedProps<T>
 ): ReactNode;
-export function RlsFieldList<T = any>(props: FieldListVoidProps<T>): ReactNode;
-export function RlsFieldList<T = any>(props: FieldListEmptyProps<T>): ReactNode;
-export function RlsFieldList<T = any>(
+function RlsFieldListComponent<T = any>(props: FieldListVoidProps<T>): ReactNode;
+function RlsFieldListComponent<T = any>(props: FieldListEmptyProps<T>): ReactNode;
+function RlsFieldListComponent<T = any>(
   props: FieldListProps<T, ListElement<T>>
 ): ReactNode;
-export function RlsFieldList<T = any>(
+function RlsFieldListComponent<T = any>(
   props: FieldListProps<T, ListElement<T>>
 ) {
   const fieldList = useFieldList(props);
@@ -241,3 +245,7 @@ export function RlsFieldList<T = any>(
 
   return <RlsFieldListInner {...props} render={render} fieldList={fieldList} />;
 }
+
+export const RlsFieldList = memo(
+  RlsFieldListComponent
+) as typeof RlsFieldListComponent;

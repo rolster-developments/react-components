@@ -3,6 +3,7 @@ import { Time } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import {
+  memo,
   MouseEvent,
   TouchEvent,
   useCallback,
@@ -85,7 +86,7 @@ function RlsPickerClockTick({
   );
 }
 
-export function RlsPickerClock({
+function RlsPickerClockComponent({
   formControl,
   onListener,
   rlsTheme,
@@ -443,3 +444,5 @@ export function RlsPickerClock({
     </div>
   );
 }
+
+export const RlsPickerClock = memo(RlsPickerClockComponent);

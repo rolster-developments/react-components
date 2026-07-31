@@ -1,4 +1,11 @@
-import { ReactNode, UIEvent, useCallback, useMemo, useState } from 'react';
+import {
+  memo,
+  ReactNode,
+  UIEvent,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 
 interface VirtualScrollProps {
   container: number;
@@ -6,7 +13,7 @@ interface VirtualScrollProps {
   items: ReactNode[];
 }
 
-export function RlsVirtualScroll({
+function RlsVirtualScrollComponent({
   container,
   height,
   items
@@ -69,3 +76,5 @@ export function RlsVirtualScroll({
     </div>
   );
 }
+
+export const RlsVirtualScroll = memo(RlsVirtualScrollComponent);

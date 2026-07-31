@@ -1,6 +1,6 @@
 import { PickerListenerEvent } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
@@ -45,11 +45,11 @@ interface FieldColorEmptyProps extends Omit<
   onValue?: (value?: string) => void;
 }
 
-export function RlsFieldColor(props: FieldColorDefinedProps): ReactNode;
-export function RlsFieldColor(props: FieldColorUndefinedProps): ReactNode;
-export function RlsFieldColor(props: FieldColorVoidProps): ReactNode;
-export function RlsFieldColor(props: FieldColorEmptyProps): ReactNode;
-export function RlsFieldColor({
+function RlsFieldColorComponent(props: FieldColorDefinedProps): ReactNode;
+function RlsFieldColorComponent(props: FieldColorUndefinedProps): ReactNode;
+function RlsFieldColorComponent(props: FieldColorVoidProps): ReactNode;
+function RlsFieldColorComponent(props: FieldColorEmptyProps): ReactNode;
+function RlsFieldColorComponent({
   children,
   color,
   disabled: disabledProps,
@@ -178,3 +178,7 @@ export function RlsFieldColor({
     </div>
   );
 }
+
+export const RlsFieldColor = memo(
+  RlsFieldColorComponent
+) as typeof RlsFieldColorComponent;
