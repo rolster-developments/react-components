@@ -23,6 +23,7 @@ interface DatatableRecordProps extends RlsComponent {
 }
 
 interface DatatableCellProps extends RlsComponent {
+  actions?: boolean;
   control?: boolean;
   truncated?: boolean;
 }
@@ -85,6 +86,7 @@ export function RlsDatatableHeader({
 }
 
 export function RlsDatatableTitle({
+  actions,
   children,
   className,
   control,
@@ -95,10 +97,10 @@ export function RlsDatatableTitle({
   const classNameTitle = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__title',
-      { truncated, control },
+      { actions, control, truncated },
       className
     );
-  }, [className, truncated, control]);
+  }, [className, truncated, control, actions]);
 
   return (
     <th id={identifier} className={classNameTitle} rls-theme={rlsTheme}>
@@ -177,6 +179,7 @@ export function RlsDatatableTotals({
 }
 
 export function RlsDatatableCell({
+  actions,
   children,
   className,
   control,
@@ -187,10 +190,10 @@ export function RlsDatatableCell({
   const classNameCell = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__cell',
-      { control, truncated },
+      { actions, control, truncated },
       className
     );
-  }, [className, truncated, control]);
+  }, [className, truncated, control, actions]);
 
   return (
     <td id={identifier} className={classNameCell} rls-theme={rlsTheme}>
@@ -200,6 +203,7 @@ export function RlsDatatableCell({
 }
 
 export function RlsDatatableData({
+  actions,
   children,
   className,
   control,
@@ -209,10 +213,10 @@ export function RlsDatatableData({
   const classNameData = useMemo(() => {
     return renderClassStatus(
       'rls-datatable__data',
-      { control, truncated },
+      { actions, control, truncated },
       className
     );
-  }, [className, truncated, control]);
+  }, [className, truncated, control, actions]);
 
   return (
     <div id={identifier} className={classNameData}>
