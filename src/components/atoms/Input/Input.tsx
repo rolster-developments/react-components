@@ -2,6 +2,7 @@ import {
   ChangeEvent,
   HTMLInputTypeAttribute,
   KeyboardEvent,
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -17,7 +18,7 @@ interface InputProps extends RolsterInputProps<any>, RlsComponent {
   type?: HTMLInputTypeAttribute;
 }
 
-export function RlsInput({
+function RlsInputComponent({
   children,
   decimals,
   disabled,
@@ -129,3 +130,5 @@ export function RlsInput({
     </div>
   );
 }
+
+export const RlsInput = memo(RlsInputComponent);

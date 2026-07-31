@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -8,7 +8,7 @@ interface RadioButtonProps extends RlsComponent {
   onClick?: () => void;
 }
 
-export function RlsRadioButton({
+function RlsRadioButtonComponent({
   checked,
   disabled,
   identifier,
@@ -30,3 +30,5 @@ export function RlsRadioButton({
     </div>
   );
 }
+
+export const RlsRadioButton = memo(RlsRadioButtonComponent);

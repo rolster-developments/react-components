@@ -1,4 +1,4 @@
-import { MouseEventHandler, useMemo } from 'react';
+import { memo, MouseEventHandler, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonType } from '../../../types';
 import { RlsComponent } from '../../definitions';
@@ -14,7 +14,7 @@ interface ButtonProps extends RlsComponent {
   suffixIcon?: string;
 }
 
-export function RlsButton({
+function RlsButtonComponent({
   type,
   children,
   disabled,
@@ -49,3 +49,5 @@ export function RlsButton({
     </button>
   );
 }
+
+export const RlsButton = memo(RlsButtonComponent);

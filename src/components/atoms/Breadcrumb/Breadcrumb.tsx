@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithRlsTheme } from '../../definitions';
 
@@ -31,7 +31,9 @@ function RlsBreadcrumbLabel({ label }: BreadcrumbLabelProps) {
   );
 }
 
-export function RlsBreadcrumb({ labels }: BreadcrumbProps) {
+function RlsBreadcrumbComponent({
+  labels
+}: BreadcrumbProps) {
   const children = useMemo(() => {
     return labels.map((label, index) => (
       <RlsBreadcrumbLabel key={index} label={label} />
@@ -40,3 +42,5 @@ export function RlsBreadcrumb({ labels }: BreadcrumbProps) {
 
   return <div className="rls-breadcrumb">{children}</div>;
 }
+
+export const RlsBreadcrumb = memo(RlsBreadcrumbComponent);

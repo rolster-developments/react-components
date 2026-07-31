@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -6,7 +6,11 @@ interface PosterProps extends RlsComponent {
   contrasted?: boolean;
 }
 
-export function RlsPoster({ children, contrasted, rlsTheme }: PosterProps) {
+function RlsPosterComponent({
+  children,
+  contrasted,
+  rlsTheme
+}: PosterProps) {
   const className = useMemo(() => {
     return renderClassStatus('rls-poster', { contrasted });
   }, [contrasted]);
@@ -17,3 +21,5 @@ export function RlsPoster({ children, contrasted, rlsTheme }: PosterProps) {
     </div>
   );
 }
+
+export const RlsPoster = memo(RlsPosterComponent);

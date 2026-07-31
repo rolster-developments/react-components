@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -17,7 +18,7 @@ interface InputCounterProps extends InputProps<number>, RlsComponent {
   step?: number;
 }
 
-export function RlsInputCounter({
+function RlsInputCounterComponent({
   className,
   disabled,
   formControl,
@@ -156,3 +157,5 @@ export function RlsInputCounter({
     </div>
   );
 }
+
+export const RlsInputCounter = memo(RlsInputCounterComponent);

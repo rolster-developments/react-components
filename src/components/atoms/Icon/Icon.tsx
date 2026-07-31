@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
 
@@ -7,7 +7,12 @@ interface IconProps extends PropsWithClassName, PropsWithRlsTheme {
   skeleton?: boolean;
 }
 
-export function RlsIcon({ value, className, rlsTheme, skeleton }: IconProps) {
+function RlsIconComponent({
+  value,
+  className,
+  rlsTheme,
+  skeleton
+}: IconProps) {
   const classNameIcon = useMemo(() => {
     return renderClassStatus('rls-icon', { skeleton }, className);
   }, [className, skeleton]);
@@ -18,3 +23,5 @@ export function RlsIcon({ value, className, rlsTheme, skeleton }: IconProps) {
     </div>
   );
 }
+
+export const RlsIcon = memo(RlsIconComponent);

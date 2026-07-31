@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useMemo } from 'react';
+import { memo, ReactNode, useCallback, useMemo } from 'react';
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -22,13 +22,13 @@ interface ButtonOptionDefinedProps<T> extends ButtonOptionProps<T> {
   onValue?: (value: T) => void;
 }
 
-export function RlsButtonOption<T>(
+function RlsButtonOptionComponent<T>(
   props: ButtonOptionDefinedProps<T>
 ): ReactNode;
-export function RlsButtonOption<T = any>(
+function RlsButtonOptionComponent<T = any>(
   props: ButtonOptionProps<T>
 ): ReactNode;
-export function RlsButtonOption<T = any>({
+function RlsButtonOptionComponent<T = any>({
   icon,
   children,
   disabled,
@@ -66,3 +66,7 @@ export function RlsButtonOption<T = any>({
     </button>
   );
 }
+
+export const RlsButtonOption = memo(
+  RlsButtonOptionComponent
+) as typeof RlsButtonOptionComponent;

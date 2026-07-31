@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 
-export function RlsInputText(props: InputProps<string>) {
+function RlsInputTextComponent(props: InputProps<string>) {
   const { formControl, identifier, onValue, value } = props;
 
   const [valueInput, setValueInput] = useState(
@@ -33,3 +33,5 @@ export function RlsInputText(props: InputProps<string>) {
     </div>
   );
 }
+
+export const RlsInputText = memo(RlsInputTextComponent);

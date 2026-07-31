@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 
@@ -6,7 +6,7 @@ interface InputPercentageProps extends InputProps<number> {
   decimals?: number;
 }
 
-export function RlsInputPercentage(props: InputPercentageProps) {
+function RlsInputPercentageComponent(props: InputPercentageProps) {
   const { formControl, identifier, onValue, value } = props;
 
   const [valueInput, setValueInput] = useState(
@@ -37,3 +37,5 @@ export function RlsInputPercentage(props: InputPercentageProps) {
     </div>
   );
 }
+
+export const RlsInputPercentage = memo(RlsInputPercentageComponent);

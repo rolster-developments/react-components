@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../Icon/Icon';
 
@@ -10,7 +10,7 @@ interface ButtonIconProps {
   skeleton?: boolean;
 }
 
-export function RlsButtonIcon({
+function RlsButtonIconComponent({
   icon,
   className,
   disabled,
@@ -27,3 +27,5 @@ export function RlsButtonIcon({
     </button>
   );
 }
+
+export const RlsButtonIcon = memo(RlsButtonIconComponent);

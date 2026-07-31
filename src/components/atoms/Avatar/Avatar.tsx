@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -8,7 +8,7 @@ interface AvatarProps extends RlsComponent {
   skeleton?: boolean;
 }
 
-export function RlsAvatar({
+function RlsAvatarComponent({
   children,
   contrasted,
   rounded,
@@ -25,3 +25,5 @@ export function RlsAvatar({
     </div>
   );
 }
+
+export const RlsAvatar = memo(RlsAvatarComponent);

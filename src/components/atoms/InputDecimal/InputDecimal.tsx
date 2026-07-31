@@ -1,5 +1,5 @@
 import { BigDecimal } from '@rolster/commons';
-import { useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
@@ -9,7 +9,7 @@ interface InputDecimalProps extends InputProps<BigDecimal> {
   symbol?: string;
 }
 
-export function RlsInputDecimal(props: InputDecimalProps) {
+function RlsInputDecimalComponent(props: InputDecimalProps) {
   const { decimals, formControl, identifier, onValue, symbol, value } = props;
 
   const [valueInput, setValueInput] = useState(
@@ -50,3 +50,5 @@ export function RlsInputDecimal(props: InputDecimalProps) {
     </div>
   );
 }
+
+export const RlsInputDecimal = memo(RlsInputDecimalComponent);

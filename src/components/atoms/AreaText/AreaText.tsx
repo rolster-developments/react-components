@@ -3,6 +3,7 @@ import {
   ChangeEvent,
   CSSProperties,
   KeyboardEvent,
+  memo,
   TextareaHTMLAttributes,
   useCallback,
   useEffect,
@@ -35,7 +36,7 @@ export interface AreaTextProps extends RlsComponent {
   value?: string;
 }
 
-export function RlsAreaText({
+function RlsAreaTextComponent({
   autoComplete,
   disabled,
   formControl,
@@ -169,3 +170,5 @@ export function RlsAreaText({
     </div>
   );
 }
+
+export const RlsAreaText = memo(RlsAreaTextComponent);

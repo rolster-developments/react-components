@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import { PropsWithRlsTheme } from '../../definitions';
 
-export function RlsProgressCircular({ rlsTheme }: PropsWithRlsTheme) {
+function RlsProgressCircularComponent({ rlsTheme }: PropsWithRlsTheme) {
   return (
     <div className="rls-progress-circular" rls-theme={rlsTheme}>
       <svg className="rls-progress-circular__svg" viewBox="0 0 36 36">
@@ -14,3 +15,5 @@ export function RlsProgressCircular({ rlsTheme }: PropsWithRlsTheme) {
     </div>
   );
 }
+
+export const RlsProgressCircular = memo(RlsProgressCircularComponent);

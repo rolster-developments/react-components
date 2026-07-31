@@ -1,4 +1,6 @@
-export function RlsSpinner() {
+import { memo } from 'react';
+
+function RlsSpinnerComponent() {
   return (
     <div className="rls-spinner">
       <svg className="rls-spinner__svg rls-spinner__svg--1" viewBox="0 0 64 64">
@@ -39,3 +41,5 @@ export function RlsSpinner() {
     </div>
   );
 }
+
+export const RlsSpinner = memo(RlsSpinnerComponent);

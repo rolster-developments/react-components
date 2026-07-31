@@ -1,4 +1,4 @@
-import { KeyboardEvent, useCallback, useMemo, useState } from 'react';
+import { KeyboardEvent, memo, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { InputProps } from '../../types';
@@ -9,7 +9,7 @@ interface InputPasswordProps extends InputProps<string>, RlsComponent {
   type?: InputPasswordType;
 }
 
-export function RlsInputPassword({
+function RlsInputPasswordComponent({
   disabled,
   formControl,
   identifier,
@@ -84,3 +84,5 @@ export function RlsInputPassword({
     </div>
   );
 }
+
+export const RlsInputPassword = memo(RlsInputPasswordComponent);

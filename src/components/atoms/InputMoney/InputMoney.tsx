@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
@@ -8,7 +8,7 @@ interface InputMoneyProps extends InputProps<number> {
   symbol?: string;
 }
 
-export function RlsInputMoney(props: InputMoneyProps) {
+function RlsInputMoneyComponent(props: InputMoneyProps) {
   const { decimals, formControl, identifier, onValue, symbol, value } = props;
 
   const [valueInput, setValueInput] = useState(
@@ -42,3 +42,5 @@ export function RlsInputMoney(props: InputMoneyProps) {
     </div>
   );
 }
+
+export const RlsInputMoney = memo(RlsInputMoneyComponent);

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RolsterReactInputControl } from '../../types';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
@@ -13,7 +13,7 @@ interface InputSearchProps {
   placeholder?: string;
 }
 
-export function RlsInputSearch({
+function RlsInputSearchComponent({
   formControl,
   disabled,
   identifier,
@@ -54,3 +54,5 @@ export function RlsInputSearch({
     </div>
   );
 }
+
+export const RlsInputSearch = memo(RlsInputSearchComponent);
