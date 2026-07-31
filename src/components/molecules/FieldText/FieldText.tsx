@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputText } from '../../atoms/InputText/InputText';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 
-export function RlsFieldText(props: FieldProps<string>) {
+function RlsFieldTextComponent(props: FieldProps<string>) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
@@ -52,3 +52,5 @@ export function RlsFieldText(props: FieldProps<string>) {
     </div>
   );
 }
+
+export const RlsFieldText = memo(RlsFieldTextComponent);

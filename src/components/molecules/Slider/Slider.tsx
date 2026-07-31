@@ -1,5 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
 import {
+  memo,
   MouseEvent,
   useCallback,
   useEffect,
@@ -40,7 +41,7 @@ function calculateInitialRate(
   return Math.ceil((rateValue / rateMax) * 100);
 }
 
-export function RlsSlider({
+function RlsSliderComponent({
   children,
   className,
   disabled,
@@ -154,3 +155,5 @@ export function RlsSlider({
     </div>
   );
 }
+
+export const RlsSlider = memo(RlsSliderComponent);

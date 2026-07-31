@@ -1,5 +1,5 @@
 import { BigDecimal } from '@rolster/commons';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputDecimal } from '../../atoms/InputDecimal/InputDecimal';
 import { FieldProps } from '../../types';
@@ -10,7 +10,7 @@ interface FieldDecimalProps extends FieldProps<BigDecimal> {
   symbol?: string;
 }
 
-export function RlsFieldDecimal(props: FieldDecimalProps) {
+function RlsFieldDecimalComponent(props: FieldDecimalProps) {
   const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
@@ -49,3 +49,5 @@ export function RlsFieldDecimal(props: FieldDecimalProps) {
     </div>
   );
 }
+
+export const RlsFieldDecimal = memo(RlsFieldDecimalComponent);

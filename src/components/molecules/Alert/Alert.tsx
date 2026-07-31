@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
@@ -8,7 +8,7 @@ interface RlsAlertProps extends RlsComponent {
   icon?: string;
 }
 
-export function RlsAlert({
+function RlsAlertComponent({
   bordered,
   children,
   icon,
@@ -31,3 +31,5 @@ export function RlsAlert({
     </div>
   );
 }
+
+export const RlsAlert = memo(RlsAlertComponent);

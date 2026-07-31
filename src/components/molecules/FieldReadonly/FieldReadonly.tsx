@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
 interface FieldReadonlyProps extends RlsComponent {
   value: string;
 }
 
-export function RlsFieldReadonly({
+function RlsFieldReadonlyComponent({
   children,
   identifier,
   rlsTheme,
@@ -32,3 +33,5 @@ export function RlsFieldReadonly({
     </div>
   );
 }
+
+export const RlsFieldReadonly = memo(RlsFieldReadonlyComponent);

@@ -1,11 +1,11 @@
-import { useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPassword } from '../../atoms/InputPassword/InputPassword';
 import { FieldProps } from '../../types';
 import { RlsMessageFormError } from '../MessageFormError/MessageFormError';
 
-export function RlsFieldPassword(props: FieldProps<string>) {
+function RlsFieldPasswordComponent(props: FieldProps<string>) {
   const { children, formControl, identifier, rlsTheme } = props;
 
   const [passwordIsActive, setPasswordIsActive] = useState(true);
@@ -58,3 +58,5 @@ export function RlsFieldPassword(props: FieldProps<string>) {
     </div>
   );
 }
+
+export const RlsFieldPassword = memo(RlsFieldPasswordComponent);

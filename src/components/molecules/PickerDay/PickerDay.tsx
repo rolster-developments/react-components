@@ -7,7 +7,7 @@ import {
 import { DAY_LABELS } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -68,7 +68,7 @@ function RlsPickerDayElement({
   );
 }
 
-export function RlsPickerDay({
+function RlsPickerDayComponent({
   date,
   disabled,
   formControl,
@@ -164,3 +164,5 @@ export function RlsPickerDay({
     </div>
   );
 }
+
+export const RlsPickerDay = memo(RlsPickerDayComponent);

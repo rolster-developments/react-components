@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useMemo, useRef } from 'react';
+import { memo, MouseEvent, useCallback, useMemo, useRef } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsComponent } from '../../definitions';
@@ -16,7 +16,7 @@ interface FieldFileProps extends RlsComponent {
   value?: File;
 }
 
-export function RlsFieldFile({
+function RlsFieldFileComponent({
   accept,
   children,
   disabled: _disabled,
@@ -134,3 +134,5 @@ export function RlsFieldFile({
     </div>
   );
 }
+
+export const RlsFieldFile = memo(RlsFieldFileComponent);

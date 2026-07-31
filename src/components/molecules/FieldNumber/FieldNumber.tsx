@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
@@ -9,7 +9,7 @@ interface FieldNumberProps extends FieldProps<number> {
   decimals?: number;
 }
 
-export function RlsFieldNumber(props: FieldNumberProps) {
+function RlsFieldNumberComponent(props: FieldNumberProps) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
@@ -56,3 +56,5 @@ export function RlsFieldNumber(props: FieldNumberProps) {
     </div>
   );
 }
+
+export const RlsFieldNumber = memo(RlsFieldNumberComponent);

@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useMemo } from 'react';
+import { memo, ReactNode, useMemo } from 'react';
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsRadioButton } from '../../atoms/RadioButton/RadioButton';
@@ -22,13 +22,13 @@ interface LabelRadioButtonDefinedProps<T> extends LabelRadioButtonProps<T> {
   onValue?: (value: T) => void;
 }
 
-export function RlsLabelRadioButton<T>(
+function RlsLabelRadioButtonComponent<T>(
   props: LabelRadioButtonDefinedProps<T>
 ): ReactNode;
-export function RlsLabelRadioButton<T = any>(
+function RlsLabelRadioButtonComponent<T = any>(
   props: LabelRadioButtonProps<T>
 ): ReactNode;
-export function RlsLabelRadioButton<T = any>({
+function RlsLabelRadioButtonComponent<T = any>({
   children,
   disabled,
   extended,
@@ -64,3 +64,7 @@ export function RlsLabelRadioButton<T = any>({
     </div>
   );
 }
+
+export const RlsLabelRadioButton = memo(
+  RlsLabelRadioButtonComponent
+) as typeof RlsLabelRadioButtonComponent;

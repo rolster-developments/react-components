@@ -3,6 +3,7 @@ import {
   ChangeEvent,
   FocusEventHandler,
   KeyboardEventHandler,
+  memo,
   MouseEventHandler,
   ReactNode,
   RefObject,
@@ -85,7 +86,7 @@ function RlsFieldListLi<E>({
   );
 }
 
-export function RlsFieldListSuggestions<E = any>({
+function RlsFieldListSuggestionsComponent<E = any>({
   elements,
   action,
   disabled,
@@ -223,3 +224,7 @@ export function RlsFieldListSuggestions<E = any>({
     </div>
   );
 }
+
+export const RlsFieldListSuggestions = memo(
+  RlsFieldListSuggestionsComponent
+) as typeof RlsFieldListSuggestionsComponent;

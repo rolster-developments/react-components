@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPercentage } from '../../atoms/InputPercentage/InputPercentage';
@@ -9,7 +9,7 @@ interface FieldPercentageProps extends FieldProps<number> {
   decimals?: number;
 }
 
-export function RlsFieldPercentage(props: FieldPercentageProps) {
+function RlsFieldPercentageComponent(props: FieldPercentageProps) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
@@ -56,3 +56,5 @@ export function RlsFieldPercentage(props: FieldPercentageProps) {
     </div>
   );
 }
+
+export const RlsFieldPercentage = memo(RlsFieldPercentageComponent);

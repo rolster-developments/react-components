@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import {
   AreaTextProps,
@@ -13,7 +13,7 @@ interface FieldAreaProps extends AreaTextProps, RlsComponent {
   msgErrorDisabled?: boolean;
 }
 
-export function RlsFieldArea(props: FieldAreaProps) {
+function RlsFieldAreaComponent(props: FieldAreaProps) {
   const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
@@ -52,3 +52,5 @@ export function RlsFieldArea(props: FieldAreaProps) {
     </div>
   );
 }
+
+export const RlsFieldArea = memo(RlsFieldAreaComponent);

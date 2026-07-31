@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -41,7 +41,7 @@ function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
   );
 }
 
-export function RlsTabs<T = any>({ tabs, onValue, rlsTheme }: TabsProps<T>) {
+function RlsTabsComponent<T = any>({ tabs, onValue, rlsTheme }: TabsProps<T>) {
   const [value, setValue] = useState<T>();
 
   const onSelect = useCallback(
@@ -70,3 +70,5 @@ export function RlsTabs<T = any>({ tabs, onValue, rlsTheme }: TabsProps<T>) {
     </div>
   );
 }
+
+export const RlsTabs = memo(RlsTabsComponent) as typeof RlsTabsComponent;

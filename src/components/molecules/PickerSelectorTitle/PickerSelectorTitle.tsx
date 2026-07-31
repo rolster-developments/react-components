@@ -3,7 +3,7 @@ import { monthLimitTemplate } from '@rolster/components';
 import { Month, MONTH_NAMES } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 
 export type PickerSelectorTitleType = 'month' | 'year';
@@ -19,7 +19,7 @@ interface PickerSelectorTitleProps {
   onClick?: (type: PickerSelectorTitleType) => void;
 }
 
-export function RlsPickerSelectorTitle({
+function RlsPickerSelectorTitleComponent({
   monthControl,
   type,
   yearControl,
@@ -137,3 +137,5 @@ export function RlsPickerSelectorTitle({
     </div>
   );
 }
+
+export const RlsPickerSelectorTitle = memo(RlsPickerSelectorTitleComponent);

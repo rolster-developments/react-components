@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 import { RlsComponent } from '../../definitions';
 
 interface ToolbarProps extends RlsComponent {
@@ -6,7 +6,7 @@ interface ToolbarProps extends RlsComponent {
   subtitle?: ReactNode;
 }
 
-export function RlsToolbar({ actions, children, subtitle }: ToolbarProps) {
+function RlsToolbarComponent({ actions, children, subtitle }: ToolbarProps) {
   return (
     <div className="rls-toolbar">
       <div className="rls-toolbar__description">
@@ -27,3 +27,5 @@ export function RlsToolbar({ actions, children, subtitle }: ToolbarProps) {
     </div>
   );
 }
+
+export const RlsToolbar = memo(RlsToolbarComponent);

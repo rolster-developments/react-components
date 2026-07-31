@@ -1,4 +1,5 @@
 import {
+  memo,
   MouseEvent,
   ReactNode,
   useCallback,
@@ -25,7 +26,7 @@ interface ButtonToggleProps extends RlsComponent {
   disabled?: boolean;
 }
 
-export function RlsButtonToggle({
+function RlsButtonToggleComponent({
   onAction,
   options,
   type,
@@ -130,3 +131,5 @@ export function RlsButtonToggle({
     </div>
   );
 }
+
+export const RlsButtonToggle = memo(RlsButtonToggleComponent);

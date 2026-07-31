@@ -1,4 +1,5 @@
 import {
+  memo,
   ReactNode,
   TransitionEvent,
   useCallback,
@@ -19,7 +20,7 @@ interface RlsAccordionProps extends RlsComponent {
   opened?: boolean;
 }
 
-export function RlsAccordion({
+function RlsAccordionComponent({
   bordered,
   children,
   className,
@@ -130,3 +131,5 @@ export function RlsAccordion({
     </div>
   );
 }
+
+export const RlsAccordion = memo(RlsAccordionComponent);

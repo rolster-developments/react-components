@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
 
@@ -9,7 +9,7 @@ interface ButtonStepperProps extends RlsComponent {
   onAction?: (action: ButtonStepperAction) => void;
 }
 
-export function RlsButtonStepper({
+function RlsButtonStepperComponent({
   disabled,
   onAction,
   rlsTheme
@@ -34,3 +34,5 @@ export function RlsButtonStepper({
     </div>
   );
 }
+
+export const RlsButtonStepper = memo(RlsButtonStepperComponent);

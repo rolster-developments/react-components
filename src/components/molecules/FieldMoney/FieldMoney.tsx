@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputMoney } from '../../atoms/InputMoney/InputMoney';
@@ -10,7 +10,7 @@ interface FieldMoneyProps extends FieldProps<number> {
   symbol?: string;
 }
 
-export function RlsFieldMoney(props: FieldMoneyProps) {
+function RlsFieldMoneyComponent(props: FieldMoneyProps) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
@@ -57,3 +57,5 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
     </div>
   );
 }
+
+export const RlsFieldMoney = memo(RlsFieldMoneyComponent);
