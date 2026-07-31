@@ -19,6 +19,8 @@ export type RlsTheme =
   | 'smartness'
   | 'obsidian';
 
+export type RlsAppTheme = 'light' | 'dark';
+
 export type RlsDesignSystem = 'bordered' | 'filled';
 
 export type RlsButtonType =

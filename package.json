@@ -50,7 +50,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolster/rollup": "^2.1.1",
-    "@rolster/styles-foundations": "^3.3.4",
+    "@rolster/styles-foundations": "^3.4.0",
     "@rolster/types": "^1.1.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
