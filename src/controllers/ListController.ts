@@ -230,13 +230,14 @@ export function useListController<T = any, K = string>({
         const newPosition = navigationListFromInput({
           content: refContent.current,
           event: event as any,
+          higher: state.higher,
           list: refList.current
         });
 
         position.current = newPosition ?? 0;
       }
     },
-    [state.listIsVisible]
+    [state.listIsVisible, state.higher]
   );
 
   const navigationElement = useCallback(
@@ -244,12 +245,13 @@ export function useListController<T = any, K = string>({
       position.current = navigationListFromElement({
         content: refContent.current,
         event: event as any,
+        higher: state.higher,
         input: refInput.current,
         list: refList.current,
         position: position.current
       });
     },
-    [state.listIsVisible]
+    [state.higher]
   );
 
   return {
