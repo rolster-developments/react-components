@@ -94,3 +94,11 @@ body {
   flex-direction: column;
   row-gap: var(--rls-sizing-x8);
 }
+
+.dashboard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--rls-sizing-x4);
+  row-gap: var(--rls-sizing-x4);
+}

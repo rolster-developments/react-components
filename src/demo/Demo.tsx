@@ -1,8 +1,9 @@
 import { RolsterAutocompleteElement } from '@rolster/components';
 import { useFormControl, useInputControl } from '@rolster/react-forms';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   NavbarMenuOption,
+  NotificationsConfig,
   RlsAvatar,
   RlsBadge,
   RlsBallot,
@@ -25,6 +26,7 @@ import {
   RlsNavbarMenu,
   RlsPoster,
   RlsTheme,
+  toggleAppTheme,
   useDesingSystemController,
   useRlsContext
 } from '../index';
@@ -122,15 +124,54 @@ const PERSON_SUGGESTIONS = PERSONS.map(
   (person) => new PersonListElement(person)
 );
 
+const NOTIFICATIONS: NotificationsConfig[] = [
+  {
+    icon: 'check',
+    rlsTheme: 'success',
+    title: 'Operación exitosa',
+    content: <p>Los cambios se guardaron correctamente en el sistema.</p>
+  },
+  {
+    icon: 'warning',
+    rlsTheme: 'warning',
+    title: 'Advertencia',
+    content: <p>Revisa los datos del formulario antes de continuar.</p>
+  },
+  {
+    icon: 'close',
+    rlsTheme: 'danger',
+    title: 'Ocurrió un error',
+    content: <p>No fue posible completar la operación solicitada.</p>
+  },
+  {
+    icon: 'bell',
+    rlsTheme: 'info',
+    title: 'Información',
+    content: <p>Tienes nuevas actividades pendientes por revisar.</p>
+  }
+];
+
 export function Demo() {
   const designSystem = useDesingSystemController();
-  const { snackbar } = useRlsContext();
+  const { notify, snackbar } = useRlsContext();
+
+  const notifyIndex = useRef(0);
 
   const searchControl = useInputControl('');
   const textControl = useInputControl('');
   const dateControl = useFormControl<Date>();
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();
+
+  const changeAppTheme = useCallback(() => {
+    toggleAppTheme();
+  }, []);
+
+  const showNotification = useCallback(() => {
+    notify(NOTIFICATIONS[notifyIndex.current % NOTIFICATIONS.length]);
+
+    notifyIndex.current += 1;
+  }, [notify]);
 
   const showSnackbar = useCallback(() => {
     snackbar({
@@ -254,7 +295,7 @@ export function Demo() {
                           </RlsBallot>
                         </RlsDatatableCell>
                         <RlsDatatableCell className="col-xs-20 rls-align-right">
-                          <RlsBadge rlsTheme="amber">{person.user}</RlsBadge>
+                          <RlsBadge rlsTheme="amber" contrasted={true}>{person.user}</RlsBadge>
                         </RlsDatatableCell>
 
                         <RlsDatatableFloating rlsTheme="amber">
@@ -264,6 +305,26 @@ export function Demo() {
                     );
                   })}
                 </RlsDatatable>
+
+                <div className="dashboard__actions">
+                  <RlsButton
+                    type="flat"
+                    rlsTheme="obsidian"
+                    prefixIcon="shake"
+                    onClick={changeAppTheme}
+                  >
+                    Cambiar tema
+                  </RlsButton>
+
+                  <RlsButton
+                    type="raised"
+                    rlsTheme="info"
+                    prefixIcon="bell"
+                    onClick={showNotification}
+                  >
+                    Sacar notificación
+                  </RlsButton>
+                </div>
               </div>
 
               <div className="dashboard__inputs rls-flex-xs-col-2">

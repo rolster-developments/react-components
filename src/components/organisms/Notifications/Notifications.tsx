@@ -120,8 +120,20 @@ export function useNotifications(): NotificationsService {
 
       setNotifications((notifications) => [
         ...notifications,
-        { id, config, visible: true }
+        { id, config, visible: false }
       ]);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setNotifications((notifications) =>
+            notifications.map((notification) =>
+              notification.id === id
+                ? { ...notification, visible: true }
+                : notification
+            )
+          );
+        });
+      });
 
       const timer = setTimeout(() => {
         remove(id);
