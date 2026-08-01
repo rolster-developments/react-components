@@ -1,5 +1,5 @@
 import { SealedPartial } from '@rolster/commons';
-import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
+import { memo, ReactNode, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
@@ -76,9 +76,11 @@ function RlsConfirmationComponent({
   title,
   visible
 }: ConfirmationProps) {
-  const classConfirmation = useMemo(() => {
-    return renderClassStatus('rls-confirmation', { visible }, className);
-  }, [visible, className]);
+  const classConfirmation = renderClassStatus(
+    'rls-confirmation',
+    { visible },
+    className
+  );
 
   return (
     <div className={classConfirmation} rls-theme={rlsTheme}>
@@ -165,7 +167,7 @@ export function useConfirmation(): ConfirmationService {
                 setVisible(false);
                 resolve(ConfirmationResult.reject());
               },
-              type: options.reject.type ?? 'outline',
+              type: options.reject.type ?? 'flat',
               disabled: options.reject.disabled,
               identifier: options.reject.identifier,
               rlsTheme: options.reject.rlsTheme

@@ -129,29 +129,21 @@ function RlsPickerClockComponent({
     return formatTime(minute);
   }, [minute]);
 
-  const classNameHour = useMemo(() => {
-    return renderClassStatus('rls-picker-clock__title__value', {
-      active: selectionIsHours
-    });
-  }, [selectionIsHours]);
+  const classNameHour = renderClassStatus('rls-picker-clock__title__value', {
+    active: selectionIsHours
+  });
 
-  const classNameMinute = useMemo(() => {
-    return renderClassStatus('rls-picker-clock__title__value', {
-      active: !selectionIsHours
-    });
-  }, [selectionIsHours]);
+  const classNameMinute = renderClassStatus('rls-picker-clock__title__value', {
+    active: !selectionIsHours
+  });
 
-  const classNameAM = useMemo(() => {
-    return renderClassStatus('rls-picker-clock__zone__value', {
-      active: !zoneIsPM
-    });
-  }, [zoneIsPM]);
+  const classNameAM = renderClassStatus('rls-picker-clock__zone__value', {
+    active: !zoneIsPM
+  });
 
-  const classNamePM = useMemo(() => {
-    return renderClassStatus('rls-picker-clock__zone__value', {
-      active: zoneIsPM
-    });
-  }, [zoneIsPM]);
+  const classNamePM = renderClassStatus('rls-picker-clock__zone__value', {
+    active: zoneIsPM
+  });
 
   const refreshClockHour = useEffectEvent(() => {
     refreshClock(hour > 12 ? hour - 12 : hour);
@@ -436,7 +428,7 @@ function RlsPickerClockComponent({
         </div>
 
         <div className="rls-picker-clock__footer--ok">
-          <RlsButton type="gradient" onClick={onSelect}>
+          <RlsButton type="raised" onClick={onSelect}>
             {labels.timeActionSelect}
           </RlsButton>
         </div>

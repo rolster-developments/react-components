@@ -3,7 +3,6 @@ import {
   ReactNode,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -58,9 +57,7 @@ function RlsSnackbarComponent({
   title,
   visible
 }: SnackbarProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-snackbar', { visible });
-  }, [visible]);
+  const className = renderClassStatus('rls-snackbar', { visible });
 
   return (
     <div className={className} rls-theme={rlsTheme}>

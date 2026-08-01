@@ -7,14 +7,7 @@ import {
 import { dateFormatTemplate } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import {
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DATE_FORMAT_TITLE } from '../../../constants/picker.constant';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
@@ -74,13 +67,11 @@ function RlsPickerDateComponent({
     return new Date(yearControl.value, monthControl.value, dayControl.value);
   }, [yearControl.value, monthControl.value, dayControl.value]);
 
-  const classNameComponent = useMemo(() => {
-    return renderClassStatus('rls-picker-date__component', {
-      day: visibility === 'DAY',
-      month: visibility === 'MONTH',
-      year: visibility === 'YEAR'
-    });
-  }, [visibility]);
+  const classNameComponent = renderClassStatus('rls-picker-date__component', {
+    day: visibility === 'DAY',
+    month: visibility === 'MONTH',
+    year: visibility === 'YEAR'
+  });
 
   const title = useMemo(() => {
     return dateFormatTemplate(value, DATE_FORMAT_TITLE);
@@ -218,7 +209,7 @@ function RlsPickerDateComponent({
             </div>
 
             <div className="rls-picker-date__actions--ok">
-              <RlsButton type="gradient" onClick={onSelect}>
+              <RlsButton type="raised" onClick={onSelect}>
                 {labels.dateActionSelect}
               </RlsButton>
             </div>

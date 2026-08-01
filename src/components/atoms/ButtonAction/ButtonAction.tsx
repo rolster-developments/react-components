@@ -1,4 +1,4 @@
-import { memo, MouseEventHandler, useMemo } from 'react';
+import { memo, MouseEventHandler } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonType } from '../../../types';
 import { RlsComponent } from '../../definitions';
@@ -21,9 +21,7 @@ function RlsButtonActionComponent({
   tooltip,
   type
 }: ButtonActionProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-button-action', { type });
-  }, [type]);
+  const className = renderClassStatus('rls-button-action', { type });
 
   return (
     <button

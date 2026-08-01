@@ -20,9 +20,11 @@ function RlsMessageEmptyComponent({
   rlsTheme,
   title
 }: MessageEmptyProps) {
-  const classNameMessageEmpty = useMemo(() => {
-    return renderClassStatus('rls-message-empty', {}, className);
-  }, [className]);
+  const classNameMessageEmpty = renderClassStatus(
+    'rls-message-empty',
+    {},
+    className
+  );
 
   const logo = useMemo(() => {
     if (icon) {

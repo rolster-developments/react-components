@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useFormToggleController } from '../../../controllers/FormToggleController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
@@ -26,13 +26,11 @@ function RlsLabelCheckBoxComponent({
     formControl
   });
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-label-checkbox', {
-      disabled,
-      extended,
-      reverse
-    });
-  }, [disabled, extended, reverse]);
+  const className = renderClassStatus('rls-label-checkbox', {
+    disabled,
+    extended,
+    reverse
+  });
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

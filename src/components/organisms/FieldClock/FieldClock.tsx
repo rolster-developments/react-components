@@ -67,12 +67,10 @@ function RlsFieldClockComponent({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const timeValue = useMemo(() => {
     return formControl ? formControl.value : value;
@@ -157,6 +155,7 @@ function RlsFieldClockComponent({
 
       <RlsModalClock
         visible={modalIsVisible}
+        formControl={formControl}
         time={time}
         disabled={disabled}
         onClose={onCloseModal}

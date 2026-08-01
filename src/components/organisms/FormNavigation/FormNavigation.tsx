@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -16,13 +16,11 @@ function RlsFormNavigationComponent({
   visible,
   rlsTheme
 }: FormNavigationProps) {
-  const classNameForm = useMemo(() => {
-    return renderClassStatus(
-      'rls-form-navigation',
-      { visible: controller?.visible ?? visible },
-      className
-    );
-  }, [className, visible, controller?.visible]);
+  const classNameForm = renderClassStatus(
+    'rls-form-navigation',
+    { visible: controller?.visible ?? visible },
+    className
+  );
 
   return ReactDOM.createPortal(
     <div className={classNameForm} rls-theme={rlsTheme}>

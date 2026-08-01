@@ -96,26 +96,17 @@ function RlsFieldAutocompleteTemplateComponent<
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        focused: autocomplete.focused && !disabled,
-        error: formControl?.wrong,
-        disabled,
-        readonly: props.readOnly,
-        selected: !!autocomplete.value
-      },
-      `rls-field-list rls-field-autocomplete ${props.className ?? ''}`
-    );
-  }, [
-    formControl?.wrong,
-    autocomplete.value,
-    autocomplete.focused,
-    props.className,
-    props.readOnly,
-    disabled
-  ]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      focused: autocomplete.focused && !disabled,
+      error: formControl?.wrong,
+      disabled,
+      readonly: props.readOnly,
+      selected: !!autocomplete.value
+    },
+    `rls-field-list rls-field-autocomplete ${props.className ?? ''}`
+  );
 
   const onClickPattern = useCallback(() => {
     onSearch?.(autocomplete.pattern);

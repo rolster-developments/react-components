@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RolsterReactInputControl } from '../../types';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
@@ -23,9 +23,7 @@ function RlsInputSearchComponent({
 }: InputSearchProps) {
   const [value, setValue] = useState('');
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-input-search', { disabled });
-  }, [disabled]);
+  const className = renderClassStatus('rls-input-search', { disabled });
 
   const onValue = useCallback(
     (value: string) => {

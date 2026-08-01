@@ -30,13 +30,11 @@ function RlsPickerYearElement({
   year,
   disabled
 }: PickerYearElementProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-picker-year__element', {
-      disabled: year.disabled || disabled,
-      focused: year.focused,
-      selected: year.selected
-    });
-  }, [year.disabled, year.focused, year.selected, disabled]);
+  const className = renderClassStatus('rls-picker-year__element', {
+    disabled: year.disabled || disabled,
+    focused: year.focused,
+    selected: year.selected
+  });
 
   const onClick = useCallback(() => {
     if (year.value && !year.disabled && !disabled) {

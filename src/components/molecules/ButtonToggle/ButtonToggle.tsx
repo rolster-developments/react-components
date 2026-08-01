@@ -4,7 +4,6 @@ import {
   ReactNode,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -52,12 +51,10 @@ function RlsButtonToggleComponent({
       document.removeEventListener('click', onCloseMenu);
     };
   }, []);
-  const classNameList = useMemo(() => {
-    return renderClassStatus('rls-button-toggle__list', {
-      hide: !visible,
-      visible
-    });
-  }, [visible]);
+  const classNameList = renderClassStatus('rls-button-toggle__list', {
+    hide: !visible,
+    visible
+  });
 
   const onClickMenu = useCallback(() => {
     setVisible((visible) => !visible);

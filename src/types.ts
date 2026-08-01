@@ -21,16 +21,9 @@ export type RlsTheme =
 
 export type RlsAppTheme = 'light' | 'dark';
 
-export type RlsDesignSystem = 'bordered' | 'filled';
+export type RlsDesignSystem = 'bordered' | 'filled' | 'gradient';
 
-export type RlsButtonType =
-  | 'classic'
-  | 'raised'
-  | 'flat'
-  | 'stroked'
-  | 'outline'
-  | 'ghost'
-  | 'gradient';
+export type RlsButtonType = 'ghost' | 'flat' | 'raised';
 
 declare module 'react' {
   interface HTMLAttributes<T> {

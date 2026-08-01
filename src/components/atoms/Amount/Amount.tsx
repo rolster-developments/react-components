@@ -17,9 +17,7 @@ function RlsAmountComponent({
   rlsTheme,
   symbol
 }: AmountProps) {
-  const classNameAmount = useMemo(() => {
-    return renderClassStatus('rls-amount', {}, className);
-  }, [className]);
+  const classNameAmount = renderClassStatus('rls-amount', {}, className);
 
   const { decimal, integer } = useMemo(() => {
     const currency = currencyFormat({ value, decimals });

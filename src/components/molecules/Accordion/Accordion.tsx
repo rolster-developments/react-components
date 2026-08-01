@@ -4,7 +4,6 @@ import {
   TransitionEvent,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -37,13 +36,11 @@ function RlsAccordionComponent({
   const contentRef = useRef<HTMLDivElement>(null);
   const initializedRef = useRef(false);
 
-  const classNameAccordion = useMemo(() => {
-    return renderClassStatus(
-      'rls-accordion',
-      { bordered, disabled, open, animating },
-      className
-    );
-  }, [animating, bordered, className, disabled, open]);
+  const classNameAccordion = renderClassStatus(
+    'rls-accordion',
+    { bordered, disabled, open, animating },
+    className
+  );
 
   const onClickHeader = useCallback(() => {
     if (!disabled) {

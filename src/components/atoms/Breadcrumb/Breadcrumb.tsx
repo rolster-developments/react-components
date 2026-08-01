@@ -16,11 +16,9 @@ interface BreadcrumbLabelProps {
 }
 
 function RlsBreadcrumbLabel({ label }: BreadcrumbLabelProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-breadcrumb__label__a', {
-      actionable: !!label.onClick
-    });
-  }, [label.onClick]);
+  const className = renderClassStatus('rls-breadcrumb__label__a', {
+    actionable: !!label.onClick
+  });
 
   return (
     <span className="rls-breadcrumb__label" onClick={label.onClick}>
@@ -31,9 +29,7 @@ function RlsBreadcrumbLabel({ label }: BreadcrumbLabelProps) {
   );
 }
 
-function RlsBreadcrumbComponent({
-  labels
-}: BreadcrumbProps) {
+function RlsBreadcrumbComponent({ labels }: BreadcrumbProps) {
   const children = useMemo(() => {
     return labels.map((label, index) => (
       <RlsBreadcrumbLabel key={index} label={label} />

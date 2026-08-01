@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -15,9 +15,11 @@ function RlsAvatarComponent({
   skeleton,
   rlsTheme
 }: AvatarProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-avatar', { contrasted, rounded, skeleton });
-  }, [contrasted, rounded, skeleton]);
+  const className = renderClassStatus('rls-avatar', {
+    contrasted,
+    rounded,
+    skeleton
+  });
 
   return (
     <div className={className} rls-theme={rlsTheme}>

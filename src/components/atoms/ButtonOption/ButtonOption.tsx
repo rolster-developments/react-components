@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, ReactNode, useCallback, useMemo } from 'react';
+import { memo, ReactNode, useCallback } from 'react';
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -45,9 +45,7 @@ function RlsButtonOptionComponent<T = any>({
     value
   });
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-button-option', { checked });
-  }, [checked]);
+  const className = renderClassStatus('rls-button-option', { checked });
 
   const onAction = useCallback(() => {
     onSelect();

@@ -1,11 +1,4 @@
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
@@ -57,9 +50,7 @@ function RlsNotification({
   title,
   visible
 }: NotificationProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-notification', { visible });
-  }, [visible]);
+  const className = renderClassStatus('rls-notification', { visible });
 
   return (
     <div className={className} rls-theme={rlsTheme}>

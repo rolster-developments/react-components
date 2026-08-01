@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../Icon/Icon';
 
@@ -17,9 +17,11 @@ function RlsButtonIconComponent({
   onClick,
   skeleton
 }: ButtonIconProps) {
-  const classNameButton = useMemo(() => {
-    return renderClassStatus('rls-button-icon', { skeleton }, className);
-  }, [className, skeleton]);
+  const classNameButton = renderClassStatus(
+    'rls-button-icon',
+    { skeleton },
+    className
+  );
 
   return (
     <button className={classNameButton} onClick={onClick} disabled={disabled}>

@@ -441,7 +441,7 @@ function RlsPickerColorComponent({
         </div>
 
         <div className="rls-picker-color__actions--ok">
-          <RlsButton type="gradient" onClick={onSelect}>
+          <RlsButton type="raised" onClick={onSelect}>
             {labels.colorActionSelect}
           </RlsButton>
         </div>

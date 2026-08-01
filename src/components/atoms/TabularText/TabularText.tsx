@@ -28,9 +28,7 @@ function RlsTabularTextComponent({ className, value }: TabularTextProps) {
     );
   }, [value]);
 
-  const _className = useMemo(() => {
-    return renderClassStatus('rls-tabular-text', {}, className);
-  }, [className]);
+  const _className = renderClassStatus('rls-tabular-text', {}, className);
 
   return <div className={_className}>{codes}</div>;
 }

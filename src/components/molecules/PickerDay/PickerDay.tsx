@@ -45,15 +45,13 @@ function RlsPickerDayElement({
   onSelect,
   disabled
 }: PickerDayElementProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-picker-day__element', {
-      disabled: day.disabled || disabled,
-      focused: day.focused,
-      forbidden: day.forbidden,
-      selected: day.selected,
-      today: day.today
-    });
-  }, [day, disabled]);
+  const className = renderClassStatus('rls-picker-day__element', {
+    disabled: day.disabled || disabled,
+    focused: day.focused,
+    forbidden: day.forbidden,
+    selected: day.selected,
+    today: day.today
+  });
 
   const onClick = useCallback(() => {
     if (day.value && !day.disabled && !disabled) {

@@ -7,7 +7,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from 'react';
 import { DATE_FORMAT } from '../../../constants/picker.constant';
@@ -76,7 +75,7 @@ function RlsFieldDateComponent({
   rlsTheme,
   value: valueInitial
 }: FieldDateProps) {
-  const today = useRef(new Date()); // Initial current date in component
+  const today = useMemo(() => new Date(), []);
 
   const [value, setValue] = useState(formControl?.value ?? valueInitial);
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -85,12 +84,10 @@ function RlsFieldDateComponent({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const dateValue = useMemo(() => {
     return formControl ? formControl.value : value;
@@ -107,7 +104,7 @@ function RlsFieldDateComponent({
 
   useEffect(() => {
     const dateSecure = verifyDateRange({
-      date: formControl?.value ?? date ?? today.current,
+      date: formControl?.value ?? date ?? today,
       minDate,
       maxDate
     });
@@ -189,6 +186,7 @@ function RlsFieldDateComponent({
 
       <RlsModalDate
         visible={modalIsVisible}
+        formControl={formControl}
         date={date}
         disabled={disabled}
         maxDate={maxDate}

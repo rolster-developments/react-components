@@ -52,12 +52,8 @@ function RlsFieldDateRangeComponent(
 function RlsFieldDateRangeComponent(
   props: FieldDateRangeUndefinedProps
 ): ReactNode;
-function RlsFieldDateRangeComponent(
-  props: FieldDateRangeVoidProps
-): ReactNode;
-function RlsFieldDateRangeComponent(
-  props: FieldDateRangeEmptyProps
-): ReactNode;
+function RlsFieldDateRangeComponent(props: FieldDateRangeVoidProps): ReactNode;
+function RlsFieldDateRangeComponent(props: FieldDateRangeEmptyProps): ReactNode;
 function RlsFieldDateRangeComponent({
   children,
   date,
@@ -82,12 +78,10 @@ function RlsFieldDateRangeComponent({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const dateRangeValue = useMemo(() => {
     return formControl ? formControl.value : value;
@@ -172,6 +166,7 @@ function RlsFieldDateRangeComponent({
 
       <RlsModalDateRange
         visible={modalIsVisible}
+        formControl={formControl}
         date={currentDate}
         disabled={disabled}
         maxDate={maxDate}

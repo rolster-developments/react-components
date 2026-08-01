@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -15,9 +15,7 @@ function RlsRadioButtonComponent({
   rlsTheme,
   onClick
 }: RadioButtonProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-radiobutton', { checked, disabled });
-  }, [checked, disabled]);
+  const className = renderClassStatus('rls-radiobutton', { checked, disabled });
 
   return (
     <div

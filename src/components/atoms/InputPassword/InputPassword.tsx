@@ -1,4 +1,4 @@
-import { KeyboardEvent, memo, useCallback, useMemo, useState } from 'react';
+import { KeyboardEvent, memo, useCallback, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { InputProps } from '../../types';
@@ -59,12 +59,10 @@ function RlsInputPasswordComponent({
     setFocused(() => false);
   }, [formControl]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-input-password', {
-      disabled: formControl?.disabled || disabled,
-      focused: formControl?.focused ?? focused
-    });
-  }, [formControl?.focused, formControl?.disabled, focused, disabled]);
+  const className = renderClassStatus('rls-input-password', {
+    disabled: formControl?.disabled || disabled,
+    focused: formControl?.focused ?? focused
+  });
 
   return (
     <div id={identifier} className={className}>

@@ -84,17 +84,18 @@ function RlsPickerDateRangeComponent({
     return value;
   }, [_date, yearControl.value, monthControl.value]);
 
-  const classNameComponent = useMemo(() => {
-    return renderClassStatus('rls-picker-date-range__component', {
+  const classNameComponent = renderClassStatus(
+    'rls-picker-date-range__component',
+    {
       day: visibility === 'DAY',
       month: visibility === 'MONTH',
       year: visibility === 'YEAR'
-    });
-  }, [visibility]);
+    }
+  );
 
-  const classNameFooter = useMemo(() => {
-    return renderClassStatus('rls-picker-date-range__footer', { automatic });
-  }, [automatic]);
+  const classNameFooter = renderClassStatus('rls-picker-date-range__footer', {
+    automatic
+  });
 
   const title = useMemo(() => rangeFormatTemplate(value), [value]);
 
@@ -187,7 +188,7 @@ function RlsPickerDateRangeComponent({
           </div>
 
           <div className="rls-picker-date-range__actions--ok">
-            <RlsButton type="gradient" onClick={onSelect}>
+            <RlsButton type="raised" onClick={onSelect}>
               {labels.dateActionSelect}
             </RlsButton>
           </div>

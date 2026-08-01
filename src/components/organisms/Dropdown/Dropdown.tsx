@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect } from 'react';
 import { DropdownController } from '../../../controllers/DropdownController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -7,12 +7,14 @@ interface DropdownProps extends RlsComponent {
   controller: DropdownController;
 }
 
-function RlsDropdownComponent({ children, controller, rlsTheme }: DropdownProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-dropdown', {
-      visible: controller.visible
-    });
-  }, [controller.visible]);
+function RlsDropdownComponent({
+  children,
+  controller,
+  rlsTheme
+}: DropdownProps) {
+  const className = renderClassStatus('rls-dropdown', {
+    visible: controller.visible
+  });
 
   useEffect(() => {
     function onCloseDropdown({ target }: MouseEvent) {

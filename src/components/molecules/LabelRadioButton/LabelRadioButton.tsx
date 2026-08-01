@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, ReactNode, useMemo } from 'react';
+import { memo, ReactNode } from 'react';
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsRadioButton } from '../../atoms/RadioButton/RadioButton';
@@ -46,13 +46,11 @@ function RlsLabelRadioButtonComponent<T = any>({
     value
   });
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-label-radiobutton', {
-      disabled,
-      extended,
-      reverse
-    });
-  }, [disabled, extended, reverse]);
+  const className = renderClassStatus('rls-label-radiobutton', {
+    disabled,
+    extended,
+    reverse
+  });
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

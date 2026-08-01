@@ -122,10 +122,9 @@ const PERSON_SUGGESTIONS = PERSONS.map(
   (person) => new PersonListElement(person)
 );
 
-export function DesignSystemFilled() {
-  const { snackbar } = useRlsContext();
-
+export function Demo() {
   const designSystem = useDesingSystemController();
+  const { snackbar } = useRlsContext();
 
   const searchControl = useInputControl('');
   const textControl = useInputControl('');
@@ -239,7 +238,7 @@ export function DesignSystemFilled() {
                     return (
                       <RlsDatatableRecord
                         key={person.documentNumber}
-                        contained={true}
+                        truncated={true}
                       >
                         <RlsDatatableCell control={true}>
                           <RlsLed color={person.color} />
@@ -306,7 +305,7 @@ export function DesignSystemFilled() {
                 </RlsButton>
 
                 <RlsButton
-                  type="stroked"
+                  type="flat"
                   rlsTheme="info"
                   prefixIcon="shake"
                   onClick={designSystem.toggle}

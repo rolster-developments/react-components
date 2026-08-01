@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
@@ -15,9 +15,7 @@ function RlsAlertComponent({
   identifier,
   rlsTheme
 }: RlsAlertProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-alert', { bordered });
-  }, [bordered]);
+  const className = renderClassStatus('rls-alert', { bordered });
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

@@ -17,18 +17,16 @@ function RlsFieldDecimalComponent(props: FieldDecimalProps) {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-decimal'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-decimal'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

@@ -115,13 +115,11 @@ function RlsFieldListSuggestionsComponent<E = any>({
     });
   }, []);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-list__suggestions', {
-      disabled,
-      higher,
-      visible
-    });
-  }, [disabled, higher, visible]);
+  const className = renderClassStatus('rls-field-list__suggestions', {
+    disabled,
+    higher,
+    visible
+  });
 
   const onChangePattern = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -21,12 +21,10 @@ interface TabProps<T> {
 }
 
 function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-tabs__children', {
-      active: tab.value === value,
-      disabled: tab.disabled
-    });
-  }, [tab, value]);
+  const className = renderClassStatus('rls-tabs__children', {
+    active: tab.value === value,
+    disabled: tab.disabled
+  });
 
   const onClick = useCallback(() => {
     if (!tab.disabled) {

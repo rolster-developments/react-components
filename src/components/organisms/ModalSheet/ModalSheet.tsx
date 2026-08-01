@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -20,13 +20,11 @@ function RlsModalSheetComponent({
   visible,
   rlsTheme
 }: ModalSheetProps) {
-  const classNameModal = useMemo(() => {
-    return renderClassStatus(
-      'rls-modal-sheet',
-      { visible: controller?.visible ?? visible },
-      className
-    );
-  }, [className, visible, controller?.visible]);
+  const classNameModal = renderClassStatus(
+    'rls-modal-sheet',
+    { visible: controller?.visible ?? visible },
+    className
+  );
 
   const onClickBackdrop = useCallback(() => {
     if (autoclose) {

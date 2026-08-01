@@ -36,19 +36,15 @@ function RlsFieldFileComponent({
     [formControl?.disabled, _disabled]
   );
 
-  const className = useMemo(
-    () =>
-      renderClassStatus(
-        'rls-field-box',
-        {
-          disabled,
-          error: formControl?.wrong,
-          focused: formControl?.focused && !disabled,
-          readonly: readOnly
-        },
-        'rls-field-file'
-      ),
-    [formControl?.focused, formControl?.wrong, readOnly, disabled]
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: readOnly
+    },
+    'rls-field-file'
   );
 
   const currentFile = useMemo(

@@ -5,7 +5,6 @@ import {
   memo,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -102,12 +101,10 @@ function RlsInputComponent({
     onBlur?.();
   }, [formControl, onBlur]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-input', {
-      disabled: formControl?.disabled || disabled,
-      focused: formControl?.focused ?? focused
-    });
-  }, [formControl?.focused, formControl?.disabled, focused, disabled]);
+  const className = renderClassStatus('rls-input', {
+    disabled: formControl?.disabled || disabled,
+    focused: formControl?.focused ?? focused
+  });
 
   return (
     <div id={identifier} className={className}>

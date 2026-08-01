@@ -14,18 +14,16 @@ function RlsFieldPasswordComponent(props: FieldProps<string>) {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-password'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-password'
+  );
 
   const onTogglePassword = useCallback(() => {
     setPasswordIsActive((password) => !password);

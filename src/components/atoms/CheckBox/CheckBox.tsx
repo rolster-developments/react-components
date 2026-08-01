@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
@@ -22,9 +22,7 @@ function RlsCheckBoxComponent({
   onClick,
   rlsTheme
 }: CheckBoxProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-checkbox', { checked, disabled });
-  }, [checked, disabled]);
+  const className = renderClassStatus('rls-checkbox', { checked, disabled });
 
   return (
     <div

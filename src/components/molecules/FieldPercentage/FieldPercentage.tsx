@@ -16,18 +16,16 @@ function RlsFieldPercentageComponent(props: FieldPercentageProps) {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-percentage'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-percentage'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>

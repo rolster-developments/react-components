@@ -40,13 +40,11 @@ function RlsPickerMonthElement({
     });
   }, []);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-picker-month__component', {
-      disabled: month.disabled || disabled,
-      focused: month.focused,
-      selected: month.selected
-    });
-  }, [month.disabled, month.focused, month.selected, disabled]);
+  const className = renderClassStatus('rls-picker-month__component', {
+    disabled: month.disabled || disabled,
+    focused: month.focused,
+    selected: month.selected
+  });
 
   const onClick = useCallback(() => {
     if (valueIsDefined(month.value) && !month.disabled && !disabled) {

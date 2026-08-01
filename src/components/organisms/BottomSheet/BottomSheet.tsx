@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -20,13 +20,11 @@ function RlsBottomSheetComponent({
   visible,
   rlsTheme
 }: BottomSheetProps) {
-  const classNameSheet = useMemo(() => {
-    return renderClassStatus(
-      'rls-bottom-sheet',
-      { visible: controller?.visible ?? visible },
-      className
-    );
-  }, [className, visible, controller?.visible]);
+  const classNameSheet = renderClassStatus(
+    'rls-bottom-sheet',
+    { visible: controller?.visible ?? visible },
+    className
+  );
 
   const onClickBackdrop = useCallback(() => {
     if (autoclose) {

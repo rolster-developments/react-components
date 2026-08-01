@@ -44,13 +44,11 @@ export function RlsApplication({ children }: RlsComponent) {
   const [navbarIsCondense, setNavbarIsCondense] = useState(false);
   const [appIsMobile, setIsMobile] = useState(false);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-app__body', {
-      mobile: appIsMobile,
-      'navbar-snackbar': navbarInApp,
-      'navbar-condense': navbarIsCondense
-    });
-  }, [appIsMobile, navbarInApp, navbarIsCondense]);
+  const className = renderClassStatus('rls-app__body', {
+    mobile: appIsMobile,
+    'navbar-snackbar': navbarInApp,
+    'navbar-condense': navbarIsCondense
+  });
 
   const state = useMemo<RlsState>(
     () => ({

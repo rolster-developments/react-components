@@ -73,12 +73,10 @@ function RlsFieldColorComponent({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const displayHex = useMemo(() => {
     const hex = colorValue && hexIsValid(colorValue) ? colorValue : '';
@@ -164,7 +162,7 @@ function RlsFieldColorComponent({
       </div>
 
       <RlsModal
-        className="rls-field-color-modal"
+        className="rls-modal-color"
         visible={modalIsVisible}
         rlsTheme={rlsTheme}
       >

@@ -65,24 +65,16 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        focused: fieldList.listIsVisible && !disabled,
-        error: formControl?.wrong,
-        disabled,
-        readonly: props.readOnly
-      },
-      `rls-field-list rls-field-list__multi ${props.className ?? ''}`
-    );
-  }, [
-    formControl?.wrong,
-    fieldList.listIsVisible,
-    props.className,
-    props.readOnly,
-    disabled
-  ]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      focused: fieldList.listIsVisible && !disabled,
+      error: formControl?.wrong,
+      disabled,
+      readonly: props.readOnly
+    },
+    `rls-field-list rls-field-list__multi ${props.className ?? ''}`
+  );
 
   const renderWithCheckbox = useCallback(
     (element: E) => (
@@ -219,8 +211,12 @@ function RlsFieldListComponent<T = any>(
 function RlsFieldListComponent<T = any>(
   props: FieldListDefinedProps<T>
 ): ReactNode;
-function RlsFieldListComponent<T = any>(props: FieldListVoidProps<T>): ReactNode;
-function RlsFieldListComponent<T = any>(props: FieldListEmptyProps<T>): ReactNode;
+function RlsFieldListComponent<T = any>(
+  props: FieldListVoidProps<T>
+): ReactNode;
+function RlsFieldListComponent<T = any>(
+  props: FieldListEmptyProps<T>
+): ReactNode;
 function RlsFieldListComponent<T = any>(
   props: FieldListProps<T, ListElement<T>>
 ): ReactNode;

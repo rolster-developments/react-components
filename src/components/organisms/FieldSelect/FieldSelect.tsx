@@ -68,24 +68,16 @@ function RlsFieldSelectTemplateComponent<
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        focused: select.focused && !disabled,
-        error: formControl?.wrong,
-        disabled: disabled,
-        readonly: props.readOnly
-      },
-      `rls-field-list rls-field-select ${props.className ?? ''}`
-    );
-  }, [
-    formControl?.wrong,
-    select.focused,
-    props.className,
-    props.readOnly,
-    disabled
-  ]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      focused: select.focused && !disabled,
+      error: formControl?.wrong,
+      disabled: disabled,
+      readonly: props.readOnly
+    },
+    `rls-field-list rls-field-select ${props.className ?? ''}`
+  );
 
   return (
     <div

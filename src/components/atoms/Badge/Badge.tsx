@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -6,14 +6,8 @@ interface BadgeProps extends RlsComponent {
   contrasted?: boolean;
 }
 
-function RlsBadgeComponent({
-  children,
-  contrasted,
-  rlsTheme
-}: BadgeProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-badge', { contrasted });
-  }, [contrasted]);
+function RlsBadgeComponent({ children, contrasted, rlsTheme }: BadgeProps) {
+  const className = renderClassStatus('rls-badge', { contrasted });
 
   return (
     <span className={className} rls-theme={rlsTheme}>

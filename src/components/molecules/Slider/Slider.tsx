@@ -79,17 +79,15 @@ function RlsSliderComponent({
   const refTrackOn = useRef<HTMLDivElement>(null!);
   const refThumb = useRef<HTMLDivElement>(null!);
 
-  const classNameSlider = useMemo(() => {
-    return renderClassStatus(
-      'rls-slider',
-      {
-        complet: valueSlider === maxValueSlider,
-        disabled: disabled,
-        empty: valueSlider === minValueSlider
-      },
-      className
-    );
-  }, [valueSlider, minValueSlider, maxValueSlider, disabled]);
+  const classNameSlider = renderClassStatus(
+    'rls-slider',
+    {
+      complet: valueSlider === maxValueSlider,
+      disabled: disabled,
+      empty: valueSlider === minValueSlider
+    },
+    className
+  );
 
   useEffect(() => {
     const valueInitial = formControl?.value ?? value ?? 0;
