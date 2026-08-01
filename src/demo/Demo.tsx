@@ -21,6 +21,9 @@ import {
   RlsFieldText,
   RlsIcon,
   RlsInputSearch,
+  RlsLabelCheckBox,
+  RlsLabelRadioButton,
+  RlsLabelSwitch,
   RlsLed,
   RlsNavbar,
   RlsNavbarMenu,
@@ -162,6 +165,9 @@ export function Demo() {
   const dateControl = useFormControl<Date>();
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();
+  const checkboxControl = useInputControl(false);
+  const switchControl = useInputControl(true);
+  const radioControl = useInputControl('daily');
 
   const changeAppTheme = useCallback(() => {
     toggleAppTheme();
@@ -280,6 +286,7 @@ export function Demo() {
                       <RlsDatatableRecord
                         key={person.documentNumber}
                         truncated={true}
+                        warning={true}
                       >
                         <RlsDatatableCell control={true}>
                           <RlsLed color={person.color} />
@@ -295,7 +302,9 @@ export function Demo() {
                           </RlsBallot>
                         </RlsDatatableCell>
                         <RlsDatatableCell className="col-xs-20 rls-align-right">
-                          <RlsBadge rlsTheme="amber" contrasted={true}>{person.user}</RlsBadge>
+                          <RlsBadge rlsTheme="amber" contrasted={true}>
+                            {person.user}
+                          </RlsBadge>
                         </RlsDatatableCell>
 
                         <RlsDatatableFloating rlsTheme="amber">
@@ -355,6 +364,27 @@ export function Demo() {
                 >
                   Persona asignada
                 </RlsFieldAutocomplete>
+
+                <RlsLabelCheckBox formControl={checkboxControl}>
+                  Acepto los términos y condiciones
+                </RlsLabelCheckBox>
+
+                <RlsLabelSwitch formControl={switchControl}>
+                  Recibir notificaciones por correo
+                </RlsLabelSwitch>
+
+                <div className="dashboard__radios">
+                  <RlsLabelRadioButton formControl={radioControl} value="daily">
+                    Resumen diario
+                  </RlsLabelRadioButton>
+
+                  <RlsLabelRadioButton
+                    formControl={radioControl}
+                    value="weekly"
+                  >
+                    Resumen semanal
+                  </RlsLabelRadioButton>
+                </div>
 
                 <RlsButton
                   type="raised"

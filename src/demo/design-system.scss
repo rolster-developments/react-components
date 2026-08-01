@@ -102,3 +102,9 @@ body {
   column-gap: var(--rls-sizing-x4);
   row-gap: var(--rls-sizing-x4);
 }
+
+.dashboard__radios {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x2);
+}

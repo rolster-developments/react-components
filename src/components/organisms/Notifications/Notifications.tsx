@@ -144,8 +144,12 @@ export function useNotifications(): NotificationsService {
     [remove]
   );
 
+  const className = renderClassStatus('rls-notifications', {
+    visible: notifications.length > 0
+  });
+
   const RlsNotifications = ReactDOM.createPortal(
-    <div className="rls-notifications">
+    <div className={className}>
       {notifications.map((notification) => (
         <RlsNotification
           key={notification.id}
