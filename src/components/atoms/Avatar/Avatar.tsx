@@ -6,6 +6,7 @@ interface AvatarProps extends RlsComponent {
   contrasted?: boolean;
   rounded?: boolean;
   skeleton?: boolean;
+  transparent?: boolean;
 }
 
 function RlsAvatarComponent({
@@ -13,12 +14,14 @@ function RlsAvatarComponent({
   contrasted,
   rounded,
   skeleton,
+  transparent,
   rlsTheme
 }: AvatarProps) {
   const className = renderClassStatus('rls-avatar', {
     contrasted,
     rounded,
-    skeleton
+    skeleton,
+    transparent
   });
 
   return (

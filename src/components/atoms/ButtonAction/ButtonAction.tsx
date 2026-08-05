@@ -6,6 +6,7 @@ import { RlsIcon } from '../Icon/Icon';
 
 interface ButtonActionProps extends RlsComponent {
   icon: string;
+  badge?: string;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   tooltip?: string;
@@ -14,6 +15,7 @@ interface ButtonActionProps extends RlsComponent {
 
 function RlsButtonActionComponent({
   icon,
+  badge,
   disabled,
   identifier,
   onClick,
@@ -33,6 +35,8 @@ function RlsButtonActionComponent({
     >
       <div className="rls-button-action__content">
         <RlsIcon value={icon} />
+
+        {badge && <span className="rls-button-action__badge">{badge}</span>}
       </div>
       {tooltip && (
         <div className="rls-button-action__tooltip rls-overline-font-medium">
