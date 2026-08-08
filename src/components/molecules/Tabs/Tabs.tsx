@@ -12,6 +12,7 @@ export interface Tab<T = any> {
 interface TabsProps<T> extends RlsComponent {
   tabs: Tab<T>[];
   onValue?: (value: T) => void;
+  value?: T;
 }
 
 interface TabProps<T> {
@@ -41,30 +42,44 @@ function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
   );
 }
 
-export function RlsTabs<T = any>({ tabs, onValue, rlsTheme }: TabsProps<T>) {
-  const [value, setValue] = useState<T>();
+export function RlsTabs<T = any>({
+  tabs,
+  value,
+  onValue,
+  rlsTheme
+}: TabsProps<T>) {
+  const [valueInternal, setValueInternal] = useState<T>();
 
   const onSelect = useCallback(
     (value: T) => {
-      setValue(value);
+      setValueInternal(value);
       onValue?.(value);
     },
     [onValue]
   );
 
   useEffect(() => {
+    if (value !== undefined) {
+      return setValueInternal(value);
+    }
+
     const initial = tabs.find((tab) => tab.defaultActive) ?? tabs[0];
 
     if (initial) {
       onSelect(initial.value);
     }
-  }, []);
+  }, [value]);
 
   return (
     <div className="rls-tabs" rls-theme={rlsTheme}>
       {tabs.map((tab, index) => {
         return (
-          <RlsTab key={index} tab={tab} value={value} onSelect={onSelect} />
+          <RlsTab
+            key={index}
+            tab={tab}
+            value={valueInternal}
+            onSelect={onSelect}
+          />
         );
       })}
     </div>
