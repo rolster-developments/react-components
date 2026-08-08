@@ -1,6 +1,7 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
+import { RolsterReactHtmlControl } from '../../types';
 
 export interface Tab<T = any> {
   label: string;
@@ -11,6 +12,7 @@ export interface Tab<T = any> {
 
 interface TabsProps<T> extends RlsComponent {
   tabs: Tab<T>[];
+  formControl?: RolsterReactHtmlControl<T>;
   onValue?: (value: T) => void;
   value?: T;
 }
@@ -18,20 +20,21 @@ interface TabsProps<T> extends RlsComponent {
 interface TabProps<T> {
   onSelect: (value: T) => void;
   tab: Tab<T>;
+  disabled?: boolean;
   value?: T;
 }
 
-function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
+function RlsTab<T>({ disabled, onSelect, tab, value }: TabProps<T>) {
   const className = renderClassStatus('rls-tabs__children', {
     active: tab.value === value,
-    disabled: tab.disabled
+    disabled: disabled || tab.disabled
   });
 
   const onClick = useCallback(() => {
-    if (!tab.disabled) {
+    if (!disabled && !tab.disabled) {
       onSelect(tab.value);
     }
-  }, [tab.disabled]);
+  }, [disabled, tab.disabled, onSelect]);
 
   return (
     <div className={className} onClick={onClick}>
@@ -42,21 +45,35 @@ function RlsTab<T>({ onSelect, tab, value }: TabProps<T>) {
 
 function RlsTabsComponent<T = any>({
   tabs,
-  value,
+  formControl,
   onValue,
+  value,
   rlsTheme
 }: TabsProps<T>) {
   const [valueInternal, setValueInternal] = useState<T>();
 
+  const valueSelected = useMemo(() => {
+    return formControl ? formControl.value : valueInternal;
+  }, [formControl?.value, valueInternal]);
+
   const onSelect = useCallback(
     (value: T) => {
-      setValueInternal(value);
+      if (formControl) {
+        formControl?.setValue(value);
+      } else {
+        setValueInternal(value);
+      }
+
       onValue?.(value);
     },
-    [onValue]
+    [formControl, onValue]
   );
 
   useEffect(() => {
+    if (formControl?.value !== undefined) {
+      return setValueInternal(formControl.value);
+    }
+
     if (value !== undefined) {
       return setValueInternal(value);
     }
@@ -66,7 +83,7 @@ function RlsTabsComponent<T = any>({
     if (initial) {
       onSelect(initial.value);
     }
-  }, [value]);
+  }, [value, formControl?.value]);
 
   return (
     <div className="rls-tabs" rls-theme={rlsTheme}>
@@ -75,7 +92,8 @@ function RlsTabsComponent<T = any>({
           <RlsTab
             key={index}
             tab={tab}
-            value={valueInternal}
+            disabled={formControl?.disabled}
+            value={valueSelected}
             onSelect={onSelect}
           />
         );
