@@ -1,11 +1,4 @@
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
@@ -57,9 +50,7 @@ function RlsNotification({
   title,
   visible
 }: NotificationProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-notification', { visible });
-  }, [visible]);
+  const className = renderClassStatus('rls-notification', { visible });
 
   return (
     <div className={className} rls-theme={rlsTheme}>
@@ -129,8 +120,20 @@ export function useNotifications(): NotificationsService {
 
       setNotifications((notifications) => [
         ...notifications,
-        { id, config, visible: true }
+        { id, config, visible: false }
       ]);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setNotifications((notifications) =>
+            notifications.map((notification) =>
+              notification.id === id
+                ? { ...notification, visible: true }
+                : notification
+            )
+          );
+        });
+      });
 
       const timer = setTimeout(() => {
         remove(id);
@@ -141,8 +144,12 @@ export function useNotifications(): NotificationsService {
     [remove]
   );
 
+  const className = renderClassStatus('rls-notifications', {
+    visible: notifications.length > 0
+  });
+
   const RlsNotifications = ReactDOM.createPortal(
-    <div className="rls-notifications">
+    <div className={className}>
       {notifications.map((notification) => (
         <RlsNotification
           key={notification.id}

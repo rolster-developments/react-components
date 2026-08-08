@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 
 export interface NavbarMenuOption {
@@ -30,7 +30,7 @@ function RlsNavbarMenuOption({ option, onOption }: NavbarMenuOptionProps) {
   );
 }
 
-export function RlsNavbarMenu({ options, onOption }: NavbarMenuProps) {
+function RlsNavbarMenuComponent({ options, onOption }: NavbarMenuProps) {
   return (
     <ul className="rls-app__page__nav__menu">
       {options.map((option) => (
@@ -43,3 +43,5 @@ export function RlsNavbarMenu({ options, onOption }: NavbarMenuProps) {
     </ul>
   );
 }
+
+export const RlsNavbarMenu = memo(RlsNavbarMenuComponent);

@@ -1,8 +1,9 @@
 import { RolsterAutocompleteElement } from '@rolster/components';
 import { useFormControl, useInputControl } from '@rolster/react-forms';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   NavbarMenuOption,
+  NotificationsConfig,
   RlsAvatar,
   RlsBadge,
   RlsBallot,
@@ -20,11 +21,15 @@ import {
   RlsFieldText,
   RlsIcon,
   RlsInputSearch,
+  RlsLabelCheckBox,
+  RlsLabelRadioButton,
+  RlsLabelSwitch,
   RlsLed,
   RlsNavbar,
   RlsNavbarMenu,
   RlsPoster,
   RlsTheme,
+  toggleAppTheme,
   useDesingSystemController,
   useRlsContext
 } from '../index';
@@ -122,16 +127,57 @@ const PERSON_SUGGESTIONS = PERSONS.map(
   (person) => new PersonListElement(person)
 );
 
-export function DesignSystemFilled() {
-  const { snackbar } = useRlsContext();
+const NOTIFICATIONS: NotificationsConfig[] = [
+  {
+    icon: 'check',
+    rlsTheme: 'success',
+    title: 'Operación exitosa',
+    content: <p>Los cambios se guardaron correctamente en el sistema.</p>
+  },
+  {
+    icon: 'warning',
+    rlsTheme: 'warning',
+    title: 'Advertencia',
+    content: <p>Revisa los datos del formulario antes de continuar.</p>
+  },
+  {
+    icon: 'close',
+    rlsTheme: 'danger',
+    title: 'Ocurrió un error',
+    content: <p>No fue posible completar la operación solicitada.</p>
+  },
+  {
+    icon: 'bell',
+    rlsTheme: 'info',
+    title: 'Información',
+    content: <p>Tienes nuevas actividades pendientes por revisar.</p>
+  }
+];
 
+export function Demo() {
   const designSystem = useDesingSystemController();
+  const { notify, snackbar } = useRlsContext();
+
+  const notifyIndex = useRef(0);
 
   const searchControl = useInputControl('');
   const textControl = useInputControl('');
   const dateControl = useFormControl<Date>();
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();
+  const checkboxControl = useInputControl(false);
+  const switchControl = useInputControl(true);
+  const radioControl = useInputControl('daily');
+
+  const changeAppTheme = useCallback(() => {
+    toggleAppTheme();
+  }, []);
+
+  const showNotification = useCallback(() => {
+    notify(NOTIFICATIONS[notifyIndex.current % NOTIFICATIONS.length]);
+
+    notifyIndex.current += 1;
+  }, [notify]);
 
   const showSnackbar = useCallback(() => {
     snackbar({
@@ -239,7 +285,8 @@ export function DesignSystemFilled() {
                     return (
                       <RlsDatatableRecord
                         key={person.documentNumber}
-                        contained={true}
+                        truncated={true}
+                        warning={true}
                       >
                         <RlsDatatableCell control={true}>
                           <RlsLed color={person.color} />
@@ -255,7 +302,9 @@ export function DesignSystemFilled() {
                           </RlsBallot>
                         </RlsDatatableCell>
                         <RlsDatatableCell className="col-xs-20 rls-align-right">
-                          <RlsBadge rlsTheme="amber">{person.user}</RlsBadge>
+                          <RlsBadge rlsTheme="amber" contrasted={true}>
+                            {person.user}
+                          </RlsBadge>
                         </RlsDatatableCell>
 
                         <RlsDatatableFloating rlsTheme="amber">
@@ -265,6 +314,26 @@ export function DesignSystemFilled() {
                     );
                   })}
                 </RlsDatatable>
+
+                <div className="dashboard__actions">
+                  <RlsButton
+                    type="flat"
+                    rlsTheme="obsidian"
+                    prefixIcon="shake"
+                    onClick={changeAppTheme}
+                  >
+                    Cambiar tema
+                  </RlsButton>
+
+                  <RlsButton
+                    type="raised"
+                    rlsTheme="info"
+                    prefixIcon="bell"
+                    onClick={showNotification}
+                  >
+                    Sacar notificación
+                  </RlsButton>
+                </div>
               </div>
 
               <div className="dashboard__inputs rls-flex-xs-col-2">
@@ -296,6 +365,27 @@ export function DesignSystemFilled() {
                   Persona asignada
                 </RlsFieldAutocomplete>
 
+                <RlsLabelCheckBox formControl={checkboxControl}>
+                  Acepto los términos y condiciones
+                </RlsLabelCheckBox>
+
+                <RlsLabelSwitch formControl={switchControl}>
+                  Recibir notificaciones por correo
+                </RlsLabelSwitch>
+
+                <div className="dashboard__radios">
+                  <RlsLabelRadioButton formControl={radioControl} value="daily">
+                    Resumen diario
+                  </RlsLabelRadioButton>
+
+                  <RlsLabelRadioButton
+                    formControl={radioControl}
+                    value="weekly"
+                  >
+                    Resumen semanal
+                  </RlsLabelRadioButton>
+                </div>
+
                 <RlsButton
                   type="raised"
                   rlsTheme="success"
@@ -306,7 +396,7 @@ export function DesignSystemFilled() {
                 </RlsButton>
 
                 <RlsButton
-                  type="stroked"
+                  type="flat"
                   rlsTheme="info"
                   prefixIcon="shake"
                   onClick={designSystem.toggle}

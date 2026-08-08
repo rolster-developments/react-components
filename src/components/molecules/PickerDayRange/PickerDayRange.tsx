@@ -12,7 +12,7 @@ import {
 } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -47,15 +47,13 @@ function RlsPickerDayRangeElement({
   onSelect,
   disabled
 }: PickerDayRangeElementProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-picker-day-range__element', {
-      disabled: day.disabled || disabled,
-      end: day.end,
-      forbidden: day.forbidden,
-      ranged: day.ranged,
-      source: day.source
-    });
-  }, [day.disabled, day.end, day.forbidden, day.ranged, day.source, disabled]);
+  const className = renderClassStatus('rls-picker-day-range__element', {
+    disabled: day.disabled || disabled,
+    end: day.end,
+    forbidden: day.forbidden,
+    ranged: day.ranged,
+    source: day.source
+  });
 
   const onClick = useCallback(() => {
     if (day.value && !day.disabled && !disabled) {
@@ -72,7 +70,7 @@ function RlsPickerDayRangeElement({
   );
 }
 
-export function RlsPickerDayRange({
+function RlsPickerDayRangeComponent({
   date,
   disabled,
   formControl,
@@ -149,3 +147,5 @@ export function RlsPickerDayRange({
     </div>
   );
 }
+
+export const RlsPickerDayRange = memo(RlsPickerDayRangeComponent);

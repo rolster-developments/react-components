@@ -7,7 +7,7 @@ import {
 import { DAY_LABELS } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -45,15 +45,13 @@ function RlsPickerDayElement({
   onSelect,
   disabled
 }: PickerDayElementProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-picker-day__element', {
-      disabled: day.disabled || disabled,
-      focused: day.focused,
-      forbidden: day.forbidden,
-      selected: day.selected,
-      today: day.today
-    });
-  }, [day, disabled]);
+  const className = renderClassStatus('rls-picker-day__element', {
+    disabled: day.disabled || disabled,
+    focused: day.focused,
+    forbidden: day.forbidden,
+    selected: day.selected,
+    today: day.today
+  });
 
   const onClick = useCallback(() => {
     if (day.value && !day.disabled && !disabled) {
@@ -68,7 +66,7 @@ function RlsPickerDayElement({
   );
 }
 
-export function RlsPickerDay({
+function RlsPickerDayComponent({
   date,
   disabled,
   formControl,
@@ -164,3 +162,5 @@ export function RlsPickerDay({
     </div>
   );
 }
+
+export const RlsPickerDay = memo(RlsPickerDayComponent);

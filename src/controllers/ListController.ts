@@ -10,6 +10,7 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -56,6 +57,28 @@ function getRemSize(): number {
   return fontSize > 0 ? fontSize : FALLBACK_REM_SIZE;
 }
 
+function suggestionsShallowEqual<T>(
+  a: AbstractListElement<T>[],
+  b: AbstractListElement<T>[]
+): boolean {
+  return (
+    a === b ||
+    (a.length === b.length && a.every((element, index) => element === b[index]))
+  );
+}
+
+function useStableSuggestions<T>(
+  suggestions: AbstractListElement<T>[]
+): AbstractListElement<T>[] {
+  const suggestionsRef = useRef(suggestions);
+
+  if (!suggestionsShallowEqual(suggestionsRef.current, suggestions)) {
+    suggestionsRef.current = suggestions;
+  }
+
+  return suggestionsRef.current;
+}
+
 function shouldDisplayHigher(
   content: HTMLElement | null,
   list: HTMLElement | null
@@ -82,18 +105,23 @@ function shouldDisplayHigher(
   return spaceAbove > spaceBelow;
 }
 
-export function useListController<T = any, K = string>(
-  props: ListControllerProps<T, K>
-): ListController<T> {
-  const { suggestions, automatic, formControl, reference } = props;
-
+export function useListController<T = any, K = string>({
+  suggestions,
+  automatic,
+  formControl,
+  reference
+}: ListControllerProps<T, K>): ListController<T> {
   const refContent = useRef<HTMLDivElement>(null);
   const refList = useRef<HTMLUListElement>(null);
   const refInput = useRef<HTMLInputElement>(null);
 
   const listIsOpen = useRef(false);
-  const [collection, setCollection] = useState(
-    new ListCollection<T, K>(suggestions)
+
+  const stableSuggestions = useStableSuggestions(suggestions);
+
+  const collection = useMemo(
+    () => new ListCollection<T, K>(stableSuggestions, reference),
+    [stableSuggestions]
   );
 
   const [state, refreshState] = useState<ListControllerState>({
@@ -132,10 +160,6 @@ export function useListController<T = any, K = string>(
   }, [state.listIsVisible]);
 
   useEffect(() => {
-    setCollection(new ListCollection(suggestions, reference));
-  }, [suggestions]);
-
-  useEffect(() => {
     if (!changeValueInternal.current) {
       if (formControl?.value) {
         const element = collection.find(formControl.value);
@@ -157,13 +181,13 @@ export function useListController<T = any, K = string>(
         if (element) {
           setFormValue(element);
         } else {
-          refreshState({ ...state, value: '' });
+          refreshState((state) => ({ ...state, value: '' }));
         }
       } else {
         if (automatic) {
           setFormValue(collection.value[0], true);
         } else {
-          refreshState({ ...state, value: '' });
+          refreshState((state) => ({ ...state, value: '' }));
         }
       }
     }
@@ -172,14 +196,14 @@ export function useListController<T = any, K = string>(
   }, [collection, formControl?.value]);
 
   const setState = useCallback((state: Partial<ListControllerState>) => {
-    const _state = state.listIsVisible
+    const newState = state.listIsVisible
       ? {
           ...state,
           higher: shouldDisplayHigher(refContent.current, refList.current)
         }
       : state;
 
-    refreshState((state) => ({ ...state, ..._state }));
+    refreshState((currentState) => ({ ...currentState, ...newState }));
   }, []);
 
   const setFormValue = useCallback(
@@ -203,16 +227,17 @@ export function useListController<T = any, K = string>(
   const navigationInput = useCallback(
     (event: KeyboardEvent) => {
       if (state.listIsVisible) {
-        const _position = navigationListFromInput({
+        const newPosition = navigationListFromInput({
           content: refContent.current,
           event: event as any,
+          higher: state.higher,
           list: refList.current
         });
 
-        position.current = _position ?? 0;
+        position.current = newPosition ?? 0;
       }
     },
-    [state.listIsVisible]
+    [state.listIsVisible, state.higher]
   );
 
   const navigationElement = useCallback(
@@ -220,12 +245,13 @@ export function useListController<T = any, K = string>(
       position.current = navigationListFromElement({
         content: refContent.current,
         event: event as any,
+        higher: state.higher,
         input: refInput.current,
         list: refList.current,
         position: position.current
       });
     },
-    [state.listIsVisible]
+    [state.higher]
   );
 
   return {

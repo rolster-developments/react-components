@@ -5,7 +5,7 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 
@@ -28,10 +28,9 @@ interface PageButtonProps {
 }
 
 function PageButton({ page, onSelect }: PageButtonProps) {
-  const className = useMemo(
-    () => renderClassStatus('rls-pagination__page', { active: page.active }),
-    [page.active]
-  );
+  const className = renderClassStatus('rls-pagination__page', {
+    active: page.active
+  });
 
   const onClick = useCallback(() => {
     onSelect(page);
@@ -44,7 +43,7 @@ function PageButton({ page, onSelect }: PageButtonProps) {
   );
 }
 
-export function RlsPagination<T>({
+function RlsPaginationComponent<T>({
   suggestions,
   count,
   filter,
@@ -170,3 +169,7 @@ export function RlsPagination<T>({
     </div>
   );
 }
+
+export const RlsPagination = memo(
+  RlsPaginationComponent
+) as typeof RlsPaginationComponent;

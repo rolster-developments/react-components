@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import {
   AreaTextProps,
@@ -13,25 +13,23 @@ interface FieldAreaProps extends AreaTextProps, RlsComponent {
   msgErrorDisabled?: boolean;
 }
 
-export function RlsFieldArea(props: FieldAreaProps) {
+function RlsFieldAreaComponent(props: FieldAreaProps) {
   const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-area'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-area'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>
@@ -52,3 +50,5 @@ export function RlsFieldArea(props: FieldAreaProps) {
     </div>
   );
 }
+
+export const RlsFieldArea = memo(RlsFieldAreaComponent);

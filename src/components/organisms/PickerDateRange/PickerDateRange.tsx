@@ -8,7 +8,7 @@ import {
 } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl, useReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
 import { reactI18n } from '../../../i18n';
@@ -36,7 +36,7 @@ interface PickerDateRangeProps extends RlsComponent {
 
 type Visibility = 'DAY' | 'MONTH' | 'YEAR';
 
-export function RlsPickerDateRange({
+function RlsPickerDateRangeComponent({
   automatic,
   date: datePicker,
   disabled,
@@ -84,17 +84,18 @@ export function RlsPickerDateRange({
     return value;
   }, [_date, yearControl.value, monthControl.value]);
 
-  const classNameComponent = useMemo(() => {
-    return renderClassStatus('rls-picker-date-range__component', {
+  const classNameComponent = renderClassStatus(
+    'rls-picker-date-range__component',
+    {
       day: visibility === 'DAY',
       month: visibility === 'MONTH',
       year: visibility === 'YEAR'
-    });
-  }, [visibility]);
+    }
+  );
 
-  const classNameFooter = useMemo(() => {
-    return renderClassStatus('rls-picker-date-range__footer', { automatic });
-  }, [automatic]);
+  const classNameFooter = renderClassStatus('rls-picker-date-range__footer', {
+    automatic
+  });
 
   const title = useMemo(() => rangeFormatTemplate(value), [value]);
 
@@ -187,7 +188,7 @@ export function RlsPickerDateRange({
           </div>
 
           <div className="rls-picker-date-range__actions--ok">
-            <RlsButton type="gradient" onClick={onSelect}>
+            <RlsButton type="raised" onClick={onSelect}>
               {labels.dateActionSelect}
             </RlsButton>
           </div>
@@ -196,3 +197,5 @@ export function RlsPickerDateRange({
     </div>
   );
 }
+
+export const RlsPickerDateRange = memo(RlsPickerDateRangeComponent);

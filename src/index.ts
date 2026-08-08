@@ -111,6 +111,7 @@ export * from './controllers/ListController';
 export * from './controllers/PortalController';
 export * from './controllers/RelocationOnComponentController';
 export * from './controllers/ResizeController';
+export * from './helpers/app-theme';
 export * from './helpers/color';
 export * from './helpers/css';
 export * from './helpers/date-range-picker';

@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -17,7 +18,7 @@ interface InputCounterProps extends InputProps<number>, RlsComponent {
   step?: number;
 }
 
-export function RlsInputCounter({
+function RlsInputCounterComponent({
   className,
   disabled,
   formControl,
@@ -42,17 +43,15 @@ export function RlsInputCounter({
     [formControl?.disabled, disabled]
   );
 
-  const classNameCounter = useMemo(() => {
-    return renderClassStatus(
-      'rls-input-counter',
-      {
-        disabled: _disabled,
-        focused: formControl?.focused ?? focused,
-        readonly: readOnly
-      },
-      className
-    );
-  }, [_disabled, formControl?.focused, focused, readOnly, className]);
+  const classNameCounter = renderClassStatus(
+    'rls-input-counter',
+    {
+      disabled: _disabled,
+      focused: formControl?.focused ?? focused,
+      readonly: readOnly
+    },
+    className
+  );
 
   useEffect(() => {
     if (!changeIsInternal.current && formControl) {
@@ -156,3 +155,5 @@ export function RlsInputCounter({
     </div>
   );
 }
+
+export const RlsInputCounter = memo(RlsInputCounterComponent);

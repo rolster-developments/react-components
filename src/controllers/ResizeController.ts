@@ -1,4 +1,4 @@
-import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
 
 interface ResizeDimensionEvent {
   height: number;
@@ -11,27 +11,26 @@ interface ResizeEvent {
 }
 
 interface ResizeProps {
-  refElement: MutableRefObject<HTMLElement>;
+  refElement: RefObject<HTMLElement>;
   onResize?: (event: ResizeEvent) => void;
 }
 
-export function useResize(props: ResizeProps): void {
-  const { refElement, onResize } = props;
-
+export function useResize({ refElement, onResize }: ResizeProps): void {
   const dimension = useRef({ height: 0, width: 0 });
+
+  const onResizeRef = useRef(onResize);
+  onResizeRef.current = onResize;
 
   const observer = useCallback((entries: ResizeObserverEntry[]) => {
     const { height, width } = entries[0].contentRect;
 
-    if (onResize) {
-      onResize({
-        current: dimension.current,
-        dimension: {
-          height,
-          width
-        }
-      });
-    }
+    onResizeRef.current?.({
+      current: dimension.current,
+      dimension: {
+        height,
+        width
+      }
+    });
 
     dimension.current = { height, width };
   }, []);

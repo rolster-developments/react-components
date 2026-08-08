@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -6,10 +6,13 @@ interface CardProps extends RlsComponent {
   outline?: boolean;
 }
 
-export function RlsCard({ children, className, outline, rlsTheme }: CardProps) {
-  const classNameCard = useMemo(() => {
-    return renderClassStatus('rls-card', { outline }, className);
-  }, [outline, className]);
+function RlsCardComponent({
+  children,
+  className,
+  outline,
+  rlsTheme
+}: CardProps) {
+  const classNameCard = renderClassStatus('rls-card', { outline }, className);
 
   return (
     <div className={classNameCard} rls-theme={rlsTheme}>
@@ -17,3 +20,5 @@ export function RlsCard({ children, className, outline, rlsTheme }: CardProps) {
     </div>
   );
 }
+
+export const RlsCard = memo(RlsCardComponent);

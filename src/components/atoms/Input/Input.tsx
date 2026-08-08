@@ -2,9 +2,9 @@ import {
   ChangeEvent,
   HTMLInputTypeAttribute,
   KeyboardEvent,
+  memo,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -17,7 +17,7 @@ interface InputProps extends RolsterInputProps<any>, RlsComponent {
   type?: HTMLInputTypeAttribute;
 }
 
-export function RlsInput({
+function RlsInputComponent({
   children,
   decimals,
   disabled,
@@ -101,12 +101,10 @@ export function RlsInput({
     onBlur?.();
   }, [formControl, onBlur]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-input', {
-      disabled: formControl?.disabled || disabled,
-      focused: formControl?.focused ?? focused
-    });
-  }, [formControl?.focused, formControl?.disabled, focused, disabled]);
+  const className = renderClassStatus('rls-input', {
+    disabled: formControl?.disabled || disabled,
+    focused: formControl?.focused ?? focused
+  });
 
   return (
     <div id={identifier} className={className}>
@@ -129,3 +127,5 @@ export function RlsInput({
     </div>
   );
 }
+
+export const RlsInput = memo(RlsInputComponent);

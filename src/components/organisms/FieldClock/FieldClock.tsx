@@ -1,6 +1,6 @@
 import { Time } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsComponent } from '../../definitions';
@@ -43,11 +43,11 @@ interface FieldClockEmptyProps extends Omit<
   onValue?: (value?: Time) => void;
 }
 
-export function RlsFieldClock(props: FieldClockDefinedProps): ReactNode;
-export function RlsFieldClock(props: FieldClockUndefinedProps): ReactNode;
-export function RlsFieldClock(props: FieldClockVoidProps): ReactNode;
-export function RlsFieldClock(props: FieldClockEmptyProps): ReactNode;
-export function RlsFieldClock({
+function RlsFieldClockComponent(props: FieldClockDefinedProps): ReactNode;
+function RlsFieldClockComponent(props: FieldClockUndefinedProps): ReactNode;
+function RlsFieldClockComponent(props: FieldClockVoidProps): ReactNode;
+function RlsFieldClockComponent(props: FieldClockEmptyProps): ReactNode;
+function RlsFieldClockComponent({
   children,
   disabled: disabledProps,
   formControl,
@@ -67,12 +67,10 @@ export function RlsFieldClock({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const timeValue = useMemo(() => {
     return formControl ? formControl.value : value;
@@ -157,6 +155,7 @@ export function RlsFieldClock({
 
       <RlsModalClock
         visible={modalIsVisible}
+        formControl={formControl}
         time={time}
         disabled={disabled}
         onClose={onCloseModal}
@@ -165,3 +164,7 @@ export function RlsFieldClock({
     </div>
   );
 }
+
+export const RlsFieldClock = memo(
+  RlsFieldClockComponent
+) as typeof RlsFieldClockComponent;

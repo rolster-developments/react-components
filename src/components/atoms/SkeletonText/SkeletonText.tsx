@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 import { RlsSkeleton } from '../Skeleton/Skeleton';
 
@@ -5,7 +6,7 @@ interface SkeletonTextProps extends RlsComponent {
   active?: boolean;
 }
 
-export function RlsSkeletonText({
+function RlsSkeletonTextComponent({
   active,
   children,
   rlsTheme
@@ -20,3 +21,5 @@ export function RlsSkeletonText({
     </div>
   );
 }
+
+export const RlsSkeletonText = memo(RlsSkeletonTextComponent);

@@ -1,4 +1,11 @@
-import { ReactNode, UIEvent, useCallback, useMemo, useState } from 'react';
+import {
+  memo,
+  ReactNode,
+  UIEvent,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 
 interface VirtualScrollProps {
   container: number;
@@ -6,22 +13,16 @@ interface VirtualScrollProps {
   items: ReactNode[];
 }
 
-export function RlsVirtualScroll({
+function RlsVirtualScrollComponent({
   container,
   height,
   items
 }: VirtualScrollProps) {
-  const [scrollTop, setScrollTop] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
 
-  const startIndex = useMemo(
-    () => Math.floor(scrollTop / height),
-    [scrollTop, height]
-  );
-
-  const endIndex = useMemo(
-    () =>
-      Math.min(items.length - 1, Math.floor((scrollTop + container) / height)),
-    [scrollTop, items.length, height, container]
+  const endIndex = Math.min(
+    items.length - 1,
+    startIndex + Math.ceil(container / height)
   );
 
   const visibleItems = useMemo(
@@ -29,9 +30,12 @@ export function RlsVirtualScroll({
     [items, startIndex, endIndex]
   );
 
-  const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
-    setScrollTop(event.currentTarget.scrollTop);
-  }, []);
+  const handleScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      setStartIndex(Math.floor(event.currentTarget.scrollTop / height));
+    },
+    [height]
+  );
 
   return (
     <div
@@ -69,3 +73,5 @@ export function RlsVirtualScroll({
     </div>
   );
 }
+
+export const RlsVirtualScroll = memo(RlsVirtualScrollComponent);

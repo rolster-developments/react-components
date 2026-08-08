@@ -1,5 +1,5 @@
 import { currencyFormat } from '@rolster/commons';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
 import { RlsTabularText } from '../TabularText/TabularText';
@@ -10,16 +10,14 @@ interface AmountProps extends PropsWithClassName, PropsWithRlsTheme {
   symbol?: string;
 }
 
-export function RlsAmount({
+function RlsAmountComponent({
   value,
   className,
   decimals,
   rlsTheme,
   symbol
 }: AmountProps) {
-  const classNameAmount = useMemo(() => {
-    return renderClassStatus('rls-amount', {}, className);
-  }, [className]);
+  const classNameAmount = renderClassStatus('rls-amount', {}, className);
 
   const { decimal, integer } = useMemo(() => {
     const currency = currencyFormat({ value, decimals });
@@ -50,3 +48,5 @@ export function RlsAmount({
     </div>
   );
 }
+
+export const RlsAmount = memo(RlsAmountComponent);

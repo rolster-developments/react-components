@@ -1,6 +1,11 @@
+import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-export function RlsContent({ children, identifier, rlsTheme }: RlsComponent) {
+function RlsContentComponent({
+  children,
+  identifier,
+  rlsTheme
+}: RlsComponent) {
   return (
     <div
       id={identifier}
@@ -11,3 +16,5 @@ export function RlsContent({ children, identifier, rlsTheme }: RlsComponent) {
     </div>
   );
 }
+
+export const RlsContent = memo(RlsContentComponent);

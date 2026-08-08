@@ -7,7 +7,7 @@ import {
 import { MONTH_NAMES } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -40,13 +40,11 @@ function RlsPickerMonthElement({
     });
   }, []);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-picker-month__component', {
-      disabled: month.disabled || disabled,
-      focused: month.focused,
-      selected: month.selected
-    });
-  }, [month.disabled, month.focused, month.selected, disabled]);
+  const className = renderClassStatus('rls-picker-month__component', {
+    disabled: month.disabled || disabled,
+    focused: month.focused,
+    selected: month.selected
+  });
 
   const onClick = useCallback(() => {
     if (valueIsDefined(month.value) && !month.disabled && !disabled) {
@@ -61,7 +59,7 @@ function RlsPickerMonthElement({
   );
 }
 
-export function RlsPickerMonth({
+function RlsPickerMonthComponent({
   date,
   disabled,
   formControl,
@@ -145,3 +143,5 @@ export function RlsPickerMonth({
     </div>
   );
 }
+
+export const RlsPickerMonth = memo(RlsPickerMonthComponent);

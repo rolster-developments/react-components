@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useMemo } from 'react';
+import { memo } from 'react';
 import { useFormToggleController } from '../../../controllers/FormToggleController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
@@ -12,7 +12,7 @@ interface LabelCheckBoxProps extends RlsComponent {
   reverse?: boolean;
 }
 
-export function RlsLabelCheckBox({
+function RlsLabelCheckBoxComponent({
   children,
   disabled,
   extended,
@@ -26,13 +26,11 @@ export function RlsLabelCheckBox({
     formControl
   });
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-label-checkbox', {
-      disabled,
-      extended,
-      reverse
-    });
-  }, [disabled, extended, reverse]);
+  const className = renderClassStatus('rls-label-checkbox', {
+    disabled,
+    extended,
+    reverse
+  });
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>
@@ -44,3 +42,5 @@ export function RlsLabelCheckBox({
     </div>
   );
 }
+
+export const RlsLabelCheckBox = memo(RlsLabelCheckBoxComponent);

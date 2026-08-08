@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-export function RlsNavbar({ children, identifier, rlsTheme }: RlsComponent) {
+function RlsNavbarComponent({ children, identifier, rlsTheme }: RlsComponent) {
   return (
     <nav id={identifier} className="rls-app__page__nav" rls-theme={rlsTheme}>
       <div className="rls-app__page__nav__content">{children}</div>
@@ -9,3 +10,5 @@ export function RlsNavbar({ children, identifier, rlsTheme }: RlsComponent) {
     </nav>
   );
 }
+
+export const RlsNavbar = memo(RlsNavbarComponent);

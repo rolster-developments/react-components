@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useMemo, useRef } from 'react';
+import { memo, MouseEvent, useCallback, useMemo, useRef } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsComponent } from '../../definitions';
@@ -16,7 +16,7 @@ interface FieldFileProps extends RlsComponent {
   value?: File;
 }
 
-export function RlsFieldFile({
+function RlsFieldFileComponent({
   accept,
   children,
   disabled: _disabled,
@@ -36,19 +36,15 @@ export function RlsFieldFile({
     [formControl?.disabled, _disabled]
   );
 
-  const className = useMemo(
-    () =>
-      renderClassStatus(
-        'rls-field-box',
-        {
-          disabled,
-          error: formControl?.wrong,
-          focused: formControl?.focused && !disabled,
-          readonly: readOnly
-        },
-        'rls-field-file'
-      ),
-    [formControl?.focused, formControl?.wrong, readOnly, disabled]
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: readOnly
+    },
+    'rls-field-file'
   );
 
   const currentFile = useMemo(
@@ -134,3 +130,5 @@ export function RlsFieldFile({
     </div>
   );
 }
+
+export const RlsFieldFile = memo(RlsFieldFileComponent);

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 
 const className = 'rls-tabular-text';
@@ -15,7 +15,7 @@ interface TabularTextProps {
   value?: string;
 }
 
-export function RlsTabularText({ className, value }: TabularTextProps) {
+function RlsTabularTextComponent({ className, value }: TabularTextProps) {
   const codes = useMemo(() => {
     return (
       <>
@@ -28,9 +28,9 @@ export function RlsTabularText({ className, value }: TabularTextProps) {
     );
   }, [value]);
 
-  const _className = useMemo(() => {
-    return renderClassStatus('rls-tabular-text', {}, className);
-  }, [className]);
+  const _className = renderClassStatus('rls-tabular-text', {}, className);
 
   return <div className={_className}>{codes}</div>;
 }
+
+export const RlsTabularText = memo(RlsTabularTextComponent);

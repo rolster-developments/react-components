@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputNumber } from '../../atoms/InputNumber/InputNumber';
@@ -9,25 +9,23 @@ interface FieldNumberProps extends FieldProps<number> {
   decimals?: number;
 }
 
-export function RlsFieldNumber(props: FieldNumberProps) {
+function RlsFieldNumberComponent(props: FieldNumberProps) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-number'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-number'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>
@@ -56,3 +54,5 @@ export function RlsFieldNumber(props: FieldNumberProps) {
     </div>
   );
 }
+
+export const RlsFieldNumber = memo(RlsFieldNumberComponent);

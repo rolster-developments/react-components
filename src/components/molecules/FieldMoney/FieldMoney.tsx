@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputMoney } from '../../atoms/InputMoney/InputMoney';
@@ -10,25 +10,23 @@ interface FieldMoneyProps extends FieldProps<number> {
   symbol?: string;
 }
 
-export function RlsFieldMoney(props: FieldMoneyProps) {
+function RlsFieldMoneyComponent(props: FieldMoneyProps) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-money'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-money'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>
@@ -57,3 +55,5 @@ export function RlsFieldMoney(props: FieldMoneyProps) {
     </div>
   );
 }
+
+export const RlsFieldMoney = memo(RlsFieldMoneyComponent);

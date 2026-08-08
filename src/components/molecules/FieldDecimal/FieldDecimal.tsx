@@ -1,5 +1,5 @@
 import { BigDecimal } from '@rolster/commons';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsInputDecimal } from '../../atoms/InputDecimal/InputDecimal';
 import { FieldProps } from '../../types';
@@ -10,25 +10,23 @@ interface FieldDecimalProps extends FieldProps<BigDecimal> {
   symbol?: string;
 }
 
-export function RlsFieldDecimal(props: FieldDecimalProps) {
+function RlsFieldDecimalComponent(props: FieldDecimalProps) {
   const { children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-decimal'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-decimal'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>
@@ -49,3 +47,5 @@ export function RlsFieldDecimal(props: FieldDecimalProps) {
     </div>
   );
 }
+
+export const RlsFieldDecimal = memo(RlsFieldDecimalComponent);

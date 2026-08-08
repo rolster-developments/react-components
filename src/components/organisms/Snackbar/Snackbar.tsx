@@ -1,8 +1,8 @@
 import {
+  memo,
   ReactNode,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -49,7 +49,7 @@ export interface SnackbarService {
   snackbar: Snackbar;
 }
 
-export function RlsSnackbar({
+function RlsSnackbarComponent({
   content,
   onClose,
   icon,
@@ -57,9 +57,7 @@ export function RlsSnackbar({
   title,
   visible
 }: SnackbarProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-snackbar', { visible });
-  }, [visible]);
+  const className = renderClassStatus('rls-snackbar', { visible });
 
   return (
     <div className={className} rls-theme={rlsTheme}>
@@ -83,6 +81,8 @@ export function RlsSnackbar({
     </div>
   );
 }
+
+export const RlsSnackbar = memo(RlsSnackbarComponent);
 
 interface SnackbarState {
   config: SnackbarConfig;

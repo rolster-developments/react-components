@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonAction } from '../../atoms/ButtonAction/ButtonAction';
 import { RlsInputPercentage } from '../../atoms/InputPercentage/InputPercentage';
@@ -9,25 +9,23 @@ interface FieldPercentageProps extends FieldProps<number> {
   decimals?: number;
 }
 
-export function RlsFieldPercentage(props: FieldPercentageProps) {
+function RlsFieldPercentageComponent(props: FieldPercentageProps) {
   const { action, children, formControl, identifier, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        disabled,
-        error: formControl?.wrong,
-        focused: formControl?.focused && !disabled,
-        readonly: props.readOnly
-      },
-      'rls-field-percentage'
-    );
-  }, [formControl?.focused, formControl?.wrong, props.readOnly, disabled]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      disabled,
+      error: formControl?.wrong,
+      focused: formControl?.focused && !disabled,
+      readonly: props.readOnly
+    },
+    'rls-field-percentage'
+  );
 
   return (
     <div id={identifier} className={className} rls-theme={rlsTheme}>
@@ -56,3 +54,5 @@ export function RlsFieldPercentage(props: FieldPercentageProps) {
     </div>
   );
 }
+
+export const RlsFieldPercentage = memo(RlsFieldPercentageComponent);

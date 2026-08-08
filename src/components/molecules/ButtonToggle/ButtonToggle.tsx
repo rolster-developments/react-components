@@ -1,9 +1,9 @@
 import {
+  memo,
   MouseEvent,
   ReactNode,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -25,7 +25,7 @@ interface ButtonToggleProps extends RlsComponent {
   disabled?: boolean;
 }
 
-export function RlsButtonToggle({
+function RlsButtonToggleComponent({
   onAction,
   options,
   type,
@@ -51,12 +51,10 @@ export function RlsButtonToggle({
       document.removeEventListener('click', onCloseMenu);
     };
   }, []);
-  const classNameList = useMemo(() => {
-    return renderClassStatus('rls-button-toggle__list', {
-      hide: !visible,
-      visible
-    });
-  }, [visible]);
+  const classNameList = renderClassStatus('rls-button-toggle__list', {
+    hide: !visible,
+    visible
+  });
 
   const onClickMenu = useCallback(() => {
     setVisible((visible) => !visible);
@@ -130,3 +128,5 @@ export function RlsButtonToggle({
     </div>
   );
 }
+
+export const RlsButtonToggle = memo(RlsButtonToggleComponent);

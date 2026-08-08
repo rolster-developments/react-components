@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { memo, ReactNode } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsAvatar } from '../../atoms/Avatar/Avatar';
 import { RlsSkeletonText } from '../../atoms/SkeletonText/SkeletonText';
@@ -12,7 +12,7 @@ interface BallotProps extends RlsComponent {
   subtitle?: ReactNode;
 }
 
-export function RlsBallot({
+function RlsBallotComponent({
   bordered,
   className,
   children,
@@ -22,9 +22,11 @@ export function RlsBallot({
   subtitle,
   rlsTheme
 }: BallotProps) {
-  const classNameBallot = useMemo(() => {
-    return renderClassStatus('rls-ballot', { bordered, skeleton }, className);
-  }, [bordered, skeleton, className]);
+  const classNameBallot = renderClassStatus(
+    'rls-ballot',
+    { bordered, skeleton },
+    className
+  );
 
   return (
     <div className={classNameBallot} rls-theme={rlsTheme}>
@@ -48,3 +50,5 @@ export function RlsBallot({
     </div>
   );
 }
+
+export const RlsBallot = memo(RlsBallotComponent);

@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { memo, ReactNode, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
@@ -10,7 +10,7 @@ interface MessageEmptyProps extends RlsComponent {
   title?: ReactNode;
 }
 
-export function RlsMessageEmpty({
+function RlsMessageEmptyComponent({
   children,
   className,
   emoji,
@@ -20,9 +20,11 @@ export function RlsMessageEmpty({
   rlsTheme,
   title
 }: MessageEmptyProps) {
-  const classNameMessageEmpty = useMemo(() => {
-    return renderClassStatus('rls-message-empty', {}, className);
-  }, [className]);
+  const classNameMessageEmpty = renderClassStatus(
+    'rls-message-empty',
+    {},
+    className
+  );
 
   const logo = useMemo(() => {
     if (icon) {
@@ -66,3 +68,5 @@ export function RlsMessageEmpty({
     </div>
   );
 }
+
+export const RlsMessageEmpty = memo(RlsMessageEmptyComponent);

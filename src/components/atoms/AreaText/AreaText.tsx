@@ -3,10 +3,10 @@ import {
   ChangeEvent,
   CSSProperties,
   KeyboardEvent,
+  memo,
   TextareaHTMLAttributes,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -35,7 +35,7 @@ export interface AreaTextProps extends RlsComponent {
   value?: string;
 }
 
-export function RlsAreaText({
+function RlsAreaTextComponent({
   autoComplete,
   disabled,
   formControl,
@@ -133,19 +133,11 @@ export function RlsAreaText({
     onBlur?.();
   }, [formControl, onBlur]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-area-text', {
-      disabled: formControl?.disabled || disabled,
-      focused: formControl?.focused ?? focused,
-      readonly: readOnly
-    });
-  }, [
-    formControl?.disabled,
-    formControl?.focused,
-    disabled,
-    focused,
-    readOnly
-  ]);
+  const className = renderClassStatus('rls-area-text', {
+    disabled: formControl?.disabled || disabled,
+    focused: formControl?.focused ?? focused,
+    readonly: readOnly
+  });
 
   return (
     <div id={identifier} className={className}>
@@ -169,3 +161,5 @@ export function RlsAreaText({
     </div>
   );
 }
+
+export const RlsAreaText = memo(RlsAreaTextComponent);

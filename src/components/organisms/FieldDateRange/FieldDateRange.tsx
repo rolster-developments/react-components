@@ -1,6 +1,6 @@
 import { DateRange } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { rangeFormatTemplate } from '../../../helpers/date-range-picker';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
@@ -46,13 +46,15 @@ interface FieldDateRangeEmptyProps extends Omit<
   onValue?: (value?: DateRange) => void;
 }
 
-export function RlsFieldDateRange(props: FieldDateRangeDefinedProps): ReactNode;
-export function RlsFieldDateRange(
+function RlsFieldDateRangeComponent(
+  props: FieldDateRangeDefinedProps
+): ReactNode;
+function RlsFieldDateRangeComponent(
   props: FieldDateRangeUndefinedProps
 ): ReactNode;
-export function RlsFieldDateRange(props: FieldDateRangeVoidProps): ReactNode;
-export function RlsFieldDateRange(props: FieldDateRangeEmptyProps): ReactNode;
-export function RlsFieldDateRange({
+function RlsFieldDateRangeComponent(props: FieldDateRangeVoidProps): ReactNode;
+function RlsFieldDateRangeComponent(props: FieldDateRangeEmptyProps): ReactNode;
+function RlsFieldDateRangeComponent({
   children,
   date,
   disabled: disabledProps,
@@ -76,12 +78,10 @@ export function RlsFieldDateRange({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const dateRangeValue = useMemo(() => {
     return formControl ? formControl.value : value;
@@ -166,6 +166,7 @@ export function RlsFieldDateRange({
 
       <RlsModalDateRange
         visible={modalIsVisible}
+        formControl={formControl}
         date={currentDate}
         disabled={disabled}
         maxDate={maxDate}
@@ -176,3 +177,7 @@ export function RlsFieldDateRange({
     </div>
   );
 }
+
+export const RlsFieldDateRange = memo(
+  RlsFieldDateRangeComponent
+) as typeof RlsFieldDateRangeComponent;

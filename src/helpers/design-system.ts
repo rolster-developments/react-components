@@ -3,7 +3,7 @@ import { RlsDesignSystem } from '../types';
 
 const DESIGN_SYSTEM_PREFIX = 'rls-design-system';
 
-const DESIGN_SYSTEMS: RlsDesignSystem[] = ['bordered', 'filled'];
+const DESIGN_SYSTEMS: RlsDesignSystem[] = ['bordered', 'filled', 'gradient'];
 
 function designSystemClass(designSystem: RlsDesignSystem): string {
   return `${DESIGN_SYSTEM_PREFIX}-${designSystem}`;

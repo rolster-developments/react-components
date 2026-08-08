@@ -6,6 +6,7 @@ import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
+  memo,
   ReactNode,
   useCallback,
   useEffect,
@@ -58,7 +59,7 @@ interface FieldAutocompleteTemplateProps<
   render: (element: E) => ReactNode;
 }
 
-export function RlsFieldAutocompleteTemplate<
+function RlsFieldAutocompleteTemplateComponent<
   T = any,
   E extends Element<T> = Element<T>,
   K = string
@@ -95,26 +96,17 @@ export function RlsFieldAutocompleteTemplate<
     return formControl?.disabled || props.disabled;
   }, [formControl?.disabled, props.disabled]);
 
-  const className = useMemo(() => {
-    return renderClassStatus(
-      'rls-field-box',
-      {
-        focused: autocomplete.focused && !disabled,
-        error: formControl?.wrong,
-        disabled,
-        readonly: props.readOnly,
-        selected: !!autocomplete.value
-      },
-      `rls-field-list rls-field-autocomplete ${props.className ?? ''}`
-    );
-  }, [
-    formControl?.wrong,
-    autocomplete.value,
-    autocomplete.focused,
-    props.className,
-    props.readOnly,
-    disabled
-  ]);
+  const className = renderClassStatus(
+    'rls-field-box',
+    {
+      focused: autocomplete.focused && !disabled,
+      error: formControl?.wrong,
+      disabled,
+      readonly: props.readOnly,
+      selected: !!autocomplete.value
+    },
+    `rls-field-list rls-field-autocomplete ${props.className ?? ''}`
+  );
 
   const onClickPattern = useCallback(() => {
     onSearch?.(autocomplete.pattern);
@@ -211,6 +203,10 @@ export function RlsFieldAutocompleteTemplate<
   );
 }
 
+export const RlsFieldAutocompleteTemplate = memo(
+  RlsFieldAutocompleteTemplateComponent
+) as typeof RlsFieldAutocompleteTemplateComponent;
+
 interface FieldAutocompleteDefinedProps<T = any> extends FieldAutocompleteProps<
   T,
   AutocompleteElement<T>
@@ -243,22 +239,22 @@ interface FieldAutocompleteEmptyProps<T = any> extends Omit<
   onValue?: (value?: T) => void;
 }
 
-export function RlsFieldAutocomplete<T = any>(
+function RlsFieldAutocompleteComponent<T = any>(
   props: FieldAutocompleteUndefinedProps<T>
 ): ReactNode;
-export function RlsFieldAutocomplete<T = any>(
+function RlsFieldAutocompleteComponent<T = any>(
   props: FieldAutocompleteDefinedProps<T>
 ): ReactNode;
-export function RlsFieldAutocomplete<T = any>(
+function RlsFieldAutocompleteComponent<T = any>(
   props: FieldAutocompleteVoidProps<T>
 ): ReactNode;
-export function RlsFieldAutocomplete<T = any>(
+function RlsFieldAutocompleteComponent<T = any>(
   props: FieldAutocompleteEmptyProps<T>
 ): ReactNode;
-export function RlsFieldAutocomplete<T = any>(
+function RlsFieldAutocompleteComponent<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>
 ): ReactNode;
-export function RlsFieldAutocomplete<T = any>(
+function RlsFieldAutocompleteComponent<T = any>(
   props: FieldAutocompleteProps<T, AutocompleteElement<T>>
 ) {
   const render = useCallback(
@@ -277,3 +273,7 @@ export function RlsFieldAutocomplete<T = any>(
 
   return <RlsFieldAutocompleteTemplate {...props} render={render} />;
 }
+
+export const RlsFieldAutocomplete = memo(
+  RlsFieldAutocompleteComponent
+) as typeof RlsFieldAutocompleteComponent;

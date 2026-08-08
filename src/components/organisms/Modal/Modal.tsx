@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -11,7 +11,7 @@ interface ModalProps extends RlsComponent {
   visible?: boolean;
 }
 
-export function RlsModal({
+function RlsModalComponent({
   autoclose,
   children,
   className,
@@ -20,13 +20,11 @@ export function RlsModal({
   visible,
   rlsTheme
 }: ModalProps) {
-  const classNameModal = useMemo(() => {
-    return renderClassStatus(
-      'rls-modal',
-      { visible: controller?.visible ?? visible },
-      className
-    );
-  }, [className, visible, controller?.visible]);
+  const classNameModal = renderClassStatus(
+    'rls-modal',
+    { visible: controller?.visible ?? visible },
+    className
+  );
 
   const onClickBackdrop = useCallback(() => {
     if (autoclose) {
@@ -44,3 +42,5 @@ export function RlsModal({
     document.body
   );
 }
+
+export const RlsModal = memo(RlsModalComponent);

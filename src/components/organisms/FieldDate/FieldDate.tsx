@@ -2,11 +2,11 @@ import { verifyDateRange } from '@rolster/components';
 import { dateFormatTemplate } from '@rolster/dates';
 import { ReactControl } from '@rolster/react-forms';
 import {
+  memo,
   ReactNode,
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from 'react';
 import { DATE_FORMAT } from '../../../constants/picker.constant';
@@ -55,11 +55,11 @@ interface FieldDateEmptyProps extends Omit<
   onValue?: (value?: Date) => void;
 }
 
-export function RlsFieldDate(props: FieldDateDefinedProps): ReactNode;
-export function RlsFieldDate(props: FieldDateUndefinedProps): ReactNode;
-export function RlsFieldDate(props: FieldDateVoidProps): ReactNode;
-export function RlsFieldDate(props: FieldDateEmptyProps): ReactNode;
-export function RlsFieldDate({
+function RlsFieldDateComponent(props: FieldDateDefinedProps): ReactNode;
+function RlsFieldDateComponent(props: FieldDateUndefinedProps): ReactNode;
+function RlsFieldDateComponent(props: FieldDateVoidProps): ReactNode;
+function RlsFieldDateComponent(props: FieldDateEmptyProps): ReactNode;
+function RlsFieldDateComponent({
   children,
   date,
   disabled: disabledProps,
@@ -75,7 +75,7 @@ export function RlsFieldDate({
   rlsTheme,
   value: valueInitial
 }: FieldDateProps) {
-  const today = useRef(new Date()); // Initial current date in component
+  const today = useMemo(() => new Date(), []);
 
   const [value, setValue] = useState(formControl?.value ?? valueInitial);
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -84,12 +84,10 @@ export function RlsFieldDate({
     return formControl?.disabled || disabledProps;
   }, [formControl?.disabled, disabledProps]);
 
-  const className = useMemo(() => {
-    return renderClassStatus('rls-field-box', {
-      disabled,
-      readonly: readOnly
-    });
-  }, [disabled, readOnly]);
+  const className = renderClassStatus('rls-field-box', {
+    disabled,
+    readonly: readOnly
+  });
 
   const dateValue = useMemo(() => {
     return formControl ? formControl.value : value;
@@ -106,7 +104,7 @@ export function RlsFieldDate({
 
   useEffect(() => {
     const dateSecure = verifyDateRange({
-      date: formControl?.value ?? date ?? today.current,
+      date: formControl?.value ?? date ?? today,
       minDate,
       maxDate
     });
@@ -188,6 +186,7 @@ export function RlsFieldDate({
 
       <RlsModalDate
         visible={modalIsVisible}
+        formControl={formControl}
         date={date}
         disabled={disabled}
         maxDate={maxDate}
@@ -198,3 +197,7 @@ export function RlsFieldDate({
     </div>
   );
 }
+
+export const RlsFieldDate = memo(
+  RlsFieldDateComponent
+) as typeof RlsFieldDateComponent;

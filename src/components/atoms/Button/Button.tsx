@@ -1,4 +1,4 @@
-import { MouseEventHandler, useMemo } from 'react';
+import { memo, MouseEventHandler } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonType } from '../../../types';
 import { RlsComponent } from '../../definitions';
@@ -14,7 +14,7 @@ interface ButtonProps extends RlsComponent {
   suffixIcon?: string;
 }
 
-export function RlsButton({
+function RlsButtonComponent({
   type,
   children,
   disabled,
@@ -25,9 +25,7 @@ export function RlsButton({
   rlsTheme,
   suffixIcon
 }: ButtonProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-button__content', { type });
-  }, [type]);
+  const className = renderClassStatus('rls-button__content', { type });
 
   return (
     <button
@@ -49,3 +47,5 @@ export function RlsButton({
     </button>
   );
 }
+
+export const RlsButton = memo(RlsButtonComponent);

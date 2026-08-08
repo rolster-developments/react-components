@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
@@ -15,16 +15,14 @@ interface CheckBoxControlProps extends RlsComponent {
   disabled?: boolean;
 }
 
-export function RlsCheckBox({
+function RlsCheckBoxComponent({
   checked,
   disabled,
   identifier,
   onClick,
   rlsTheme
 }: CheckBoxProps) {
-  const className = useMemo(() => {
-    return renderClassStatus('rls-checkbox', { checked, disabled });
-  }, [checked, disabled]);
+  const className = renderClassStatus('rls-checkbox', { checked, disabled });
 
   return (
     <div
@@ -38,7 +36,9 @@ export function RlsCheckBox({
   );
 }
 
-export function RlsCheckBoxControl({
+export const RlsCheckBox = memo(RlsCheckBoxComponent);
+
+function RlsCheckBoxControlComponent({
   formControl,
   disabled,
   identifier,
@@ -58,3 +58,5 @@ export function RlsCheckBoxControl({
     />
   );
 }
+
+export const RlsCheckBoxControl = memo(RlsCheckBoxControlComponent);
