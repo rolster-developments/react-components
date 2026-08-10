@@ -3,6 +3,7 @@ import {
   ReactNode,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -44,8 +45,10 @@ interface SnackbarProps extends SnackbarConfig {
 
 export type Snackbar = (config: SnackbarConfig) => void;
 
+type SnackbarPropsRender = PropsWithRlsTheme;
+
 export interface SnackbarService {
-  RlsSnackbar: ReactNode;
+  RlsSnackbar: (props: SnackbarPropsRender) => ReactNode;
   snackbar: Snackbar;
 }
 
@@ -84,6 +87,8 @@ function RlsSnackbarComponent({
 
 export const RlsSnackbar = memo(RlsSnackbarComponent);
 
+const RlsSnackbarNode = RlsSnackbar;
+
 interface SnackbarState {
   config: SnackbarConfig;
   visible: boolean;
@@ -98,6 +103,9 @@ export function useSnackbar(): SnackbarService {
     visible: false
   });
 
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
   const onClose = useCallback(() => {
     if (timeoutId.current) {
       clearTimeout(timeoutId.current);
@@ -107,9 +115,21 @@ export function useSnackbar(): SnackbarService {
     setState((state) => ({ ...state, visible: false }));
   }, []);
 
-  const rlsSnackbar = (
-    <RlsSnackbar {...state.config} visible={state.visible} onClose={onClose} />
-  );
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
+  const RlsSnackbar = useMemo(() => {
+    return function RlsSnackbar(props: SnackbarPropsRender) {
+      return (
+        <RlsSnackbarNode
+          {...props}
+          {...stateRef.current.config}
+          visible={stateRef.current.visible}
+          onClose={onCloseRef.current}
+        />
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (state.visible) {
@@ -137,8 +157,5 @@ export function useSnackbar(): SnackbarService {
     }));
   }, []);
 
-  return {
-    RlsSnackbar: rlsSnackbar,
-    snackbar
-  };
+  return { RlsSnackbar, snackbar };
 }

@@ -37,8 +37,8 @@ export function useRlsContext(): RlsState {
 
 export function RlsApplication({ children }: RlsComponent) {
   const { RlsConfirmation, confirmation } = useConfirmation();
-  const { RlsNotifications, notify } = useNotifications();
   const { RlsSnackbar, snackbar } = useSnackbar();
+  const { RlsNotifications, notify } = useNotifications();
 
   const [navbarInApp, setNavbarInApp] = useState(false);
   const [navbarIsCondense, setNavbarIsCondense] = useState(false);
@@ -67,11 +67,11 @@ export function RlsApplication({ children }: RlsComponent) {
       <div className={className}>
         {children}
 
-        {RlsSnackbar}
+        <RlsSnackbar />
       </div>
 
-      {RlsNotifications}
-      {RlsConfirmation}
+      <RlsConfirmation />
+      <RlsNotifications />
     </RlsContext>
   );
 }

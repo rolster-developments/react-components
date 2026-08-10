@@ -5,6 +5,7 @@ import {
   MouseEvent,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -234,17 +235,30 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
     [toggleElement]
   );
 
-  return {
-    ...state,
-    selected,
-    refContent,
-    refList,
-    isSelected,
-    onClickAction,
-    onClickBackdrop,
-    onClickElement,
-    onClickInput,
-    onKeydownElement,
-    onRemoveElement
-  };
+  return useMemo(
+    () => ({
+      ...state,
+      selected,
+      refContent,
+      refList,
+      isSelected,
+      onClickAction,
+      onClickBackdrop,
+      onClickElement,
+      onClickInput,
+      onKeydownElement,
+      onRemoveElement
+    }),
+    [
+      state,
+      selected,
+      isSelected,
+      onClickAction,
+      onClickBackdrop,
+      onClickElement,
+      onClickInput,
+      onKeydownElement,
+      onRemoveElement
+    ]
+  );
 }

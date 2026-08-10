@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export interface PortalController {
   close: () => void;
@@ -17,5 +17,5 @@ export function usePortalController(): PortalController {
     setVisible(false);
   }, []);
 
-  return { close, open, visible };
+  return useMemo(() => ({ close, open, visible }), [close, open, visible]);
 }

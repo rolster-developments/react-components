@@ -10,6 +10,7 @@ import {
   MouseEventHandler,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
@@ -226,18 +227,34 @@ export function useFieldAutocomplete<
     [onChange, controller.navigationElement]
   );
 
-  return {
-    ...controller,
-    coincidences,
-    onBlurInput,
-    onClickAction,
-    onClickBackdrop,
-    onClickControl,
-    onClickElement,
-    onFocusInput,
-    onKeydownElement,
-    onKeydownInput,
-    pattern,
-    setPattern
-  };
+  return useMemo(
+    () => ({
+      ...controller,
+      coincidences,
+      onBlurInput,
+      onClickAction,
+      onClickBackdrop,
+      onClickControl,
+      onClickElement,
+      onFocusInput,
+      onKeydownElement,
+      onKeydownInput,
+      pattern,
+      setPattern
+    }),
+    [
+      controller,
+      coincidences,
+      onBlurInput,
+      onClickAction,
+      onClickBackdrop,
+      onClickControl,
+      onClickElement,
+      onFocusInput,
+      onKeydownElement,
+      onKeydownInput,
+      pattern,
+      setPattern
+    ]
+  );
 }

@@ -1,4 +1,11 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
@@ -37,9 +44,11 @@ interface NotificationProps extends NotificationsConfig {
 
 export type Notify = (config: NotificationsConfig) => void;
 
+type NotificationsPropsRender = PropsWithRlsTheme;
+
 export interface NotificationsService {
   notify: Notify;
-  RlsNotifications: ReactNode;
+  RlsNotifications: (props: NotificationsPropsRender) => ReactNode;
 }
 
 function RlsNotification({
@@ -81,6 +90,9 @@ export function useNotifications(): NotificationsService {
     new Map()
   );
 
+  const notificationsRef = useRef(notifications);
+  notificationsRef.current = notifications;
+
   useEffect(() => {
     const timers = timersRef.current;
 
@@ -113,6 +125,28 @@ export function useNotifications(): NotificationsService {
     }, DURATION_ANIMATION);
   }, []);
 
+  const RlsNotifications = useMemo(() => {
+    return function RlsNotifications(props: NotificationsPropsRender) {
+      const className = renderClassStatus('rls-notifications', {
+        visible: notificationsRef.current.length > 0
+      });
+
+      return ReactDOM.createPortal(
+        <div className={className} {...props}>
+          {notificationsRef.current.map((notification) => (
+            <RlsNotification
+              key={notification.id}
+              {...notification.config}
+              visible={notification.visible}
+              onClose={() => remove(notification.id)}
+            />
+          ))}
+        </div>,
+        document.body
+      );
+    };
+  }, [remove]);
+
   const notify = useCallback(
     (config: NotificationsConfig) => {
       const id = generateId();
@@ -142,24 +176,6 @@ export function useNotifications(): NotificationsService {
       timersRef.current.set(id, timer);
     },
     [remove]
-  );
-
-  const className = renderClassStatus('rls-notifications', {
-    visible: notifications.length > 0
-  });
-
-  const RlsNotifications = ReactDOM.createPortal(
-    <div className={className}>
-      {notifications.map((notification) => (
-        <RlsNotification
-          key={notification.id}
-          {...notification.config}
-          visible={notification.visible}
-          onClose={() => remove(notification.id)}
-        />
-      ))}
-    </div>,
-    document.body
   );
 
   return {

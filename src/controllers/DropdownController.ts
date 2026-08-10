@@ -1,4 +1,4 @@
-import { MouseEvent, RefObject, useCallback, useRef, useState } from 'react';
+import { MouseEvent, RefObject, useCallback, useMemo, useRef, useState } from 'react';
 
 type DropdownEffect = '0% 0%' | '100% 0%' | '0% 100%' | '100% 100%';
 
@@ -97,11 +97,8 @@ export function useDropdownController(
     setVisible(false);
   }, []);
 
-  return {
-    close,
-    component,
-    open,
-    openWithEvent,
-    visible
-  };
+  return useMemo(
+    () => ({ close, component, open, openWithEvent, visible }),
+    [close, open, openWithEvent, visible]
+  );
 }

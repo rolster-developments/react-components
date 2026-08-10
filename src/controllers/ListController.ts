@@ -121,7 +121,7 @@ export function useListController<T = any, K = string>({
 
   const collection = useMemo(
     () => new ListCollection<T, K>(stableSuggestions, reference),
-    [stableSuggestions]
+    [stableSuggestions, reference]
   );
 
   const [state, refreshState] = useState<ListControllerState>({
@@ -254,14 +254,17 @@ export function useListController<T = any, K = string>({
     [state.higher]
   );
 
-  return {
-    ...state,
-    navigationElement,
-    navigationInput,
-    refContent,
-    refInput,
-    refList,
-    setFormValue,
-    setState
-  };
+  return useMemo(
+    () => ({
+      ...state,
+      navigationElement,
+      navigationInput,
+      refContent,
+      refInput,
+      refList,
+      setFormValue,
+      setState
+    }),
+    [state, navigationElement, navigationInput, setFormValue, setState]
+  );
 }

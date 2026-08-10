@@ -1,5 +1,5 @@
 import { SealedPartial } from '@rolster/commons';
-import { memo, ReactNode, useCallback, useState } from 'react';
+import { memo, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
@@ -61,9 +61,11 @@ interface ConfirmationOptions extends ConfirmationBasic {
 
 export type Confirmation = (options: ConfirmationOptions) => Result;
 
+type ConfirmationPropsRender = PropsWithRlsTheme;
+
 export interface ConfirmationService {
   confirmation: Confirmation;
-  RlsConfirmation: ReactNode;
+  RlsConfirmation: (props: ConfirmationPropsRender) => ReactNode;
 }
 
 function RlsConfirmationComponent({
@@ -135,14 +137,30 @@ function RlsConfirmationComponent({
 
 export const RlsConfirmation = memo(RlsConfirmationComponent);
 
+const RlsConfirmationBase = RlsConfirmation;
+
 export function useConfirmation(): ConfirmationService {
   const [config, setConfig] = useState<ConfirmationProps>({});
   const [visible, setVisible] = useState(false);
 
-  const component = ReactDOM.createPortal(
-    <RlsConfirmation {...config} visible={visible} />,
-    document.body
-  );
+  const configRef = useRef(config);
+  configRef.current = config;
+
+  const visibleRef = useRef(visible);
+  visibleRef.current = visible;
+
+  const RlsConfirmation = useMemo(() => {
+    return function RlsConfirmation(props: ConfirmationPropsRender) {
+      return ReactDOM.createPortal(
+        <RlsConfirmationBase
+          {...props}
+          {...configRef.current}
+          visible={visibleRef.current}
+        />,
+        document.body
+      );
+    };
+  }, []);
 
   const confirmation = useCallback((options: ConfirmationOptions) => {
     return new Promise<ConfirmationResult>((resolve) => {
@@ -180,7 +198,7 @@ export function useConfirmation(): ConfirmationService {
   }, []);
 
   return {
-    RlsConfirmation: component,
-    confirmation
+    confirmation,
+    RlsConfirmation
   };
 }

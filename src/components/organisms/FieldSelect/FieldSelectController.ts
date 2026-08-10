@@ -5,7 +5,8 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   useCallback,
-  useEffect
+  useEffect,
+  useMemo
 } from 'react';
 import { useListController } from '../../../controllers/ListController';
 import { ListControllerState } from '../../../definitions';
@@ -167,15 +168,28 @@ export function useFieldSelect<
     [onChange, controller.navigationElement]
   );
 
-  return {
-    ...controller,
-    onBlurInput,
-    onClickAction,
-    onClickBackdrop,
-    onClickInput,
-    onClickElement,
-    onFocusInput,
-    onKeydownElement,
-    onKeydownInput
-  };
+  return useMemo(
+    () => ({
+      ...controller,
+      onBlurInput,
+      onClickAction,
+      onClickBackdrop,
+      onClickInput,
+      onClickElement,
+      onFocusInput,
+      onKeydownElement,
+      onKeydownInput
+    }),
+    [
+      controller,
+      onBlurInput,
+      onClickAction,
+      onClickBackdrop,
+      onClickInput,
+      onClickElement,
+      onFocusInput,
+      onKeydownElement,
+      onKeydownInput
+    ]
+  );
 }
