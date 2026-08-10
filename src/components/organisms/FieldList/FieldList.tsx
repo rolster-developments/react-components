@@ -112,11 +112,10 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
                     {item.description}
                   </span>
 
-                  {!props.readOnly && (
+                  {!props.readOnly && !disabled && (
                     <button
                       className="rls-field-list__multi__chip__remove"
                       onClick={fieldList.onRemoveElement(item)}
-                      disabled={disabled}
                     >
                       <RlsIcon value="close" />
                     </button>
@@ -126,11 +125,10 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
             )}
           </div>
 
-          {!props.readOnly && (
+          {!props.readOnly && !disabled && (
             <RlsButtonIcon
               icon="arrow-ios-down"
               onClick={fieldList.onClickAction}
-              disabled={disabled}
             />
           )}
         </div>

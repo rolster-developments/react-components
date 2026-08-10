@@ -166,12 +166,8 @@ function RlsFieldDateComponent({
               disabled={disabled}
             />
 
-            {!readOnly && (
-              <RlsButtonIcon
-                icon={status.icon}
-                onClick={onClickAction}
-                disabled={disabled}
-              />
+            {!readOnly && !disabled && (
+              <RlsButtonIcon icon={status.icon} onClick={onClickAction} />
             )}
           </div>
         </div>

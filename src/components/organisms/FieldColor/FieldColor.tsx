@@ -78,10 +78,10 @@ function RlsFieldColorComponent({
     readonly: readOnly
   });
 
-  const displayHex = useMemo(() => {
-    const hex = colorValue && hexIsValid(colorValue) ? colorValue : '';
+  const colorDisplay = useMemo(() => {
+    const color = colorValue && hexIsValid(colorValue) ? colorValue : '';
 
-    return normalizeHex(hex);
+    return normalizeHex(color);
   }, [colorValue]);
 
   const onClickInput = useCallback(() => {
@@ -113,6 +113,7 @@ function RlsFieldColorComponent({
       if (event !== PickerListenerEvent.Cancel) {
         onChange(value);
       }
+
       formControl?.touch();
       setModalIsVisible(false);
     },
@@ -126,28 +127,27 @@ function RlsFieldColorComponent({
 
         <div className="rls-field-box__component">
           <div className="rls-field-box__body">
-            {displayHex && (
+            {colorDisplay && (
               <div
                 className="rls-field-color__swatch"
-                style={{ backgroundColor: displayHex }}
+                style={{ backgroundColor: colorDisplay }}
               />
             )}
 
             <input
               className="rls-field-color__control"
               type="text"
-              value={displayHex}
+              value={colorDisplay}
               readOnly={true}
               placeholder={placeholder}
               onClick={onClickInput}
               disabled={disabled}
             />
 
-            {!readOnly && (
+            {!readOnly && !disabled && (
               <RlsButtonIcon
                 icon={colorValue ? 'trash-2' : 'color-palette'}
                 onClick={onClickAction}
-                disabled={disabled}
               />
             )}
           </div>

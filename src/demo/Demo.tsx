@@ -94,7 +94,7 @@ const PERSONS: Person[] = [
   {
     color: '#1780e0',
     documentNumber: '1.065.642.202',
-    name: 'Daniel Andrés Castillo Pedroza',
+    name: 'DANIEL ANDRES CASTILLO PEDROZA',
     offices: '2 sucursal(es)',
     role: 'SUPERUSUARIO',
     user: 'daniel.castillo'
@@ -291,17 +291,17 @@ export function Demo() {
                         <RlsDatatableCell control={true}>
                           <RlsLed color={person.color} />
                         </RlsDatatableCell>
-                        <RlsDatatableCell className="col-xs-20 rls-align-center">
+                        <RlsDatatableCell className="rls-width-xs-20 rls-align-center">
                           <RlsPoster rlsTheme="info">
                             <b>{person.documentNumber}</b>
                           </RlsPoster>
                         </RlsDatatableCell>
-                        <RlsDatatableCell className="col-xs-60">
+                        <RlsDatatableCell className="rls-width-xs-60">
                           <RlsBallot subtitle={<span>{person.role}</span>}>
-                            <p>{person.name}</p>
+                            <p className="rls-truncate">{person.name}</p>
                           </RlsBallot>
                         </RlsDatatableCell>
-                        <RlsDatatableCell className="col-xs-20 rls-align-right">
+                        <RlsDatatableCell className="rls-width-xs-20 rls-align-right">
                           <RlsBadge rlsTheme="amber" contrasted={true}>
                             {person.user}
                           </RlsBadge>

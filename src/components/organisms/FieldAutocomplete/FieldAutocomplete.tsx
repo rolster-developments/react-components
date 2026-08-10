@@ -169,11 +169,10 @@ function RlsFieldAutocompleteTemplateComponent<
             onClick={autocomplete.onClickControl}
           />
 
-          {!props.readOnly && (
+          {!props.readOnly && !disabled && (
             <RlsButtonIcon
               icon={autocomplete.value ? 'trash-2' : 'arrow-ios-down'}
               onClick={autocomplete.onClickAction}
-              disabled={disabled}
             />
           )}
         </div>

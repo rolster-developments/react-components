@@ -112,6 +112,7 @@ function RlsFieldClockComponent({
       if (time) {
         onChange(time);
       }
+
       formControl?.touch();
       setModalIsVisible(false);
     },
@@ -135,12 +136,8 @@ function RlsFieldClockComponent({
               disabled={disabled}
             />
 
-            {!readOnly && (
-              <RlsButtonIcon
-                icon={status.icon}
-                onClick={onClickAction}
-                disabled={disabled}
-              />
+            {!readOnly && !disabled && (
+              <RlsButtonIcon icon={status.icon} onClick={onClickAction} />
             )}
           </div>
         </div>

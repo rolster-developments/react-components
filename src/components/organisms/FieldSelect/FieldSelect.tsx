@@ -103,11 +103,10 @@ function RlsFieldSelectTemplateComponent<
             disabled={disabled}
           />
 
-          {!props.readOnly && (
+          {!props.readOnly && !disabled && (
             <RlsButtonIcon
               icon={!unremovable && !!select.value ? 'close' : 'arrow-ios-down'}
               onClick={select.onClickAction}
-              disabled={disabled}
             />
           )}
         </div>
