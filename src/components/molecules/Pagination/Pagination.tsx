@@ -10,6 +10,7 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 
 export interface PaginationEvent<T> {
+  currentPage: number;
   firstPage: boolean;
   lastPage: boolean;
   suggestions: T[];
@@ -20,6 +21,7 @@ interface PaginationProps<T> {
   count?: number;
   filter?: FilterCriteria<T>;
   onPagination?: (event: PaginationEvent<T>) => void;
+  position?: number;
 }
 
 interface PageButtonProps {
@@ -47,16 +49,22 @@ function RlsPaginationComponent<T>({
   suggestions,
   count,
   filter,
-  onPagination
+  onPagination,
+  position
 }: PaginationProps<T>) {
   const [template, setTemplate] = useState<PaginationTemplate>();
   const controller = useRef<PaginationController>(undefined);
 
   const refreshTemplate = useCallback(
     (template: PaginationTemplate, suggestions: T[]) => {
-      const { firstPage, lastPage } = template;
+      const { currentPage, firstPage, lastPage } = template;
 
-      onPagination?.({ firstPage, lastPage, suggestions });
+      onPagination?.({
+        currentPage: currentPage.value,
+        firstPage,
+        lastPage,
+        suggestions
+      });
 
       setTemplate(template);
     },
@@ -76,7 +84,7 @@ function RlsPaginationComponent<T>({
     const pagination = new PaginationController({
       suggestions,
       count,
-      position: template?.currentPage.value
+      position: template?.currentPage.value ?? position
     });
 
     controller.current = pagination;
