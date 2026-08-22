@@ -148,10 +148,13 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
         disabled={disabled}
         higher={fieldList.higher}
         render={renderWithCheckbox}
+        refAnchor={fieldList.refContent}
         refList={fieldList.refList}
+        refSuggestions={fieldList.refSuggestions}
         onClickElement={fieldList.onClickElement}
         onKeydownElement={fieldList.onKeydownElement}
         onClickBackdrop={fieldList.onClickBackdrop}
+        onHiddenAnchor={fieldList.onClickBackdrop}
       />
     </div>
   );

@@ -68,6 +68,7 @@ export interface FieldListControl<T = any, E extends Element<T> = Element<T>> {
   onRemoveElement: (element: E) => (event: MouseEvent) => void;
   refContent: React.RefObject<HTMLDivElement | null>;
   refList: React.RefObject<HTMLUListElement | null>;
+  refSuggestions: React.RefObject<HTMLDivElement | null>;
   selected: E[];
 }
 
@@ -90,6 +91,7 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
 
   const refContent = useRef<HTMLDivElement>(null);
   const refList = useRef<HTMLUListElement>(null);
+  const refSuggestions = useRef<HTMLDivElement>(null);
 
   const formControl = props.formControl as
     | ReactControl<HTMLElement, T[]>
@@ -104,7 +106,10 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
-      if (!refContent?.current?.contains(target as any)) {
+      if (
+        !refContent?.current?.contains(target as any) &&
+        !refSuggestions?.current?.contains(target as any)
+      ) {
         setState((state) => ({ ...state, listIsVisible: false }));
       }
     }
@@ -241,6 +246,7 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
       selected,
       refContent,
       refList,
+      refSuggestions,
       isSelected,
       onClickAction,
       onClickBackdrop,

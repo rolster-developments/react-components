@@ -126,10 +126,13 @@ function RlsFieldSelectTemplateComponent<
         disabled={disabled}
         higher={select.higher}
         render={render}
+        refAnchor={select.refContent}
         refList={select.refList}
+        refSuggestions={select.refSuggestions}
         onClickElement={select.onClickElement}
         onKeydownElement={select.onKeydownElement}
         onClickBackdrop={select.onClickBackdrop}
+        onHiddenAnchor={select.onClickBackdrop}
       />
     </div>
   );

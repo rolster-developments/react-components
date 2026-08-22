@@ -31,6 +31,7 @@ export interface ListController<T = any> extends ListControllerState {
   refContent: RefObject<HTMLDivElement | null>;
   refInput: RefObject<HTMLInputElement | null>;
   refList: RefObject<HTMLUListElement | null>;
+  refSuggestions: RefObject<HTMLDivElement | null>;
   setFormValue(element?: AbstractListElement<T>): void;
   setState: (state: Partial<ListControllerState>) => void;
 }
@@ -114,6 +115,7 @@ export function useListController<T = any, K = string>({
   const refContent = useRef<HTMLDivElement>(null);
   const refList = useRef<HTMLUListElement>(null);
   const refInput = useRef<HTMLInputElement>(null);
+  const refSuggestions = useRef<HTMLDivElement>(null);
 
   const listIsOpen = useRef(false);
 
@@ -137,7 +139,10 @@ export function useListController<T = any, K = string>({
 
   useEffect(() => {
     function onCloseSuggestions({ target }: MouseEvent) {
-      if (!refContent?.current?.contains(target as any)) {
+      if (
+        !refContent?.current?.contains(target as any) &&
+        !refSuggestions?.current?.contains(target as any)
+      ) {
         refreshState((state) => ({ ...state, listIsVisible: false }));
       }
     }
@@ -262,6 +267,7 @@ export function useListController<T = any, K = string>({
       refContent,
       refInput,
       refList,
+      refSuggestions,
       setFormValue,
       setState
     }),

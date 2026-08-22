@@ -192,11 +192,14 @@ function RlsFieldAutocompleteTemplateComponent<
         disabled={disabled}
         higher={autocomplete.higher}
         render={render}
+        refAnchor={autocomplete.refContent}
         refList={autocomplete.refList}
+        refSuggestions={autocomplete.refSuggestions}
         searchControl={searchControl}
         onClickElement={autocomplete.onClickElement}
         onKeydownElement={autocomplete.onKeydownElement}
         onClickBackdrop={autocomplete.onClickBackdrop}
+        onHiddenAnchor={autocomplete.onClickBackdrop}
       />
     </div>
   );

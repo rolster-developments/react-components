@@ -10,5 +10,6 @@ export interface ListControllerState {
   refContent: RefObject<HTMLDivElement | null>;
   refInput: RefObject<HTMLInputElement | null>;
   refList: RefObject<HTMLUListElement | null>;
+  refSuggestions: RefObject<HTMLDivElement | null>;
   value: string;
 }

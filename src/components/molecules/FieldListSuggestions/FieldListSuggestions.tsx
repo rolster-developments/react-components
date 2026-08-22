@@ -12,11 +12,13 @@ import {
   useMemo,
   useState
 } from 'react';
+import { createPortal } from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
 import { PropsWithRlsTheme } from '../../definitions';
+import { useSuggestionsPortal } from './SuggestionsPortalController';
 
 export interface FieldListSearchControl {
   onChange: (pattern: string) => void;
@@ -48,7 +50,10 @@ interface FieldListSuggestionsProps<E = any> extends PropsWithRlsTheme {
   action?: FieldListAction;
   disabled?: boolean;
   higher?: boolean;
+  onHiddenAnchor?: () => void;
+  refAnchor?: RefObject<HTMLElement | null>;
   refList?: RefObject<HTMLUListElement | null>;
+  refSuggestions?: RefObject<HTMLDivElement | null>;
   renderEmpty?: () => ReactNode;
   searchControl?: FieldListSearchControl;
 }
@@ -97,10 +102,15 @@ function RlsFieldListSuggestionsComponent<E = any>({
   visible,
   onClickBackdrop,
   onClickElement,
+  onHiddenAnchor,
   onKeydownElement,
+  refAnchor,
   refList,
+  refSuggestions,
   rlsTheme
 }: FieldListSuggestionsProps<E>) {
+  const portal = useSuggestionsPortal(visible, refAnchor, onHiddenAnchor);
+
   const [labels, setLabels] = useState({
     listEmptyDescription: reactI18n('listEmptyDescription'),
     listEmptyTitle: reactI18n('listEmptyTitle')
@@ -118,6 +128,7 @@ function RlsFieldListSuggestionsComponent<E = any>({
   const className = renderClassStatus('rls-field-list__suggestions', {
     disabled,
     higher,
+    portal: portal.active,
     visible
   });
 
@@ -141,8 +152,13 @@ function RlsFieldListSuggestionsComponent<E = any>({
 
   const searching = searchControl?.searching ?? false;
 
-  return (
-    <div className={className} rls-theme={rlsTheme}>
+  const suggestions = (
+    <div
+      ref={refSuggestions}
+      className={className}
+      style={portal.active ? portal.style : undefined}
+      rls-theme={rlsTheme ?? portal.theme}
+    >
       <div className="rls-field-list__suggestions__body">
         <ul ref={refList} className="rls-field-list__ul">
           {searchControl && (
@@ -221,6 +237,8 @@ function RlsFieldListSuggestionsComponent<E = any>({
       <div className="rls-field-list__backdrop" onClick={onClickBackdrop}></div>
     </div>
   );
+
+  return portal.active ? createPortal(suggestions, document.body) : suggestions;
 }
 
 export const RlsFieldListSuggestions = memo(
