@@ -10,6 +10,7 @@ import {
   RlsButton,
   RlsButtonAction,
   RlsCard,
+  RlsChooserSelect,
   RlsDatatable,
   RlsDatatableCell,
   RlsDatatableFloating,
@@ -127,6 +128,14 @@ const PERSON_SUGGESTIONS = PERSONS.map(
   (person) => new PersonListElement(person)
 );
 
+function personInitials(name: string): string {
+  return name
+    .split(' ')
+    .slice(0, 2)
+    .map((word) => word.charAt(0))
+    .join('');
+}
+
 const NOTIFICATIONS: NotificationsConfig[] = [
   {
     icon: 'check',
@@ -165,6 +174,7 @@ export function Demo() {
   const dateControl = useFormControl<Date>();
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();
+  const chooserControl = useFormControl<Person>();
   const checkboxControl = useInputControl(false);
   const switchControl = useInputControl(true);
   const radioControl = useInputControl('daily');
@@ -364,6 +374,42 @@ export function Demo() {
                 >
                   Persona asignada
                 </RlsFieldAutocomplete>
+
+                <RlsChooserSelect
+                  className="dashboard__chooser"
+                  formControl={chooserControl}
+                  suggestions={PERSON_SUGGESTIONS}
+                >
+                  {({ value, listIsVisible }) => {
+                    return (
+                      <div className="dashboard__chooser__user">
+                        <RlsAvatar rlsTheme="info" rounded={true}>
+                          {value ? (
+                            <span>{personInitials(value.name)}</span>
+                          ) : (
+                            <RlsIcon value="person" />
+                          )}
+                        </RlsAvatar>
+
+                        <RlsBallot
+                          subtitle={
+                            <span>{value?.role ?? 'Sin usuario asignado'}</span>
+                          }
+                        >
+                          <p className="rls-truncate">
+                            {value?.name ?? 'Seleccionar usuario'}
+                          </p>
+                        </RlsBallot>
+
+                        <RlsIcon
+                          value={
+                            listIsVisible ? 'arrow-ios-up' : 'arrow-ios-down'
+                          }
+                        />
+                      </div>
+                    );
+                  }}
+                </RlsChooserSelect>
 
                 <RlsLabelCheckBox formControl={checkboxControl}>
                   Acepto los términos y condiciones
