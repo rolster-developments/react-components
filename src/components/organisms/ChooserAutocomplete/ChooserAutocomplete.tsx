@@ -35,7 +35,8 @@ interface ChooserAutocompleteProps<
   T = any,
   E extends Element<T> = Element<T>,
   K = string
-> extends PropsWithRlsTheme, PropsWithClassName {
+>
+  extends PropsWithRlsTheme, PropsWithClassName {
   suggestions: E[];
   action?: FieldListAction;
   automatic?: boolean;

@@ -1,11 +1,7 @@
 import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-function RlsContentComponent({
-  children,
-  identifier,
-  rlsTheme
-}: RlsComponent) {
+function RlsContentComponent({ children, identifier, rlsTheme }: RlsComponent) {
   return (
     <div
       id={identifier}

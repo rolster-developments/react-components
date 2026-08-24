@@ -1,4 +1,10 @@
-import { CSSProperties, RefObject, useEffect, useState } from 'react';
+import {
+  CSSProperties,
+  RefObject,
+  useEffect,
+  useEffectEvent,
+  useState
+} from 'react';
 import { RlsTheme } from '../../../types';
 
 export interface SuggestionsPortalController {
@@ -45,11 +51,14 @@ function anchorIsVisible(rect: DOMRect, scrollables: HTMLElement[]): boolean {
   }
 
   return (
-    rect.bottom > top && rect.top < bottom && rect.right > left && rect.left < right
+    rect.bottom > top &&
+    rect.top < bottom &&
+    rect.right > left &&
+    rect.left < right
   );
 }
 
-export function useSuggestionsPortal(
+export function useSuggestionsPortalController(
   visible: boolean,
   refAnchor?: RefObject<HTMLElement | null>,
   onHiddenAnchor?: () => void
@@ -61,6 +70,10 @@ export function useSuggestionsPortal(
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const onAnchorHidden = useEffectEvent(() => {
+    onHiddenAnchor?.();
+  });
 
   useEffect(() => {
     const anchor = refAnchor?.current;
@@ -86,16 +99,16 @@ export function useSuggestionsPortal(
       const rect = anchor.getBoundingClientRect();
 
       if (!anchorIsVisible(rect, scrollables)) {
-        onHiddenAnchor?.();
+        onAnchorHidden();
         return;
       }
 
       setStyle({
-        ['--pvt-portal-top' as string]: `${rect.bottom}px`,
-        ['--pvt-portal-bottom' as string]: `${window.innerHeight - rect.top}px`,
-        ['--pvt-portal-left' as string]: `${rect.left}px`,
-        ['--pvt-portal-width' as string]: `${rect.width}px`
-      });
+        '--pvt-portal-top': `${rect.bottom}px`,
+        '--pvt-portal-bottom': `${window.innerHeight - rect.top}px`,
+        '--pvt-portal-left': `${rect.left}px`,
+        '--pvt-portal-width': `${rect.width}px`
+      } as CSSProperties);
     }
 
     function requestReposition(): void {
@@ -113,7 +126,7 @@ export function useSuggestionsPortal(
       window.removeEventListener('scroll', requestReposition, true);
       window.removeEventListener('resize', requestReposition);
     };
-  }, [mounted, visible, refAnchor, onHiddenAnchor]);
+  }, [mounted, visible, refAnchor]);
 
   return { active: mounted && !!refAnchor, style, theme };
 }

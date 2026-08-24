@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useEffectEvent, useRef } from 'react';
 
 interface ResizeDimensionEvent {
   height: number;
@@ -18,13 +18,10 @@ interface ResizeProps {
 export function useResize({ refElement, onResize }: ResizeProps): void {
   const dimension = useRef({ height: 0, width: 0 });
 
-  const onResizeRef = useRef(onResize);
-  onResizeRef.current = onResize;
-
-  const observer = useCallback((entries: ResizeObserverEntry[]) => {
+  const observer = useEffectEvent((entries: ResizeObserverEntry[]) => {
     const { height, width } = entries[0].contentRect;
 
-    onResizeRef.current?.({
+    onResize?.({
       current: dimension.current,
       dimension: {
         height,
@@ -33,7 +30,7 @@ export function useResize({ refElement, onResize }: ResizeProps): void {
     });
 
     dimension.current = { height, width };
-  }, []);
+  });
 
   useEffect(() => {
     dimension.current = {
@@ -41,7 +38,7 @@ export function useResize({ refElement, onResize }: ResizeProps): void {
       width: refElement.current.offsetWidth
     };
 
-    const resizeObserver = new ResizeObserver(observer);
+    const resizeObserver = new ResizeObserver((entries) => observer(entries));
     resizeObserver.observe(refElement.current);
 
     return () => {

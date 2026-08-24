@@ -19,10 +19,8 @@ export interface ChooserListState<T = any, E extends Element<T> = Element<T>> {
   selected: E[];
 }
 
-interface ChooserListProps<
-  T = any,
-  E extends Element<T> = Element<T>
-> extends PropsWithRlsTheme, PropsWithClassName {
+interface ChooserListProps<T = any, E extends Element<T> = Element<T>>
+  extends PropsWithRlsTheme, PropsWithClassName {
   suggestions: E[];
   action?: FieldListAction;
   children?: ReactNode | ((state: ChooserListState<T, E>) => ReactNode);

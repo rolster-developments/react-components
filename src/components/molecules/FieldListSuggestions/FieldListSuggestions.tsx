@@ -18,7 +18,7 @@ import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
 import { PropsWithRlsTheme } from '../../definitions';
-import { useSuggestionsPortal } from './SuggestionsPortalController';
+import { useSuggestionsPortalController } from './SuggestionsPortalController';
 
 export interface FieldListSearchControl {
   onChange: (pattern: string) => void;
@@ -109,7 +109,11 @@ function RlsFieldListSuggestionsComponent<E = any>({
   refSuggestions,
   rlsTheme
 }: FieldListSuggestionsProps<E>) {
-  const portal = useSuggestionsPortal(visible, refAnchor, onHiddenAnchor);
+  const portal = useSuggestionsPortalController(
+    visible,
+    refAnchor,
+    onHiddenAnchor
+  );
 
   const [labels, setLabels] = useState({
     listEmptyDescription: reactI18n('listEmptyDescription'),

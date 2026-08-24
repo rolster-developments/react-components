@@ -1,4 +1,11 @@
-import { MouseEvent, RefObject, useCallback, useMemo, useRef, useState } from 'react';
+import {
+  MouseEvent,
+  RefObject,
+  useCallback,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 type DropdownEffect = '0% 0%' | '100% 0%' | '0% 100%' | '100% 100%';
 

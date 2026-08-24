@@ -10,6 +10,7 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useEffectEvent,
   useMemo,
   useRef,
   useState
@@ -164,7 +165,36 @@ export function useListController<T = any, K = string>({
     }
   }, [state.listIsVisible]);
 
-  useEffect(() => {
+  const setState = useCallback((state: Partial<ListControllerState>) => {
+    const newState = state.listIsVisible
+      ? {
+          ...state,
+          higher: shouldDisplayHigher(refContent.current, refList.current)
+        }
+      : state;
+
+    refreshState((currentState) => ({ ...currentState, ...newState }));
+  }, []);
+
+  const setFormValue = useCallback(
+    (element?: AbstractListElement<any>, valueIsDefault = false) => {
+      refreshState((state) => ({
+        ...state,
+        value: element?.description || ''
+      }));
+
+      changeValueInternal.current = true;
+
+      if (valueIsDefault) {
+        formControl?.setDefaultValue(element?.value);
+      } else {
+        formControl?.setValue(element?.value);
+      }
+    },
+    [formControl]
+  );
+
+  const reconcileFormValue = useEffectEvent(() => {
     if (!changeValueInternal.current) {
       if (formControl?.value) {
         const element = collection.find(formControl.value);
@@ -198,36 +228,11 @@ export function useListController<T = any, K = string>({
     }
 
     changeValueInternal.current = false;
+  });
+
+  useEffect(() => {
+    reconcileFormValue();
   }, [collection, formControl?.value]);
-
-  const setState = useCallback((state: Partial<ListControllerState>) => {
-    const newState = state.listIsVisible
-      ? {
-          ...state,
-          higher: shouldDisplayHigher(refContent.current, refList.current)
-        }
-      : state;
-
-    refreshState((currentState) => ({ ...currentState, ...newState }));
-  }, []);
-
-  const setFormValue = useCallback(
-    (element?: AbstractListElement<any>, valueIsDefault = false) => {
-      refreshState((state) => ({
-        ...state,
-        value: element?.description || ''
-      }));
-
-      changeValueInternal.current = true;
-
-      if (valueIsDefault) {
-        formControl?.setDefaultValue(element?.value);
-      } else {
-        formControl?.setValue(element?.value);
-      }
-    },
-    [formControl]
-  );
 
   const navigationInput = useCallback(
     (event: KeyboardEvent) => {
