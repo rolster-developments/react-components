@@ -1,4 +1,5 @@
-import { RefObject, useEffect, useEffectEvent, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
+import { useEventCallback } from './EventCallbackController';
 
 interface RelocationOnComponentProps {
   container: RefObject<HTMLElement>;
@@ -49,7 +50,7 @@ export function useRelocationOnComponent({
     return clientY;
   }
 
-  const start = useEffectEvent((positionX: number, positionY: number) => {
+  const start = useEventCallback((positionX: number, positionY: number) => {
     dragOffset.current = {
       x: positionX,
       y: positionY
@@ -63,15 +64,17 @@ export function useRelocationOnComponent({
     dragging.current = true;
   });
 
-  const relocation = useEffectEvent((positionX: number, positionY: number) => {
-    const clientX = getClientX(positionX);
-    const clientY = getClientY(positionY);
+  const relocation = useEventCallback(
+    (positionX: number, positionY: number) => {
+      const clientX = getClientX(positionX);
+      const clientY = getClientY(positionY);
 
-    elementRef.current.style.top = `${clientY}px`;
-    elementRef.current.style.left = `${clientX}px`;
+      elementRef.current.style.top = `${clientY}px`;
+      elementRef.current.style.left = `${clientX}px`;
 
-    onDrag?.();
-  });
+      onDrag?.();
+    }
+  );
 
   useEffect(() => {
     const mousedown = (event: MouseEvent) => {

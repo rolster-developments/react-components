@@ -9,11 +9,11 @@ import {
   TouchEvent,
   useCallback,
   useEffect,
-  useEffectEvent,
   useMemo,
   useRef,
   useState
 } from 'react';
+import { useEventCallback } from '../../../controllers/EventCallbackController';
 import {
   DEFAULT_COLOR,
   hexToHsv,
@@ -142,7 +142,7 @@ function RlsPickerColorComponent({
     []
   );
 
-  const updateColorOnCanvas = useEffectEvent(
+  const updateColorOnCanvas = useEventCallback(
     (clientX: number, clientY: number) => {
       if (!canvasRef.current) return;
 
@@ -156,7 +156,7 @@ function RlsPickerColorComponent({
     }
   );
 
-  const updateHueOnSlider = useEffectEvent(
+  const updateHueOnSlider = useEventCallback(
     (clientX: number, clientY: number) => {
       if (!hueRef.current) return;
 
@@ -169,7 +169,7 @@ function RlsPickerColorComponent({
     }
   );
 
-  const updateAlphaOnSlider = useEffectEvent(
+  const updateAlphaOnSlider = useEventCallback(
     (clientX: number, clientY: number) => {
       if (!alphaRef.current) return;
 
@@ -302,7 +302,7 @@ function RlsPickerColorComponent({
     hexEditing.current = true;
   }, []);
 
-  const onHexBlur = useEffectEvent(() => {
+  const onHexBlur = useEventCallback(() => {
     hexEditing.current = false;
 
     const normalized = normalizeHex(hexInput);

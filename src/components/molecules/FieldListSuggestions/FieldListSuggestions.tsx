@@ -112,7 +112,8 @@ function RlsFieldListSuggestionsComponent<E = any>({
   const portal = useSuggestionsPortalController(
     visible,
     refAnchor,
-    onHiddenAnchor
+    onHiddenAnchor,
+    higher
   );
 
   const [labels, setLabels] = useState({

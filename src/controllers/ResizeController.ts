@@ -1,4 +1,5 @@
-import { RefObject, useEffect, useEffectEvent, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
+import { useEventCallback } from './EventCallbackController';
 
 interface ResizeDimensionEvent {
   height: number;
@@ -18,7 +19,7 @@ interface ResizeProps {
 export function useResize({ refElement, onResize }: ResizeProps): void {
   const dimension = useRef({ height: 0, width: 0 });
 
-  const observer = useEffectEvent((entries: ResizeObserverEntry[]) => {
+  const observer = useEventCallback((entries: ResizeObserverEntry[]) => {
     const { height, width } = entries[0].contentRect;
 
     onResize?.({

@@ -10,14 +10,15 @@ import {
   RefObject,
   useCallback,
   useEffect,
-  useEffectEvent,
   useMemo,
   useRef,
   useState
 } from 'react';
+import { getRemSize } from '../helpers/css';
+import { useEventCallback } from './EventCallbackController';
 
 const MAX_LIST_HEIGHT_REM = 90;
-const FALLBACK_REM_SIZE = 16;
+const VIEWPORT_GAP_REM = 8;
 
 interface ListControllerState {
   focused: boolean;
@@ -45,18 +46,6 @@ interface ListControllerProps<T = any, K = string> {
     | ReactControl<HTMLElement, NonNullable<T>>;
   reference?: (value: T) => K;
   value?: T;
-}
-
-function getRemSize(): number {
-  if (typeof window === 'undefined') {
-    return FALLBACK_REM_SIZE;
-  }
-
-  const fontSize = parseFloat(
-    getComputedStyle(document.documentElement).fontSize
-  );
-
-  return fontSize > 0 ? fontSize : FALLBACK_REM_SIZE;
 }
 
 function suggestionsShallowEqual<T>(
@@ -89,11 +78,14 @@ function shouldDisplayHigher(
     return false;
   }
 
-  const { top, bottom } = content.getBoundingClientRect();
-  const spaceAbove = top;
-  const spaceBelow = window.innerHeight - bottom;
+  const remSize = getRemSize();
+  const gap = VIEWPORT_GAP_REM * remSize;
 
-  const maxHeight = MAX_LIST_HEIGHT_REM * getRemSize();
+  const { top, bottom } = content.getBoundingClientRect();
+  const spaceAbove = top - gap;
+  const spaceBelow = window.innerHeight - bottom - gap;
+
+  const maxHeight = MAX_LIST_HEIGHT_REM * remSize;
   const desiredHeight = Math.min(list?.scrollHeight || maxHeight, maxHeight);
 
   if (spaceBelow >= desiredHeight) {
@@ -194,7 +186,7 @@ export function useListController<T = any, K = string>({
     [formControl]
   );
 
-  const reconcileFormValue = useEffectEvent(() => {
+  const reconcileFormValue = useEventCallback(() => {
     if (!changeValueInternal.current) {
       if (formControl?.value) {
         const element = collection.find(formControl.value);

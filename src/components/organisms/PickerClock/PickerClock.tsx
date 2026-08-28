@@ -8,11 +8,11 @@ import {
   TouchEvent,
   useCallback,
   useEffect,
-  useEffectEvent,
   useMemo,
   useRef,
   useState
 } from 'react';
+import { useEventCallback } from '../../../controllers/EventCallbackController';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
@@ -145,11 +145,11 @@ function RlsPickerClockComponent({
     active: zoneIsPM
   });
 
-  const refreshClockHour = useEffectEvent(() => {
+  const refreshClockHour = useEventCallback(() => {
     refreshClock(hour > 12 ? hour - 12 : hour);
   });
 
-  const refreshClockMinute = useEffectEvent(() => {
+  const refreshClockMinute = useEventCallback(() => {
     refreshClock(minute);
   });
 
