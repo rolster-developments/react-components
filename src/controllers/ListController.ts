@@ -175,7 +175,10 @@ export function useListController<T = any, K = string>({
         value: element?.description || ''
       }));
 
-      changeValueInternal.current = true;
+      changeValueInternal.current = !Object.is(
+        element?.value,
+        formControl?.value
+      );
 
       if (valueIsDefault) {
         formControl?.setDefaultValue(element?.value);
@@ -207,6 +210,8 @@ export function useListController<T = any, K = string>({
 
         if (element) {
           setFormValue(element);
+        } else if (automatic) {
+          setFormValue(collection.value[0], true);
         } else {
           refreshState((state) => ({ ...state, value: '' }));
         }
