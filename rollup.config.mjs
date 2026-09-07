@@ -8,6 +8,7 @@ export default rolster({
     '@rolster/components',
     '@rolster/dates',
     '@rolster/i18n',
+    '@rolster/react',
     '@rolster/react-forms',
     '@rolster/strings',
     'react',

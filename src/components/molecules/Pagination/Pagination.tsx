@@ -5,16 +5,12 @@ import {
   PaginationController,
   PaginationTemplate
 } from '@rolster/components';
+import { PaginationEvent } from '@rolster/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 
-export interface PaginationEvent<T> {
-  currentPage: number;
-  firstPage: boolean;
-  lastPage: boolean;
-  suggestions: T[];
-}
+export type { PaginationEvent } from '@rolster/react';
 
 interface PaginationProps<T> {
   suggestions: T[];
@@ -29,7 +25,7 @@ interface PageButtonProps {
   page: PageState;
 }
 
-function PageButton({ page, onSelect }: PageButtonProps) {
+function RlsPaginationButton({ page, onSelect }: PageButtonProps) {
   const className = renderClassStatus('rls-pagination__page', {
     active: page.active
   });
@@ -142,7 +138,7 @@ function RlsPaginationComponent<T>({
       <div className="rls-pagination__body">
         <div className="rls-pagination__pages">
           {template?.pages.map((page) => (
-            <PageButton
+            <RlsPaginationButton
               key={page.value}
               page={page}
               onSelect={goToPagination}
