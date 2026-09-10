@@ -316,13 +316,22 @@ function RlsImageEditorComponent(props: ImageEditorProps) {
   const onCropImage = useCallback(() => {
     const cropProps = getCropProperties();
 
-    const width = props.maxWidth || cropProps.width;
-    const height = width * getRatioFactor(ratio);
+    const width = Math.round(
+      props.maxWidth
+        ? Math.min(props.maxWidth, cropProps.width)
+        : cropProps.width
+    );
+    const height = Math.round(width * getRatioFactor(ratio));
 
     refPicture.current.width = width;
     refPicture.current.height = height;
 
     const context = refPicture.current.getContext('2d');
+
+    if (context) {
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = 'high';
+    }
 
     context?.drawImage(
       refCanvas.current,

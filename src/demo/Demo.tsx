@@ -1,7 +1,8 @@
 import { RolsterAutocompleteElement } from '@rolster/components';
 import { useFormControl, useInputControl } from '@rolster/react-forms';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
+  ImageEditorValue,
   NavbarMenuOption,
   NotificationsConfig,
   RlsAvatar,
@@ -21,6 +22,7 @@ import {
   RlsFieldSelect,
   RlsFieldText,
   RlsIcon,
+  RlsImageChooser,
   RlsInputSearch,
   RlsLabelCheckBox,
   RlsLabelRadioButton,
@@ -29,6 +31,7 @@ import {
   RlsNavbar,
   RlsNavbarMenu,
   RlsPoster,
+  RlsSlider,
   RlsTheme,
   toggleAppTheme,
   useDesingSystemController,
@@ -178,6 +181,12 @@ export function Demo() {
   const checkboxControl = useInputControl(false);
   const switchControl = useInputControl(true);
   const radioControl = useInputControl('daily');
+  const volumeControl = useFormControl<number>(35);
+
+  const [zoom, setZoom] = useState(60);
+  const [crop, setCrop] = useState(60);
+  const [rating, setRating] = useState(20);
+  const [avatar, setAvatar] = useState<ImageEditorValue>();
 
   const changeAppTheme = useCallback(() => {
     toggleAppTheme();
@@ -296,7 +305,6 @@ export function Demo() {
                       <RlsDatatableRecord
                         key={person.documentNumber}
                         truncated={true}
-                        warning={true}
                       >
                         <RlsDatatableCell control={true}>
                           <RlsLed color={person.color} />
@@ -316,6 +324,15 @@ export function Demo() {
                             {person.user}
                           </RlsBadge>
                         </RlsDatatableCell>
+                        <RlsDatatableCell className="rls-width-xs-20">
+                          <RlsButton
+                            type="ghost"
+                            rlsTheme="info"
+                            prefixIcon="person"
+                          >
+                            Editar
+                          </RlsButton>
+                        </RlsDatatableCell>
 
                         <RlsDatatableFloating rlsTheme="amber">
                           <RlsButtonAction icon="bell" />
@@ -324,6 +341,48 @@ export function Demo() {
                     );
                   })}
                 </RlsDatatable>
+
+                <div className="dashboard__sliders">
+                  <RlsSlider value={zoom} onValue={setZoom}>
+                    Nivel de zoom
+                  </RlsSlider>
+
+                  <RlsSlider
+                    prefixIcon="external-link"
+                    value={crop}
+                    minValue={50}
+                    maxValue={100}
+                    onValue={setCrop}
+                  >
+                    Recorte de imagen, rango 50 a 100
+                  </RlsSlider>
+
+                  <RlsSlider
+                    value={rating}
+                    minValue={0}
+                    maxValue={50}
+                    step={5}
+                    rlsTheme="success"
+                    onValue={setRating}
+                  >
+                    Calificación con paso de 5
+                  </RlsSlider>
+
+                  <RlsSlider formControl={volumeControl} rlsTheme="amber">
+                    Volumen con formControl
+                  </RlsSlider>
+
+                  <RlsSlider value={42} disabled={true}>
+                    Deshabilitado
+                  </RlsSlider>
+
+                  <div className="dashboard__sliders__report">
+                    <span>zoom: {zoom}</span>
+                    <span>recorte: {crop}</span>
+                    <span>calificación: {rating}</span>
+                    <span>volumen: {volumeControl.value}</span>
+                  </div>
+                </div>
 
                 <div className="dashboard__actions">
                   <RlsButton
@@ -347,6 +406,30 @@ export function Demo() {
               </div>
 
               <div className="dashboard__inputs rls-flex-xs-col-2">
+                <div className="dashboard__avatar">
+                  <RlsImageChooser
+                    ratio="1:1"
+                    maxWidth={320}
+                    quality={0.92}
+                    onValue={setAvatar}
+                  />
+
+                  <div className="dashboard__avatar__detail">
+                    <span className="rls-smalltext-font-bold">
+                      Foto de perfil
+                    </span>
+
+                    {avatar ? (
+                      <span>
+                        {avatar.blob.type} ·{' '}
+                        {Math.round(avatar.blob.size / 1024)} KB
+                      </span>
+                    ) : (
+                      <span>Toca el círculo para elegir una imagen</span>
+                    )}
+                  </div>
+                </div>
+
                 <RlsFieldDate formControl={dateControl} rlsTheme="success">
                   Fecha de cumpleaños
                 </RlsFieldDate>

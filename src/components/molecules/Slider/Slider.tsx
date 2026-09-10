@@ -1,16 +1,26 @@
 import { ReactControl } from '@rolster/react-forms';
 import {
+  KeyboardEvent as ReactKeyboardEvent,
   memo,
-  MouseEvent,
+  PointerEvent as ReactPointerEvent,
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import {
+  normalizeSliderValue,
+  sliderRateToValue,
+  sliderValueToRate
+} from '../../../helpers/slider';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
+
+const DEFAULT_STEP = 1;
+const PAGE_STEP_DIVISOR = 10;
 
 interface SliderProps extends RlsComponent {
   disabled?: boolean;
@@ -19,26 +29,8 @@ interface SliderProps extends RlsComponent {
   minValue?: number;
   onValue?: (value: number) => void;
   prefixIcon?: string;
+  step?: number;
   value?: number;
-}
-
-function calculateInitialValue(
-  value: number,
-  minValue: number,
-  maxValue: number
-): number {
-  return minValue > value ? minValue : maxValue < value ? maxValue : value;
-}
-
-function calculateInitialRate(
-  value: number,
-  minValue: number,
-  maxValue: number
-): number {
-  const rateMax = maxValue - minValue;
-  const rateValue = value - minValue;
-
-  return Math.ceil((rateValue / rateMax) * 100);
 }
 
 function RlsSliderComponent({
@@ -52,6 +44,7 @@ function RlsSliderComponent({
   onValue,
   prefixIcon,
   rlsTheme,
+  step,
   value
 }: SliderProps) {
   const minValueSlider = useMemo(() => {
@@ -62,91 +55,258 @@ function RlsSliderComponent({
     return maxValue ?? 100;
   }, [maxValue]);
 
-  const [valueSlider, setValue] = useState(
-    calculateInitialValue(
+  const stepSlider = useMemo(() => {
+    return step && step > 0 ? step : DEFAULT_STEP;
+  }, [step]);
+
+  const [valueSlider, setValueSlider] = useState(() => {
+    return normalizeSliderValue(
       formControl?.value ?? value ?? 0,
       minValueSlider,
-      maxValueSlider
-    )
-  );
+      maxValueSlider,
+      stepSlider
+    );
+  });
 
-  const [rate, setRate] = useState(
-    calculateInitialRate(valueSlider, minValueSlider, maxValueSlider)
-  );
+  const [dragging, setDragging] = useState(false);
 
-  const refComponent = useRef<HTMLDivElement>(null!);
   const refTrack = useRef<HTMLDivElement>(null!);
-  const refTrackOn = useRef<HTMLDivElement>(null!);
   const refThumb = useRef<HTMLDivElement>(null!);
+
+  const refValue = useRef(valueSlider);
+  const refValueExternal = useRef(formControl?.value ?? value);
+
+  const labelId = useId();
+
+  const rate = useMemo(() => {
+    return sliderValueToRate(valueSlider, minValueSlider, maxValueSlider);
+  }, [valueSlider, minValueSlider, maxValueSlider]);
 
   const classNameSlider = renderClassStatus(
     'rls-slider',
     {
       complet: valueSlider === maxValueSlider,
       disabled: disabled,
+      dragging: dragging,
       empty: valueSlider === minValueSlider
     },
     className
   );
 
+  const commitValue = useCallback(
+    (valueNext: number) => {
+      if (refValue.current === valueNext) {
+        return;
+      }
+
+      refValue.current = valueNext;
+
+      setValueSlider(valueNext);
+      formControl?.setValue(valueNext);
+      onValue?.(valueNext);
+    },
+    [formControl, onValue]
+  );
+
+  const commitRate = useCallback(
+    (rateNext: number) => {
+      commitValue(
+        sliderRateToValue(rateNext, minValueSlider, maxValueSlider, stepSlider)
+      );
+    },
+    [commitValue, minValueSlider, maxValueSlider, stepSlider]
+  );
+
+  const calculateRateFromClientX = useCallback((clientX: number) => {
+    const { left, width } = refTrack.current.getBoundingClientRect();
+
+    return width > 0 ? ((clientX - left) / width) * 100 : 0;
+  }, []);
+
+  const onPointerDown = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      if (disabled) {
+        return;
+      }
+
+      event.preventDefault();
+      refThumb.current.focus();
+
+      setDragging(true);
+      commitRate(calculateRateFromClientX(event.clientX));
+    },
+    [disabled, commitRate, calculateRateFromClientX]
+  );
+
+  const calculateValueFromKey = useCallback(
+    (key: string): number | undefined => {
+      const pageStep = Math.max(
+        stepSlider,
+        (maxValueSlider - minValueSlider) / PAGE_STEP_DIVISOR
+      );
+
+      switch (key) {
+        case 'ArrowRight':
+        case 'ArrowUp':
+          return refValue.current + stepSlider;
+        case 'ArrowLeft':
+        case 'ArrowDown':
+          return refValue.current - stepSlider;
+        case 'PageUp':
+          return refValue.current + pageStep;
+        case 'PageDown':
+          return refValue.current - pageStep;
+        case 'Home':
+          return minValueSlider;
+        case 'End':
+          return maxValueSlider;
+        default:
+          return undefined;
+      }
+    },
+    [stepSlider, minValueSlider, maxValueSlider]
+  );
+
+  const onKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      if (disabled) {
+        return;
+      }
+
+      const valueNext = calculateValueFromKey(event.key);
+
+      if (valueNext === undefined) {
+        return;
+      }
+
+      event.preventDefault();
+
+      commitValue(
+        normalizeSliderValue(
+          valueNext,
+          minValueSlider,
+          maxValueSlider,
+          stepSlider
+        )
+      );
+    },
+    [
+      disabled,
+      calculateValueFromKey,
+      commitValue,
+      minValueSlider,
+      maxValueSlider,
+      stepSlider
+    ]
+  );
+
+  useEffect(() => {
+    if (!dragging) {
+      return;
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      commitRate(calculateRateFromClientX(event.clientX));
+    };
+
+    const onPointerRelease = () => {
+      setDragging(false);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerRelease);
+    window.addEventListener('pointercancel', onPointerRelease);
+
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerRelease);
+      window.removeEventListener('pointercancel', onPointerRelease);
+    };
+  }, [dragging, commitRate, calculateRateFromClientX]);
+
   useEffect(() => {
     const valueInitial = formControl?.value ?? value ?? 0;
 
-    refThumb.current.style.left = `${rate}%`;
-    refTrackOn.current.style.width = `${rate}%`;
-
-    if (valueInitial !== valueSlider) {
-      formControl?.setValue(valueSlider);
-      onValue?.(valueSlider);
+    if (valueInitial !== refValue.current) {
+      formControl?.setValue(refValue.current);
+      onValue?.(refValue.current);
     }
   }, []);
 
-  const calculateValueWithRate = useCallback(
-    (rate: number) => {
-      const value = Math.ceil(((maxValueSlider - minValueSlider) * rate) / 100);
+  useEffect(() => {
+    const valueExternal = formControl?.value ?? value;
 
-      refThumb.current.style.left = `${rate}%`;
-      refTrackOn.current.style.width = `${rate}%`;
+    if (
+      valueExternal === undefined ||
+      valueExternal === refValueExternal.current
+    ) {
+      return;
+    }
 
-      const sliderValue = value + minValueSlider;
+    refValueExternal.current = valueExternal;
 
-      setRate(rate);
-      setValue(sliderValue);
-      formControl?.setValue(sliderValue);
-      onValue?.(sliderValue);
-    },
-    [minValueSlider, maxValueSlider, formControl, onValue]
-  );
+    commitValue(
+      normalizeSliderValue(
+        valueExternal,
+        minValueSlider,
+        maxValueSlider,
+        stepSlider
+      )
+    );
+  }, [
+    value,
+    formControl?.value,
+    commitValue,
+    minValueSlider,
+    maxValueSlider,
+    stepSlider
+  ]);
 
-  const onClickTrack = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      const { left, width } = refTrack.current.getBoundingClientRect();
-
-      const rate = Math.ceil(((event.clientX - left) / width) * 100);
-
-      calculateValueWithRate(rate);
-    },
-    [minValueSlider, maxValueSlider]
-  );
+  useEffect(() => {
+    commitValue(
+      normalizeSliderValue(
+        refValue.current,
+        minValueSlider,
+        maxValueSlider,
+        stepSlider
+      )
+    );
+  }, [commitValue, minValueSlider, maxValueSlider, stepSlider]);
 
   return (
     <div id={identifier} className={classNameSlider} rls-theme={rlsTheme}>
-      {children && <span className="rls-slider__label">{children}</span>}
+      {children && (
+        <span id={labelId} className="rls-slider__label">
+          {children}
+        </span>
+      )}
 
       <div className="rls-slider__body">
         {prefixIcon && <RlsIcon value={prefixIcon} />}
 
-        <div ref={refComponent} className="rls-slider__component">
-          <div
-            ref={refTrack}
-            className="rls-slider__track"
-            onClick={onClickTrack}
-          >
-            <div ref={refTrackOn} className="rls-slider__track__on"></div>
+        <div className="rls-slider__component" onPointerDown={onPointerDown}>
+          <div ref={refTrack} className="rls-slider__track">
+            <div
+              className="rls-slider__track__on"
+              style={{ width: `${rate}%` }}
+            ></div>
           </div>
 
-          <div ref={refThumb} className="rls-slider__thumb">
-            {rate}%
+          <div
+            ref={refThumb}
+            className="rls-slider__thumb"
+            style={{ left: `${rate}%` }}
+            role="slider"
+            tabIndex={disabled ? -1 : 0}
+            aria-orientation="horizontal"
+            aria-valuemin={minValueSlider}
+            aria-valuemax={maxValueSlider}
+            aria-valuenow={valueSlider}
+            aria-disabled={disabled || undefined}
+            aria-labelledby={children ? labelId : undefined}
+            onKeyDown={onKeyDown}
+          >
+            {valueSlider}
           </div>
         </div>
       </div>

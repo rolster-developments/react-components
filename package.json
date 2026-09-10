@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.8.19",
+  "version": "19.8.20",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "license": "MIT",
@@ -29,14 +29,13 @@
   ],
   "scripts": {
     "prettier": "prettier --write .",
-    "prettier:css": "prettier --write dist/**/*.css --ignore-path .prettierignore",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "clean": "rimraf ./dist",
     "dev": "vite",
     "build": "npm run clean && tsc -p tsconfig.app.json && rollup -c rollup.config.mjs",
     "test": "vitest run",
-    "prepublishOnly": "npm run build",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@rolster/commons": "^4.2.3",
@@ -56,7 +55,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.2",
-    "@vitest/ui": "^4.1.9",
+    "@vitest/ui": "^5.0.0",
     "eslint": "^10.7.0",
     "eslint-plugin-perfectionist": "^5.10.0",
     "eslint-plugin-simple-import-sort": "^13.0.0",
@@ -69,7 +68,7 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.64.0",
     "vite": "^8.0.16",
-    "vitest": "^4.1.9"
+    "vitest": "^5.0.0"
   },
   "repository": {
     "type": "git",
