@@ -10,11 +10,11 @@ npm i @rolster/react-components
 
 ## Configuration
 
-You must install the `@rolster/typescript-types` to define package data types, which are configured by adding them to the `files` property of the `tsconfig.json` file.
+You must install the `@rolster/types` to define package data types, which are configured by adding them to the `files` property of the `tsconfig.json` file.
 
 ```json
 {
-  "files": ["node_modules/@rolster/typescript-types/index.d.ts"]
+  "files": ["node_modules/@rolster/types/index.d.ts"]
 }
 ```
 
