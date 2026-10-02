@@ -88,44 +88,44 @@ Components that display a list of options (`RlsFieldSelect`, `RlsFieldList`, `Rl
 
 ### Atoms
 
-| Component             | Description                                                                               |
-| --------------------- | ----------------------------------------------------------------------------------------- |
-| `RlsAmount`           | Currency value split into integer and decimal tabular text, with an optional symbol       |
-| `RlsAreaText`         | `textarea` that grows with its content and syncs value, focus and disabled with a control |
-| `RlsAvatar`           | Container for an image, initials or icon, with contrasted, rounded and skeleton variants  |
-| `RlsBadge`            | Inline badge, contrasted when requested                                                   |
-| `RlsBreadcrumb`       | Row of labels, each one actionable when it declares `onClick`                             |
-| `RlsButton`           | Button of type `ghost`, `flat` or `raised`, with icons and a spinner while `requesting`   |
-| `RlsButtonAction`     | Icon button with optional badge and tooltip                                               |
-| `RlsButtonIcon`       | Icon button without decoration, with skeleton state                                       |
-| `RlsButtonOption`     | Icon button that behaves as one option of a single selection over a control               |
-| `RlsCheckBox`         | Checkbox mark driven by the `checked` prop                                                |
-| `RlsCheckBoxControl`  | `RlsCheckBox` bound to a `boolean` control                                                |
-| `RlsHoverSwap`        | Renders `children` and swaps it for `content` while the pointer is over it                |
-| `RlsIcon`             | Renders the glyph `rls-icon-{value}`, with skeleton state                                 |
-| `RlsImage`            | `img` that shows a skeleton until the source finishes loading                             |
-| `RlsInput`            | Base `input` that syncs value, focus and disabled with a control                          |
-| `RlsInputCounter`     | Number input with decrement and increment buttons, clamped by `min`, `max` and `step`     |
-| `RlsInputDecimal`     | Number input for `BigDecimal` values that overlays the formatted amount                   |
-| `RlsInputMoney`       | Number input that overlays the value formatted as currency                                |
-| `RlsInputNumber`      | Number input that overlays the current value                                              |
-| `RlsInputPassword`    | Input whose type switches between `password` and `text`                                   |
-| `RlsInputPercentage`  | Number input that overlays the value followed by `%`                                      |
-| `RlsInputSearch`      | Text input with a search action button                                                    |
-| `RlsInputText`        | Text input that overlays the current value                                                |
-| `RlsLabel`            | Text label                                                                                |
-| `RlsLed`              | Indicator whose background is set from a hexadecimal color                                |
-| `RlsMessageIcon`      | Icon followed by a truncated message                                                      |
-| `RlsPoster`           | Highlighted block of content, contrasted when requested                                   |
-| `RlsProgressBar`      | Progress bar by `percentage` or indeterminate                                             |
-| `RlsProgressCircular` | Circular progress indicator drawn in SVG                                                  |
-| `RlsRadioButton`      | Radio mark driven by the `checked` prop                                                   |
-| `RlsSkeleton`         | Placeholder block while content is loading                                                |
-| `RlsSkeletonText`     | Renders `children`, or a skeleton while `active`                                          |
-| `RlsSpinner`          | Loading spinner drawn in SVG                                                              |
-| `RlsSwitch`           | Switch driven by the `checked` prop, with capsule variant                                 |
-| `RlsSwitchControl`    | `RlsSwitch` bound to a `boolean` control                                                  |
-| `RlsTabularText`      | Renders each character in its own span, so digits keep a fixed width                      |
+| Component             | Description                                                                              |
+| --------------------- | ---------------------------------------------------------------------------------------- |
+| `RlsAmount`           | Currency value split into integer and decimal tabular text, with an optional symbol      |
+| `RlsAreaText`         | `textarea` that grows between `minRows` and `maxRows` and syncs with a control           |
+| `RlsAvatar`           | Container for an image, initials or icon, with contrasted, rounded and skeleton variants |
+| `RlsBadge`            | Inline badge, contrasted when requested                                                  |
+| `RlsBreadcrumb`       | Row of labels, each one actionable when it declares `onClick`                            |
+| `RlsButton`           | Button of type `ghost`, `flat` or `raised`, with icons and a spinner while `requesting`  |
+| `RlsButtonAction`     | Icon button with optional badge and tooltip                                              |
+| `RlsButtonIcon`       | Icon button without decoration, with skeleton state                                      |
+| `RlsButtonOption`     | Icon button that behaves as one option of a single selection over a control              |
+| `RlsCheckBox`         | Checkbox mark driven by the `checked` prop                                               |
+| `RlsCheckBoxControl`  | `RlsCheckBox` bound to a `boolean` control                                               |
+| `RlsHoverSwap`        | Renders `children` and swaps it for `content` while the pointer is over it               |
+| `RlsIcon`             | Renders the glyph `rls-icon-{value}`, with skeleton state                                |
+| `RlsImage`            | `img` that shows a skeleton until the source finishes loading                            |
+| `RlsInput`            | Base `input` that syncs value, focus and disabled with a control                         |
+| `RlsInputCounter`     | Number input with decrement and increment buttons, clamped by `min`, `max` and `step`    |
+| `RlsInputDecimal`     | Number input for `BigDecimal` values that overlays the formatted amount                  |
+| `RlsInputMoney`       | Number input that overlays the value formatted as currency                               |
+| `RlsInputNumber`      | Number input that overlays the current value                                             |
+| `RlsInputPassword`    | Input whose type switches between `password` and `text`                                  |
+| `RlsInputPercentage`  | Number input that overlays the value followed by `%`                                     |
+| `RlsInputSearch`      | Text input with a search action button                                                   |
+| `RlsInputText`        | Text input that overlays the current value                                               |
+| `RlsLabel`            | Text label                                                                               |
+| `RlsLed`              | Indicator whose background is set from a hexadecimal color                               |
+| `RlsMessageIcon`      | Icon followed by a truncated message                                                     |
+| `RlsPoster`           | Highlighted block of content, contrasted when requested                                  |
+| `RlsProgressBar`      | Progress bar by `percentage` or indeterminate                                            |
+| `RlsProgressCircular` | Circular progress indicator drawn in SVG                                                 |
+| `RlsRadioButton`      | Radio mark driven by the `checked` prop                                                  |
+| `RlsSkeleton`         | Placeholder block while content is loading                                               |
+| `RlsSkeletonText`     | Renders `children`, or a skeleton while `active`                                         |
+| `RlsSpinner`          | Loading spinner drawn in SVG                                                             |
+| `RlsSwitch`           | Switch driven by the `checked` prop, with capsule variant                                |
+| `RlsSwitchControl`    | `RlsSwitch` bound to a `boolean` control                                                 |
+| `RlsTabularText`      | Renders each character in its own span, so digits keep a fixed width                     |
 
 ```tsx
 import { RlsButton, RlsIcon, RlsPoster } from '@rolster/react-components';
@@ -163,7 +163,7 @@ function Header({ requesting, onSave }: HeaderProps) {
 | `RlsButtonStepper`        | Pair of buttons that emit a down and an up action                                        |
 | `RlsButtonToggle`         | Action button with a second button that opens the list of `options`                      |
 | `RlsContent`              | Content container of an application page                                                 |
-| `RlsFieldArea`            | Labelled field over `RlsAreaText` with its error message                                 |
+| `RlsFieldArea`            | Labelled field over `RlsAreaText`, with an optional counter and its error message        |
 | `RlsFieldDecimal`         | Labelled field over `RlsInputDecimal` with its error message                             |
 | `RlsFieldFile`            | Labelled field that opens a file selector and shows the name of the chosen file          |
 | `RlsFieldListSuggestions` | Suggestion list rendered in a portal, with optional search input, action and empty state |
