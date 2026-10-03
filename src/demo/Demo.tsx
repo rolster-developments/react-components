@@ -173,7 +173,10 @@ export function Demo() {
   const notifyIndex = useRef(0);
 
   const searchControl = useInputControl('');
-  const textControl = useInputControl('');
+  const textControl = useInputControl({
+    value: '',
+    formatter: (value: string) => value.toUpperCase()
+  });
   const dateControl = useFormControl<Date>();
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();

@@ -82,6 +82,17 @@ createRoot(document.getElementById('root')!).render(
 
 Field components are driven by `@rolster/react-forms`: the `formControl` prop takes a `ReactControl` created with `useInputControl` or `useFormControl`, and the field renders the error of the control through `RlsMessageFormError`. Those messages are translated with `@rolster/i18n` and can be extended with `setErrorsI18n`.
 
+`RlsInput`, `RlsAreaText` and the fields built over them honour the `formatter` and `formatOn` options of the control. While the user types (or pastes) they apply the formatter before writing the value, keep the caret in place when the text length changes, revert characters the formatter rejects even when the control value does not change, and wait for the end of an IME composition before formatting. With `formatOn: 'blur'` the raw text is kept until the field loses focus and the control formats it.
+
+```tsx
+const name = useInputControl({
+  value: '',
+  formatter: (value: string) => value.toUpperCase()
+});
+
+<RlsFieldText formControl={name}>Nombre completo</RlsFieldText>;
+```
+
 Components that display a list of options (`RlsFieldSelect`, `RlsFieldList`, `RlsFieldAutocomplete` and the `RlsChooser*` family) receive their `suggestions` as elements of `@rolster/components`, usually instances of `RolsterListElement` or `RolsterAutocompleteElement`, or of a subclass that overrides `title`, `description` and `compareTo`.
 
 ## Features

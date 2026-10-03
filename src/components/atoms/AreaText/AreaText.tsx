@@ -1,6 +1,7 @@
 import { ReactControl } from '@rolster/react-forms';
 import {
   ChangeEvent,
+  CompositionEvent,
   CSSProperties,
   KeyboardEvent,
   memo,
@@ -15,6 +16,21 @@ import { RlsComponent } from '../../definitions';
 
 const AREA_TEXT_MAX_ROWS = 8;
 const AREA_TEXT_MIN_ROWS = 3;
+
+function writeAreaValue(element: HTMLTextAreaElement, valueArea: string): void {
+  const rawArea = element.value;
+
+  if (rawArea === valueArea) {
+    return;
+  }
+
+  const selection = element.selectionStart;
+  const offset = valueArea.length - rawArea.length;
+  const caret = Math.max(0, Math.min(selection + offset, valueArea.length));
+
+  element.value = valueArea;
+  element.setSelectionRange(caret, caret);
+}
 
 export type RolsterReactAreaTextControl<T = string> =
   | ReactControl<HTMLTextAreaElement, T>
@@ -70,7 +86,9 @@ function RlsAreaTextComponent({
   const elementRef = useRef<HTMLTextAreaElement>(null);
   const areaRef = formControl?.elementRef ?? elementRef;
 
-  const changeIsInternal = useRef(false);
+  const composing = useRef(false);
+  const valueSent = useRef<unknown>(formControl?.value);
+  const valueSource = useRef<unknown>(formControl ? formControl.value : value);
   const heightIsManual = useRef(false);
   const heightApplied = useRef(0);
 
@@ -108,15 +126,20 @@ function RlsAreaTextComponent({
   }, [areaRef, rowsMax, rowsMin]);
 
   useEffect(() => {
-    if (!changeIsInternal.current) {
-      const nextValue = String(formControl?.value ?? value ?? '');
+    const source = formControl ? formControl.value : value;
+
+    const isEcho = Object.is(source, valueSent.current);
+    const isSame = Object.is(source, valueSource.current);
+
+    valueSource.current = source;
+
+    if (!isEcho && !isSame) {
+      const nextValue = String(source ?? '');
 
       if (valueArea !== nextValue) {
         setValueArea(nextValue);
       }
     }
-
-    changeIsInternal.current = false;
   }, [formControl?.value, value, valueArea]);
 
   useEffect(() => {
@@ -150,17 +173,44 @@ function RlsAreaTextComponent({
     return () => observer.disconnect();
   }, [areaRef, resize]);
 
-  const onChangeArea = useCallback(
-    (event: ChangeEvent<HTMLTextAreaElement>) => {
-      const nextValue = event.target.value;
+  const applyArea = useCallback(
+    (element: HTMLTextAreaElement) => {
+      const rawArea = element.value;
+      const formatter = formControl?.formatter;
 
-      changeIsInternal.current = true;
+      const nextValue =
+        formatter && formControl?.formatOn !== 'blur' && !composing.current
+          ? (formatter(rawArea) ?? '')
+          : rawArea;
+
+      writeAreaValue(element, nextValue);
+
+      valueSent.current = nextValue;
 
       onValue?.(nextValue);
       setValueArea(nextValue);
       formControl?.setValue(nextValue);
     },
     [formControl, onValue]
+  );
+
+  const onChangeArea = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      applyArea(event.target);
+    },
+    [applyArea]
+  );
+
+  const onCompositionStart = useCallback(() => {
+    composing.current = true;
+  }, []);
+
+  const onCompositionEnd = useCallback(
+    (event: CompositionEvent<HTMLTextAreaElement>) => {
+      composing.current = false;
+      applyArea(event.currentTarget);
+    },
+    [applyArea]
   );
 
   const onKeyDownArea = useCallback(
@@ -217,6 +267,8 @@ function RlsAreaTextComponent({
         onFocus={onFocusArea}
         onBlur={onBlurArea}
         onChange={onChangeArea}
+        onCompositionStart={onCompositionStart}
+        onCompositionEnd={onCompositionEnd}
         onKeyDown={onKeyDownArea}
         onKeyUp={onKeyUpArea}
         value={valueArea}
