@@ -5,6 +5,7 @@ import {
   ImageEditorValue,
   NavbarMenuOption,
   NotificationsConfig,
+  RlsAppThemeTabs,
   RlsAvatar,
   RlsBadge,
   RlsBallot,
@@ -33,7 +34,6 @@ import {
   RlsPoster,
   RlsSlider,
   RlsTheme,
-  toggleAppTheme,
   useDesingSystemController,
   useRlsContext
 } from '../index';
@@ -190,10 +190,6 @@ export function Demo() {
   const [crop, setCrop] = useState(60);
   const [rating, setRating] = useState(20);
   const [avatar, setAvatar] = useState<ImageEditorValue>();
-
-  const changeAppTheme = useCallback(() => {
-    toggleAppTheme();
-  }, []);
 
   const showNotification = useCallback(() => {
     notify(NOTIFICATIONS[notifyIndex.current % NOTIFICATIONS.length]);
@@ -388,14 +384,7 @@ export function Demo() {
                 </div>
 
                 <div className="dashboard__actions">
-                  <RlsButton
-                    type="flat"
-                    rlsTheme="obsidian"
-                    prefixIcon="shake"
-                    onClick={changeAppTheme}
-                  >
-                    Cambiar tema
-                  </RlsButton>
+                  <RlsAppThemeTabs rlsTheme="neutral" />
 
                   <RlsButton
                     type="raised"

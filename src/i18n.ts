@@ -2,6 +2,9 @@ import { i18n } from '@rolster/i18n';
 
 export const reactI18n = i18n({
   es: {
+    appThemeDark: 'Oscuro',
+    appThemeDim: 'Intermedio',
+    appThemeLight: 'Claro',
     confirmationActionApproved: 'Aceptar',
     dateActionCancel: 'Cancelar',
     dateActionSelect: 'Establecer',
@@ -15,6 +18,9 @@ export const reactI18n = i18n({
     listInputPlaceholder: 'Escriba palabre clave para filtrar...'
   },
   en: {
+    appThemeDark: 'Dark',
+    appThemeDim: 'Dim',
+    appThemeLight: 'Light',
     confirmationActionApproved: 'Approved',
     dateActionCancel: 'Cancel',
     dateActionSelect: 'Select',

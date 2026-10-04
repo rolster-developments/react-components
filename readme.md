@@ -168,6 +168,7 @@ function Header({ requesting, onSave }: HeaderProps) {
 | ------------------------- | ---------------------------------------------------------------------------------------- |
 | `RlsAccordion`            | Collapsible section with title and indicator, animated on the height of its content      |
 | `RlsAlert`                | Message block with optional icon and bordered variant                                    |
+| `RlsAppThemeTabs`         | Tab bar with the application themes that writes the selected one on the body             |
 | `RlsBallot`               | Avatar, title and subtitle row, with skeleton state                                      |
 | `RlsBody`                 | Body container of an application page                                                    |
 | `RlsButtonProgress`       | Action button surrounded by a circular progress while `progressing`                      |
@@ -301,27 +302,28 @@ function Assignment({ persons }: { persons: Person[] }) {
 
 ### Hooks
 
-| Hook                                                 | Description                                                                           |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `useRlsContext(): RlsState`                          | Reads the context of `RlsApplication`; throws when the wrapper is missing             |
-| `useConfirmation(): ConfirmationService`             | Creates the `confirmation` function and the `RlsConfirmation` node that renders it    |
-| `useNotifications(): NotificationsService`           | Creates the `notify` function and the `RlsNotifications` node with the stack          |
-| `useSnackbar(): SnackbarService`                     | Creates the `snackbar` function and the `RlsSnackbar` node that renders it            |
-| `useFieldAutocomplete(props)`                        | State of an autocomplete field: coincidences, pattern, references and event handlers  |
-| `useFieldList(props)`                                | State of a multiple selection field: selected elements, references and event handlers |
-| `useFieldSelect(props)`                              | State of a single selection field: value, references and event handlers               |
-| `useListController(props)`                           | Base of the previous ones: visibility, keyboard navigation and writing to the control |
-| `useDatatable(table?): DatatableController`          | Observes the body of a table and reports whether it is scrollable                     |
-| `useDesingSystemController(primary?, secondary?)`    | Applies a design system and toggles between two of them                               |
-| `useDropdownController(effect?): DropdownController` | Opens a `RlsDropdown` at a position or from a mouse event                             |
-| `usePortalController(): PortalController`            | Visibility of modals, sheets and navigation panels                                    |
-| `useTabsController(options): TabsController`         | Creates the control of a tab bar and the `Tabs` node bound to it                      |
-| `useImageEditorController(options)`                  | Opens the file selector and the image editor, and returns the node that renders them  |
-| `useFormSingleSelectionController(props)`            | `checked` state and selection of a value over a control                               |
-| `useFormToggleController(props)`                     | `checked` state and toggle of a `boolean` control                                     |
-| `useResize({ refElement, onResize })`                | Reports the dimensions of an element when it changes size                             |
-| `useRelocationOnComponent({ container, element })`   | Allows dragging an element inside its container                                       |
-| `useEventCallback(callback)`                         | Returns a stable function that always calls the last received callback                |
+| Hook                                                    | Description                                                                           |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `useRlsContext(): RlsState`                             | Reads the context of `RlsApplication`; throws when the wrapper is missing             |
+| `useConfirmation(): ConfirmationService`                | Creates the `confirmation` function and the `RlsConfirmation` node that renders it    |
+| `useNotifications(): NotificationsService`              | Creates the `notify` function and the `RlsNotifications` node with the stack          |
+| `useSnackbar(): SnackbarService`                        | Creates the `snackbar` function and the `RlsSnackbar` node that renders it            |
+| `useFieldAutocomplete(props)`                           | State of an autocomplete field: coincidences, pattern, references and event handlers  |
+| `useFieldList(props)`                                   | State of a multiple selection field: selected elements, references and event handlers |
+| `useFieldSelect(props)`                                 | State of a single selection field: value, references and event handlers               |
+| `useListController(props)`                              | Base of the previous ones: visibility, keyboard navigation and writing to the control |
+| `useDatatable(table?): DatatableController`             | Observes the body of a table and reports whether it is scrollable                     |
+| `useDesingSystemController(primary?, secondary?)`       | Applies a design system and toggles between two of them                               |
+| `useAppThemeController(initial?, primary?, secondary?)` | Applies an application theme and toggles between two of them                          |
+| `useDropdownController(effect?): DropdownController`    | Opens a `RlsDropdown` at a position or from a mouse event                             |
+| `usePortalController(): PortalController`               | Visibility of modals, sheets and navigation panels                                    |
+| `useTabsController(options): TabsController`            | Creates the control of a tab bar and the `Tabs` node bound to it                      |
+| `useImageEditorController(options)`                     | Opens the file selector and the image editor, and returns the node that renders them  |
+| `useFormSingleSelectionController(props)`               | `checked` state and selection of a value over a control                               |
+| `useFormToggleController(props)`                        | `checked` state and toggle of a `boolean` control                                     |
+| `useResize({ refElement, onResize })`                   | Reports the dimensions of an element when it changes size                             |
+| `useRelocationOnComponent({ container, element })`      | Allows dragging an element inside its container                                       |
+| `useEventCallback(callback)`                            | Returns a stable function that always calls the last received callback                |
 
 ```tsx
 import { RlsButton, useRlsContext } from '@rolster/react-components';
@@ -354,12 +356,12 @@ function DeleteAction({ person }: { person: Person }) {
 
 ### Theme and design system
 
-The application theme is written on the `app-theme` attribute of `document.body`, and the colors of a theme are written as custom properties on that same element.
+The application theme is written on the `app-theme` attribute of `document.body`, and the colors of a theme are written as custom properties on that same element. The themes are `light`, `dim` and `dark`, as declared by `@rolster/styles-foundations`; `RlsAppThemeTabs` renders them as a tab bar and applies the selected one, with translated labels that the `labels` prop can override.
 
 | Function                                 | Description                                                                  |
 | ---------------------------------------- | ---------------------------------------------------------------------------- |
 | `getAppTheme(): RlsAppTheme`             | Current theme, `light` when nothing has been set                             |
-| `setAppTheme(theme)`                     | Writes `light` or `dark` on the application body                             |
+| `setAppTheme(theme)`                     | Writes `light`, `dim` or `dark` on the application body                      |
 | `toggleAppTheme(): RlsAppTheme`          | Switches between `light` and `dark`, and returns the applied theme           |
 | `setDesignSystem(designSystem?)`         | Writes the class of the design system on the body and removes the other ones |
 | `generateThemePalette(color, theme?)`    | Builds a `ThemePalette` of eleven shades from a hexadecimal color            |
@@ -398,7 +400,7 @@ toggleAppTheme(); // 'dark'
 | Type                             | Description                                                                     |
 | -------------------------------- | ------------------------------------------------------------------------------- |
 | `RlsTheme`                       | Color theme of a component, applied with the `rlsTheme` prop                    |
-| `RlsAppTheme`                    | Application theme, `light` or `dark`                                            |
+| `RlsAppTheme`                    | Application theme, `light`, `dim` or `dark`                                     |
 | `RlsDesignSystem`                | Design system, `bordered`, `filled` or `gradient`                               |
 | `RlsButtonType`                  | Button style, `ghost`, `flat` or `raised`                                       |
 | `PropsWithClassName`             | Props with an optional `className`                                              |
@@ -414,6 +416,7 @@ toggleAppTheme(); // 'dark'
 | `NotificationsConfig`            | Configuration of a notification, a `SnackbarConfig` plus `duration`             |
 | `PaginationEvent<T>`             | Event of `RlsPagination`: page, limits and suggestions of the page              |
 | `Tab<T>`                         | Tab of `RlsTabs`: label, value and disabled state                               |
+| `AppThemeLabels`                 | Labels of `RlsAppThemeTabs`, one optional string per application theme          |
 | `NavbarMenuOption`               | Option of `RlsNavbarMenu`: identifier, icon and label                           |
 | `ImageEditorValue`               | Result of the image editor: `base64` and `blob`                                 |
 | `ThemePalette`                   | Palette generated for a theme: shades, custom properties and CSS                |

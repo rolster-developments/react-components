@@ -17,7 +17,8 @@ export type RlsTheme =
   | 'purple'
   | 'amber'
   | 'smartness'
-  | 'obsidian';
+  | 'obsidian'
+  | 'neutral';
 
 export type RlsAppTheme = 'light' | 'dim' | 'dark';
 

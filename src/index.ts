@@ -35,6 +35,7 @@ export * from './components/atoms/TabularText/TabularText';
 export * from './components/definitions';
 export * from './components/molecules/Accordion/Accordion';
 export * from './components/molecules/Alert/Alert';
+export * from './components/molecules/AppThemeTabs/AppThemeTabs';
 export * from './components/molecules/Ballot/Ballot';
 export * from './components/molecules/Body/Body';
 export * from './components/molecules/ButtonProgress/ButtonProgress';
@@ -105,6 +106,7 @@ export type {
   RolsterReactInputControl
 } from './components/types';
 export * from './context';
+export * from './controllers/AppThemeController';
 export * from './controllers/DatatableController';
 export * from './controllers/DesingSystemController';
 export * from './controllers/DropdownController';
