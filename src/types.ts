@@ -19,7 +19,7 @@ export type RlsTheme =
   | 'smartness'
   | 'obsidian';
 
-export type RlsAppTheme = 'light' | 'dark';
+export type RlsAppTheme = 'light' | 'dim' | 'dark';
 
 export type RlsDesignSystem = 'bordered' | 'filled' | 'gradient';
 

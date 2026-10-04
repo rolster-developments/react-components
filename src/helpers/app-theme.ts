@@ -7,9 +7,9 @@ export function getAppTheme(): RlsAppTheme {
     return 'light';
   }
 
-  return document.body.getAttribute(APP_THEME_ATTRIBUTE) === 'dark'
-    ? 'dark'
-    : 'light';
+  const theme = document.body.getAttribute(APP_THEME_ATTRIBUTE);
+
+  return theme === 'dark' || theme === 'dim' ? theme : 'light';
 }
 
 export function setAppTheme(theme: RlsAppTheme): void {
