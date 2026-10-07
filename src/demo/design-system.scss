@@ -173,3 +173,22 @@ body {
     color: var(--rls-app-color-700);
   }
 }
+
+.dashboard__overlay {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x4);
+  padding: var(--rls-sizing-x8);
+  box-sizing: border-box;
+
+  h3 {
+    font-size: var(--rls-heading6-font-size);
+    font-weight: var(--rls-font-weight-bold);
+    color: var(--rls-app-color-900);
+  }
+
+  p {
+    font-size: var(--rls-body-font-size);
+    color: var(--rls-app-color-600);
+  }
+}

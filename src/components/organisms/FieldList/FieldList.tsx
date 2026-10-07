@@ -7,7 +7,7 @@ import { memo, ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
-import { RlsIcon } from '../../atoms/Icon/Icon';
+import { RlsChip } from '../../atoms/Chip/Chip';
 import { RlsComponent } from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
@@ -107,20 +107,16 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
               </span>
             ) : (
               fieldList.selected.map((item, index) => (
-                <div key={index} className="rls-field-list__multi__chip">
-                  <span className="rls-field-list__multi__chip__description">
-                    {item.description}
-                  </span>
-
-                  {!props.readOnly && !disabled && (
-                    <button
-                      className="rls-field-list__multi__chip__remove"
-                      onClick={fieldList.onRemoveElement(item)}
-                    >
-                      <RlsIcon value="close" />
-                    </button>
-                  )}
-                </div>
+                <RlsChip
+                  key={index}
+                  onRemove={
+                    !props.readOnly && !disabled
+                      ? fieldList.onRemoveElement(item)
+                      : undefined
+                  }
+                >
+                  {item.description}
+                </RlsChip>
               ))
             )}
           </div>

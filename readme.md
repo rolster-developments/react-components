@@ -112,6 +112,7 @@ Components that display a list of options (`RlsFieldSelect`, `RlsFieldList`, `Rl
 | `RlsButtonOption`     | Icon button that behaves as one option of a single selection over a control              |
 | `RlsCheckBox`         | Checkbox mark driven by the `checked` prop                                               |
 | `RlsCheckBoxControl`  | `RlsCheckBox` bound to a `boolean` control                                               |
+| `RlsChip`             | Compact label with optional icon, remove button and clickable state                      |
 | `RlsHoverSwap`        | Renders `children` and swaps it for `content` while the pointer is over it               |
 | `RlsIcon`             | Renders the glyph `rls-icon-{value}`, with skeleton state                                |
 | `RlsImage`            | `img` that shows a skeleton until the source finishes loading                            |
@@ -174,6 +175,7 @@ function Header({ requesting, onSave }: HeaderProps) {
 | `RlsButtonProgress`       | Action button surrounded by a circular progress while `progressing`                      |
 | `RlsButtonStepper`        | Pair of buttons that emit a down and an up action                                        |
 | `RlsButtonToggle`         | Action button with a second button that opens the list of `options`                      |
+| `RlsChipGroup`            | Group of chips that behaves as a single selection over a list of values                  |
 | `RlsContent`              | Content container of an application page                                                 |
 | `RlsFieldArea`            | Labelled field over `RlsAreaText`, with an optional counter and its error message        |
 | `RlsFieldDecimal`         | Labelled field over `RlsInputDecimal` with its error message                             |
@@ -261,6 +263,7 @@ function Account() {
 | `RlsFormNavigation`              | Navigation panel that slides over a form                                   |
 | `RlsImageChooser`                | Avatar that opens the file selector and the image editor                   |
 | `RlsImageEditor`                 | Image editor with zoom, crop by ratio and export to `ImageEditorValue`     |
+| `RlsLedColor`                    | Led that opens the color picker and shows the selected color               |
 | `RlsModal`                       | Modal window with backdrop                                                 |
 | `RlsModalClock`                  | Modal that hosts `RlsPickerClock`                                          |
 | `RlsModalDate`                   | Modal that hosts `RlsPickerDate`                                           |

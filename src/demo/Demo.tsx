@@ -9,9 +9,12 @@ import {
   RlsAvatar,
   RlsBadge,
   RlsBallot,
+  RlsBottomSheet,
   RlsButton,
   RlsButtonAction,
   RlsCard,
+  RlsChip,
+  RlsChipGroup,
   RlsChooserSelect,
   RlsDatatable,
   RlsDatatableCell,
@@ -20,21 +23,26 @@ import {
   RlsFieldAutocomplete,
   RlsFieldDate,
   RlsFieldDateRange,
+  RlsFieldList,
   RlsFieldSelect,
   RlsFieldText,
+  RlsFormNavigation,
   RlsIcon,
   RlsImageChooser,
   RlsInputSearch,
   RlsLabelCheckBox,
   RlsLabelRadioButton,
   RlsLabelSwitch,
-  RlsLed,
+  RlsLedColor,
+  RlsModal,
+  RlsModalSheet,
   RlsNavbar,
   RlsNavbarMenu,
   RlsPoster,
   RlsSlider,
   RlsTheme,
   useDesingSystemController,
+  usePortalController,
   useRlsContext
 } from '../index';
 
@@ -93,6 +101,8 @@ const NEW_COURSES: CourseItem[] = [
     color: 'amaizing'
   }
 ];
+
+const ROLES = ['SUPERUSUARIO', 'ADMINISTRADOR', 'INVITADO'];
 
 const PERSONS: Person[] = [
   {
@@ -167,8 +177,13 @@ const NOTIFICATIONS: NotificationsConfig[] = [
 ];
 
 export function Demo() {
-  const designSystem = useDesingSystemController();
-  const { notify, snackbar } = useRlsContext();
+  const designSystem = useDesingSystemController('filled', 'bordered');
+  const { confirmation, notify, snackbar } = useRlsContext();
+
+  const modalController = usePortalController();
+  const modalSheetController = usePortalController();
+  const bottomSheetController = usePortalController();
+  const formNavigationController = usePortalController();
 
   const notifyIndex = useRef(0);
 
@@ -181,21 +196,47 @@ export function Demo() {
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();
   const chooserControl = useFormControl<Person>();
+  const listControl = useFormControl<Person[]>([]);
+  const roleControl = useFormControl<string>('ADMINISTRADOR');
+  const personControl = useFormControl<Person>();
   const checkboxControl = useInputControl(false);
   const switchControl = useInputControl(true);
   const radioControl = useInputControl('daily');
   const volumeControl = useFormControl<number>(35);
+  const colorControl = useFormControl<string>(undefined, [
+    (color) => (color ? undefined : { id: 'required' })
+  ]);
 
   const [zoom, setZoom] = useState(60);
   const [crop, setCrop] = useState(60);
   const [rating, setRating] = useState(20);
   const [avatar, setAvatar] = useState<ImageEditorValue>();
+  const [colors, setColors] = useState<Record<string, string | undefined>>(() =>
+    PERSONS.reduce(
+      (state, { color, user }) => ({ ...state, [user]: color }),
+      {} as Record<string, string | undefined>
+    )
+  );
+
+  const onColorPerson = useCallback((user: string, color?: string) => {
+    setColors((state) => ({ ...state, [user]: color }));
+  }, []);
 
   const showNotification = useCallback(() => {
     notify(NOTIFICATIONS[notifyIndex.current % NOTIFICATIONS.length]);
 
     notifyIndex.current += 1;
   }, [notify]);
+
+  const showConfirmation = useCallback(() => {
+    confirmation({
+      title: 'Eliminar registro',
+      subtitle: 'Esta acción no se puede deshacer',
+      content: <p>¿Deseas eliminar definitivamente este registro?</p>,
+      approved: { label: 'Eliminar', rlsTheme: 'danger' },
+      reject: { label: 'Cancelar' }
+    });
+  }, [confirmation]);
 
   const showSnackbar = useCallback(() => {
     snackbar({
@@ -306,7 +347,12 @@ export function Demo() {
                         truncated={true}
                       >
                         <RlsDatatableCell control={true}>
-                          <RlsLed color={person.color} />
+                          <RlsLedColor
+                            value={colors[person.user]}
+                            onValue={(color) =>
+                              onColorPerson(person.user, color)
+                            }
+                          />
                         </RlsDatatableCell>
                         <RlsDatatableCell className="rls-width-xs-20 rls-align-center">
                           <RlsPoster rlsTheme="info">
@@ -381,6 +427,46 @@ export function Demo() {
                     <span>calificación: {rating}</span>
                     <span>volumen: {volumeControl.value}</span>
                   </div>
+
+                  <div className="dashboard__sliders__report">
+                    <RlsLedColor formControl={colorControl} />
+                    <span>color: {colorControl.value ?? 'sin definir'}</span>
+                    <span>válido: {colorControl.valid ? 'sí' : 'no'}</span>
+                  </div>
+
+                  <div className="dashboard__sliders__report">
+                    <RlsChip>Básico</RlsChip>
+                    <RlsChip rlsTheme="info">Con tema</RlsChip>
+                    <RlsChip icon="person">Con ícono</RlsChip>
+                    <RlsChip rlsTheme="success" contrasted={true}>
+                      Contrastado
+                    </RlsChip>
+                    <RlsChip onRemove={() => undefined}>Removible</RlsChip>
+                    <RlsChip disabled={true}>Deshabilitado</RlsChip>
+                  </div>
+
+                  <div className="dashboard__sliders__report">
+                    <RlsChipGroup
+                      formControl={roleControl}
+                      options={ROLES}
+                      rlsTheme="info"
+                    />
+
+                    <span>rol: {roleControl.value}</span>
+                  </div>
+
+                  <div className="dashboard__sliders__report">
+                    <RlsChipGroup
+                      formControl={personControl}
+                      options={PERSONS}
+                      reference={(person) => person.user}
+                      render={(person) => person.user}
+                    />
+
+                    <span>
+                      persona: {personControl.value?.name ?? 'ninguna'}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="dashboard__actions">
@@ -450,6 +536,14 @@ export function Demo() {
                   Persona asignada
                 </RlsFieldAutocomplete>
 
+                <RlsFieldList
+                  formControl={listControl}
+                  suggestions={PERSON_SUGGESTIONS}
+                  placeholder="Seleccione personas"
+                >
+                  Personas asignadas
+                </RlsFieldList>
+
                 <RlsChooserSelect
                   className="dashboard__chooser"
                   formControl={chooserControl}
@@ -516,6 +610,26 @@ export function Demo() {
                   Mostrar snackbar
                 </RlsButton>
 
+                <RlsButton type="flat" onClick={modalController.open}>
+                  Abrir modal
+                </RlsButton>
+
+                <RlsButton type="flat" onClick={modalSheetController.open}>
+                  Abrir modal sheet
+                </RlsButton>
+
+                <RlsButton type="flat" onClick={bottomSheetController.open}>
+                  Abrir bottom sheet
+                </RlsButton>
+
+                <RlsButton type="flat" onClick={formNavigationController.open}>
+                  Abrir form navigation
+                </RlsButton>
+
+                <RlsButton type="flat" onClick={showConfirmation}>
+                  Abrir confirmation
+                </RlsButton>
+
                 <RlsButton
                   type="flat"
                   rlsTheme="info"
@@ -529,6 +643,46 @@ export function Demo() {
           </div>
         </div>
       </section>
+
+      <RlsModal controller={modalController} autoclose>
+        <div className="dashboard__overlay">
+          <h3>Modal</h3>
+          <p>Entrada con desaceleración, salida más corta con aceleración.</p>
+          <RlsButton type="raised" onClick={modalController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsModal>
+
+      <RlsModalSheet controller={modalSheetController} autoclose>
+        <div className="dashboard__overlay">
+          <h3>Modal sheet</h3>
+          <p>Modal en escritorio, bottom sheet en pantallas pequeñas.</p>
+          <RlsButton type="raised" onClick={modalSheetController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsModalSheet>
+
+      <RlsBottomSheet controller={bottomSheetController} autoclose>
+        <div className="dashboard__overlay">
+          <h3>Bottom sheet</h3>
+          <p>Desliza desde el borde inferior sin fundido.</p>
+          <RlsButton type="raised" onClick={bottomSheetController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsBottomSheet>
+
+      <RlsFormNavigation controller={formNavigationController}>
+        <div className="dashboard__overlay">
+          <h3>Form navigation</h3>
+          <p>Panel lateral para formularios.</p>
+          <RlsButton type="raised" onClick={formNavigationController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsFormNavigation>
     </div>
   );
 }
