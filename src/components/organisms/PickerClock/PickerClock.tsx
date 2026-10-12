@@ -4,8 +4,7 @@ import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import {
   memo,
-  MouseEvent,
-  TouchEvent,
+  PointerEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -29,7 +28,6 @@ interface PickerClockProps extends RlsComponent {
 }
 
 interface PickerClockTickProps {
-  onValue: (value: number) => void;
   selectionIsHours: boolean;
   value: number;
 }
@@ -38,16 +36,27 @@ function formatTime(value: number): string {
   return String(value).padStart(2, '0');
 }
 
+function pointerIsInsideTick(
+  { clientX, clientY }: PointerEvent<HTMLElement>,
+  tick: HTMLElement
+): boolean {
+  const { left, top, width, height } = tick.getBoundingClientRect();
+
+  const distanceX = clientX - (left + width / 2);
+  const distanceY = clientY - (top + height / 2);
+  const radius = Math.min(width, height) / 2;
+
+  return distanceX ** 2 + distanceY ** 2 <= radius ** 2;
+}
+
 const CLOCK_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const CLOCK_HOURS = 12;
+const CLOCK_MINUTES = 60;
 const RADIUS = 48;
 const DIAL_RADIUS = 60;
 const TICK_RADIUS = 7;
 
-function RlsPickerClockTick({
-  onValue,
-  selectionIsHours,
-  value
-}: PickerClockTickProps) {
+function RlsPickerClockTick({ selectionIsHours, value }: PickerClockTickProps) {
   const styleTick = useMemo(() => {
     const radian = (value / 6) * Math.PI;
     const x = Math.sin(radian) * RADIUS;
@@ -59,29 +68,21 @@ function RlsPickerClockTick({
     };
   }, []);
 
-  const label = useMemo(() => {
+  const tickValue = useMemo(() => {
     if (selectionIsHours) {
-      return formatTime(value);
+      return value;
     }
 
-    if (value === 12) {
-      return formatTime(0);
-    }
-
-    return formatTime(value * 5);
+    return value === CLOCK_HOURS ? 0 : value * 5;
   }, [selectionIsHours]);
 
-  const onClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      onValue(value);
-    },
-    [onValue]
-  );
-
   return (
-    <div className="rls-picker-clock__tick" style={styleTick} onClick={onClick}>
-      {label}
+    <div
+      className="rls-picker-clock__tick"
+      style={styleTick}
+      data-value={tickValue}
+    >
+      {formatTime(tickValue)}
     </div>
   );
 }
@@ -182,30 +183,6 @@ function RlsPickerClockComponent({
     changeIsInternal.current = false;
   }, [formControl?.value]);
 
-  const refreshComponent = useCallback(
-    (clientX: number, clientY: number) => {
-      const rectangle = plateElement.current.getBoundingClientRect();
-      const centerX = rectangle.left + rectangle.width / 2;
-      const centerY = rectangle.top + rectangle.height / 2;
-
-      const positionX = clientX - centerX;
-      const positionY = clientY - centerY;
-
-      const angle = Math.atan2(-positionX, positionY) + Math.PI;
-
-      const value = Math.round(angle / radianUnit);
-
-      refreshClock(value);
-
-      if (selectionIsHours) {
-        setHour(value === 0 ? 12 : value);
-      } else {
-        setMinute(value);
-      }
-    },
-    [selectionIsHours, radianUnit]
-  );
-
   const refreshClock = useCallback(
     (value: number) => {
       const angle = value * radianUnit;
@@ -228,6 +205,38 @@ function RlsPickerClockComponent({
     [selectionIsHours, radianUnit]
   );
 
+  const selectValue = useCallback(
+    (value: number) => {
+      refreshClock(value);
+
+      if (selectionIsHours) {
+        setHour(value === 0 ? CLOCK_HOURS : value);
+      } else {
+        setMinute(value);
+      }
+    },
+    [selectionIsHours, refreshClock]
+  );
+
+  const selectFromPosition = useCallback(
+    (clientX: number, clientY: number) => {
+      const rectangle = plateElement.current.getBoundingClientRect();
+      const centerX = rectangle.left + rectangle.width / 2;
+      const centerY = rectangle.top + rectangle.height / 2;
+
+      const positionX = clientX - centerX;
+      const positionY = clientY - centerY;
+
+      // Angle in [0, 2π) measured clockwise from 12 o'clock
+      const angle = Math.atan2(-positionX, positionY) + Math.PI;
+      const steps = selectionIsHours ? CLOCK_HOURS : CLOCK_MINUTES;
+
+      // Modulo keeps the last half step before 12 o'clock as 0, not as 60/12
+      selectValue(Math.round(angle / radianUnit) % steps);
+    },
+    [selectionIsHours, radianUnit, selectValue]
+  );
+
   const onClickHour = useCallback(() => {
     setSelectionIsHours(true);
   }, []);
@@ -244,49 +253,53 @@ function RlsPickerClockComponent({
     setZoneIsPM(true);
   }, []);
 
-  const onActiveSelection = useCallback(() => {
-    selectionIsActive.current = true;
-  }, []);
+  const onPointerDown = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      event.currentTarget.setPointerCapture(event.pointerId);
 
-  const onMouseSelection = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+      selectionIsActive.current = true;
+
+      const tick = (event.target as HTMLElement).closest<HTMLElement>(
+        '.rls-picker-clock__tick'
+      );
+
+      // Pressing inside a label circle snaps to its exact value,
+      // anywhere else (and while dragging) the angle decides
+      if (tick?.dataset.value && pointerIsInsideTick(event, tick)) {
+        selectValue(Number(tick.dataset.value));
+      } else {
+        selectFromPosition(event.clientX, event.clientY);
+      }
+    },
+    [selectValue, selectFromPosition]
+  );
+
+  const onPointerMove = useCallback(
+    (event: PointerEvent<HTMLDivElement>) => {
       if (selectionIsActive.current) {
-        event.preventDefault();
-        refreshComponent(event.clientX, event.clientY);
+        selectFromPosition(event.clientX, event.clientY);
       }
     },
-    [refreshComponent]
+    [selectFromPosition]
   );
 
-  const onTouchSelection = useCallback(
-    (event: TouchEvent<HTMLDivElement>) => {
-      const touch = event.touches.item(0);
+  const onPointerUp = useCallback(() => {
+    if (!selectionIsActive.current) {
+      return;
+    }
 
-      if (selectionIsActive.current && touch) {
-        refreshComponent(touch.clientX, touch.clientY);
-      }
-    },
-    [refreshComponent]
-  );
+    selectionIsActive.current = false;
 
-  const onInactiveSelection = useCallback(() => {
+    // Once the hour is chosen, continue with the minutes
+    if (selectionIsHours) {
+      setSelectionIsHours(false);
+    }
+  }, [selectionIsHours]);
+
+  const onPointerCancel = useCallback(() => {
     selectionIsActive.current = false;
   }, []);
-
-  const onClickValue = useCallback(
-    (value: number) => {
-      if (selectionIsHours) {
-        setHour(value);
-        refreshClock(value);
-      } else {
-        const minute = value === 12 ? 0 : value * 5;
-
-        setMinute(minute);
-        refreshClock(minute);
-      }
-    },
-    [selectionIsHours]
-  );
 
   const onCancel = useCallback(() => {
     onListener?.({ event: PickerListenerEvent.Cancel });
@@ -295,16 +308,21 @@ function RlsPickerClockComponent({
   const onCurrentTime = useCallback(() => {
     const currentTime = Time.now();
 
+    const zoneIsPM = currentTime.hour >= 12;
+    const hour = zoneIsPM ? currentTime.hour - 12 : currentTime.hour;
+
     changeIsInternal.current = true;
     formControl?.setValue(currentTime);
-    setHour(currentTime.hour);
+    setZoneIsPM(zoneIsPM);
+    setHour(hour);
     setMinute(currentTime.minute);
+    refreshClock(selectionIsHours ? hour : currentTime.minute);
 
     onListener?.({
       event: PickerListenerEvent.Select,
       value: currentTime
     });
-  }, [formControl, onListener]);
+  }, [formControl, onListener, selectionIsHours, refreshClock]);
 
   const onSelect = useCallback(() => {
     const hourValue = zoneIsPM
@@ -356,13 +374,10 @@ function RlsPickerClockComponent({
         <div
           className="rls-picker-clock__plate"
           ref={plateElement}
-          onMouseDown={onActiveSelection}
-          onMouseMove={onMouseSelection}
-          onMouseUp={onInactiveSelection}
-          onMouseLeave={onInactiveSelection}
-          onTouchStart={onActiveSelection}
-          onTouchMove={onTouchSelection}
-          onTouchEnd={onInactiveSelection}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerCancel}
         >
           <div className="rls-picker-clock__canvas">
             <svg width="120rem" height="120rem">
@@ -408,7 +423,6 @@ function RlsPickerClockComponent({
                   key={value}
                   value={value}
                   selectionIsHours={selectionIsHours}
-                  onValue={onClickValue}
                 />
               );
             })}

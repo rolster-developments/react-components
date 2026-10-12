@@ -8,7 +8,7 @@ import {
   useRef,
   useState
 } from 'react';
-import { RlsButton } from '../components/atoms/Button/Button';
+import { RlsIcon } from '../components/atoms/Icon/Icon';
 import { ImageEditorValue } from '../components/organisms/ImageEditor/ImageEditor';
 import { RlsImageEditorModal } from '../components/organisms/ImageEditorModal/ImageEditorModal';
 import { ImageRatio } from '../components/types';
@@ -100,14 +100,14 @@ export function useImageEditorController(
           selection={options.selection}
           onValue={onEditorValue}
         >
-          <RlsButton
-            type="flat"
-            rlsTheme="danger"
+          <button
+            className="rls-image-editor__action"
+            rls-theme="danger"
             onClick={onCancel}
             disabled={options.disabled}
           >
-            {labels.actionCancel}
-          </RlsButton>
+            <RlsIcon value="close" />
+          </button>
         </RlsImageEditorModal>
       )
     );

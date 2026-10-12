@@ -1,4 +1,9 @@
-import { RolsterAutocompleteElement } from '@rolster/components';
+import {
+  PickerListener,
+  PickerListenerEvent,
+  RolsterAutocompleteElement
+} from '@rolster/components';
+import { Time } from '@rolster/dates';
 import { useFormControl, useInputControl } from '@rolster/react-forms';
 import { useCallback, useRef, useState } from 'react';
 import {
@@ -38,6 +43,7 @@ import {
   RlsModalSheet,
   RlsNavbar,
   RlsNavbarMenu,
+  RlsPickerClock,
   RlsPoster,
   RlsSlider,
   RlsTheme,
@@ -193,6 +199,8 @@ export function Demo() {
     formatter: (value: string) => value.toUpperCase()
   });
   const dateControl = useFormControl<Date>();
+  const clockControl = useFormControl<Time>(new Time(9, 30));
+  const [clockEvent, setClockEvent] = useState('ninguno');
   const selectControl = useFormControl<Person>();
   const autocompleteControl = useFormControl<Person>();
   const chooserControl = useFormControl<Person>();
@@ -204,7 +212,10 @@ export function Demo() {
   const radioControl = useInputControl('daily');
   const volumeControl = useFormControl<number>(35);
   const colorControl = useFormControl<string>(undefined, [
-    (color) => (color ? undefined : { id: 'required' })
+    (color) =>
+      color
+        ? undefined
+        : { id: 'required', message: 'Selecciona un color para continuar' }
   ]);
 
   const [zoom, setZoom] = useState(60);
@@ -217,6 +228,12 @@ export function Demo() {
       {} as Record<string, string | undefined>
     )
   );
+
+  const onClockListener = useCallback(({ event }: PickerListener<Time>) => {
+    setClockEvent(
+      event === PickerListenerEvent.Select ? 'seleccionar' : 'cancelar'
+    );
+  }, []);
 
   const onColorPerson = useCallback((user: string, color?: string) => {
     setColors((state) => ({ ...state, [user]: color }));
@@ -448,6 +465,7 @@ export function Demo() {
                   <div className="dashboard__sliders__report">
                     <RlsChipGroup
                       formControl={roleControl}
+                      value={roleControl.value}
                       options={ROLES}
                       rlsTheme="info"
                     />
@@ -515,6 +533,22 @@ export function Demo() {
                 <RlsFieldDateRange placeholder="Periodo del reporte">
                   Rango de periodo
                 </RlsFieldDateRange>
+
+                <div className="dashboard__clock">
+                  <RlsPickerClock
+                    formControl={clockControl}
+                    rlsTheme="info"
+                    onListener={onClockListener}
+                  />
+
+                  <div className="dashboard__sliders__report">
+                    <span>
+                      hora:{' '}
+                      {clockControl.value?.meridiemFormat ?? 'sin definir'}
+                    </span>
+                    <span>evento: {clockEvent}</span>
+                  </div>
+                </div>
 
                 <RlsFieldText formControl={textControl}>
                   Nombre completo

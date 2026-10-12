@@ -1,10 +1,8 @@
-import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRelocationOnComponent } from '../../../controllers/RelocationOnComponentController';
 import { useResize } from '../../../controllers/ResizeController';
-import { reactI18n } from '../../../i18n';
-import { RlsButton } from '../../atoms/Button/Button';
+import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 import { RlsSlider } from '../../molecules/Slider/Slider';
 import { ImageMymeType, ImageRatio } from '../../types';
@@ -74,11 +72,6 @@ export function calculateImgDimension(
 
 function RlsImageEditorComponent(props: ImageEditorProps) {
   const [selection, setSelection] = useState(props.selection ?? 60);
-
-  const [labels, setLabels] = useState({
-    actionRestore: reactI18n('editorImageActionRestore'),
-    actionSelect: reactI18n('editorImageActionSelect')
-  });
 
   const refBody = useRef<HTMLDivElement>(null!);
   const refImage = useRef<HTMLDivElement>(null!);
@@ -275,18 +268,10 @@ function RlsImageEditorComponent(props: ImageEditorProps) {
       refreshSelectionStyle(selection);
     };
 
-    const unsubscription = i18nSubscribe(() => {
-      setLabels({
-        actionRestore: reactI18n('editorImageActionRestore'),
-        actionSelect: reactI18n('editorImageActionSelect')
-      });
-    });
-
     window.addEventListener('resize', refreshImageStyle);
 
     return () => {
       window.removeEventListener('resize', refreshImageStyle);
-      unsubscription();
     };
   }, []);
 
@@ -418,7 +403,7 @@ function RlsImageEditorComponent(props: ImageEditorProps) {
       <div className="rls-image-editor__footer">
         <div className="rls-image-editor__sliders">
           <RlsSlider
-            prefixIcon="external-link"
+            prefixIcon="crop"
             value={selection}
             minValue={MIN_SLIDER_VALUE}
             maxValue={MAX_SLIDER_VALUE}
@@ -430,25 +415,23 @@ function RlsImageEditorComponent(props: ImageEditorProps) {
         <div className="rls-image-editor__actions">
           {props.children}
 
-          <RlsButton
-            type="flat"
-            rlsTheme="standard"
-            prefixIcon="refresh"
+          <button
+            className="rls-image-editor__action"
+            rls-theme="standard"
             onClick={onRestore}
             disabled={props.disabled}
           >
-            {labels.actionRestore}
-          </RlsButton>
+            <RlsIcon value="refresh" />
+          </button>
 
-          <RlsButton
-            type="raised"
-            rlsTheme="primary"
-            prefixIcon="crop"
+          <button
+            className="rls-image-editor__action"
+            rls-theme="success"
             onClick={onCropImage}
             disabled={props.disabled}
           >
-            {labels.actionSelect}
-          </RlsButton>
+            <RlsIcon value="checkmark-circle-out" />
+          </button>
         </div>
       </div>
 
