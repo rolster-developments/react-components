@@ -314,6 +314,7 @@ function generateThemeCSS(
   const rgb900 = rgbChannels(parseHex(colors['900']));
   const rgb700 = rgbChannels(parseHex(colors['700']));
   const rgb500 = rgbChannels(parseHex(colors['500']));
+  const rgb300 = rgbChannels(parseHex(colors['300']));
 
   const colorProps = SHADE_LABELS.map((label) =>
     prop(`color-${label}`, colors[label])
@@ -332,10 +333,19 @@ function generateThemeCSS(
     prop(`backdrop-${label}`, `rgba(${rgb900}, ${Number(label) / 1000})`)
   );
 
-  const skeletonProps = (
-    Object.entries(SKELETON_OPACITY) as [ShadeLabel, number][]
-  ).map(([label, opacity]) =>
+  const skeletonOpacities = Object.entries(SKELETON_OPACITY) as [
+    ShadeLabel,
+    number
+  ][];
+
+  const skeletonProps = skeletonOpacities.map(([label, opacity]) =>
     prop(`skeleton-${label}`, `rgba(${rgb700}, ${opacity})`)
+  );
+
+  // Skeleton tokens for dark surfaces, taken from the light step that mirrors
+  // color-700 around color-500, as the foundations mixin does.
+  const skeletonDarkProps = skeletonOpacities.map(([label, opacity]) =>
+    prop(`skeleton-dark-${label}`, `rgba(${rgb300}, ${opacity})`)
   );
 
   const shadowProps = [
@@ -348,6 +358,7 @@ function generateThemeCSS(
     ...gradientProps,
     ...backdropProps,
     ...skeletonProps,
+    ...skeletonDarkProps,
     ...shadowProps
   ];
 }
@@ -445,7 +456,91 @@ export function setThemeColor(
     return;
   }
 
+  resetTheme(theme);
+
   const { properties } = generateThemePalette(baseColor, theme);
+  const target = document.body || document.documentElement;
+
+  properties.forEach(({ name, value }) => {
+    target.style.setProperty(name, value);
+  });
+}
+
+const ALIAS_LABELS: ShadeLabel[] = [
+  '900',
+  '800',
+  '700',
+  '600',
+  '500',
+  '400',
+  '300',
+  '200',
+  '100'
+];
+
+const SKELETON_LABELS = Object.keys(SKELETON_OPACITY) as ShadeLabel[];
+
+const ALIAS_TOKENS: string[] = [
+  ...SHADE_LABELS.map((label) => `color-${label}`),
+  ...ALIAS_LABELS.map((label) => `gradient-${label}`),
+  ...ALIAS_LABELS.map((label) => `backdrop-${label}`),
+  ...SKELETON_LABELS.map((label) => `skeleton-${label}`),
+  ...SKELETON_LABELS.map((label) => `skeleton-dark-${label}`),
+  'shadow-color-500',
+  'shadow-500'
+];
+
+export interface ThemeAlias {
+  css: string;
+  properties: { name: string; value: string }[];
+  source: RlsTheme;
+  theme: RlsTheme;
+}
+
+export function resetTheme(theme: RlsTheme = 'primary'): void {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  const target = document.body || document.documentElement;
+
+  ALIAS_TOKENS.forEach((token) => {
+    target.style.removeProperty(`--rls-${theme}-${token}`);
+  });
+}
+
+export function generateThemeAlias(
+  source: RlsTheme,
+  theme: RlsTheme = 'primary'
+): ThemeAlias {
+  const properties = ALIAS_TOKENS.map((token) => ({
+    name: `--rls-${theme}-${token}`,
+    value: `var(--rls-${source}-${token})`
+  }));
+
+  return {
+    source,
+    theme,
+    properties,
+    css: properties.map((p) => `${p.name}: ${p.value};`).join('\n')
+  };
+}
+
+export function setThemeAlias(
+  source: RlsTheme,
+  theme: RlsTheme = 'primary'
+): void {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  if (source === theme) {
+    resetTheme(theme);
+
+    return;
+  }
+
+  const { properties } = generateThemeAlias(source, theme);
   const target = document.body || document.documentElement;
 
   properties.forEach(({ name, value }) => {
