@@ -11,10 +11,11 @@ function RlsSkeletonTextComponent({
   active,
   animation,
   children,
+  rlsSize,
   rlsTheme
 }: SkeletonTextProps) {
   return (
-    <div className="rls-skeleton-text" rls-theme={rlsTheme}>
+    <div className="rls-skeleton-text" rls-size={rlsSize} rls-theme={rlsTheme}>
       {active ? (
         <RlsSkeleton animation={animation} />
       ) : (

@@ -2,11 +2,15 @@ import { ReactControl } from '@rolster/react-forms';
 import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsChip } from '../../atoms/Chip/Chip';
-import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
+import {
+  PropsWithClassName,
+  PropsWithRlsSize,
+  PropsWithRlsTheme
+} from '../../definitions';
 import { RolsterReactHtmlControl } from '../../types';
 
 interface ChipGroupProps<T = any, K = any>
-  extends PropsWithRlsTheme, PropsWithClassName {
+  extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   options: T[];
   disabled?: boolean;
   formControl?: RolsterReactHtmlControl<T>;
@@ -52,6 +56,7 @@ function RlsChipGroupComponent<T = any, K = any>({
   disabled: disabledProps,
   formControl,
   identifier,
+  rlsSize,
   onValue,
   options,
   reference,
@@ -103,7 +108,12 @@ function RlsChipGroupComponent<T = any, K = any>({
   );
 
   return (
-    <div id={identifier} className={classNameGroup} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameGroup}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {options.map((option, index) => (
         <RlsChip
           key={index}

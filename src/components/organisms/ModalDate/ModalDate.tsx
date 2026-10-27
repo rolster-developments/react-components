@@ -28,6 +28,7 @@ function RlsModalDateComponent({
   formControl,
   maxDate,
   minDate,
+  rlsSize,
   onClose,
   rlsTheme,
   visible
@@ -45,6 +46,7 @@ function RlsModalDateComponent({
       className="rls-modal-date"
       controller={controller}
       visible={visible}
+      rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     >
       <RlsPickerDate

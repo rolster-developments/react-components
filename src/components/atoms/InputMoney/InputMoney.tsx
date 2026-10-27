@@ -1,15 +1,17 @@
 import { memo, useCallback, useState } from 'react';
+import { PropsWithRlsSize } from '../../definitions';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
 
-interface InputMoneyProps extends InputProps<number> {
+interface InputMoneyProps extends InputProps<number>, PropsWithRlsSize {
   decimals?: number;
   symbol?: string;
 }
 
 function RlsInputMoneyComponent(props: InputMoneyProps) {
-  const { decimals, formControl, identifier, onValue, symbol, value } = props;
+  const { decimals, formControl, identifier, rlsSize, onValue, symbol, value } =
+    props;
 
   const [valueInput, setValueInput] = useState(
     formControl?.value ?? value ?? 0
@@ -26,7 +28,7 @@ function RlsInputMoneyComponent(props: InputMoneyProps) {
   );
 
   return (
-    <div id={identifier} className="rls-input-money">
+    <div id={identifier} className="rls-input-money" rls-size={rlsSize}>
       <RlsInput
         {...props}
         type="number"

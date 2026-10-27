@@ -64,6 +64,7 @@ function RlsAreaTextComponent({
   maxLength,
   maxRows,
   minRows,
+  rlsSize,
   onBlur,
   onEnter,
   onFocus,
@@ -253,7 +254,7 @@ function RlsAreaTextComponent({
   });
 
   return (
-    <div id={identifier} className={className}>
+    <div id={identifier} className={className} rls-size={rlsSize}>
       <textarea
         ref={areaRef}
         className="rls-area-text__component"

@@ -20,6 +20,7 @@ function RlsBallotComponent({
   initials,
   skeleton,
   subtitle,
+  rlsSize,
   rlsTheme
 }: BallotProps) {
   const classNameBallot = renderClassStatus(
@@ -29,9 +30,9 @@ function RlsBallotComponent({
   );
 
   return (
-    <div className={classNameBallot} rls-theme={rlsTheme}>
+    <div className={classNameBallot} rls-size={rlsSize} rls-theme={rlsTheme}>
       {(img || initials) && (
-        <RlsAvatar skeleton={skeleton}>
+        <RlsAvatar skeleton={skeleton} rlsSize={rlsSize}>
           {img && <img src={img} />}
           {initials && <span>{initials}</span>}
         </RlsAvatar>

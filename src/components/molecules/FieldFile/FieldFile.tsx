@@ -23,6 +23,7 @@ function RlsFieldFileComponent({
   formControl,
   identifier,
   msgErrorDisabled,
+  rlsSize,
   onValue,
   placeholder,
   readOnly,
@@ -91,7 +92,12 @@ function RlsFieldFileComponent({
   }, [readOnly, disabled]);
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children && <span className="rls-field-box__label">{children}</span>}
 
       <div className="rls-field-box__component" onClick={onClickControl}>

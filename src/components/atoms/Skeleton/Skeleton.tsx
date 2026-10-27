@@ -8,12 +8,14 @@ export interface SkeletonProps extends RlsComponent {
   animation?: RlsSkeletonAnimation;
 }
 
-function RlsSkeletonComponent({ animation, rlsTheme }: SkeletonProps) {
+function RlsSkeletonComponent({ animation, rlsSize, rlsTheme }: SkeletonProps) {
   const className = renderClassStatus('rls-skeleton', {
     animation: animation !== 'shimmer' && animation
   });
 
-  return <div className={className} rls-theme={rlsTheme}></div>;
+  return (
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}></div>
+  );
 }
 
 export const RlsSkeleton = memo(RlsSkeletonComponent);

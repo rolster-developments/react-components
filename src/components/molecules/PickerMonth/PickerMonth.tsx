@@ -65,6 +65,7 @@ function RlsPickerMonthComponent({
   formControl,
   maxDate,
   minDate,
+  rlsSize,
   onValue,
   rlsTheme,
   year
@@ -131,7 +132,7 @@ function RlsPickerMonthComponent({
   }, [formControl?.value]);
 
   return (
-    <div className="rls-picker-month" rls-theme={rlsTheme}>
+    <div className="rls-picker-month" rls-size={rlsSize} rls-theme={rlsTheme}>
       {months.map((month, index) => (
         <RlsPickerMonthElement
           key={index}

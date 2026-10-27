@@ -62,6 +62,7 @@ function RlsInputComponent({
   disabled,
   formControl,
   identifier,
+  rlsSize,
   onBlur,
   onEnter,
   onFocus,
@@ -181,7 +182,7 @@ function RlsInputComponent({
   });
 
   return (
-    <div id={identifier} className={className}>
+    <div id={identifier} className={className} rls-size={rlsSize}>
       <input
         ref={formControl?.elementRef}
         className="rls-input__component"

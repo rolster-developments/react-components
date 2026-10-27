@@ -1,14 +1,14 @@
 import { memo, useEffect, useRef } from 'react';
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
-interface RlsLedProps extends PropsWithRlsTheme {
+interface RlsLedProps extends PropsWithRlsTheme, PropsWithRlsSize {
   color?: string;
 }
 
 const CONTENT_BACKGROUND = '--pvt-content-background';
 
-function RlsLedComponent({ color, rlsTheme }: RlsLedProps) {
+function RlsLedComponent({ color, rlsSize, rlsTheme }: RlsLedProps) {
   const refLed = useRef<HTMLDivElement>(null);
   const refColor = useRef<string>(undefined);
 
@@ -25,7 +25,14 @@ function RlsLedComponent({ color, rlsTheme }: RlsLedProps) {
     }
   }, [color]);
 
-  return <div ref={refLed} className="rls-led" rls-theme={rlsTheme}></div>;
+  return (
+    <div
+      ref={refLed}
+      className="rls-led"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    ></div>
+  );
 }
 
 export const RlsLed = memo(RlsLedComponent);

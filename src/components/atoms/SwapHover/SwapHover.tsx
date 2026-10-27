@@ -9,10 +9,16 @@ function RlsSwapHoverComponent({
   children,
   content,
   identifier,
+  rlsSize,
   rlsTheme
 }: SwapHoverProps) {
   return (
-    <div id={identifier} className="rls-swap-hover" rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className="rls-swap-hover"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className="rls-swap-hover__primary">{children}</div>
       <div className="rls-swap-hover__secondary">{content}</div>
     </div>

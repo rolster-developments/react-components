@@ -37,6 +37,7 @@ function RlsDatatableComponent({
   footer,
   header,
   identifier,
+  rlsSize,
   rlsTheme,
   resizable,
   summary,
@@ -51,7 +52,7 @@ function RlsDatatableComponent({
   });
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {toolbar && <div className="rls-datatable__toolbar">{toolbar}</div>}
 
       <div className="rls-datatable__table">
@@ -76,10 +77,16 @@ export const RlsDatatable = memo(RlsDatatableComponent);
 function RlsDatatableHeaderComponent({
   children,
   identifier,
+  rlsSize,
   rlsTheme
 }: RlsComponent) {
   return (
-    <tr id={identifier} className="rls-datatable__header" rls-theme={rlsTheme}>
+    <tr
+      id={identifier}
+      className="rls-datatable__header"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </tr>
   );
@@ -93,6 +100,7 @@ function RlsDatatableTitleComponent({
   className,
   control,
   identifier,
+  rlsSize,
   rlsTheme,
   truncated
 }: DatatableCellProps) {
@@ -103,7 +111,12 @@ function RlsDatatableTitleComponent({
   );
 
   return (
-    <th id={identifier} className={classNameTitle} rls-theme={rlsTheme}>
+    <th
+      id={identifier}
+      className={classNameTitle}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </th>
   );
@@ -115,6 +128,7 @@ function RlsDatatableSubheaderComponent({
   children,
   className,
   identifier,
+  rlsSize,
   rlsTheme
 }: DatatableSubheaderProps) {
   const classNameSubheader = renderClassStatus(
@@ -124,7 +138,12 @@ function RlsDatatableSubheaderComponent({
   );
 
   return (
-    <tr id={identifier} className={classNameSubheader} rls-theme={rlsTheme}>
+    <tr
+      id={identifier}
+      className={classNameSubheader}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </tr>
   );
@@ -138,6 +157,7 @@ function RlsDatatableRecordComponent({
   error,
   identifier,
   info,
+  rlsSize,
   rlsTheme,
   success,
   truncated,
@@ -150,7 +170,12 @@ function RlsDatatableRecordComponent({
   );
 
   return (
-    <tr id={identifier} className={classNameRecord} rls-theme={rlsTheme}>
+    <tr
+      id={identifier}
+      className={classNameRecord}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </tr>
   );
@@ -164,6 +189,7 @@ function RlsDatatableTotalsComponent({
   error,
   identifier,
   info,
+  rlsSize,
   rlsTheme,
   success,
   truncated,
@@ -176,7 +202,12 @@ function RlsDatatableTotalsComponent({
   );
 
   return (
-    <div id={identifier} className={classNameTotals} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameTotals}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </div>
   );
@@ -190,6 +221,7 @@ function RlsDatatableCellComponent({
   className,
   control,
   identifier,
+  rlsSize,
   rlsTheme,
   truncated
 }: DatatableCellProps) {
@@ -200,7 +232,12 @@ function RlsDatatableCellComponent({
   );
 
   return (
-    <td id={identifier} className={classNameCell} rls-theme={rlsTheme}>
+    <td
+      id={identifier}
+      className={classNameCell}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </td>
   );
@@ -236,6 +273,7 @@ function RlsDatatableFloatingComponent({
   className,
   identifier,
   invested,
+  rlsSize,
   rlsTheme
 }: DatatableFloatingProps) {
   const classNameFloating = renderClassStatus(
@@ -245,7 +283,12 @@ function RlsDatatableFloatingComponent({
   );
 
   return (
-    <td id={identifier} className={classNameFloating} rls-theme={rlsTheme}>
+    <td
+      id={identifier}
+      className={classNameFloating}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children}
     </td>
   );

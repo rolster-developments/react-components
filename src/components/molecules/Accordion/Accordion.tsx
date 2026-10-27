@@ -25,6 +25,7 @@ function RlsAccordionComponent({
   className,
   disabled,
   identifier,
+  rlsSize,
   onToggle,
   opened,
   rlsTheme,
@@ -102,7 +103,12 @@ function RlsAccordionComponent({
   );
 
   return (
-    <div id={identifier} className={classNameAccordion} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameAccordion}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <button
         type="button"
         className="rls-accordion__header"

@@ -72,6 +72,7 @@ function RlsFieldAutocompleteTemplateComponent<
     children,
     formControl,
     msgErrorDisabled,
+    rlsSize,
     onSearch,
     placeholder,
     rlsTheme,
@@ -154,6 +155,7 @@ function RlsFieldAutocompleteTemplateComponent<
       id={props.identifier}
       ref={autocomplete.refContent}
       className={className}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       {children && <span className="rls-field-box__label">{children}</span>}

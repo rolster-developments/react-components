@@ -11,6 +11,7 @@ interface ButtonStepperProps extends RlsComponent {
 
 function RlsButtonStepperComponent({
   disabled,
+  rlsSize,
   onAction,
   rlsTheme
 }: ButtonStepperProps) {
@@ -23,7 +24,7 @@ function RlsButtonStepperComponent({
   }, [onAction]);
 
   return (
-    <div className="rls-button-stepper" rls-theme={rlsTheme}>
+    <div className="rls-button-stepper" rls-size={rlsSize} rls-theme={rlsTheme}>
       <RlsButtonIcon
         icon="arrow-ios-down"
         disabled={disabled}

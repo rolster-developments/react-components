@@ -10,6 +10,8 @@ import {
   ImageEditorValue,
   NavbarMenuOption,
   NotificationsConfig,
+  RlsAccordion,
+  RlsAlert,
   RlsAppThemeTabs,
   RlsAvatar,
   RlsBadge,
@@ -17,6 +19,7 @@ import {
   RlsBottomSheet,
   RlsButton,
   RlsButtonAction,
+  RlsButtonIcon,
   RlsCard,
   RlsChip,
   RlsChipGroup,
@@ -34,6 +37,7 @@ import {
   RlsFormNavigation,
   RlsIcon,
   RlsImageChooser,
+  RlsInputCounter,
   RlsInputSearch,
   RlsLabelCheckBox,
   RlsLabelRadioButton,
@@ -45,7 +49,9 @@ import {
   RlsNavbarMenu,
   RlsPickerClock,
   RlsPoster,
+  RlsSize,
   RlsSlider,
+  RlsTabs,
   RlsTheme,
   useDesingSystemController,
   usePortalController,
@@ -181,6 +187,91 @@ const NOTIFICATIONS: NotificationsConfig[] = [
     content: <p>Tienes nuevas actividades pendientes por revisar.</p>
   }
 ];
+
+const SIZE_TABS = [
+  { label: 'Resumen', value: 'summary', defaultActive: true },
+  { label: 'Detalle', value: 'detail' },
+  { label: 'Historial', value: 'history' }
+];
+
+function SizeSamples({ rlsSize }: { rlsSize: RlsSize }) {
+  return (
+    <div className="dashboard__inputs">
+      <div className="dashboard__sliders__report">
+        <RlsButton
+          type="raised"
+          rlsTheme="info"
+          prefixIcon="bell"
+          rlsSize={rlsSize}
+        >
+          Guardar cambios
+        </RlsButton>
+        <RlsButton type="ghost" rlsSize={rlsSize}>
+          Cancelar
+        </RlsButton>
+        <RlsButtonAction
+          icon="bell"
+          badge="3"
+          rlsTheme="amber"
+          rlsSize={rlsSize}
+        />
+        <RlsButtonIcon icon="search" rlsSize={rlsSize} />
+      </div>
+
+      <div className="dashboard__sliders__report">
+        <RlsAvatar rlsTheme="info" rounded={true} rlsSize={rlsSize}>
+          <span>DC</span>
+        </RlsAvatar>
+        <RlsBadge rlsTheme="amber" contrasted={true} rlsSize={rlsSize}>
+          Nuevo
+        </RlsBadge>
+        <RlsChip icon="person" rlsTheme="success" rlsSize={rlsSize}>
+          Con ícono
+        </RlsChip>
+        <RlsChip onRemove={() => undefined} rlsSize={rlsSize}>
+          Removible
+        </RlsChip>
+        <RlsInputCounter value={3} min={0} max={10} rlsSize={rlsSize} />
+      </div>
+
+      <RlsBallot
+        initials="DC"
+        subtitle={<span>Front-end</span>}
+        rlsSize={rlsSize}
+      >
+        Daniel Castillo
+      </RlsBallot>
+
+      <RlsFieldText placeholder="Escribe un nombre" rlsSize={rlsSize}>
+        Nombre completo
+      </RlsFieldText>
+
+      <RlsFieldSelect
+        suggestions={PERSON_SUGGESTIONS}
+        placeholder="Seleccione una persona"
+        rlsSize={rlsSize}
+      >
+        Responsable
+      </RlsFieldSelect>
+
+      <RlsLabelCheckBox rlsSize={rlsSize}>Acepto los términos</RlsLabelCheckBox>
+
+      <RlsLabelSwitch rlsSize={rlsSize}>Recibir notificaciones</RlsLabelSwitch>
+
+      <RlsTabs tabs={SIZE_TABS} rlsTheme="info" rlsSize={rlsSize} />
+
+      <RlsAlert icon="bell" rlsTheme="info" rlsSize={rlsSize}>
+        <p className="rls-paragraph-font">
+          Los cambios se guardaron correctamente.
+        </p>
+      </RlsAlert>
+
+      <RlsAccordion title="Más información" bordered={true} rlsSize={rlsSize}>
+        <p>Contenido del acordeón con tipografía escalada.</p>
+      </RlsAccordion>
+    </div>
+  );
+}
 
 export function Demo() {
   const designSystem = useDesingSystemController('filled', 'bordered');
@@ -672,6 +763,21 @@ export function Demo() {
                 >
                   Cambiar temática
                 </RlsButton>
+              </div>
+            </div>
+
+            <div className="dashboard__section rls-flex-xs-col-6">
+              <div className="dashboard__section__header">
+                <span className="rls-title-font">rlsSize: normal vs small</span>
+              </div>
+
+              <div className="rls-flex-xs-grid-16 rls-flex-xs-grid-col-6">
+                <div className="rls-flex-xs-col-3">
+                  <SizeSamples rlsSize="normal" />
+                </div>
+                <div className="rls-flex-xs-col-3">
+                  <SizeSamples rlsSize="small" />
+                </div>
               </div>
             </div>
           </div>

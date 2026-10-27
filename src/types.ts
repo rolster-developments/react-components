@@ -26,8 +26,11 @@ export type RlsDesignSystem = 'bordered' | 'filled' | 'gradient';
 
 export type RlsButtonType = 'ghost' | 'flat' | 'raised';
 
+export type RlsSize = 'normal' | 'small';
+
 declare module 'react' {
   interface HTMLAttributes<T> {
+    'rls-size'?: RlsSize;
     'rls-theme'?: RlsTheme;
   }
 }

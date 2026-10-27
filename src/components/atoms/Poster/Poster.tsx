@@ -6,11 +6,16 @@ interface PosterProps extends RlsComponent {
   contrasted?: boolean;
 }
 
-function RlsPosterComponent({ children, contrasted, rlsTheme }: PosterProps) {
+function RlsPosterComponent({
+  children,
+  contrasted,
+  rlsSize,
+  rlsTheme
+}: PosterProps) {
   const className = renderClassStatus('rls-poster', { contrasted });
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {children}
     </div>
   );

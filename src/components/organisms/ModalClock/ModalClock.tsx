@@ -22,6 +22,7 @@ function RlsModalClockComponent({
   controller,
   disabled,
   formControl,
+  rlsSize,
   onClose,
   rlsTheme,
   time,
@@ -40,6 +41,7 @@ function RlsModalClockComponent({
       className="rls-modal-clock"
       controller={controller}
       visible={visible}
+      rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     >
       <RlsPickerClock

@@ -59,6 +59,7 @@ function RlsFieldSelectTemplateComponent<
     children,
     formControl,
     msgErrorDisabled,
+    rlsSize,
     placeholder,
     rlsTheme,
     unremovable
@@ -84,6 +85,7 @@ function RlsFieldSelectTemplateComponent<
       id={props.identifier}
       ref={select.refContent}
       className={className}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       {children && <span className="rls-field-box__label">{children}</span>}

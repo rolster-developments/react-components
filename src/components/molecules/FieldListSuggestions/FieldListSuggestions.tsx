@@ -17,7 +17,7 @@ import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 import { useSuggestionsPortalController } from './SuggestionsPortalController';
 
 export interface FieldListSearchControl {
@@ -40,7 +40,8 @@ export interface FieldListAction {
   keepOpen?: boolean;
 }
 
-interface FieldListSuggestionsProps<E = any> extends PropsWithRlsTheme {
+interface FieldListSuggestionsProps<E = any>
+  extends PropsWithRlsTheme, PropsWithRlsSize {
   elements: E[];
   onClickBackdrop: MouseEventHandler;
   onClickElement: (element: E) => MouseEventHandler;
@@ -100,6 +101,7 @@ function RlsFieldListSuggestionsComponent<E = any>({
   renderEmpty,
   searchControl,
   visible,
+  rlsSize,
   onClickBackdrop,
   onClickElement,
   onHiddenAnchor,
@@ -162,6 +164,7 @@ function RlsFieldListSuggestionsComponent<E = any>({
       ref={refSuggestions}
       className={className}
       style={portal.active ? portal.style : undefined}
+      rls-size={rlsSize}
       rls-theme={rlsTheme ?? portal.theme}
     >
       <div className="rls-field-list__suggestions__body">

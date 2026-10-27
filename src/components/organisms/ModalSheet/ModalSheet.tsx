@@ -16,6 +16,7 @@ function RlsModalSheetComponent({
   children,
   className,
   controller,
+  rlsSize,
   onAutoClose,
   visible,
   rlsTheme
@@ -35,7 +36,7 @@ function RlsModalSheetComponent({
   }, [autoclose, controller, onAutoClose]);
 
   return ReactDOM.createPortal(
-    <div className={classNameModal} rls-theme={rlsTheme}>
+    <div className={classNameModal} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-modal-sheet__component">{children}</div>
 
       <div

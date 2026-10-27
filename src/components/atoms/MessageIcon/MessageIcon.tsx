@@ -9,10 +9,11 @@ interface MessageIconProps extends RlsComponent {
 function RlsMessageIconComponent({
   icon,
   children,
+  rlsSize,
   rlsTheme
 }: MessageIconProps) {
   return (
-    <div className="rls-message-icon" rls-theme={rlsTheme}>
+    <div className="rls-message-icon" rls-size={rlsSize} rls-theme={rlsTheme}>
       {icon && <RlsIcon value={icon} />}
       <span className="truncate">{children}</span>
     </div>

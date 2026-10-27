@@ -41,6 +41,7 @@ function RlsSliderComponent({
   identifier,
   maxValue,
   minValue,
+  rlsSize,
   onValue,
   prefixIcon,
   rlsTheme,
@@ -274,7 +275,12 @@ function RlsSliderComponent({
   }, [commitValue, minValueSlider, maxValueSlider, stepSlider]);
 
   return (
-    <div id={identifier} className={classNameSlider} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameSlider}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children && (
         <span id={labelId} className="rls-slider__label">
           {children}

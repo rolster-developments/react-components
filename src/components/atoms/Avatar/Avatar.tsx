@@ -12,6 +12,7 @@ interface AvatarProps extends RlsComponent {
 function RlsAvatarComponent({
   children,
   contrasted,
+  rlsSize,
   rounded,
   skeleton,
   transparent,
@@ -25,7 +26,7 @@ function RlsAvatarComponent({
   });
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {children}
     </div>
   );

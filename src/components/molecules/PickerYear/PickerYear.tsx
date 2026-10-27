@@ -55,6 +55,7 @@ function RlsPickerYearComponent({
   formControl,
   maxDate,
   minDate,
+  rlsSize,
   onValue,
   rlsTheme
 }: PickerYearProps) {
@@ -117,7 +118,7 @@ function RlsPickerYearComponent({
   }, []);
 
   return (
-    <div className="rls-picker-year" rls-theme={rlsTheme}>
+    <div className="rls-picker-year" rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-picker-year__header">
         <RlsButtonIcon
           icon="arrow-ios-left"

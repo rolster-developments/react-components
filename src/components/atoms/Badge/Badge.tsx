@@ -6,11 +6,16 @@ interface BadgeProps extends RlsComponent {
   contrasted?: boolean;
 }
 
-function RlsBadgeComponent({ children, contrasted, rlsTheme }: BadgeProps) {
+function RlsBadgeComponent({
+  children,
+  contrasted,
+  rlsSize,
+  rlsTheme
+}: BadgeProps) {
   const className = renderClassStatus('rls-badge', { contrasted });
 
   return (
-    <span className={className} rls-theme={rlsTheme}>
+    <span className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {children}
     </span>
   );

@@ -43,6 +43,7 @@ function RlsPickerDateComponent({
   formControl,
   maxDate,
   minDate,
+  rlsSize,
   onListener,
   rlsTheme
 }: PickerDateProps) {
@@ -142,7 +143,7 @@ function RlsPickerDateComponent({
   }, [formControl, value, onListener]);
 
   return (
-    <div className="rls-picker-date" rls-theme={rlsTheme}>
+    <div className="rls-picker-date" rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-picker-date__header">
         <RlsPickerSelectorTitle
           monthControl={monthControl}

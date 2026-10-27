@@ -63,6 +63,7 @@ function RlsFieldDateRangeComponent({
   maxDate,
   minDate,
   msgErrorDisabled,
+  rlsSize,
   onValue,
   placeholder,
   readOnly,
@@ -131,7 +132,12 @@ function RlsFieldDateRangeComponent({
   );
 
   return (
-    <div id={identifier} className="rls-field-date-range" rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className="rls-field-date-range"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className={className}>
         {children && <span className="rls-field-box__label">{children}</span>}
 
@@ -169,6 +175,7 @@ function RlsFieldDateRangeComponent({
         maxDate={maxDate}
         minDate={minDate}
         onClose={onCloseModal}
+        rlsSize={rlsSize}
         rlsTheme={rlsTheme}
       />
     </div>

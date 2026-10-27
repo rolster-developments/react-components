@@ -1,8 +1,9 @@
 import { memo } from 'react';
+import { PropsWithRlsSize } from '../../definitions';
 
-function RlsSpinnerComponent() {
+function RlsSpinnerComponent({ rlsSize }: PropsWithRlsSize) {
   return (
-    <div className="rls-spinner">
+    <div className="rls-spinner" rls-size={rlsSize}>
       <svg className="rls-spinner__svg rls-spinner__svg--1" viewBox="0 0 64 64">
         <circle />
       </svg>

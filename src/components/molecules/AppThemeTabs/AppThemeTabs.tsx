@@ -2,12 +2,12 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { getAppTheme, setAppTheme } from '../../../helpers/app-theme';
 import { reactI18n } from '../../../i18n';
 import { RlsAppTheme } from '../../../types';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 import { RlsTabs, Tab } from '../Tabs/Tabs';
 
 export type AppThemeLabels = Partial<Record<RlsAppTheme, string>>;
 
-interface AppThemeTabsProps extends PropsWithRlsTheme {
+interface AppThemeTabsProps extends PropsWithRlsTheme, PropsWithRlsSize {
   labels?: AppThemeLabels;
   onValue?: (value: RlsAppTheme) => void;
   themes?: RlsAppTheme[];
@@ -24,6 +24,7 @@ const LABELS: Record<RlsAppTheme, () => string> = {
 
 function RlsAppThemeTabsComponent({
   labels,
+  rlsSize,
   onValue,
   rlsTheme,
   themes = APP_THEMES,
@@ -62,6 +63,7 @@ function RlsAppThemeTabsComponent({
       tabs={tabs}
       value={appTheme}
       onValue={onSelect}
+      rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     />
   );

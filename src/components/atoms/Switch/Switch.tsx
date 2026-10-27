@@ -20,6 +20,7 @@ function RlsSwitchComponent({
   capsule,
   disabled,
   identifier,
+  rlsSize,
   onClick,
   rlsTheme
 }: SwitchProps) {
@@ -34,6 +35,7 @@ function RlsSwitchComponent({
       id={identifier}
       className={className}
       onClick={onClick}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <div className="rls-switch__component">
@@ -49,6 +51,7 @@ function RlsSwitchControlComponent({
   formControl,
   disabled,
   identifier,
+  rlsSize,
   rlsTheme
 }: SwitchControlProps) {
   const onClick = useCallback(() => {
@@ -61,6 +64,7 @@ function RlsSwitchControlComponent({
       checked={formControl.value}
       disabled={disabled}
       onClick={onClick}
+      rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     />
   );

@@ -46,6 +46,7 @@ function RlsTab<T>({ disabled, onSelect, tab, value }: TabProps<T>) {
 function RlsTabsComponent<T = any>({
   tabs,
   formControl,
+  rlsSize,
   onValue,
   value,
   rlsTheme
@@ -86,7 +87,7 @@ function RlsTabsComponent<T = any>({
   }, [value, formControl?.value]);
 
   return (
-    <div className="rls-tabs" rls-theme={rlsTheme}>
+    <div className="rls-tabs" rls-size={rlsSize} rls-theme={rlsTheme}>
       {tabs.map((tab, index) => {
         return (
           <RlsTab

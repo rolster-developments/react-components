@@ -3,15 +3,17 @@ import { ReactControl } from '@rolster/react-forms';
 import { memo, useEffect, useMemo, useState } from 'react';
 import { msgErrorsI18n } from '../../../helpers/language';
 import { RlsMessageIcon } from '../../atoms/MessageIcon/MessageIcon';
+import { PropsWithRlsSize } from '../../definitions';
 
-interface MessageFormErrorProps {
+interface MessageFormErrorProps extends PropsWithRlsSize {
   className: string;
   formControl?: ReactControl<HTMLElement>;
 }
 
 function RlsMessageFormErrorComponent({
   className,
-  formControl
+  formControl,
+  rlsSize
 }: MessageFormErrorProps) {
   const [language, setLanguage] = useState<LanguageCode>('es');
 
@@ -32,7 +34,7 @@ function RlsMessageFormErrorComponent({
   return (
     <>
       {formControl?.wrong && (
-        <div className={className}>
+        <div className={className} rls-size={rlsSize}>
           <RlsMessageIcon icon="alert-triangle" rlsTheme="danger">
             {msgError}
           </RlsMessageIcon>

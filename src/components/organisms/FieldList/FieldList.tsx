@@ -57,6 +57,7 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
   formControl,
   fieldList,
   msgErrorDisabled,
+  rlsSize,
   placeholder,
   rlsTheme,
   ...props
@@ -91,6 +92,7 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
       id={props.identifier}
       ref={fieldList.refContent}
       className={className}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       {children && <span className="rls-field-box__label">{children}</span>}

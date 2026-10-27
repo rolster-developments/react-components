@@ -25,6 +25,7 @@ function RlsInputCounterComponent({
   identifier,
   max,
   min,
+  rlsSize,
   onBlur,
   onFocus,
   onValue,
@@ -123,7 +124,12 @@ function RlsInputCounterComponent({
   }, [formControl, onBlur]);
 
   return (
-    <div id={identifier} className={classNameCounter} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameCounter}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <RlsButtonIcon
         className="rls-input-counter__down"
         icon="minus"

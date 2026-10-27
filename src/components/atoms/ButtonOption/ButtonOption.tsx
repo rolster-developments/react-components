@@ -34,6 +34,7 @@ function RlsButtonOptionComponent<T = any>({
   disabled,
   formControl,
   identifier,
+  rlsSize,
   onClick,
   onValue,
   value
@@ -56,6 +57,7 @@ function RlsButtonOptionComponent<T = any>({
     <button
       id={identifier}
       className={className}
+      rls-size={rlsSize}
       onClick={onAction}
       disabled={disabled}
     >

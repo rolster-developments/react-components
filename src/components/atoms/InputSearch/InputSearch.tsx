@@ -1,10 +1,11 @@
 import { memo, useCallback, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { PropsWithRlsSize } from '../../definitions';
 import { RolsterReactInputControl } from '../../types';
 import { RlsButtonAction } from '../ButtonAction/ButtonAction';
 import { RlsInput } from '../Input/Input';
 
-interface InputSearchProps {
+interface InputSearchProps extends PropsWithRlsSize {
   disabled?: boolean;
   formControl?: RolsterReactInputControl<string>;
   identifier?: string;
@@ -17,6 +18,7 @@ function RlsInputSearchComponent({
   formControl,
   disabled,
   identifier,
+  rlsSize,
   onEnter,
   onSearch,
   placeholder
@@ -35,10 +37,11 @@ function RlsInputSearchComponent({
   );
 
   return (
-    <div id={identifier} className={className}>
+    <div id={identifier} className={className} rls-size={rlsSize}>
       <RlsInput
         formControl={formControl}
         placeholder={placeholder}
+        rlsSize={rlsSize}
         onEnter={onEnter}
         onValue={onValue}
         disabled={disabled}

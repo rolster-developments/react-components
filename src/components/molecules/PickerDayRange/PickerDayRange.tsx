@@ -76,6 +76,7 @@ function RlsPickerDayRangeComponent({
   formControl,
   maxDate,
   minDate,
+  rlsSize,
   rlsTheme
 }: PickerDayRangeProps) {
   const rangeDay = useMemo(() => {
@@ -127,7 +128,11 @@ function RlsPickerDayRangeComponent({
   }, [dateDayRange, range, minDate, maxDate]);
 
   return (
-    <div className="rls-picker-day-range" rls-theme={rlsTheme}>
+    <div
+      className="rls-picker-day-range"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <RlsPickerDayRangeHeaders />
 
       <div className="rls-picker-day-range__component">

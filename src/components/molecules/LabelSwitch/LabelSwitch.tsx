@@ -21,6 +21,7 @@ function RlsLabelSwitchComponent({
   identifier,
   formControl,
   reverse,
+  rlsSize,
   rlsTheme
 }: LabelSwitchProps) {
   const { checked, onToggle } = useFormToggleController({
@@ -35,7 +36,12 @@ function RlsLabelSwitchComponent({
   });
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className="rls-label-switch__component" onClick={onToggle}>
         <RlsSwitch checked={checked} capsule={capsule} disabled={disabled} />
       </div>

@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { RlsIcon } from '../../atoms/Icon/Icon';
+import { PropsWithRlsSize } from '../../definitions';
 
 export interface NavbarMenuOption {
   icon: string;
@@ -7,7 +8,7 @@ export interface NavbarMenuOption {
   label: string;
 }
 
-interface NavbarMenuProps {
+interface NavbarMenuProps extends PropsWithRlsSize {
   options: NavbarMenuOption[];
   onOption?: (option: NavbarMenuOption) => void;
 }
@@ -30,9 +31,13 @@ function RlsNavbarMenuOption({ option, onOption }: NavbarMenuOptionProps) {
   );
 }
 
-function RlsNavbarMenuComponent({ options, onOption }: NavbarMenuProps) {
+function RlsNavbarMenuComponent({
+  options,
+  rlsSize,
+  onOption
+}: NavbarMenuProps) {
   return (
-    <ul className="rls-app__page__nav__menu">
+    <ul className="rls-app__page__nav__menu" rls-size={rlsSize}>
       {options.map((option) => (
         <RlsNavbarMenuOption
           key={option.id}

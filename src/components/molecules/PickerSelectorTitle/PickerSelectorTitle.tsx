@@ -5,10 +5,11 @@ import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
+import { PropsWithRlsSize } from '../../definitions';
 
 export type PickerSelectorTitleType = 'month' | 'year';
 
-interface PickerSelectorTitleProps {
+interface PickerSelectorTitleProps extends PropsWithRlsSize {
   monthControl: ReactControl<HTMLElement, number>;
   type: PickerSelectorTitleType;
   yearControl: ReactControl<HTMLElement, number>;
@@ -27,6 +28,7 @@ function RlsPickerSelectorTitleComponent({
   disabled,
   maxDate,
   minDate,
+  rlsSize,
   onClick
 }: PickerSelectorTitleProps) {
   const { limitNext, limitPrevious } = useMemo(() => {
@@ -117,7 +119,7 @@ function RlsPickerSelectorTitleComponent({
   }, [type, onNextMonth, onNextYear]);
 
   return (
-    <div className="rls-picker-selector-title">
+    <div className="rls-picker-selector-title" rls-size={rlsSize}>
       <RlsButtonIcon
         icon="arrow-ios-left"
         onClick={onPrevious}

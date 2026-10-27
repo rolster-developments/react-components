@@ -11,7 +11,7 @@ interface FieldDecimalProps extends FieldProps<BigDecimal> {
 }
 
 function RlsFieldDecimalComponent(props: FieldDecimalProps) {
-  const { children, formControl, identifier, rlsTheme } = props;
+  const { children, formControl, identifier, rlsSize, rlsTheme } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -29,7 +29,12 @@ function RlsFieldDecimalComponent(props: FieldDecimalProps) {
   );
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children && <span className="rls-field-box__label">{children}</span>}
 
       <div className="rls-field-box__component">

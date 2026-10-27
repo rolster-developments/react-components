@@ -16,6 +16,7 @@ function RlsBottomSheetComponent({
   children,
   className,
   controller,
+  rlsSize,
   onBackdrop,
   visible,
   rlsTheme
@@ -34,7 +35,7 @@ function RlsBottomSheetComponent({
   }, [autoclose, controller, onBackdrop]);
 
   return ReactDOM.createPortal(
-    <div className={classNameSheet} rls-theme={rlsTheme}>
+    <div className={classNameSheet} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-bottom-sheet__component">{children}</div>
 
       <div

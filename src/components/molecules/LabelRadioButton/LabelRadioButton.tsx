@@ -34,6 +34,7 @@ function RlsLabelRadioButtonComponent<T = any>({
   extended,
   identifier,
   formControl,
+  rlsSize,
   onValue,
   reverse,
   rlsTheme,
@@ -53,7 +54,12 @@ function RlsLabelRadioButtonComponent<T = any>({
   });
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className="rls-label-radiobutton__component" onClick={onSelect}>
         <RlsRadioButton checked={checked} disabled={disabled} />
       </div>

@@ -19,6 +19,7 @@ function RlsCheckBoxComponent({
   checked,
   disabled,
   identifier,
+  rlsSize,
   onClick,
   rlsTheme
 }: CheckBoxProps) {
@@ -29,6 +30,7 @@ function RlsCheckBoxComponent({
       id={identifier}
       className={className}
       onClick={onClick}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <RlsIcon value="checkmark" />
@@ -42,6 +44,7 @@ function RlsCheckBoxControlComponent({
   formControl,
   disabled,
   identifier,
+  rlsSize,
   rlsTheme
 }: CheckBoxControlProps) {
   const onClick = useCallback(() => {
@@ -54,6 +57,7 @@ function RlsCheckBoxControlComponent({
       checked={!!formControl.value}
       disabled={disabled}
       onClick={onClick}
+      rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     />
   );

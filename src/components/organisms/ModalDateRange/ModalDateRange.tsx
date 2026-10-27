@@ -29,6 +29,7 @@ function RlsModalDateRangeComponent({
   formControl,
   maxDate,
   minDate,
+  rlsSize,
   onClose,
   rlsTheme,
   visible
@@ -46,6 +47,7 @@ function RlsModalDateRangeComponent({
       className="rls-modal-date-range"
       controller={controller}
       visible={visible}
+      rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     >
       <RlsPickerDateRange

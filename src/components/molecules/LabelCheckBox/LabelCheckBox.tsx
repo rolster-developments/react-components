@@ -19,6 +19,7 @@ function RlsLabelCheckBoxComponent({
   identifier,
   formControl,
   reverse,
+  rlsSize,
   rlsTheme
 }: LabelCheckBoxProps) {
   const { checked, onToggle } = useFormToggleController({
@@ -33,7 +34,12 @@ function RlsLabelCheckBoxComponent({
   });
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className="rls-label-checkbox__component" onClick={onToggle}>
         <RlsCheckBox checked={checked} disabled={disabled} />
       </div>

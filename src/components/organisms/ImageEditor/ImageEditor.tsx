@@ -368,7 +368,7 @@ function RlsImageEditorComponent(props: ImageEditorProps) {
   }, []);
 
   return (
-    <div className="rls-image-editor">
+    <div className="rls-image-editor" rls-size={props.rlsSize}>
       <div ref={refBody} className="rls-image-editor__body">
         <div ref={refImage} className="rls-image-editor__body__image">
           <div

@@ -1,9 +1,12 @@
 import { memo, useCallback, useState } from 'react';
+import { PropsWithRlsSize } from '../../definitions';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 
-function RlsInputTextComponent(props: InputProps<string>) {
-  const { formControl, identifier, onValue, value } = props;
+interface InputTextProps extends InputProps<string>, PropsWithRlsSize {}
+
+function RlsInputTextComponent(props: InputTextProps) {
+  const { formControl, identifier, rlsSize, onValue, value } = props;
 
   const [valueInput, setValueInput] = useState(
     formControl?.value ?? value ?? ''
@@ -21,7 +24,7 @@ function RlsInputTextComponent(props: InputProps<string>) {
   );
 
   return (
-    <div id={identifier} className="rls-input-text">
+    <div id={identifier} className="rls-input-text" rls-size={rlsSize}>
       <RlsInput
         {...props}
         type="text"

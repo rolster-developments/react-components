@@ -89,6 +89,7 @@ function RlsPickerClockTick({ selectionIsHours, value }: PickerClockTickProps) {
 
 function RlsPickerClockComponent({
   formControl,
+  rlsSize,
   onListener,
   rlsTheme,
   time
@@ -345,7 +346,7 @@ function RlsPickerClockComponent({
   }, [formControl, hour, minute, zoneIsPM, onListener]);
 
   return (
-    <div className="rls-picker-clock" rls-theme={rlsTheme}>
+    <div className="rls-picker-clock" rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-picker-clock__header">
         <div className="rls-picker-clock__title">
           <span className={classNameHour} onClick={onClickHour}>

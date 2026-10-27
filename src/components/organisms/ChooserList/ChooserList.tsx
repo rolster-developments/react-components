@@ -6,7 +6,11 @@ import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, memo, ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
-import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
+import {
+  PropsWithClassName,
+  PropsWithRlsSize,
+  PropsWithRlsTheme
+} from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
   FieldListAction,
@@ -20,7 +24,7 @@ export interface ChooserListState<T = any, E extends Element<T> = Element<T>> {
 }
 
 interface ChooserListProps<T = any, E extends Element<T> = Element<T>>
-  extends PropsWithRlsTheme, PropsWithClassName {
+  extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   suggestions: E[];
   action?: FieldListAction;
   children?: ReactNode | ((state: ChooserListState<T, E>) => ReactNode);
@@ -47,8 +51,15 @@ function RlsChooserListTemplateComponent<
 >(props: ChooserListTemplateProps<T, E>) {
   const fieldList = useFieldList(props);
 
-  const { render, suggestions, action, children, formControl, rlsTheme } =
-    props;
+  const {
+    render,
+    suggestions,
+    action,
+    children,
+    formControl,
+    rlsSize,
+    rlsTheme
+  } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -95,6 +106,7 @@ function RlsChooserListTemplateComponent<
       id={props.identifier}
       ref={fieldList.refContent}
       className={className}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <div

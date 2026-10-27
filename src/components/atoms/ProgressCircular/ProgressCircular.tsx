@@ -1,9 +1,18 @@
 import { memo } from 'react';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
-function RlsProgressCircularComponent({ rlsTheme }: PropsWithRlsTheme) {
+interface ProgressCircularProps extends PropsWithRlsTheme, PropsWithRlsSize {}
+
+function RlsProgressCircularComponent({
+  rlsSize,
+  rlsTheme
+}: ProgressCircularProps) {
   return (
-    <div className="rls-progress-circular" rls-theme={rlsTheme}>
+    <div
+      className="rls-progress-circular"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <svg className="rls-progress-circular__svg" viewBox="0 0 36 36">
         <circle
           className="rls-progress-circular__circle"

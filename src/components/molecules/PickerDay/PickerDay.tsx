@@ -73,6 +73,7 @@ function RlsPickerDayComponent({
   maxDate,
   month,
   minDate,
+  rlsSize,
   onValue,
   rlsTheme,
   year
@@ -142,7 +143,7 @@ function RlsPickerDayComponent({
   }, [dateDay, formControl?.value, value, month, year, minDate, maxDate]);
 
   return (
-    <div className="rls-picker-day" rls-theme={rlsTheme}>
+    <div className="rls-picker-day" rls-size={rlsSize} rls-theme={rlsTheme}>
       <RlsPickerDayHeaders />
 
       <div className="rls-picker-day__component">

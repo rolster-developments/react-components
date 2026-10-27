@@ -15,7 +15,8 @@ interface FieldAreaProps extends AreaTextProps, RlsComponent {
 }
 
 function RlsFieldAreaComponent(props: FieldAreaProps) {
-  const { children, formControl, identifier, maxLength, rlsTheme } = props;
+  const { children, formControl, identifier, maxLength, rlsSize, rlsTheme } =
+    props;
 
   const { onValue } = props;
 
@@ -55,7 +56,12 @@ function RlsFieldAreaComponent(props: FieldAreaProps) {
   );
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children && <span className="rls-field-box__label">{children}</span>}
 
       <div className="rls-field-box__component">

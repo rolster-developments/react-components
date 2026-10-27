@@ -56,6 +56,7 @@ function RlsFieldColorComponent({
   formControl,
   identifier,
   msgErrorDisabled,
+  rlsSize,
   onValue,
   placeholder,
   readOnly,
@@ -121,7 +122,12 @@ function RlsFieldColorComponent({
   );
 
   return (
-    <div id={identifier} className="rls-field-color" rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className="rls-field-color"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className={className}>
         {children && <span className="rls-field-box__label">{children}</span>}
 
@@ -164,6 +170,7 @@ function RlsFieldColorComponent({
       <RlsModal
         className="rls-modal-color"
         visible={modalIsVisible}
+        rlsSize={rlsSize}
         rlsTheme={rlsTheme}
       >
         <RlsPickerColor

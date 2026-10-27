@@ -18,6 +18,7 @@ function RlsButtonActionComponent({
   badge,
   disabled,
   identifier,
+  rlsSize,
   onClick,
   rlsTheme,
   tooltip,
@@ -31,6 +32,7 @@ function RlsButtonActionComponent({
       className={className}
       onClick={onClick}
       disabled={disabled}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <div className="rls-button-action__content">

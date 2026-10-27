@@ -1,16 +1,18 @@
 import { BigDecimal } from '@rolster/commons';
 import { memo, useCallback, useMemo, useState } from 'react';
+import { PropsWithRlsSize } from '../../definitions';
 import { InputProps } from '../../types';
 import { RlsAmount } from '../Amount/Amount';
 import { RlsInput } from '../Input/Input';
 
-interface InputDecimalProps extends InputProps<BigDecimal> {
+interface InputDecimalProps extends InputProps<BigDecimal>, PropsWithRlsSize {
   decimals?: number;
   symbol?: string;
 }
 
 function RlsInputDecimalComponent(props: InputDecimalProps) {
-  const { decimals, formControl, identifier, onValue, symbol, value } = props;
+  const { decimals, formControl, identifier, rlsSize, onValue, symbol, value } =
+    props;
 
   const [valueInput, setValueInput] = useState(
     (formControl?.value ?? value ?? BigDecimal.zero()).rounded
@@ -38,7 +40,7 @@ function RlsInputDecimalComponent(props: InputDecimalProps) {
   const decimalProps = { ...props, formControl: undefined };
 
   return (
-    <div id={identifier} className="rls-input-decimal">
+    <div id={identifier} className="rls-input-decimal" rls-size={rlsSize}>
       <RlsInput
         {...decimalProps}
         type="number"

@@ -31,6 +31,7 @@ function RlsButtonToggleComponent({
   type,
   automatic,
   disabled,
+  rlsSize,
   rlsTheme
 }: ButtonToggleProps) {
   const componentRef = useRef<HTMLDivElement>(null);
@@ -91,7 +92,12 @@ function RlsButtonToggleComponent({
   );
 
   return (
-    <div className="rls-button-toggle" ref={componentRef} rls-theme={rlsTheme}>
+    <div
+      className="rls-button-toggle"
+      ref={componentRef}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className="rls-button-toggle__content">
         {action && (
           <div className="rls-button-toggle__action">

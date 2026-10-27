@@ -17,6 +17,7 @@ function RlsMessageEmptyComponent({
   icon,
   identifier,
   image,
+  rlsSize,
   rlsTheme,
   title
 }: MessageEmptyProps) {
@@ -55,7 +56,12 @@ function RlsMessageEmptyComponent({
   }, [icon, emoji, image]);
 
   return (
-    <div id={identifier} className={classNameMessageEmpty} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameMessageEmpty}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {logo}
 
       <div className="rls-message-empty__body">

@@ -9,13 +9,14 @@ interface ProgressBarProps extends RlsComponent {
 
 function RlsProgressBarComponent({
   indeterminate,
+  rlsSize,
   percentage,
   rlsTheme
 }: ProgressBarProps) {
   const className = renderClassStatus('rls-progress-bar', { indeterminate });
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div
         className="rls-progress-bar__component"
         style={{ width: `${percentage ?? 0}%` }}

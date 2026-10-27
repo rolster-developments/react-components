@@ -4,12 +4,17 @@ import { memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import { hexIsValid, normalizeHex } from '../../../helpers/color';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsLed } from '../../atoms/Led/Led';
-import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
+import {
+  PropsWithClassName,
+  PropsWithRlsSize,
+  PropsWithRlsTheme
+} from '../../definitions';
 import { RolsterReactHtmlControl } from '../../types';
 import { RlsModal } from '../Modal/Modal';
 import { RlsPickerColor } from '../PickerColor/PickerColor';
 
-interface LedColorProps extends PropsWithRlsTheme, PropsWithClassName {
+interface LedColorProps
+  extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   color?: string;
   disabled?: boolean;
   formControl?: RolsterReactHtmlControl<string>;
@@ -50,6 +55,7 @@ function RlsLedColorComponent({
   disabled: disabledProps,
   formControl,
   identifier,
+  rlsSize,
   onValue,
   readOnly,
   rlsTheme,
@@ -111,7 +117,12 @@ function RlsLedColorComponent({
   }, []);
 
   return (
-    <div id={identifier} className={classNameLed} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={classNameLed}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <button
         className="rls-led-color__trigger"
         type="button"
@@ -124,6 +135,7 @@ function RlsLedColorComponent({
       <RlsModal
         className="rls-modal-color"
         visible={modalIsVisible}
+        rlsSize={rlsSize}
         rlsTheme={rlsTheme}
         onBackdrop={onBackdrop}
       >

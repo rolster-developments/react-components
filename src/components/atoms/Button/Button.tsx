@@ -19,6 +19,7 @@ function RlsButtonComponent({
   children,
   disabled,
   identifier,
+  rlsSize,
   onClick,
   prefixIcon,
   requesting,
@@ -32,6 +33,7 @@ function RlsButtonComponent({
       id={identifier}
       className="rls-button"
       onClick={onClick}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
       disabled={disabled}
     >

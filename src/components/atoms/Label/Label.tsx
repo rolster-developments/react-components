@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-function RlsLabelComponent({ children, rlsTheme }: RlsComponent) {
+function RlsLabelComponent({ children, rlsSize, rlsTheme }: RlsComponent) {
   return (
-    <span className="rls-label" rls-theme={rlsTheme}>
+    <span className="rls-label" rls-size={rlsSize} rls-theme={rlsTheme}>
       {children}
     </span>
   );

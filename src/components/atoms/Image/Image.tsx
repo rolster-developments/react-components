@@ -7,7 +7,7 @@ interface ImageProps extends RlsComponent {
   src: Undefined<string>;
 }
 
-function RlsImageComponent({ src, rlsTheme }: ImageProps) {
+function RlsImageComponent({ src, rlsSize, rlsTheme }: ImageProps) {
   const [srcIsComplet, setSrcIsComplet] = useState(false);
   const refImage = useRef<HTMLImageElement>(null);
 
@@ -22,7 +22,7 @@ function RlsImageComponent({ src, rlsTheme }: ImageProps) {
   }, []);
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {!srcIsComplet && <RlsSkeleton rlsTheme={rlsTheme} />}
       <img ref={refImage} src={src} onLoad={onLoad} />
     </div>

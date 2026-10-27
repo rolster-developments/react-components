@@ -43,6 +43,7 @@ interface PickerColorProps extends RlsComponent {
 function RlsPickerColorComponent({
   color,
   formControl,
+  rlsSize,
   onListener,
   rlsTheme
 }: PickerColorProps) {
@@ -339,7 +340,7 @@ function RlsPickerColorComponent({
   }, [formControl, hexColor, onListener]);
 
   return (
-    <div className="rls-picker-color" rls-theme={rlsTheme}>
+    <div className="rls-picker-color" rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-picker-color__preview">
         <div
           ref={canvasRef}

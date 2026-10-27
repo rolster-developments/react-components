@@ -12,6 +12,7 @@ function RlsRadioButtonComponent({
   checked,
   disabled,
   identifier,
+  rlsSize,
   rlsTheme,
   onClick
 }: RadioButtonProps) {
@@ -22,6 +23,7 @@ function RlsRadioButtonComponent({
       id={identifier}
       className={className}
       onClick={onClick}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <div className="rls-radiobutton__component"></div>

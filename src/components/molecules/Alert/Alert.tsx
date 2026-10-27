@@ -13,12 +13,18 @@ function RlsAlertComponent({
   children,
   icon,
   identifier,
+  rlsSize,
   rlsTheme
 }: RlsAlertProps) {
   const className = renderClassStatus('rls-alert', { bordered });
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {icon && (
         <div className="rls-alert__icon">
           <RlsIcon value={icon} />

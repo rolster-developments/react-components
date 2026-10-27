@@ -5,7 +5,7 @@ import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsButtonType } from '../../../types';
 import { RlsButton } from '../../atoms/Button/Button';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
 export class ConfirmationResult extends SealedPartial<
   void,
@@ -34,7 +34,7 @@ interface ConfirmationButton extends PropsWithRlsTheme {
   identifier?: string;
 }
 
-interface ConfirmationBasic extends PropsWithRlsTheme {
+interface ConfirmationBasic extends PropsWithRlsTheme, PropsWithRlsSize {
   className?: string;
   content?: ReactNode;
   subtitle?: string;
@@ -61,7 +61,7 @@ interface ConfirmationOptions extends ConfirmationBasic {
 
 export type Confirmation = (options: ConfirmationOptions) => Result;
 
-type ConfirmationPropsRender = PropsWithRlsTheme;
+type ConfirmationPropsRender = PropsWithRlsTheme & PropsWithRlsSize;
 
 export interface ConfirmationService {
   confirmation: Confirmation;
@@ -72,6 +72,7 @@ function RlsConfirmationComponent({
   approved,
   className,
   content,
+  rlsSize,
   reject,
   rlsTheme,
   subtitle,
@@ -85,7 +86,7 @@ function RlsConfirmationComponent({
   );
 
   return (
-    <div className={classConfirmation} rls-theme={rlsTheme}>
+    <div className={classConfirmation} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-confirmation__component">
         <div className="rls-confirmation__header">
           {title && <div className="rls-confirmation__title">{title}</div>}

@@ -9,7 +9,7 @@ import {
 import ReactDOM from 'react-dom';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
 const DURATION_ANIMATION = 240;
 const DURATION_DEFAULT = 4000;
@@ -26,7 +26,7 @@ interface NotificationsBasic {
 }
 
 export interface NotificationsConfig
-  extends PropsWithRlsTheme, NotificationsBasic {
+  extends PropsWithRlsTheme, PropsWithRlsSize, NotificationsBasic {
   duration?: number;
   icon?: string;
 }
@@ -44,7 +44,7 @@ interface NotificationProps extends NotificationsConfig {
 
 export type Notify = (config: NotificationsConfig) => void;
 
-type NotificationsPropsRender = PropsWithRlsTheme;
+type NotificationsPropsRender = PropsWithRlsTheme & PropsWithRlsSize;
 
 export interface NotificationsService {
   notify: Notify;
@@ -54,6 +54,7 @@ export interface NotificationsService {
 function RlsNotification({
   content,
   icon,
+  rlsSize,
   onClose,
   rlsTheme,
   title,
@@ -62,7 +63,7 @@ function RlsNotification({
   const className = renderClassStatus('rls-notification', { visible });
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {icon && (
         <div className="rls-notification__avatar">
           <RlsIcon value={icon} />
@@ -126,13 +127,16 @@ export function useNotifications(): NotificationsService {
   }, []);
 
   const RlsNotifications = useMemo(() => {
-    return function RlsNotifications(props: NotificationsPropsRender) {
+    return function RlsNotifications({
+      rlsSize,
+      ...props
+    }: NotificationsPropsRender) {
       const className = renderClassStatus('rls-notifications', {
         visible: notificationsRef.current.length > 0
       });
 
       return ReactDOM.createPortal(
-        <div className={className} {...props}>
+        <div className={className} rls-size={rlsSize} {...props}>
           {notificationsRef.current.map((notification) => (
             <RlsNotification
               key={notification.id}

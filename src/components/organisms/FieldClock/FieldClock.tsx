@@ -53,6 +53,7 @@ function RlsFieldClockComponent({
   formControl,
   identifier,
   msgErrorDisabled,
+  rlsSize,
   onValue,
   placeholder,
   readOnly,
@@ -120,7 +121,12 @@ function RlsFieldClockComponent({
   );
 
   return (
-    <div id={identifier} className="rls-field-clock" rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className="rls-field-clock"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className={className}>
         {children && <span className="rls-field-box__label">{children}</span>}
 
@@ -156,6 +162,7 @@ function RlsFieldClockComponent({
         time={time}
         disabled={disabled}
         onClose={onCloseModal}
+        rlsSize={rlsSize}
         rlsTheme={rlsTheme}
       />
     </div>

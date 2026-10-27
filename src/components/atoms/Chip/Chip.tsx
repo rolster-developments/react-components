@@ -19,6 +19,7 @@ function RlsChipComponent({
   disabled,
   icon,
   identifier,
+  rlsSize,
   onClick,
   onRemove,
   rlsTheme,
@@ -34,6 +35,7 @@ function RlsChipComponent({
     <div
       id={identifier}
       className={classNameChip}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
       onClick={disabled ? undefined : onClick}
     >

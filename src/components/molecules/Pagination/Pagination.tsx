@@ -9,10 +9,11 @@ import { PaginationEvent } from '@rolster/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
+import { PropsWithRlsSize } from '../../definitions';
 
 export type { PaginationEvent } from '@rolster/react';
 
-interface PaginationProps<T> {
+interface PaginationProps<T> extends PropsWithRlsSize {
   suggestions: T[];
   count?: number;
   filter?: FilterCriteria<T>;
@@ -45,6 +46,7 @@ function RlsPaginationComponent<T>({
   suggestions,
   count,
   filter,
+  rlsSize,
   onPagination,
   position
 }: PaginationProps<T>) {
@@ -116,7 +118,7 @@ function RlsPaginationComponent<T>({
   }, [refreshPagination]);
 
   return (
-    <div className="rls-pagination">
+    <div className="rls-pagination" rls-size={rlsSize}>
       <div className="rls-pagination__actions">
         <button
           className="rls-pagination__action"

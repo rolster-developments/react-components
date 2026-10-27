@@ -6,8 +6,9 @@ import {
   useMemo,
   useState
 } from 'react';
+import { PropsWithRlsSize } from '../../definitions';
 
-interface VirtualScrollProps {
+interface VirtualScrollProps extends PropsWithRlsSize {
   container: number;
   height: number;
   items: ReactNode[];
@@ -16,7 +17,8 @@ interface VirtualScrollProps {
 function RlsVirtualScrollComponent({
   container,
   height,
-  items
+  items,
+  rlsSize
 }: VirtualScrollProps) {
   const [startIndex, setStartIndex] = useState(0);
 
@@ -39,6 +41,7 @@ function RlsVirtualScrollComponent({
 
   return (
     <div
+      rls-size={rlsSize}
       style={{
         height: `${container}px`,
         overflowY: 'auto',

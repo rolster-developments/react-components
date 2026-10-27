@@ -8,6 +8,7 @@ interface FieldReadonlyProps extends RlsComponent {
 function RlsFieldReadonlyComponent({
   children,
   identifier,
+  rlsSize,
   rlsTheme,
   value
 }: FieldReadonlyProps) {
@@ -15,6 +16,7 @@ function RlsFieldReadonlyComponent({
     <div
       id={identifier}
       className="rls-field-readonly rls-field-box"
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       {children && <span className="rls-field-box__label">{children}</span>}

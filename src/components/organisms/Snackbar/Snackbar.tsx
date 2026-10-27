@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
-import { PropsWithRlsTheme } from '../../definitions';
+import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
 const DURATION_ANIMATION = 240;
 const DURATION_CHAR = 75;
@@ -34,7 +34,8 @@ interface SnackbarBasic {
   title?: ReactNode;
 }
 
-export interface SnackbarConfig extends PropsWithRlsTheme, SnackbarBasic {
+export interface SnackbarConfig
+  extends PropsWithRlsTheme, PropsWithRlsSize, SnackbarBasic {
   icon?: string;
 }
 
@@ -45,7 +46,7 @@ interface SnackbarProps extends SnackbarConfig {
 
 export type Snackbar = (config: SnackbarConfig) => void;
 
-type SnackbarPropsRender = PropsWithRlsTheme;
+type SnackbarPropsRender = PropsWithRlsTheme & PropsWithRlsSize;
 
 export interface SnackbarService {
   RlsSnackbar: (props: SnackbarPropsRender) => ReactNode;
@@ -56,6 +57,7 @@ function RlsSnackbarComponent({
   content,
   onClose,
   icon,
+  rlsSize,
   rlsTheme,
   title,
   visible
@@ -63,7 +65,7 @@ function RlsSnackbarComponent({
   const className = renderClassStatus('rls-snackbar', { visible });
 
   return (
-    <div className={className} rls-theme={rlsTheme}>
+    <div className={className} rls-size={rlsSize} rls-theme={rlsTheme}>
       {icon && (
         <div className="rls-snackbar__avatar">
           <RlsIcon value={icon} />

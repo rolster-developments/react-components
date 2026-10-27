@@ -16,6 +16,7 @@ function RlsModalComponent({
   children,
   className,
   controller,
+  rlsSize,
   onBackdrop,
   visible,
   rlsTheme
@@ -34,7 +35,7 @@ function RlsModalComponent({
   }, [autoclose, controller, onBackdrop]);
 
   return ReactDOM.createPortal(
-    <div className={classNameModal} rls-theme={rlsTheme}>
+    <div className={classNameModal} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-modal__component">{children}</div>
 
       <div className="rls-modal__backdrop" onClick={onClickBackdrop}></div>

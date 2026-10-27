@@ -5,7 +5,11 @@ import {
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, memo, ReactNode, useCallback, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
-import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
+import {
+  PropsWithClassName,
+  PropsWithRlsSize,
+  PropsWithRlsTheme
+} from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
   FieldListAction,
@@ -24,7 +28,7 @@ interface ChooserSelectProps<
   E extends Element<T> = Element<T>,
   K = string
 >
-  extends PropsWithRlsTheme, PropsWithClassName {
+  extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   suggestions: E[];
   action?: FieldListAction;
   automatic?: boolean;
@@ -55,8 +59,15 @@ function RlsChooserSelectTemplateComponent<
 >(props: ChooserSelectTemplateProps<T, E, K>) {
   const select = useFieldSelect({ ...props, unremovable: true });
 
-  const { render, suggestions, action, children, formControl, rlsTheme } =
-    props;
+  const {
+    render,
+    suggestions,
+    action,
+    children,
+    formControl,
+    rlsSize,
+    rlsTheme
+  } = props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -88,6 +99,7 @@ function RlsChooserSelectTemplateComponent<
       id={props.identifier}
       ref={select.refContent}
       className={className}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <div

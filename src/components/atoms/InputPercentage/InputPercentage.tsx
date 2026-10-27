@@ -1,13 +1,14 @@
 import { memo, useCallback, useState } from 'react';
+import { PropsWithRlsSize } from '../../definitions';
 import { InputProps } from '../../types';
 import { RlsInput } from '../Input/Input';
 
-interface InputPercentageProps extends InputProps<number> {
+interface InputPercentageProps extends InputProps<number>, PropsWithRlsSize {
   decimals?: number;
 }
 
 function RlsInputPercentageComponent(props: InputPercentageProps) {
-  const { formControl, identifier, onValue, value } = props;
+  const { formControl, identifier, rlsSize, onValue, value } = props;
 
   const [valueInput, setValueInput] = useState(
     formControl?.value ?? value ?? 0
@@ -25,7 +26,7 @@ function RlsInputPercentageComponent(props: InputPercentageProps) {
   );
 
   return (
-    <div id={identifier} className="rls-input-percentage">
+    <div id={identifier} className="rls-input-percentage" rls-size={rlsSize}>
       <RlsInput
         {...props}
         type="number"

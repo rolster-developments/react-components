@@ -13,6 +13,7 @@ function RlsFormNavigationComponent({
   children,
   className,
   controller,
+  rlsSize,
   visible,
   rlsTheme
 }: FormNavigationProps) {
@@ -23,7 +24,7 @@ function RlsFormNavigationComponent({
   );
 
   return ReactDOM.createPortal(
-    <div className={classNameForm} rls-theme={rlsTheme}>
+    <div className={classNameForm} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-form-navigation__component">{children}</div>
     </div>,
     document.body

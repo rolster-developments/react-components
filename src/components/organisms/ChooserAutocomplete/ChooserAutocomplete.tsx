@@ -15,7 +15,11 @@ import {
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
-import { PropsWithClassName, PropsWithRlsTheme } from '../../definitions';
+import {
+  PropsWithClassName,
+  PropsWithRlsSize,
+  PropsWithRlsTheme
+} from '../../definitions';
 import { RlsBallot } from '../../molecules/Ballot/Ballot';
 import {
   FieldListAction,
@@ -36,7 +40,7 @@ interface ChooserAutocompleteProps<
   E extends Element<T> = Element<T>,
   K = string
 >
-  extends PropsWithRlsTheme, PropsWithClassName {
+  extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   suggestions: E[];
   action?: FieldListAction;
   automatic?: boolean;
@@ -76,6 +80,7 @@ function RlsChooserAutocompleteTemplateComponent<
     action,
     children,
     formControl,
+    rlsSize,
     onSearch,
     rlsTheme,
     searching
@@ -172,6 +177,7 @@ function RlsChooserAutocompleteTemplateComponent<
       id={props.identifier}
       ref={autocomplete.refContent}
       className={className}
+      rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <div

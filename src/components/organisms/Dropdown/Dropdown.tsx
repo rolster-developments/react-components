@@ -10,6 +10,7 @@ interface DropdownProps extends RlsComponent {
 function RlsDropdownComponent({
   children,
   controller,
+  rlsSize,
   rlsTheme
 }: DropdownProps) {
   const className = renderClassStatus('rls-dropdown', {
@@ -31,7 +32,12 @@ function RlsDropdownComponent({
   }, []);
 
   return (
-    <div ref={controller.component} className={className} rls-theme={rlsTheme}>
+    <div
+      ref={controller.component}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       <div className="rls-dropdown__content">{children}</div>
     </div>
   );

@@ -11,7 +11,8 @@ interface FieldMoneyProps extends FieldProps<number> {
 }
 
 function RlsFieldMoneyComponent(props: FieldMoneyProps) {
-  const { action, children, formControl, identifier, rlsTheme } = props;
+  const { action, children, formControl, identifier, rlsSize, rlsTheme } =
+    props;
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -29,7 +30,12 @@ function RlsFieldMoneyComponent(props: FieldMoneyProps) {
   );
 
   return (
-    <div id={identifier} className={className} rls-theme={rlsTheme}>
+    <div
+      id={identifier}
+      className={className}
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {children && <span className="rls-field-box__label">{children}</span>}
 
       <div className="rls-field-box__component">

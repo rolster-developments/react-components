@@ -6,9 +6,14 @@ interface ToolbarProps extends RlsComponent {
   subtitle?: ReactNode;
 }
 
-function RlsToolbarComponent({ actions, children, subtitle }: ToolbarProps) {
+function RlsToolbarComponent({
+  actions,
+  children,
+  rlsSize,
+  subtitle
+}: ToolbarProps) {
   return (
-    <div className="rls-toolbar">
+    <div className="rls-toolbar" rls-size={rlsSize}>
       <div className="rls-toolbar__description">
         {children && <label className="rls-toolbar__title">{children}</label>}
         {subtitle && (

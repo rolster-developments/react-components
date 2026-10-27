@@ -1,10 +1,11 @@
 import { ReactControl } from '@rolster/react-forms';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useImageEditorController } from '../../../controllers/ImageEditorController';
+import { PropsWithRlsSize } from '../../definitions';
 import { ImageRatio } from '../../types';
 import { ImageEditorValue } from '../ImageEditor/ImageEditor';
 
-interface ImageChooserProps {
+interface ImageChooserProps extends PropsWithRlsSize {
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, ImageEditorValue>
@@ -37,7 +38,7 @@ function RlsImageChooserComponent(props: ImageChooserProps) {
   }, [props.src]);
 
   return (
-    <div className="rls-image-chooser">
+    <div className="rls-image-chooser" rls-size={props.rlsSize}>
       <div
         className="rls-image-chooser__avatar"
         onClick={controller.onImageChooser}

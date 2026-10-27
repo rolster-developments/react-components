@@ -13,6 +13,7 @@ function RlsInputPasswordComponent({
   disabled,
   formControl,
   identifier,
+  rlsSize,
   onEnter,
   onKeyDown,
   onKeyUp,
@@ -65,7 +66,7 @@ function RlsInputPasswordComponent({
   });
 
   return (
-    <div id={identifier} className={className}>
+    <div id={identifier} className={className} rls-size={rlsSize}>
       <input
         className="rls-input-password__component"
         autoComplete="off"

@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { PropsWithRlsSize } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
 
-interface ButtonIconProps {
+interface ButtonIconProps extends PropsWithRlsSize {
   icon: string;
   className?: string;
   disabled?: boolean;
@@ -14,6 +15,7 @@ function RlsButtonIconComponent({
   icon,
   className,
   disabled,
+  rlsSize,
   onClick,
   skeleton
 }: ButtonIconProps) {
@@ -24,7 +26,12 @@ function RlsButtonIconComponent({
   );
 
   return (
-    <button className={classNameButton} onClick={onClick} disabled={disabled}>
+    <button
+      className={classNameButton}
+      onClick={onClick}
+      disabled={disabled}
+      rls-size={rlsSize}
+    >
       {!skeleton && <RlsIcon value={icon} />}
     </button>
   );

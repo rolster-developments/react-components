@@ -9,13 +9,14 @@ interface CardProps extends RlsComponent {
 function RlsCardComponent({
   children,
   className,
+  rlsSize,
   outline,
   rlsTheme
 }: CardProps) {
   const classNameCard = renderClassStatus('rls-card', { outline }, className);
 
   return (
-    <div className={classNameCard} rls-theme={rlsTheme}>
+    <div className={classNameCard} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-card__content">{children}</div>
     </div>
   );
