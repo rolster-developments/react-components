@@ -1,11 +1,27 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  memo,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { renderClassStatus } from '../../../helpers/css';
+import { RlsTheme } from '../../../types';
+import { RlsBadge } from '../../atoms/Badge/Badge';
 import { RlsComponent } from '../../definitions';
 import { RolsterReactHtmlControl } from '../../types';
+
+export interface TabBadge {
+  label: ReactNode;
+  contrasted?: boolean;
+  rlsTheme?: RlsTheme;
+}
 
 export interface Tab<T = any> {
   label: string;
   value: T;
+  badge?: TabBadge;
   defaultActive?: boolean;
   disabled?: boolean;
 }
@@ -39,6 +55,15 @@ function RlsTab<T>({ disabled, onSelect, tab, value }: TabProps<T>) {
   return (
     <div className={className} onClick={onClick}>
       <span>{tab.label}</span>
+
+      {tab.badge && (
+        <RlsBadge
+          rlsTheme={tab.badge.rlsTheme}
+          contrasted={tab.badge.contrasted}
+        >
+          {tab.badge.label}
+        </RlsBadge>
+      )}
     </div>
   );
 }

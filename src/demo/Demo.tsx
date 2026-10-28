@@ -190,8 +190,16 @@ const NOTIFICATIONS: NotificationsConfig[] = [
 
 const SIZE_TABS = [
   { label: 'Resumen', value: 'summary', defaultActive: true },
-  { label: 'Detalle', value: 'detail' },
-  { label: 'Historial', value: 'history' }
+  {
+    label: 'Detalle',
+    value: 'detail',
+    badge: { label: '3', rlsTheme: 'amber' as RlsTheme, contrasted: false }
+  },
+  {
+    label: 'Historial',
+    value: 'history',
+    badge: { label: 'Nuevo', rlsTheme: 'success' as RlsTheme }
+  }
 ];
 
 function SizeSamples({ rlsSize }: { rlsSize: RlsSize }) {
