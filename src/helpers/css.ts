@@ -1,6 +1,6 @@
 const FALLBACK_REM_SIZE = 16;
 
-export type ClassStatus = Record<string, string | boolean | undefined | null>;
+export type ClassStatus = Record<string, Nullish<string | boolean>>;
 
 export function getRemSize(): number {
   if (typeof window === 'undefined') {
