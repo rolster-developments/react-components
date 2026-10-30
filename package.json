@@ -40,7 +40,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@rolster/commons": "^4.2.4",
+    "@rolster/commons": "^4.3.0",
     "@rolster/components": "^2.1.6",
     "@rolster/dates": "^4.1.7",
     "@rolster/i18n": "^3.1.4",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolster/rollup": "^3.0.0",
-    "@rolster/styles-foundations": "^3.15.0",
+    "@rolster/styles-foundations": "^3.15.1",
     "@rolster/types": "^1.2.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
