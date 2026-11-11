@@ -8,13 +8,15 @@ interface SwitchProps extends RlsComponent {
   checked: boolean;
   capsule?: boolean;
   disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  labelledBy?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface SwitchControlProps extends RlsComponent {
   formControl: ReactControl<HTMLElement, boolean>;
   disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  labelledBy?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 function RlsSwitchComponent({
@@ -22,6 +24,7 @@ function RlsSwitchComponent({
   capsule,
   disabled,
   identifier,
+  labelledBy,
   rlsSize,
   onClick,
   rlsTheme
@@ -33,17 +36,22 @@ function RlsSwitchComponent({
   });
 
   return (
-    <div
+    <button
       id={identifier}
+      type="button"
+      role="switch"
       className={className}
-      onClick={disabled ? undefined : onClick}
+      aria-checked={checked}
+      aria-labelledby={labelledBy}
+      disabled={disabled}
+      onClick={onClick}
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
-      <div className="rls-switch__component">
-        <div className="rls-switch__component__element"></div>
-      </div>
-    </div>
+      <span className="rls-switch__component">
+        <span className="rls-switch__component__element"></span>
+      </span>
+    </button>
   );
 }
 
@@ -53,6 +61,7 @@ function RlsSwitchControlComponent({
   formControl,
   disabled,
   identifier,
+  labelledBy,
   onClick,
   rlsSize,
   rlsTheme
@@ -65,7 +74,7 @@ function RlsSwitchControlComponent({
   });
 
   const _onClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       onToggle();
 
       onClick?.(event);
@@ -78,6 +87,7 @@ function RlsSwitchControlComponent({
       identifier={identifier}
       checked={checked}
       disabled={disabledControl}
+      labelledBy={labelledBy}
       onClick={_onClick}
       rlsSize={rlsSize}
       rlsTheme={rlsTheme}

@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo } from 'react';
+import { memo, useId } from 'react';
 import { useFormToggleController } from '../../../controllers/FormToggleController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsSwitch } from '../../atoms/Switch/Switch';
@@ -29,6 +29,8 @@ function RlsLabelSwitchComponent({
     formControl
   });
 
+  const labelId = useId();
+
   const className = renderClassStatus('rls-label-switch', {
     disabled,
     extended,
@@ -42,11 +44,19 @@ function RlsLabelSwitchComponent({
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
-      <div className="rls-label-switch__component" onClick={onToggle}>
-        <RlsSwitch checked={checked} capsule={capsule} disabled={disabled} />
+      <div className="rls-label-switch__component">
+        <RlsSwitch
+          checked={checked}
+          capsule={capsule}
+          disabled={disabled}
+          labelledBy={children ? labelId : undefined}
+          onClick={onToggle}
+        />
       </div>
 
-      <div className="rls-label-switch__text">{children}</div>
+      <div id={labelId} className="rls-label-switch__text">
+        {children}
+      </div>
     </div>
   );
 }
