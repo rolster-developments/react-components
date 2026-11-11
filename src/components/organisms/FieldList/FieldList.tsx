@@ -4,6 +4,7 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { memo, ReactNode, useCallback, useMemo } from 'react';
+import { useInteractiveController } from '../../../controllers/InteractiveController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
@@ -77,6 +78,21 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
     `rls-field-list rls-field-list__multi ${props.className ?? ''}`
   );
 
+  const trigger = useInteractiveController<HTMLDivElement>({
+    disabled: disabled || props.readOnly,
+    onClick: fieldList.onClickInput,
+    onKeyDown: fieldList.onKeydownTrigger,
+    role: 'combobox'
+  });
+
+  const chipsProps = fieldList.selected.length
+    ? { onClick: disabled ? undefined : fieldList.onClickInput }
+    : {
+        ...trigger,
+        'aria-expanded': fieldList.listIsVisible,
+        'aria-haspopup': 'listbox' as const
+      };
+
   const renderWithCheckbox = useCallback(
     (element: E) => (
       <div className="rls-field-list__multi__element">
@@ -99,10 +115,7 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
 
       <div className="rls-field-box__component">
         <div className="rls-field-box__body">
-          <div
-            className="rls-field-list__multi__chips"
-            onClick={disabled ? undefined : fieldList.onClickInput}
-          >
+          <div className="rls-field-list__multi__chips" {...chipsProps}>
             {!fieldList.selected.length && placeholder ? (
               <span className="rls-field-list__multi__placeholder">
                 {placeholder}
@@ -125,8 +138,11 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
 
           {!props.readOnly && !disabled && (
             <RlsButtonIcon
+              ref={fieldList.refTrigger}
               icon="arrow-ios-down"
+              expanded={fieldList.listIsVisible}
               onClick={fieldList.onClickAction}
+              onKeyDown={fieldList.onKeydownTrigger}
             />
           )}
         </div>

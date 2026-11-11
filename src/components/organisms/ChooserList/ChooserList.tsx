@@ -84,12 +84,12 @@ function RlsChooserListTemplateComponent<
           fieldList.onClickAction();
           break;
 
-        case 'Escape':
-          fieldList.onClickBackdrop();
+        default:
+          fieldList.onKeydownTrigger(event);
           break;
       }
     },
-    [fieldList.onClickAction, fieldList.onClickBackdrop]
+    [fieldList.onClickAction, fieldList.onKeydownTrigger]
   );
 
   const renderWithCheckbox = useCallback(
@@ -118,6 +118,7 @@ function RlsChooserListTemplateComponent<
       rls-theme={rlsTheme}
     >
       <div
+        ref={fieldList.refTrigger}
         className="rls-chooser__trigger"
         aria-expanded={fieldList.listIsVisible}
         aria-haspopup="listbox"

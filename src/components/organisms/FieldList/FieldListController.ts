@@ -1,4 +1,8 @@
-import { AbstractListElement as Element } from '@rolster/components';
+import {
+  AbstractListElement as Element,
+  navigationListFromElement,
+  navigationListFromInput
+} from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import {
   KeyboardEvent,
@@ -65,10 +69,12 @@ export interface FieldListControl<T = any, E extends Element<T> = Element<T>> {
   onClickElement: (element: E) => () => void;
   onClickInput: () => void;
   onKeydownElement: (element: E) => (event: KeyboardEvent) => void;
+  onKeydownTrigger: (event: KeyboardEvent) => void;
   onRemoveElement: (element: E) => (event: MouseEvent) => void;
   refContent: React.RefObject<HTMLDivElement | null>;
   refList: React.RefObject<HTMLUListElement | null>;
   refSuggestions: React.RefObject<HTMLDivElement | null>;
+  refTrigger: (element: HTMLElement | null) => void;
   selected: E[];
 }
 
@@ -92,6 +98,12 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
   const refContent = useRef<HTMLDivElement>(null);
   const refList = useRef<HTMLUListElement>(null);
   const refSuggestions = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLElement>(null);
+  const focusListOnOpen = useRef(false);
+
+  const refTrigger = useCallback((element: HTMLElement | null) => {
+    trigger.current = element;
+  }, []);
 
   const formControl = props.formControl as
     | ReactControl<HTMLElement, T[]>
@@ -195,6 +207,57 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
     setListState({ listIsVisible: false });
   }, [setListState]);
 
+  useEffect(() => {
+    if (state.listIsVisible && focusListOnOpen.current) {
+      focusListOnOpen.current = false;
+
+      requestAnimationFrame(() => {
+        const elements = refList.current?.querySelectorAll<HTMLElement>(
+          '.rls-field-list__element'
+        );
+
+        if (elements?.length) {
+          elements[state.higher ? elements.length - 1 : 0].focus();
+        }
+      });
+    }
+  }, [state.listIsVisible, state.higher]);
+
+  const onKeydownTrigger = useCallback(
+    (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'ArrowDown':
+        case 'ArrowUp':
+          event.preventDefault();
+
+          if (disabled || props.readOnly) {
+            return;
+          }
+
+          if (state.listIsVisible) {
+            navigationListFromInput({
+              content: refContent.current,
+              event: event.nativeEvent,
+              higher: state.higher,
+              list: refList.current
+            });
+          } else {
+            focusListOnOpen.current = true;
+            setListState({ listIsVisible: true });
+          }
+          break;
+
+        case 'Escape':
+          if (state.listIsVisible) {
+            event.preventDefault();
+            setListState({ listIsVisible: false });
+          }
+          break;
+      }
+    },
+    [disabled, props.readOnly, state.listIsVisible, state.higher, setListState]
+  );
+
   const onClickAction = useCallback(() => {
     if (!disabled && !props.readOnly) {
       setListState({ listIsVisible: !state.listIsVisible });
@@ -232,12 +295,49 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
   const onKeydownElement = useCallback(
     (element: E) => {
       return (event: KeyboardEvent) => {
-        if (event.code === 'Enter') {
-          toggleElement(element);
+        switch (event.code) {
+          case 'Enter':
+          case 'Space':
+            event.preventDefault();
+            toggleElement(element);
+            break;
+
+          case 'Escape':
+            event.preventDefault();
+            setListState({ listIsVisible: false });
+            trigger.current?.focus();
+            break;
+
+          case 'Tab':
+            setListState({ listIsVisible: false });
+            break;
+
+          case 'ArrowDown':
+          case 'ArrowUp': {
+            event.preventDefault();
+
+            const elements = refList.current?.querySelectorAll(
+              '.rls-field-list__element'
+            );
+
+            const position = elements
+              ? Array.prototype.indexOf.call(elements, event.currentTarget)
+              : -1;
+
+            navigationListFromElement({
+              content: refContent.current,
+              event: event.nativeEvent,
+              higher: state.higher,
+              input: trigger.current as HTMLInputElement | null,
+              list: refList.current,
+              position: Math.max(position, 0)
+            });
+            break;
+          }
         }
       };
     },
-    [toggleElement]
+    [toggleElement, setListState, state.higher]
   );
 
   return useMemo(
@@ -253,7 +353,9 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
       onClickElement,
       onClickInput,
       onKeydownElement,
-      onRemoveElement
+      onKeydownTrigger,
+      onRemoveElement,
+      refTrigger
     }),
     [
       state,
@@ -264,7 +366,9 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
       onClickElement,
       onClickInput,
       onKeydownElement,
-      onRemoveElement
+      onKeydownTrigger,
+      onRemoveElement,
+      refTrigger
     ]
   );
 }
