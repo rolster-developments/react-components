@@ -157,7 +157,9 @@ function RlsPickerDateComponent({
         />
 
         <div className="rls-picker-date__title">
-          <span onClick={onVisibilityDay}>{title}</span>
+          <button type="button" onClick={onVisibilityDay}>
+            {title}
+          </button>
         </div>
       </div>
 

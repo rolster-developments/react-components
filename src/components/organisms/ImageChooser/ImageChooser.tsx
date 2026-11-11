@@ -39,12 +39,13 @@ function RlsImageChooserComponent(props: ImageChooserProps) {
 
   return (
     <div className="rls-image-chooser" rls-size={props.rlsSize}>
-      <div
+      <button
+        type="button"
         className="rls-image-chooser__avatar"
         onClick={controller.onImageChooser}
       >
         {src && <img src={src} />}
-      </div>
+      </button>
 
       {controller.RlsImageEditorChooser}
     </div>

@@ -53,7 +53,14 @@ function RlsTab<T>({ disabled, onSelect, tab, value }: TabProps<T>) {
   }, [disabled, tab.disabled, onSelect]);
 
   return (
-    <div className={className} onClick={onClick}>
+    <button
+      type="button"
+      role="tab"
+      className={className}
+      aria-selected={tab.value === value}
+      disabled={disabled || tab.disabled}
+      onClick={onClick}
+    >
       <span>{tab.label}</span>
 
       {tab.badge && (
@@ -64,7 +71,7 @@ function RlsTab<T>({ disabled, onSelect, tab, value }: TabProps<T>) {
           {tab.badge.label}
         </RlsBadge>
       )}
-    </div>
+    </button>
   );
 }
 
@@ -112,7 +119,12 @@ function RlsTabsComponent<T = any>({
   }, [value, formControl?.value]);
 
   return (
-    <div className="rls-tabs" rls-size={rlsSize} rls-theme={rlsTheme}>
+    <div
+      className="rls-tabs"
+      role="tablist"
+      rls-size={rlsSize}
+      rls-theme={rlsTheme}
+    >
       {tabs.map((tab, index) => {
         return (
           <RlsTab

@@ -349,25 +349,29 @@ function RlsPickerClockComponent({
     <div className="rls-picker-clock" rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-picker-clock__header">
         <div className="rls-picker-clock__title">
-          <span className={classNameHour} onClick={onClickHour}>
+          <button type="button" className={classNameHour} onClick={onClickHour}>
             {hourFormat}
-          </span>
+          </button>
 
           <span className="rls-picker-clock__title__separator">:</span>
 
-          <span className={classNameMinute} onClick={onClickMinute}>
+          <button
+            type="button"
+            className={classNameMinute}
+            onClick={onClickMinute}
+          >
             {minuteFormat}
-          </span>
+          </button>
         </div>
 
         <div className="rls-picker-clock__zone">
-          <span className={classNameAM} onClick={onClickAM}>
+          <button type="button" className={classNameAM} onClick={onClickAM}>
             AM
-          </span>
+          </button>
 
-          <span className={classNamePM} onClick={onClickPM}>
+          <button type="button" className={classNamePM} onClick={onClickPM}>
             PM
-          </span>
+          </button>
         </div>
       </div>
 

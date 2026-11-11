@@ -26,7 +26,7 @@ interface PickerSelectorTitleProps extends PropsWithRlsSize {
   minDate?: Date;
   onClick?: (
     type: PickerSelectorTitleType,
-    event?: MouseEvent<HTMLSpanElement>
+    event?: MouseEvent<HTMLButtonElement>
   ) => void;
 }
 
@@ -79,14 +79,14 @@ function RlsPickerSelectorTitleComponent({
   }, [monthControl.value, yearControl.value]);
 
   const onMonth = useCallback(
-    (event: MouseEvent<HTMLSpanElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       onClick?.('month', event);
     },
     [onClick]
   );
 
   const onYear = useCallback(
-    (event: MouseEvent<HTMLSpanElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       onClick?.('year', event);
     },
     [onClick]
@@ -143,8 +143,12 @@ function RlsPickerSelectorTitleComponent({
       />
 
       <div className="rls-picker-selector-title__label">
-        <span onClick={onMonth}>{label},</span>
-        <span onClick={onYear}>{yearControl.value}</span>
+        <button type="button" onClick={onMonth}>
+          {label},
+        </button>
+        <button type="button" onClick={onYear}>
+          {yearControl.value}
+        </button>
       </div>
 
       <RlsButtonIcon
