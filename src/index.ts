@@ -117,6 +117,7 @@ export * from './controllers/EventCallbackController';
 export * from './controllers/FormSingleSelectionController';
 export * from './controllers/FormToggleController';
 export * from './controllers/ImageEditorController';
+export * from './controllers/InteractiveController';
 export * from './controllers/ListController';
 export * from './controllers/PortalController';
 export * from './controllers/RelocationOnComponentController';

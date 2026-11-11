@@ -13,6 +13,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { useInteractiveController } from '../../../controllers/InteractiveController';
 import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import {
@@ -172,6 +173,13 @@ function RlsChooserAutocompleteTemplateComponent<
     ]
   );
 
+  const trigger = useInteractiveController<HTMLDivElement>({
+    disabled,
+    onClick: autocomplete.onClickControl,
+    onKeyDown: onKeydownTrigger,
+    role: 'combobox'
+  });
+
   return (
     <div
       id={props.identifier}
@@ -182,13 +190,9 @@ function RlsChooserAutocompleteTemplateComponent<
     >
       <div
         className="rls-chooser__trigger"
-        role="combobox"
         aria-expanded={autocomplete.listIsVisible}
         aria-haspopup="listbox"
-        aria-disabled={disabled || undefined}
-        tabIndex={disabled ? -1 : 0}
-        onClick={disabled ? undefined : autocomplete.onClickControl}
-        onKeyDown={disabled ? undefined : onKeydownTrigger}
+        {...trigger}
       >
         {typeof children === 'function'
           ? children({

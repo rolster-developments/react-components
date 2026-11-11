@@ -4,6 +4,7 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, memo, ReactNode, useCallback, useMemo } from 'react';
+import { useInteractiveController } from '../../../controllers/InteractiveController';
 import { renderClassStatus } from '../../../helpers/css';
 import {
   PropsWithClassName,
@@ -94,6 +95,13 @@ function RlsChooserSelectTemplateComponent<
     [select.onKeydownInput]
   );
 
+  const trigger = useInteractiveController<HTMLDivElement>({
+    disabled,
+    onClick: select.onClickAction,
+    onKeyDown: onKeydownTrigger,
+    role: 'combobox'
+  });
+
   return (
     <div
       id={props.identifier}
@@ -104,15 +112,11 @@ function RlsChooserSelectTemplateComponent<
     >
       <div
         className="rls-chooser__trigger"
-        role="combobox"
         aria-expanded={select.listIsVisible}
         aria-haspopup="listbox"
-        aria-disabled={disabled || undefined}
-        tabIndex={disabled ? -1 : 0}
-        onClick={disabled ? undefined : select.onClickAction}
-        onKeyDown={disabled ? undefined : onKeydownTrigger}
         onFocus={select.onFocusInput}
         onBlur={select.onBlurInput}
+        {...trigger}
       >
         {typeof children === 'function'
           ? children({
