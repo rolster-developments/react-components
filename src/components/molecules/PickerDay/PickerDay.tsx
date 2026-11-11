@@ -60,9 +60,15 @@ function RlsPickerDayElement({
   }, [day.value, day.disabled, disabled, onSelect]);
 
   return (
-    <div className={className} onClick={onClick}>
+    <button
+      type="button"
+      className={className}
+      aria-pressed={day.selected}
+      disabled={day.forbidden || day.disabled || disabled}
+      onClick={onClick}
+    >
       <span className="rls-picker-day__element__span">{day.value || '??'}</span>
-    </div>
+    </button>
   );
 }
 

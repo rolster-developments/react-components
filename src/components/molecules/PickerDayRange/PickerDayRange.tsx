@@ -62,11 +62,17 @@ function RlsPickerDayRangeElement({
   }, [day.value, day.disabled, disabled, onSelect]);
 
   return (
-    <div className={className} onClick={onClick}>
+    <button
+      type="button"
+      className={className}
+      aria-pressed={day.source || day.end || day.ranged}
+      disabled={day.forbidden || day.disabled || disabled}
+      onClick={onClick}
+    >
       <span className="rls-picker-day-range__element__span">
         {day.value || '??'}
       </span>
-    </div>
+    </button>
   );
 }
 

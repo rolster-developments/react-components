@@ -53,9 +53,15 @@ function RlsPickerMonthElement({
   }, [month.value, month.disabled, disabled, onSelect]);
 
   return (
-    <div className={className} onClick={onClick}>
+    <button
+      type="button"
+      className={className}
+      aria-pressed={month.selected}
+      disabled={month.disabled || disabled}
+      onClick={onClick}
+    >
       <span className="rls-picker-month__span">{label}</span>
-    </div>
+    </button>
   );
 }
 

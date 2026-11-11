@@ -43,9 +43,15 @@ function RlsPickerYearElement({
   }, [year.value, year.disabled, disabled, onSelect]);
 
   return (
-    <div className={className} onClick={onClick}>
+    <button
+      type="button"
+      className={className}
+      aria-pressed={year.selected}
+      disabled={!year.value || year.disabled || disabled}
+      onClick={onClick}
+    >
       <span className="rls-picker-year__span">{year.value || '????'}</span>
-    </div>
+    </button>
   );
 }
 
