@@ -102,6 +102,7 @@ export * from './components/organisms/PickerClock/PickerClock';
 export * from './components/organisms/PickerColor/PickerColor';
 export * from './components/organisms/PickerDate/PickerDate';
 export * from './components/organisms/PickerDateRange/PickerDateRange';
+export * from './components/organisms/Popover/Popover';
 export * from './components/organisms/Snackbar/Snackbar';
 export type {
   FieldProps,
@@ -119,6 +120,7 @@ export * from './controllers/FormToggleController';
 export * from './controllers/ImageEditorController';
 export * from './controllers/InteractiveController';
 export * from './controllers/ListController';
+export * from './controllers/PopoverController';
 export * from './controllers/PortalController';
 export * from './controllers/RelocationOnComponentController';
 export * from './controllers/ResizeController';

@@ -49,6 +49,7 @@ import {
   RlsNavbar,
   RlsNavbarMenu,
   RlsPickerClock,
+  RlsPopover,
   RlsPoster,
   RlsSize,
   RlsSlider,
@@ -56,6 +57,7 @@ import {
   RlsTheme,
   useDesingSystemController,
   useDropdownController,
+  usePopoverController,
   usePortalController,
   useRlsContext
 } from '../index';
@@ -292,6 +294,10 @@ export function Demo() {
   const bottomSheetController = usePortalController();
   const formNavigationController = usePortalController();
   const dropdownController = useDropdownController();
+  const popoverController = usePopoverController();
+  const popoverHorizontalController = usePopoverController({
+    orientation: 'horizontal'
+  });
 
   const notifyIndex = useRef(0);
 
@@ -753,6 +759,20 @@ export function Demo() {
                   Abrir dropdown
                 </RlsButton>
 
+                <RlsButton
+                  type="flat"
+                  onClick={popoverController.openWithEvent}
+                >
+                  Abrir popover
+                </RlsButton>
+
+                <RlsButton
+                  type="flat"
+                  onClick={popoverHorizontalController.openWithEvent}
+                >
+                  Abrir popover horizontal
+                </RlsButton>
+
                 <RlsButton type="flat" onClick={modalController.open}>
                   Abrir modal
                 </RlsButton>
@@ -811,6 +831,26 @@ export function Demo() {
           </RlsButton>
         </div>
       </RlsDropdown>
+
+      <RlsPopover controller={popoverController}>
+        <div className="dashboard__overlay">
+          <h3>Popover</h3>
+          <p>Centrado sobre el botón, con la flecha apuntándolo.</p>
+          <RlsButton type="raised" onClick={popoverController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsPopover>
+
+      <RlsPopover controller={popoverHorizontalController}>
+        <div className="dashboard__overlay">
+          <h3>Popover horizontal</h3>
+          <p>Sale a la derecha del botón, o a la izquierda si no cabe.</p>
+          <RlsButton type="raised" onClick={popoverHorizontalController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsPopover>
 
       <RlsModal controller={modalController} autoclose>
         <div className="dashboard__overlay">

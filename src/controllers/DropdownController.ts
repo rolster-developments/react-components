@@ -11,6 +11,7 @@ import {
   DropdownOrigin,
   resolveDropdownPosition
 } from '../helpers/dropdown';
+import { resolveParentOffset } from '../helpers/offset';
 
 export type { DropdownOptions, DropdownOrigin } from '../helpers/dropdown';
 
@@ -20,30 +21,6 @@ export interface DropdownController {
   open: (positionX?: number, positionY?: number) => void;
   openWithEvent: (event: MouseEvent, options?: DropdownOptions) => void;
   visible: boolean;
-}
-
-interface DropdownOffset {
-  x: number;
-  y: number;
-}
-
-function resolveParentOffset(component: HTMLElement): DropdownOffset {
-  const parent = component.offsetParent as HTMLElement | null;
-
-  if (!parent) {
-    return { x: 0, y: 0 };
-  }
-
-  if (parent === document.body) {
-    return { x: window.scrollX, y: window.scrollY };
-  }
-
-  const rect = parent.getBoundingClientRect();
-
-  return {
-    x: parent.scrollLeft - rect.left - parent.clientLeft,
-    y: parent.scrollTop - rect.top - parent.clientTop
-  };
 }
 
 export function useDropdownController(
