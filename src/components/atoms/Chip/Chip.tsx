@@ -7,7 +7,7 @@ interface ChipProps extends RlsComponent {
   contrasted?: boolean;
   disabled?: boolean;
   icon?: string;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   onRemove?: MouseEventHandler<HTMLButtonElement>;
   selected?: boolean;
 }
@@ -37,11 +37,26 @@ function RlsChipComponent({
       className={classNameChip}
       rls-size={rlsSize}
       rls-theme={rlsTheme}
-      onClick={disabled ? undefined : onClick}
     >
-      {icon && <RlsIcon className="rls-chip__icon" value={icon} />}
+      {onClick ? (
+        <button
+          type="button"
+          className="rls-chip__body"
+          aria-pressed={selected}
+          disabled={disabled}
+          onClick={onClick}
+        >
+          {icon && <RlsIcon className="rls-chip__icon" value={icon} />}
 
-      <span className="rls-chip__description">{children}</span>
+          <span className="rls-chip__description">{children}</span>
+        </button>
+      ) : (
+        <span className="rls-chip__body">
+          {icon && <RlsIcon className="rls-chip__icon" value={icon} />}
+
+          <span className="rls-chip__description">{children}</span>
+        </span>
+      )}
 
       {onRemove && !disabled && (
         <button className="rls-chip__remove" type="button" onClick={onRemove}>
