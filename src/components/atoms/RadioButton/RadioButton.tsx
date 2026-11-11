@@ -12,9 +12,9 @@ function RlsRadioButtonComponent({
   checked,
   disabled,
   identifier,
+  onClick,
   rlsSize,
-  rlsTheme,
-  onClick
+  rlsTheme
 }: RadioButtonProps) {
   const className = renderClassStatus('rls-radiobutton', { checked, disabled });
 
@@ -22,7 +22,7 @@ function RlsRadioButtonComponent({
     <div
       id={identifier}
       className={className}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >

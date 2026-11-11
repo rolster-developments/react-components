@@ -1,5 +1,6 @@
 import { ReactControl } from '@rolster/react-forms';
 import { memo, MouseEvent, MouseEventHandler, useCallback } from 'react';
+import { useFormToggleController } from '../../../controllers/FormToggleController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -13,7 +14,7 @@ interface SwitchProps extends RlsComponent {
 interface SwitchControlProps extends RlsComponent {
   formControl: ReactControl<HTMLElement, boolean>;
   disabled?: boolean;
-  stopPropagation?: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 function RlsSwitchComponent({
@@ -35,7 +36,7 @@ function RlsSwitchComponent({
     <div
       id={identifier}
       className={className}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
@@ -52,27 +53,32 @@ function RlsSwitchControlComponent({
   formControl,
   disabled,
   identifier,
+  onClick,
   rlsSize,
-  rlsTheme,
-  stopPropagation
+  rlsTheme
 }: SwitchControlProps) {
-  const onClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      formControl.setValue(!formControl.value);
+  const disabledControl = formControl.disabled || disabled;
 
-      if (stopPropagation) {
-        event.stopPropagation();
-      }
+  const { checked, onToggle } = useFormToggleController({
+    disabled: disabledControl,
+    formControl
+  });
+
+  const _onClick = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      onToggle();
+
+      onClick?.(event);
     },
-    [formControl.value, stopPropagation]
+    [onToggle, onClick]
   );
 
   return (
     <RlsSwitch
       identifier={identifier}
-      checked={formControl.value}
-      disabled={disabled}
-      onClick={onClick}
+      checked={checked}
+      disabled={disabledControl}
+      onClick={_onClick}
       rlsSize={rlsSize}
       rlsTheme={rlsTheme}
     />
