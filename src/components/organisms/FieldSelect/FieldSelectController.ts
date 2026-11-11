@@ -160,12 +160,22 @@ export function useFieldSelect<
       return (event: KeyboardEvent) => {
         if (event.code === 'Enter') {
           onChange(element);
+        } else if (event.code === 'Escape') {
+          event.preventDefault();
+          controller.setState({ listIsVisible: false });
+
+          const trigger =
+            controller.refContent.current?.querySelector<HTMLElement>(
+              '[role="combobox"], .rls-field-list__control'
+            ) ?? controller.refInput?.current;
+
+          trigger?.focus();
         } else {
           controller.navigationElement(event);
         }
       };
     },
-    [onChange, controller.navigationElement]
+    [onChange, controller.navigationElement, controller.setState]
   );
 
   return useMemo(

@@ -1,6 +1,8 @@
+import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useImageEditorController } from '../../../controllers/ImageEditorController';
+import { reactI18n } from '../../../i18n';
 import { PropsWithRlsSize } from '../../definitions';
 import { ImageRatio } from '../../types';
 import { ImageEditorValue } from '../ImageEditor/ImageEditor';
@@ -20,6 +22,13 @@ interface ImageChooserProps extends PropsWithRlsSize {
 
 function RlsImageChooserComponent(props: ImageChooserProps) {
   const [src, setSrc] = useState<string>();
+  const [label, setLabel] = useState(reactI18n('chooserImageLabel'));
+
+  useEffect(() => {
+    return i18nSubscribe(() => {
+      setLabel(reactI18n('chooserImageLabel'));
+    });
+  }, []);
 
   const onValue = useCallback(
     (image: ImageEditorValue) => {
@@ -42,6 +51,7 @@ function RlsImageChooserComponent(props: ImageChooserProps) {
       <button
         type="button"
         className="rls-image-chooser__avatar"
+        aria-label={label}
         onClick={controller.onImageChooser}
       >
         {src && <img src={src} />}
