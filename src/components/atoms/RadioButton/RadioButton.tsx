@@ -5,29 +5,50 @@ import { RlsComponent } from '../../definitions';
 interface RadioButtonProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  labelledBy?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 function RlsRadioButtonComponent({
   checked,
   disabled,
   identifier,
-  onClick,
+  labelledBy,
   rlsSize,
-  rlsTheme
+  rlsTheme,
+  onClick
 }: RadioButtonProps) {
   const className = renderClassStatus('rls-radiobutton', { checked, disabled });
 
+  if (!onClick) {
+    return (
+      <span
+        id={identifier}
+        className={className}
+        aria-hidden="true"
+        rls-size={rlsSize}
+        rls-theme={rlsTheme}
+      >
+        <span className="rls-radiobutton__component"></span>
+      </span>
+    );
+  }
+
   return (
-    <div
+    <button
       id={identifier}
+      type="button"
+      role="radio"
       className={className}
-      onClick={disabled ? undefined : onClick}
+      aria-checked={checked}
+      aria-labelledby={labelledBy}
+      disabled={disabled}
+      onClick={onClick}
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
-      <div className="rls-radiobutton__component"></div>
-    </div>
+      <span className="rls-radiobutton__component"></span>
+    </button>
   );
 }
 

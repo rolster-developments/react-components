@@ -8,35 +8,57 @@ import { RlsIcon } from '../Icon/Icon';
 interface CheckBoxProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  labelledBy?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface CheckBoxControlProps extends RlsComponent {
   formControl: ReactControl<HTMLElement, boolean>;
   disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  labelledBy?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 function RlsCheckBoxComponent({
   checked,
   disabled,
   identifier,
+  labelledBy,
   rlsSize,
   onClick,
   rlsTheme
 }: CheckBoxProps) {
   const className = renderClassStatus('rls-checkbox', { checked, disabled });
 
+  if (!onClick) {
+    return (
+      <span
+        id={identifier}
+        className={className}
+        aria-hidden="true"
+        rls-size={rlsSize}
+        rls-theme={rlsTheme}
+      >
+        <RlsIcon value="checkmark" />
+      </span>
+    );
+  }
+
   return (
-    <div
+    <button
       id={identifier}
+      type="button"
+      role="checkbox"
       className={className}
-      onClick={disabled ? undefined : onClick}
+      aria-checked={checked}
+      aria-labelledby={labelledBy}
+      disabled={disabled}
+      onClick={onClick}
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
       <RlsIcon value="checkmark" />
-    </div>
+    </button>
   );
 }
 
@@ -46,6 +68,7 @@ function RlsCheckBoxControlComponent({
   formControl,
   disabled,
   identifier,
+  labelledBy,
   onClick,
   rlsSize,
   rlsTheme
@@ -58,7 +81,7 @@ function RlsCheckBoxControlComponent({
   });
 
   const _onClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       onToggle();
 
       onClick?.(event);
@@ -71,6 +94,7 @@ function RlsCheckBoxControlComponent({
       identifier={identifier}
       checked={checked}
       disabled={disabledControl}
+      labelledBy={labelledBy}
       onClick={_onClick}
       rlsSize={rlsSize}
       rlsTheme={rlsTheme}

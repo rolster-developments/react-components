@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, useId } from 'react';
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsRadioButton } from '../../atoms/RadioButton/RadioButton';
@@ -47,6 +47,8 @@ function RlsLabelRadioButtonComponent<T = any>({
     value
   });
 
+  const labelId = useId();
+
   const className = renderClassStatus('rls-label-radiobutton', {
     disabled,
     extended,
@@ -60,11 +62,18 @@ function RlsLabelRadioButtonComponent<T = any>({
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
-      <div className="rls-label-radiobutton__component" onClick={onSelect}>
-        <RlsRadioButton checked={checked} disabled={disabled} />
+      <div className="rls-label-radiobutton__component">
+        <RlsRadioButton
+          checked={checked}
+          disabled={disabled}
+          labelledBy={children ? labelId : undefined}
+          onClick={onSelect}
+        />
       </div>
 
-      <div className="rls-label-radiobutton__text">{children}</div>
+      <div id={labelId} className="rls-label-radiobutton__text">
+        {children}
+      </div>
     </div>
   );
 }

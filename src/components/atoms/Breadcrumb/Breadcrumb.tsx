@@ -4,7 +4,7 @@ import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
 export interface BreadcrumbLabel extends PropsWithRlsTheme {
   label: string;
-  onClick?: MouseEventHandler<HTMLSpanElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface BreadcrumbProps extends PropsWithRlsSize {
@@ -21,10 +21,21 @@ function RlsBreadcrumbLabel({ label }: BreadcrumbLabelProps) {
   });
 
   return (
-    <span className="rls-breadcrumb__label" onClick={label.onClick}>
-      <a className={className} rls-theme={label.rlsTheme}>
-        {label.label}
-      </a>
+    <span className="rls-breadcrumb__label">
+      {label.onClick ? (
+        <button
+          type="button"
+          className={className}
+          onClick={label.onClick}
+          rls-theme={label.rlsTheme}
+        >
+          {label.label}
+        </button>
+      ) : (
+        <a className={className} rls-theme={label.rlsTheme}>
+          {label.label}
+        </a>
+      )}
     </span>
   );
 }
