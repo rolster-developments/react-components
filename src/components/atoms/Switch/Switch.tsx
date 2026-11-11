@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, useCallback } from 'react';
+import { memo, MouseEvent, MouseEventHandler, useCallback } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
@@ -7,12 +7,13 @@ interface SwitchProps extends RlsComponent {
   checked: boolean;
   capsule?: boolean;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 interface SwitchControlProps extends RlsComponent {
   formControl: ReactControl<HTMLElement, boolean>;
   disabled?: boolean;
+  stopPropagation?: boolean;
 }
 
 function RlsSwitchComponent({
@@ -52,11 +53,19 @@ function RlsSwitchControlComponent({
   disabled,
   identifier,
   rlsSize,
-  rlsTheme
+  rlsTheme,
+  stopPropagation
 }: SwitchControlProps) {
-  const onClick = useCallback(() => {
-    formControl.setValue(!formControl.value);
-  }, [formControl.value]);
+  const onClick = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      formControl.setValue(!formControl.value);
+
+      if (stopPropagation) {
+        event.stopPropagation();
+      }
+    },
+    [formControl.value, stopPropagation]
+  );
 
   return (
     <RlsSwitch

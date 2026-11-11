@@ -1,5 +1,10 @@
 import { ReactControl } from '@rolster/react-forms';
-import { KeyboardEvent, MouseEventHandler } from 'react';
+import {
+  FocusEventHandler,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  MouseEventHandler
+} from 'react';
 import { RlsComponent } from './definitions';
 
 export type RolsterReactInputControl<T = any> =
@@ -14,9 +19,9 @@ export interface InputProps<T = any> {
   disabled?: boolean;
   formControl?: RolsterReactInputControl<T>;
   identifier?: string;
-  onBlur?: () => void;
-  onEnter?: () => void;
-  onFocus?: () => void;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  onEnter?: KeyboardEventHandler<HTMLInputElement>;
+  onFocus?: FocusEventHandler<HTMLInputElement>;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
   onValue?: (value: T) => void;

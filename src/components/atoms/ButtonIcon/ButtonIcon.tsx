@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, MouseEventHandler } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithRlsSize } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
@@ -7,7 +7,7 @@ interface ButtonIconProps extends PropsWithRlsSize {
   icon: string;
   className?: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   skeleton?: boolean;
 }
 

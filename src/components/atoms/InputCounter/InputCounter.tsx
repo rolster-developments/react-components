@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  FocusEvent,
   memo,
   useCallback,
   useEffect,
@@ -111,17 +112,23 @@ function RlsInputCounterComponent({
     [onUpdate]
   );
 
-  const onFocusInput = useCallback(() => {
-    setFocused(true);
-    formControl?.focus();
-    onFocus?.();
-  }, [formControl, onFocus]);
+  const onFocusInput = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      setFocused(true);
+      formControl?.focus();
+      onFocus?.(event);
+    },
+    [formControl, onFocus]
+  );
 
-  const onBlurInput = useCallback(() => {
-    setFocused(false);
-    formControl?.blur();
-    onBlur?.();
-  }, [formControl, onBlur]);
+  const onBlurInput = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      setFocused(false);
+      formControl?.blur();
+      onBlur?.(event);
+    },
+    [formControl, onBlur]
+  );
 
   return (
     <div

@@ -1,4 +1,10 @@
-import { KeyboardEvent, memo, useCallback, useState } from 'react';
+import {
+  FocusEvent,
+  KeyboardEvent,
+  memo,
+  useCallback,
+  useState
+} from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { InputProps } from '../../types';
@@ -14,7 +20,9 @@ function RlsInputPasswordComponent({
   formControl,
   identifier,
   rlsSize,
+  onBlur,
   onEnter,
+  onFocus,
   onKeyDown,
   onKeyUp,
   onValue,
@@ -37,7 +45,7 @@ function RlsInputPasswordComponent({
       onKeyDown?.(event);
 
       if (event.key === 'Enter') {
-        onEnter?.();
+        onEnter?.(event);
       }
     },
     [onKeyDown, onEnter]
@@ -50,15 +58,23 @@ function RlsInputPasswordComponent({
     [onKeyUp]
   );
 
-  const _onFocus = useCallback(() => {
-    formControl?.focus();
-    setFocused(() => true);
-  }, [formControl]);
+  const _onFocus = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      formControl?.focus();
+      setFocused(() => true);
+      onFocus?.(event);
+    },
+    [formControl, onFocus]
+  );
 
-  const _onBlur = useCallback(() => {
-    formControl?.blur();
-    setFocused(() => false);
-  }, [formControl]);
+  const _onBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      formControl?.blur();
+      setFocused(() => false);
+      onBlur?.(event);
+    },
+    [formControl, onBlur]
+  );
 
   const className = renderClassStatus('rls-input-password', {
     disabled: formControl?.disabled || disabled,

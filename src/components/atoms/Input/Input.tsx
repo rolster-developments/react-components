@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   CompositionEvent,
+  FocusEvent,
   HTMLInputTypeAttribute,
   KeyboardEvent,
   memo,
@@ -151,7 +152,7 @@ function RlsInputComponent({
       onKeyDown?.(event);
 
       if (event.key === 'Enter') {
-        onEnter?.();
+        onEnter?.(event);
       }
     },
     [onKeyDown, onEnter]
@@ -164,17 +165,23 @@ function RlsInputComponent({
     [onKeyUp]
   );
 
-  const onFocusInput = useCallback(() => {
-    formControl?.focus();
-    setFocused(() => true);
-    onFocus?.();
-  }, [formControl, onFocus]);
+  const onFocusInput = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      formControl?.focus();
+      setFocused(() => true);
+      onFocus?.(event);
+    },
+    [formControl, onFocus]
+  );
 
-  const onBlurInput = useCallback(() => {
-    formControl?.blur();
-    setFocused(() => false);
-    onBlur?.();
-  }, [formControl, onBlur]);
+  const onBlurInput = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      formControl?.blur();
+      setFocused(() => false);
+      onBlur?.(event);
+    },
+    [formControl, onBlur]
+  );
 
   const className = renderClassStatus('rls-input', {
     disabled: formControl?.disabled || disabled,

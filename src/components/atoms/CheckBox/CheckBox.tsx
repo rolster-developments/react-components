@@ -1,5 +1,5 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, useCallback } from 'react';
+import { memo, MouseEventHandler, useCallback } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 import { RlsIcon } from '../Icon/Icon';
@@ -7,7 +7,7 @@ import { RlsIcon } from '../Icon/Icon';
 interface CheckBoxProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 interface CheckBoxControlProps extends RlsComponent {

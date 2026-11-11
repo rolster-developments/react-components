@@ -3,7 +3,10 @@ import {
   ChangeEvent,
   CompositionEvent,
   CSSProperties,
+  FocusEvent,
+  FocusEventHandler,
   KeyboardEvent,
+  KeyboardEventHandler,
   memo,
   TextareaHTMLAttributes,
   useCallback,
@@ -44,9 +47,9 @@ export interface AreaTextProps extends RlsComponent {
   maxLength?: number;
   maxRows?: number;
   minRows?: number;
-  onBlur?: () => void;
-  onEnter?: () => void;
-  onFocus?: () => void;
+  onBlur?: FocusEventHandler<HTMLTextAreaElement>;
+  onEnter?: KeyboardEventHandler<HTMLTextAreaElement>;
+  onFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onKeyDown?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
   onKeyUp?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
   onValue?: (value: string) => void;
@@ -219,7 +222,7 @@ function RlsAreaTextComponent({
       onKeyDown?.(event);
 
       if (event.key === 'Enter') {
-        onEnter?.();
+        onEnter?.(event);
       }
     },
     [onKeyDown, onEnter]
@@ -232,17 +235,23 @@ function RlsAreaTextComponent({
     [onKeyUp]
   );
 
-  const onFocusArea = useCallback(() => {
-    formControl?.focus();
-    setFocused(() => true);
-    onFocus?.();
-  }, [formControl, onFocus]);
+  const onFocusArea = useCallback(
+    (event: FocusEvent<HTMLTextAreaElement>) => {
+      formControl?.focus();
+      setFocused(() => true);
+      onFocus?.(event);
+    },
+    [formControl, onFocus]
+  );
 
-  const onBlurArea = useCallback(() => {
-    formControl?.blur();
-    setFocused(() => false);
-    onBlur?.();
-  }, [formControl, onBlur]);
+  const onBlurArea = useCallback(
+    (event: FocusEvent<HTMLTextAreaElement>) => {
+      formControl?.blur();
+      setFocused(() => false);
+      onBlur?.(event);
+    },
+    [formControl, onBlur]
+  );
 
   const disabledArea = formControl?.disabled || disabled;
 

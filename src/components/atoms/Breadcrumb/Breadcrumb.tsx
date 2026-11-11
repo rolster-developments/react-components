@@ -1,10 +1,10 @@
-import { memo, useMemo } from 'react';
+import { memo, MouseEventHandler, useMemo } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
 
 export interface BreadcrumbLabel extends PropsWithRlsTheme {
   label: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLSpanElement>;
 }
 
 interface BreadcrumbProps extends PropsWithRlsSize {

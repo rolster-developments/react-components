@@ -1,5 +1,6 @@
 import {
   memo,
+  MouseEvent,
   ReactNode,
   TransitionEvent,
   useCallback,
@@ -15,7 +16,7 @@ interface RlsAccordionProps extends RlsComponent {
   title: ReactNode;
   bordered?: boolean;
   disabled?: boolean;
-  onToggle?: (open: boolean) => void;
+  onToggle?: (open: boolean, event?: MouseEvent<HTMLButtonElement>) => void;
   opened?: boolean;
 }
 
@@ -43,17 +44,20 @@ function RlsAccordionComponent({
     className
   );
 
-  const onClickHeader = useCallback(() => {
-    if (!disabled) {
-      setOpen((current) => {
-        const next = !current;
+  const onClickHeader = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      if (!disabled) {
+        setOpen((current) => {
+          const next = !current;
 
-        onToggle?.(next);
+          onToggle?.(next, event);
 
-        return next;
-      });
-    }
-  }, [disabled, onToggle]);
+          return next;
+        });
+      }
+    },
+    [disabled, onToggle]
+  );
 
   useEffect(() => {
     const element = contentRef.current;

@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, MouseEvent, MouseEventHandler, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
@@ -7,7 +7,7 @@ import { RlsComponent } from '../../definitions';
 interface ModalProps extends RlsComponent {
   autoclose?: boolean;
   controller?: PortalController;
-  onBackdrop?: () => void;
+  onBackdrop?: MouseEventHandler<HTMLDivElement>;
   visible?: boolean;
 }
 
@@ -27,12 +27,16 @@ function RlsModalComponent({
     className
   );
 
-  const onClickBackdrop = useCallback(() => {
-    if (autoclose) {
-      controller?.close();
-    }
-    onBackdrop?.();
-  }, [autoclose, controller, onBackdrop]);
+  const onClickBackdrop = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if (autoclose) {
+        controller?.close();
+      }
+
+      onBackdrop?.(event);
+    },
+    [autoclose, controller, onBackdrop]
+  );
 
   return ReactDOM.createPortal(
     <div className={classNameModal} rls-size={rlsSize} rls-theme={rlsTheme}>

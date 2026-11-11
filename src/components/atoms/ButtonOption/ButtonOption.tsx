@@ -1,5 +1,11 @@
 import { ReactControl } from '@rolster/react-forms';
-import { memo, ReactNode, useCallback } from 'react';
+import {
+  memo,
+  MouseEvent,
+  MouseEventHandler,
+  ReactNode,
+  useCallback
+} from 'react';
 import { useFormSingleSelectionController } from '../../../controllers/FormSingleSelectionController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -11,7 +17,7 @@ interface ButtonOptionProps<T = any> extends RlsComponent {
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, T>;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   onValue?: ((value?: T) => void) | ((value: T) => void);
   value?: T;
 }
@@ -48,10 +54,13 @@ function RlsButtonOptionComponent<T = any>({
 
   const className = renderClassStatus('rls-button-option', { checked });
 
-  const onAction = useCallback(() => {
-    onSelect();
-    onClick?.();
-  }, [onSelect, onClick]);
+  const onAction = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      onSelect();
+      onClick?.(event);
+    },
+    [onSelect, onClick]
+  );
 
   return (
     <button

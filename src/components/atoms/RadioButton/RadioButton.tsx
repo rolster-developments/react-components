@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import { memo, MouseEventHandler } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
 
 interface RadioButtonProps extends RlsComponent {
   checked: boolean;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 function RlsRadioButtonComponent({

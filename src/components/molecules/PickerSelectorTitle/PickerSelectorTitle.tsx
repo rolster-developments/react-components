@@ -3,7 +3,14 @@ import { monthLimitTemplate } from '@rolster/components';
 import { Month, MONTH_NAMES } from '@rolster/dates';
 import { i18nSubscribe } from '@rolster/i18n';
 import { ReactControl } from '@rolster/react-forms';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  memo,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { RlsButtonIcon } from '../../atoms/ButtonIcon/ButtonIcon';
 import { PropsWithRlsSize } from '../../definitions';
 
@@ -17,7 +24,10 @@ interface PickerSelectorTitleProps extends PropsWithRlsSize {
   disabled?: boolean;
   maxDate?: Date;
   minDate?: Date;
-  onClick?: (type: PickerSelectorTitleType) => void;
+  onClick?: (
+    type: PickerSelectorTitleType,
+    event?: MouseEvent<HTMLSpanElement>
+  ) => void;
 }
 
 function RlsPickerSelectorTitleComponent({
@@ -68,13 +78,19 @@ function RlsPickerSelectorTitleComponent({
     }
   }, [monthControl.value, yearControl.value]);
 
-  const onMonth = useCallback(() => {
-    onClick?.('month');
-  }, [onClick]);
+  const onMonth = useCallback(
+    (event: MouseEvent<HTMLSpanElement>) => {
+      onClick?.('month', event);
+    },
+    [onClick]
+  );
 
-  const onYear = useCallback(() => {
-    onClick?.('year');
-  }, [onClick]);
+  const onYear = useCallback(
+    (event: MouseEvent<HTMLSpanElement>) => {
+      onClick?.('year', event);
+    },
+    [onClick]
+  );
 
   const onPreviousYear = useCallback(() => {
     if (valueIsDefined(yearControl.value)) {

@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { KeyboardEventHandler, memo, useCallback, useState } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
 import { PropsWithRlsSize } from '../../definitions';
 import { RolsterReactInputControl } from '../../types';
@@ -9,7 +9,7 @@ interface InputSearchProps extends PropsWithRlsSize {
   disabled?: boolean;
   formControl?: RolsterReactInputControl<string>;
   identifier?: string;
-  onEnter?: () => void;
+  onEnter?: KeyboardEventHandler<HTMLInputElement>;
   onSearch?: () => void;
   placeholder?: string;
 }
