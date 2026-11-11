@@ -28,6 +28,7 @@ import {
   RlsDatatableCell,
   RlsDatatableFloating,
   RlsDatatableRecord,
+  RlsDropdown,
   RlsFieldAutocomplete,
   RlsFieldDate,
   RlsFieldDateRange,
@@ -54,6 +55,7 @@ import {
   RlsTabs,
   RlsTheme,
   useDesingSystemController,
+  useDropdownController,
   usePortalController,
   useRlsContext
 } from '../index';
@@ -289,6 +291,7 @@ export function Demo() {
   const modalSheetController = usePortalController();
   const bottomSheetController = usePortalController();
   const formNavigationController = usePortalController();
+  const dropdownController = useDropdownController();
 
   const notifyIndex = useRef(0);
 
@@ -743,6 +746,13 @@ export function Demo() {
                   Mostrar snackbar
                 </RlsButton>
 
+                <RlsButton
+                  type="flat"
+                  onClick={dropdownController.openWithEvent}
+                >
+                  Abrir dropdown
+                </RlsButton>
+
                 <RlsButton type="flat" onClick={modalController.open}>
                   Abrir modal
                 </RlsButton>
@@ -791,6 +801,16 @@ export function Demo() {
           </div>
         </div>
       </section>
+
+      <RlsDropdown controller={dropdownController}>
+        <div className="dashboard__overlay">
+          <h3>Dropdown</h3>
+          <p>Se despliega desde la esquina más cercana al botón.</p>
+          <RlsButton type="raised" onClick={dropdownController.close}>
+            Cerrar
+          </RlsButton>
+        </div>
+      </RlsDropdown>
 
       <RlsModal controller={modalController} autoclose>
         <div className="dashboard__overlay">

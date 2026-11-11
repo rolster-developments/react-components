@@ -6,99 +6,103 @@ import {
   useRef,
   useState
 } from 'react';
+import {
+  DropdownOptions,
+  DropdownOrigin,
+  resolveDropdownPosition
+} from '../helpers/dropdown';
 
-type DropdownEffect = '0% 0%' | '100% 0%' | '0% 100%' | '100% 100%';
+export type { DropdownOptions, DropdownOrigin } from '../helpers/dropdown';
 
 export interface DropdownController {
   close: () => void;
   component: RefObject<HTMLDivElement>;
   open: (positionX?: number, positionY?: number) => void;
-  openWithEvent: (event: MouseEvent) => void;
+  openWithEvent: (event: MouseEvent, options?: DropdownOptions) => void;
   visible: boolean;
 }
 
+interface DropdownOffset {
+  x: number;
+  y: number;
+}
+
+function resolveParentOffset(component: HTMLElement): DropdownOffset {
+  const parent = component.offsetParent as HTMLElement | null;
+
+  if (!parent) {
+    return { x: 0, y: 0 };
+  }
+
+  if (parent === document.body) {
+    return { x: window.scrollX, y: window.scrollY };
+  }
+
+  const rect = parent.getBoundingClientRect();
+
+  return {
+    x: parent.scrollLeft - rect.left - parent.clientLeft,
+    y: parent.scrollTop - rect.top - parent.clientTop
+  };
+}
+
 export function useDropdownController(
-  effect: DropdownEffect = '0% 0%'
+  effect: DropdownOrigin = '0% 0%'
 ): DropdownController {
   const [visible, setVisible] = useState(false);
 
   const component = useRef<HTMLDivElement>(null!);
 
-  const open = useCallback(
-    (positionX?: number, positionY?: number) => {
+  const setPosition = useCallback(
+    (positionX: number, positionY: number, origin: DropdownOrigin) => {
       const content = component.current.querySelector(
         '.rls-dropdown__content'
       ) as HTMLElement;
 
-      content.style.transformOrigin = effect;
+      content.style.transformOrigin = origin;
       component.current.style.top = `${positionY}px`;
       component.current.style.left = `${positionX}px`;
 
       setVisible(true);
     },
-    [effect]
+    []
   );
 
-  const openWithEvent = useCallback((event: MouseEvent) => {
-    const rectContent = component.current.getBoundingClientRect();
-    const rectElement = (event.target as HTMLElement).getBoundingClientRect();
+  const open = useCallback(
+    (positionX = 0, positionY = 0) => {
+      setPosition(positionX, positionY, effect);
+    },
+    [effect, setPosition]
+  );
 
-    let positionX: number;
-    let positionY: number;
-    let effect: DropdownEffect;
-    let transform = 0;
+  const openWithEvent = useCallback(
+    (event: MouseEvent, options?: DropdownOptions) => {
+      const element = event.currentTarget as HTMLElement;
 
-    const elementX = rectElement.x + rectElement.width / 2;
-    const elementY = rectElement.y + rectElement.height / 2;
+      const trigger = element.getBoundingClientRect();
 
-    if (elementX + rectContent.width <= window.innerWidth) {
-      positionX = elementX;
-      transform += 1;
-    } else if (elementX + rectElement.width - rectContent.width > 0) {
-      positionX = elementX + rectElement.width - rectContent.width;
-      transform += 3;
-    } else {
-      positionX = window.innerWidth - rectContent.width;
-      transform += 1;
-    }
+      const position = resolveDropdownPosition(
+        trigger,
+        {
+          width: component.current.offsetWidth,
+          height: component.current.offsetHeight
+        },
+        { width: window.innerWidth, height: window.innerHeight },
+        options
+      );
 
-    if (elementY + rectContent.height <= window.innerHeight) {
-      positionY = elementY;
-      transform += 4;
-    } else if (elementY + rectElement.height - rectContent.height > 0) {
-      positionY = elementY + rectElement.height - rectContent.height;
-      transform += 7;
-    } else {
-      positionY = window.innerHeight - rectContent.height;
-      transform += 4;
-    }
+      const offset = resolveParentOffset(component.current);
 
-    switch (transform) {
-      case 7:
-        effect = '100% 0%';
-        break;
-      case 8:
-        effect = '0% 100%';
-        break;
-      case 10:
-        effect = '100% 100%';
-        break;
-      default:
-        effect = '0% 0%';
-        break;
-    }
+      setPosition(
+        position.x + offset.x,
+        position.y + offset.y,
+        position.origin
+      );
 
-    const content = component.current.querySelector(
-      '.rls-dropdown__content'
-    ) as HTMLElement;
-
-    content.style.transformOrigin = effect;
-    component.current.style.top = `${positionY}px`;
-    component.current.style.left = `${positionX}px`;
-
-    setVisible(true);
-    event.stopPropagation();
-  }, []);
+      event.stopPropagation();
+    },
+    [setPosition]
+  );
 
   const close = useCallback(() => {
     setVisible(false);
