@@ -80,12 +80,16 @@ function RlsButtonToggleComponent({
   }, [action, onAction]);
 
   const onClickOption = useCallback(
-    (event: MouseEvent<HTMLLIElement>) => {
+    (event: MouseEvent<HTMLButtonElement>) => {
       const index = Number(event.currentTarget.dataset.index);
       const option = options[index];
 
       if (option) {
         onSelectAction(option);
+
+        componentRef.current
+          ?.querySelector<HTMLButtonElement>('.rls-button-toggle__icon button')
+          ?.focus();
       }
     },
     [options, onSelectAction]
@@ -117,16 +121,19 @@ function RlsButtonToggleComponent({
         </div>
       </div>
 
-      <div className={classNameList}>
+      <div className={classNameList} aria-hidden={!visible}>
         <ul>
           {options.map((action, index) => (
-            <li
-              className="rls-truncate"
-              key={index}
-              data-index={index}
-              onClick={onClickOption}
-            >
-              {action.label}
+            <li key={index}>
+              <button
+                type="button"
+                className="rls-truncate"
+                data-index={index}
+                tabIndex={visible ? undefined : -1}
+                onClick={onClickOption}
+              >
+                {action.label}
+              </button>
             </li>
           ))}
         </ul>

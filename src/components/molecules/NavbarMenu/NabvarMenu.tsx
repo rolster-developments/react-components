@@ -24,9 +24,15 @@ function RlsNavbarMenuOption({ option, onOption }: NavbarMenuOptionProps) {
   }, [onOption]);
 
   return (
-    <li className="rls-app__page__nav__option" onClick={onClick}>
-      <RlsIcon value={option.icon} />
-      <span className="rls-label-font">{option.label}</span>
+    <li>
+      <button
+        type="button"
+        className="rls-app__page__nav__option"
+        onClick={onClick}
+      >
+        <RlsIcon value={option.icon} />
+        <span className="rls-label-font">{option.label}</span>
+      </button>
     </li>
   );
 }
