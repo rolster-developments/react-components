@@ -26,6 +26,61 @@ import { reactI18n } from '../../../i18n';
 import { RlsButton } from '../../atoms/Button/Button';
 import { RlsComponent } from '../../definitions';
 
+interface SliderKeys {
+  decrease: string[];
+  edges: boolean;
+  increase: string[];
+  pages: boolean;
+}
+
+const HORIZONTAL_KEYS: SliderKeys = {
+  decrease: ['ArrowLeft'],
+  edges: true,
+  increase: ['ArrowRight'],
+  pages: false
+};
+
+const VERTICAL_KEYS: SliderKeys = {
+  decrease: ['ArrowDown'],
+  edges: false,
+  increase: ['ArrowUp'],
+  pages: true
+};
+
+const LINEAR_KEYS: SliderKeys = {
+  decrease: ['ArrowLeft', 'ArrowDown'],
+  edges: true,
+  increase: ['ArrowRight', 'ArrowUp'],
+  pages: true
+};
+
+function valueFromKey(
+  key: string,
+  current: number,
+  max: number,
+  step: number,
+  page: number,
+  keys: SliderKeys
+): number | undefined {
+  let next: number | undefined;
+
+  if (keys.increase.includes(key)) {
+    next = current + step;
+  } else if (keys.decrease.includes(key)) {
+    next = current - step;
+  } else if (keys.pages && key === 'PageUp') {
+    next = current + page;
+  } else if (keys.pages && key === 'PageDown') {
+    next = current - page;
+  } else if (keys.edges && key === 'Home') {
+    next = 0;
+  } else if (keys.edges && key === 'End') {
+    next = max;
+  }
+
+  return next === undefined ? undefined : Math.min(max, Math.max(0, next));
+}
+
 interface ColorPickerListener {
   event: PickerListenerEvent;
   value?: string;
@@ -42,6 +97,7 @@ interface PickerColorProps extends RlsComponent {
 
 function RlsPickerColorComponent({
   color,
+  disabled,
   formControl,
   rlsSize,
   onListener,
@@ -71,7 +127,11 @@ function RlsPickerColorComponent({
 
   const [labels, setLabels] = useState({
     colorActionCancel: reactI18n('dateActionCancel'),
-    colorActionSelect: reactI18n('dateActionSelect')
+    colorActionSelect: reactI18n('dateActionSelect'),
+    colorAlpha: reactI18n('colorAlpha'),
+    colorBrightness: reactI18n('colorBrightness'),
+    colorHue: reactI18n('colorHue'),
+    colorSaturation: reactI18n('colorSaturation')
   });
 
   const hexColor = useMemo(() => hsvToHex(hsv), [hsv]);
@@ -126,7 +186,11 @@ function RlsPickerColorComponent({
     return i18nSubscribe(() => {
       setLabels({
         colorActionCancel: reactI18n('dateActionCancel'),
-        colorActionSelect: reactI18n('dateActionSelect')
+        colorActionSelect: reactI18n('dateActionSelect'),
+        colorAlpha: reactI18n('colorAlpha'),
+        colorBrightness: reactI18n('colorBrightness'),
+        colorHue: reactI18n('colorHue'),
+        colorSaturation: reactI18n('colorSaturation')
       });
     });
   }, []);
@@ -280,6 +344,89 @@ function RlsPickerColorComponent({
     [updateColorOnCanvas, updateHueOnSlider, updateAlphaOnSlider]
   );
 
+  const onKeyDownSlider = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (disabled) return;
+
+      const slider = event.currentTarget.dataset.slider as
+        | 'canvas'
+        | 'hue'
+        | 'alpha'
+        | undefined;
+
+      if (!slider) return;
+
+      const step = event.shiftKey ? 10 : 1;
+
+      switch (slider) {
+        case 'canvas': {
+          const saturation = valueFromKey(
+            event.key,
+            hsv.s,
+            100,
+            step,
+            10,
+            HORIZONTAL_KEYS
+          );
+          const brightness = valueFromKey(
+            event.key,
+            hsv.v,
+            100,
+            step,
+            10,
+            VERTICAL_KEYS
+          );
+
+          if (saturation === undefined && brightness === undefined) return;
+
+          event.preventDefault();
+
+          setHsv((prev) => ({
+            ...prev,
+            s: saturation ?? prev.s,
+            v: brightness ?? prev.v
+          }));
+          break;
+        }
+
+        case 'hue': {
+          const hue = valueFromKey(
+            event.key,
+            hsv.h,
+            360,
+            step,
+            36,
+            LINEAR_KEYS
+          );
+
+          if (hue === undefined) return;
+
+          event.preventDefault();
+          setHsv((prev) => ({ ...prev, h: hue }));
+          break;
+        }
+
+        case 'alpha': {
+          const next = valueFromKey(
+            event.key,
+            Math.round(alpha * 100),
+            100,
+            step,
+            10,
+            LINEAR_KEYS
+          );
+
+          if (next === undefined) return;
+
+          event.preventDefault();
+          setAlpha(next / 100);
+          break;
+        }
+      }
+    },
+    [disabled, hsv, alpha]
+  );
+
   const onInactiveSelection = useCallback(() => {
     selectionIsActive.current = false;
     activeSlider.current = null;
@@ -347,6 +494,15 @@ function RlsPickerColorComponent({
           className="rls-picker-color__canvas"
           style={canvasStyle}
           data-slider="canvas"
+          role="slider"
+          tabIndex={disabled ? -1 : 0}
+          aria-label={labels.colorSaturation}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={hsv.s}
+          aria-valuetext={`${labels.colorSaturation} ${hsv.s}%, ${labels.colorBrightness} ${hsv.v}%`}
+          aria-disabled={disabled || undefined}
+          onKeyDown={onKeyDownSlider}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onInactiveSelection}
@@ -377,6 +533,14 @@ function RlsPickerColorComponent({
             className="rls-picker-color__slider__track"
             style={hueSliderStyle}
             data-slider="hue"
+            role="slider"
+            tabIndex={disabled ? -1 : 0}
+            aria-label={labels.colorHue}
+            aria-valuemin={0}
+            aria-valuemax={360}
+            aria-valuenow={hsv.h}
+            aria-disabled={disabled || undefined}
+            onKeyDown={onKeyDownSlider}
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onInactiveSelection}
@@ -398,6 +562,14 @@ function RlsPickerColorComponent({
             className="rls-picker-color__slider__track rls-picker-color__slider__track--alpha"
             style={alphaSliderStyle}
             data-slider="alpha"
+            role="slider"
+            tabIndex={disabled ? -1 : 0}
+            aria-label={labels.colorAlpha}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(alpha * 100)}
+            aria-disabled={disabled || undefined}
+            onKeyDown={onKeyDownSlider}
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onInactiveSelection}
