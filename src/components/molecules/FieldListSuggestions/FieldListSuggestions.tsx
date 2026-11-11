@@ -242,7 +242,11 @@ function RlsFieldListSuggestionsComponent<E = any>({
         )}
       </div>
 
-      <div className="rls-field-list__backdrop" onClick={onClickBackdrop}></div>
+      <div
+        className="rls-field-list__backdrop"
+        role="presentation"
+        onClick={onClickBackdrop}
+      ></div>
     </div>
   );
 

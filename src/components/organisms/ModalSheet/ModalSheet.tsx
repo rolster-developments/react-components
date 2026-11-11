@@ -41,6 +41,7 @@ function RlsModalSheetComponent({
 
       <div
         className="rls-modal-sheet__backdrop"
+        role="presentation"
         onClick={onClickBackdrop}
       ></div>
     </div>,

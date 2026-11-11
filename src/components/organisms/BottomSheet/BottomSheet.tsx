@@ -44,6 +44,7 @@ function RlsBottomSheetComponent({
 
       <div
         className="rls-bottom-sheet__backdrop"
+        role="presentation"
         onClick={onClickBackdrop}
       ></div>
     </div>,

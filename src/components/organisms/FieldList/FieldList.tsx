@@ -81,14 +81,17 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
   const trigger = useInteractiveController<HTMLDivElement>({
     disabled: disabled || props.readOnly,
     onClick: fieldList.onClickInput,
-    onKeyDown: fieldList.onKeydownTrigger,
-    role: 'combobox'
+    onKeyDown: fieldList.onKeydownTrigger
   });
 
   const chipsProps = fieldList.selected.length
-    ? { onClick: disabled ? undefined : fieldList.onClickInput }
+    ? {
+        role: 'presentation',
+        onClick: disabled ? undefined : fieldList.onClickInput
+      }
     : {
         ...trigger,
+        role: 'combobox',
         'aria-expanded': fieldList.listIsVisible,
         'aria-haspopup': 'listbox' as const
       };

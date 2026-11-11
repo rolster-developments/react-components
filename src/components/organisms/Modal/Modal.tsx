@@ -42,7 +42,11 @@ function RlsModalComponent({
     <div className={classNameModal} rls-size={rlsSize} rls-theme={rlsTheme}>
       <div className="rls-modal__component">{children}</div>
 
-      <div className="rls-modal__backdrop" onClick={onClickBackdrop}></div>
+      <div
+        className="rls-modal__backdrop"
+        role="presentation"
+        onClick={onClickBackdrop}
+      ></div>
     </div>,
     document.body
   );

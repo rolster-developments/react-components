@@ -98,8 +98,7 @@ function RlsChooserSelectTemplateComponent<
   const trigger = useInteractiveController<HTMLDivElement>({
     disabled,
     onClick: select.onClickAction,
-    onKeyDown: onKeydownTrigger,
-    role: 'combobox'
+    onKeyDown: onKeydownTrigger
   });
 
   return (
@@ -112,6 +111,7 @@ function RlsChooserSelectTemplateComponent<
     >
       <div
         className="rls-chooser__trigger"
+        role="combobox"
         aria-expanded={select.listIsVisible}
         aria-haspopup="listbox"
         onFocus={select.onFocusInput}

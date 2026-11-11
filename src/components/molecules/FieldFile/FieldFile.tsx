@@ -100,7 +100,11 @@ function RlsFieldFileComponent({
     >
       {children && <span className="rls-field-box__label">{children}</span>}
 
-      <div className="rls-field-box__component" onClick={onClickControl}>
+      <div
+        className="rls-field-box__component"
+        role="presentation"
+        onClick={onClickControl}
+      >
         <div className="rls-field-box__body">
           <input
             className="rls-input__component"

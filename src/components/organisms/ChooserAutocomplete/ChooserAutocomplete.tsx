@@ -176,8 +176,7 @@ function RlsChooserAutocompleteTemplateComponent<
   const trigger = useInteractiveController<HTMLDivElement>({
     disabled,
     onClick: autocomplete.onClickControl,
-    onKeyDown: onKeydownTrigger,
-    role: 'combobox'
+    onKeyDown: onKeydownTrigger
   });
 
   return (
@@ -190,6 +189,7 @@ function RlsChooserAutocompleteTemplateComponent<
     >
       <div
         className="rls-chooser__trigger"
+        role="combobox"
         aria-expanded={autocomplete.listIsVisible}
         aria-haspopup="listbox"
         {...trigger}

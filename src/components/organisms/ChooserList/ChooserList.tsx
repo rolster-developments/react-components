@@ -105,8 +105,7 @@ function RlsChooserListTemplateComponent<
   const trigger = useInteractiveController<HTMLDivElement>({
     disabled,
     onClick: fieldList.onClickAction,
-    onKeyDown: onKeydownTrigger,
-    role: 'combobox'
+    onKeyDown: onKeydownTrigger
   });
 
   return (
@@ -120,6 +119,7 @@ function RlsChooserListTemplateComponent<
       <div
         ref={fieldList.refTrigger}
         className="rls-chooser__trigger"
+        role="combobox"
         aria-expanded={fieldList.listIsVisible}
         aria-haspopup="listbox"
         {...trigger}
