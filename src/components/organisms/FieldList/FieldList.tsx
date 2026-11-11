@@ -165,6 +165,8 @@ function RlsFieldListInner<T = any, E extends Element<T> = Element<T>>({
         disabled={disabled}
         higher={fieldList.higher}
         render={renderWithCheckbox}
+        isSelected={fieldList.isSelected}
+        multiple={true}
         refAnchor={fieldList.refContent}
         refList={fieldList.refList}
         refSuggestions={fieldList.refSuggestions}

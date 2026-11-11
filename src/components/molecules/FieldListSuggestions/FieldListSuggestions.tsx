@@ -51,6 +51,8 @@ interface FieldListSuggestionsProps<E = any>
   action?: FieldListAction;
   disabled?: boolean;
   higher?: boolean;
+  isSelected?: (element: E) => boolean;
+  multiple?: boolean;
   onHiddenAnchor?: () => void;
   refAnchor?: RefObject<HTMLElement | null>;
   refList?: RefObject<HTMLUListElement | null>;
@@ -64,13 +66,15 @@ interface FieldListLiProps<E = any> {
   onClickElement: (element: E) => MouseEventHandler;
   onKeydownElement: (element: E) => KeyboardEventHandler;
   render: (element: E) => ReactNode;
+  selected?: boolean;
 }
 
 function RlsFieldListLi<E>({
   element,
   onClickElement,
   onKeydownElement,
-  render
+  render,
+  selected
 }: FieldListLiProps<E>) {
   const onClick = useMemo(() => {
     return onClickElement(element);
@@ -83,6 +87,8 @@ function RlsFieldListLi<E>({
   return (
     <li
       className="rls-field-list__element"
+      role="option"
+      aria-selected={selected ?? false}
       tabIndex={-1}
       onClick={onClick}
       onKeyDown={onKeyDown}
@@ -97,6 +103,8 @@ function RlsFieldListSuggestionsComponent<E = any>({
   action,
   disabled,
   higher,
+  isSelected,
+  multiple,
   render,
   renderEmpty,
   searchControl,
@@ -168,39 +176,45 @@ function RlsFieldListSuggestionsComponent<E = any>({
       rls-theme={rlsTheme ?? portal.theme}
     >
       <div className="rls-field-list__suggestions__body">
-        <ul ref={refList} className="rls-field-list__ul">
-          {searchControl && (
-            <div className="rls-field-list__ul__search">
-              <input
-                className="rls-field-list__ul__control"
-                ref={searchControl.refInput}
-                type="text"
-                placeholder={searchControl.placeholder}
-                value={searchControl.pattern}
-                onChange={onChangePattern}
-                onFocus={searchControl.onFocus}
-                onBlur={searchControl.onBlur}
-                onKeyDown={searchControl.onKeyDown}
+        {searchControl && (
+          <div className="rls-field-list__ul__search">
+            <input
+              className="rls-field-list__ul__control"
+              ref={searchControl.refInput}
+              type="text"
+              placeholder={searchControl.placeholder}
+              value={searchControl.pattern}
+              onChange={onChangePattern}
+              onFocus={searchControl.onFocus}
+              onBlur={searchControl.onBlur}
+              onKeyDown={searchControl.onKeyDown}
+              disabled={disabled || searching}
+            />
+
+            {searchControl.onSearch && (
+              <button
                 disabled={disabled || searching}
-              />
+                onClick={searchControl.onSearch}
+              >
+                <RlsIcon value="search" />
+              </button>
+            )}
+          </div>
+        )}
 
-              {searchControl.onSearch && (
-                <button
-                  disabled={disabled || searching}
-                  onClick={searchControl.onSearch}
-                >
-                  <RlsIcon value="search" />
-                </button>
-              )}
-            </div>
-          )}
+        {searching && <RlsProgressBar indeterminate={true} />}
 
-          {searching && <RlsProgressBar indeterminate={true} />}
-
+        <ul
+          ref={refList}
+          className="rls-field-list__ul"
+          role="listbox"
+          aria-multiselectable={multiple || undefined}
+        >
           {elements.map((element, index) => (
             <RlsFieldListLi
               key={index}
               element={element}
+              selected={isSelected?.(element)}
               onClickElement={onClickElement}
               onKeydownElement={onKeydownElement}
               render={render}
@@ -208,7 +222,11 @@ function RlsFieldListSuggestionsComponent<E = any>({
           ))}
 
           {!elements.length && (
-            <li className="rls-field-list__empty">
+            <li
+              className="rls-field-list__empty"
+              role="option"
+              aria-disabled="true"
+            >
               {renderEmpty ? (
                 renderEmpty()
               ) : (

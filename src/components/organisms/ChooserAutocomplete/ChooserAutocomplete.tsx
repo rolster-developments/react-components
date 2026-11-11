@@ -211,6 +211,11 @@ function RlsChooserAutocompleteTemplateComponent<
         disabled={disabled}
         higher={autocomplete.higher}
         render={render}
+        isSelected={(element) => {
+          const value = formControl?.value ?? props.value;
+
+          return value !== undefined && element.compareTo(value);
+        }}
         refAnchor={autocomplete.refContent}
         refList={autocomplete.refList}
         refSuggestions={autocomplete.refSuggestions}

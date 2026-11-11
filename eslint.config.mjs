@@ -67,13 +67,5 @@ export default tseslint.config(
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/no-static-element-interactions': 'off'
     }
-  },
-  {
-    files: [
-      'src/components/molecules/FieldListSuggestions/FieldListSuggestions.tsx'
-    ],
-    rules: {
-      'jsx-a11y/no-noninteractive-element-interactions': 'off'
-    }
   }
 );

@@ -139,6 +139,8 @@ function RlsChooserListTemplateComponent<
         disabled={disabled}
         higher={fieldList.higher}
         render={renderWithCheckbox}
+        isSelected={fieldList.isSelected}
+        multiple={true}
         refAnchor={fieldList.refContent}
         refList={fieldList.refList}
         refSuggestions={fieldList.refSuggestions}

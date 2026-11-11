@@ -134,6 +134,11 @@ function RlsChooserSelectTemplateComponent<
         disabled={disabled}
         higher={select.higher}
         render={render}
+        isSelected={(element) => {
+          const value = formControl?.value ?? props.value;
+
+          return value !== undefined && element.compareTo(value);
+        }}
         refAnchor={select.refContent}
         refList={select.refList}
         refSuggestions={select.refSuggestions}
