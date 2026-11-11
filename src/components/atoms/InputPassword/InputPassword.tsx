@@ -1,8 +1,11 @@
 import {
+  ChangeEvent,
   FocusEvent,
   KeyboardEvent,
   memo,
   useCallback,
+  useEffect,
+  useRef,
   useState
 } from 'react';
 import { renderClassStatus } from '../../../helpers/css';
@@ -28,14 +31,36 @@ function RlsInputPasswordComponent({
   onValue,
   placeholder,
   readOnly,
-  type
+  type,
+  value: valueProp
 }: InputPasswordProps) {
+  const [valueInput, setValueInput] = useState(
+    () => formControl?.value ?? valueProp ?? ''
+  );
+
   const [focused, setFocused] = useState(false);
 
+  const valueSent = useRef<unknown>(formControl?.value);
+
+  useEffect(() => {
+    if (formControl && !Object.is(formControl.value, valueSent.current)) {
+      const valueControl = formControl.value ?? '';
+
+      if (valueInput !== valueControl) {
+        setValueInput(valueControl);
+      }
+    }
+  }, [formControl?.value]);
+
   const _onChange = useCallback(
-    (event: any) => {
-      formControl?.setValue(event.target.value);
-      onValue?.(event.target.value);
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+
+      valueSent.current = value;
+
+      setValueInput(value);
+      onValue?.(value);
+      formControl?.setValue(value);
     },
     [formControl, onValue]
   );
@@ -76,20 +101,24 @@ function RlsInputPasswordComponent({
     [formControl, onBlur]
   );
 
+  const disabledInput = formControl?.disabled || disabled;
+
   const className = renderClassStatus('rls-input-password', {
-    disabled: formControl?.disabled || disabled,
+    disabled: disabledInput,
     focused: formControl?.focused ?? focused
   });
 
   return (
     <div id={identifier} className={className} rls-size={rlsSize}>
       <input
+        ref={formControl?.elementRef}
         className="rls-input-password__component"
         autoComplete="off"
         type={type ?? 'password'}
         placeholder={placeholder}
-        disabled={disabled}
+        disabled={disabledInput}
         readOnly={readOnly}
+        value={valueInput}
         onFocus={_onFocus}
         onBlur={_onBlur}
         onChange={_onChange}
