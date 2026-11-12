@@ -1,5 +1,6 @@
 import { memo, MouseEvent, MouseEventHandler, useCallback } from 'react';
 import ReactDOM from 'react-dom';
+import { useDialogFocusController } from '../../../controllers/DialogFocusController';
 import { PortalController } from '../../../controllers/PortalController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsComponent } from '../../definitions';
@@ -38,9 +39,28 @@ function RlsModalComponent({
     [autoclose, controller, onBackdrop]
   );
 
+  const onEscape = useCallback(() => {
+    if (autoclose) {
+      controller?.close();
+    }
+  }, [autoclose, controller]);
+
+  const dialog = useDialogFocusController({
+    visible: controller?.visible ?? visible ?? false,
+    onEscape
+  });
+
   return ReactDOM.createPortal(
     <div className={classNameModal} rls-size={rlsSize} rls-theme={rlsTheme}>
-      <div className="rls-modal__component">{children}</div>
+      <div
+        ref={dialog.refDialog}
+        className="rls-modal__component"
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+      >
+        {children}
+      </div>
 
       <div
         className="rls-modal__backdrop"

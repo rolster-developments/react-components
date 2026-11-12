@@ -113,6 +113,7 @@ export * from './context';
 export * from './controllers/AppThemeController';
 export * from './controllers/DatatableController';
 export * from './controllers/DesingSystemController';
+export * from './controllers/DialogFocusController';
 export * from './controllers/DropdownController';
 export * from './controllers/EventCallbackController';
 export * from './controllers/FormSingleSelectionController';
