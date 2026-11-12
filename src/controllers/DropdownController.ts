@@ -12,6 +12,8 @@ import {
   resolveDropdownPosition
 } from '../helpers/dropdown';
 import { resolveParentOffset } from '../helpers/offset';
+import { useAnchorTracking } from './AnchorTrackingController';
+import { useEventCallback } from './EventCallbackController';
 
 export type { DropdownOptions, DropdownOrigin } from '../helpers/dropdown';
 
@@ -23,12 +25,18 @@ export interface DropdownController {
   visible: boolean;
 }
 
+interface DropdownAnchor {
+  element: HTMLElement;
+  options?: DropdownOptions;
+}
+
 export function useDropdownController(
   effect: DropdownOrigin = '0% 0%'
 ): DropdownController {
   const [visible, setVisible] = useState(false);
 
   const component = useRef<HTMLDivElement>(null!);
+  const anchor = useRef<DropdownAnchor | undefined>(undefined);
 
   const setPosition = useCallback(
     (positionX: number, positionY: number, origin: DropdownOrigin) => {
@@ -39,49 +47,57 @@ export function useDropdownController(
       content.style.transformOrigin = origin;
       component.current.style.top = `${positionY}px`;
       component.current.style.left = `${positionX}px`;
-
-      setVisible(true);
     },
     []
   );
 
+  const reposition = useEventCallback(() => {
+    if (!anchor.current) {
+      return;
+    }
+
+    const position = resolveDropdownPosition(
+      anchor.current.element.getBoundingClientRect(),
+      {
+        width: component.current.offsetWidth,
+        height: component.current.offsetHeight
+      },
+      { width: window.innerWidth, height: window.innerHeight },
+      anchor.current.options
+    );
+
+    const offset = resolveParentOffset(component.current);
+
+    setPosition(position.x + offset.x, position.y + offset.y, position.origin);
+  });
+
+  useAnchorTracking(visible, reposition);
+
   const open = useCallback(
     (positionX = 0, positionY = 0) => {
+      anchor.current = undefined;
       setPosition(positionX, positionY, effect);
+      setVisible(true);
     },
     [effect, setPosition]
   );
 
   const openWithEvent = useCallback(
     (event: MouseEvent, options?: DropdownOptions) => {
-      const element = event.currentTarget as HTMLElement;
-
-      const trigger = element.getBoundingClientRect();
-
-      const position = resolveDropdownPosition(
-        trigger,
-        {
-          width: component.current.offsetWidth,
-          height: component.current.offsetHeight
-        },
-        { width: window.innerWidth, height: window.innerHeight },
+      anchor.current = {
+        element: event.currentTarget as HTMLElement,
         options
-      );
+      };
 
-      const offset = resolveParentOffset(component.current);
-
-      setPosition(
-        position.x + offset.x,
-        position.y + offset.y,
-        position.origin
-      );
-
+      reposition();
+      setVisible(true);
       event.stopPropagation();
     },
-    [setPosition]
+    [reposition]
   );
 
   const close = useCallback(() => {
+    anchor.current = undefined;
     setVisible(false);
   }, []);
 
