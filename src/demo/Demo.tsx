@@ -53,6 +53,7 @@ import {
   RlsPoster,
   RlsSize,
   RlsSlider,
+  RlsSwitch,
   RlsTabs,
   RlsTheme,
   useDesingSystemController,
@@ -207,6 +208,8 @@ const SIZE_TABS = [
 ];
 
 function SizeSamples({ rlsSize }: { rlsSize: RlsSize }) {
+  const [enabled, setEnabled] = useState(false);
+
   return (
     <div className="dashboard__inputs">
       <div className="dashboard__sliders__report">
@@ -280,6 +283,23 @@ function SizeSamples({ rlsSize }: { rlsSize: RlsSize }) {
 
       <RlsAccordion title="Más información" bordered={true} rlsSize={rlsSize}>
         <p>Contenido del acordeón con tipografía escalada.</p>
+      </RlsAccordion>
+
+      <RlsAccordion
+        title={
+          <>
+            Con interruptor
+            <RlsSwitch
+              checked={enabled}
+              onClick={() => setEnabled((current) => !current)}
+              rlsSize={rlsSize}
+            />
+          </>
+        }
+        bordered={true}
+        rlsSize={rlsSize}
+      >
+        <p>El interruptor va dentro del título.</p>
       </RlsAccordion>
     </div>
   );

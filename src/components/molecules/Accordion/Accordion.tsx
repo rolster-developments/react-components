@@ -1,7 +1,9 @@
 import {
+  KeyboardEvent,
   memo,
   MouseEvent,
   ReactNode,
+  SyntheticEvent,
   TransitionEvent,
   useCallback,
   useEffect,
@@ -12,12 +14,24 @@ import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsComponent } from '../../definitions';
 
+type AccordionToggleEvent =
+  | MouseEvent<HTMLDivElement>
+  | KeyboardEvent<HTMLDivElement>;
+
 interface RlsAccordionProps extends RlsComponent {
   title: ReactNode;
   bordered?: boolean;
   disabled?: boolean;
-  onToggle?: (open: boolean, event?: MouseEvent<HTMLButtonElement>) => void;
+  onToggle?: (open: boolean, event?: AccordionToggleEvent) => void;
   opened?: boolean;
+}
+
+const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [tabindex]';
+
+function fromNestedControl(event: SyntheticEvent<HTMLDivElement>): boolean {
+  const control = (event.target as HTMLElement).closest(INTERACTIVE_SELECTOR);
+
+  return !!control && control !== event.currentTarget;
 }
 
 function RlsAccordionComponent({
@@ -44,19 +58,40 @@ function RlsAccordionComponent({
     className
   );
 
+  const toggle = useCallback(
+    (event: AccordionToggleEvent) => {
+      setOpen((current) => {
+        const next = !current;
+
+        onToggle?.(next, event);
+
+        return next;
+      });
+    },
+    [onToggle]
+  );
+
   const onClickHeader = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      if (!disabled) {
-        setOpen((current) => {
-          const next = !current;
-
-          onToggle?.(next, event);
-
-          return next;
-        });
+    (event: MouseEvent<HTMLDivElement>) => {
+      if (!disabled && !fromNestedControl(event)) {
+        toggle(event);
       }
     },
-    [disabled, onToggle]
+    [disabled, toggle]
+  );
+
+  const onKeyDownHeader = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (
+        !disabled &&
+        event.target === event.currentTarget &&
+        (event.key === 'Enter' || event.key === ' ')
+      ) {
+        event.preventDefault();
+        toggle(event);
+      }
+    },
+    [disabled, toggle]
   );
 
   useEffect(() => {
@@ -113,19 +148,21 @@ function RlsAccordionComponent({
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
-      <button
-        type="button"
+      <div
         className="rls-accordion__header"
-        aria-expanded={open}
-        disabled={disabled}
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        aria-expanded={!!open}
+        aria-disabled={disabled}
         onClick={onClickHeader}
+        onKeyDown={onKeyDownHeader}
       >
-        <span className="rls-accordion__title">{title}</span>
+        <div className="rls-accordion__title">{title}</div>
 
         <span className="rls-accordion__indicator">
           <RlsIcon value="chevron-down" />
         </span>
-      </button>
+      </div>
 
       <div
         ref={contentRef}
