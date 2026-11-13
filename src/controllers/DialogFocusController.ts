@@ -18,6 +18,10 @@ interface DialogFocusController {
   refDialog: RefObject<HTMLDivElement | null>;
 }
 
+function pointerIsCoarse(): boolean {
+  return !!window.matchMedia?.('(pointer: coarse)').matches;
+}
+
 function focusableElements(dialog: HTMLElement): HTMLElement[] {
   return [...dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)].filter(
     (element) => element.offsetParent !== null
@@ -79,7 +83,11 @@ export function useDialogFocusController({
     opener.current = document.activeElement as HTMLElement | null;
 
     requestAnimationFrame(() => {
-      (focusableElements(dialog)[0] ?? dialog).focus();
+      const target = pointerIsCoarse()
+        ? dialog
+        : (focusableElements(dialog)[0] ?? dialog);
+
+      target.focus();
     });
 
     const onKeyDown = (event: KeyboardEvent) => {
