@@ -16,6 +16,7 @@ export interface FieldSelectControl<
   E extends Element<T> = Element<T>
 > extends ListControllerState {
   onBlurInput: () => void;
+  onClear: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
   onClickElement: (element: E) => MouseEventHandler<HTMLElement>;
@@ -119,6 +120,11 @@ export function useFieldSelect<
     controller.setState({ listIsVisible: false });
   }, [controller.setState]);
 
+  const onClear = useCallback(() => {
+    controller.setFormValue(undefined);
+    props.onValue?.(undefined as T);
+  }, [controller.setFormValue, props.onValue]);
+
   const onChange = useCallback(
     (element: Element<T>) => {
       if (!props.disabled) {
@@ -182,6 +188,7 @@ export function useFieldSelect<
     () => ({
       ...controller,
       onBlurInput,
+      onClear,
       onClickAction,
       onClickBackdrop,
       onClickInput,
@@ -193,6 +200,7 @@ export function useFieldSelect<
     [
       controller,
       onBlurInput,
+      onClear,
       onClickAction,
       onClickBackdrop,
       onClickInput,

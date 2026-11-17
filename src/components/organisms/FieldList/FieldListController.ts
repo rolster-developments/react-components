@@ -64,6 +64,7 @@ export interface FieldListControl<T = any, E extends Element<T> = Element<T>> {
   higher: boolean;
   isSelected: (element: E) => boolean;
   listIsVisible: boolean;
+  onClear: () => void;
   onClickAction: () => void;
   onClickBackdrop: () => void;
   onClickElement: (element: E) => () => void;
@@ -273,6 +274,12 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
     [toggleElement]
   );
 
+  const onClear = useCallback(() => {
+    setSelected([]);
+    formControl?.setValue([]);
+    props.onValue?.([]);
+  }, [formControl, props.onValue]);
+
   const onRemoveElement = useCallback(
     (element: E) => {
       return (event: MouseEvent) => {
@@ -348,6 +355,7 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
       refList,
       refSuggestions,
       isSelected,
+      onClear,
       onClickAction,
       onClickBackdrop,
       onClickElement,
@@ -361,6 +369,7 @@ export function useFieldList<T = any, E extends Element<T> = Element<T>>(
       state,
       selected,
       isSelected,
+      onClear,
       onClickAction,
       onClickBackdrop,
       onClickElement,

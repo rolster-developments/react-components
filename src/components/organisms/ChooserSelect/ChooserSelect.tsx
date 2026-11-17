@@ -4,6 +4,7 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, memo, ReactNode, useCallback, useMemo } from 'react';
+import { useChooserSearch } from '../../../controllers/ChooserSearchController';
 import { useInteractiveController } from '../../../controllers/InteractiveController';
 import { renderClassStatus } from '../../../helpers/css';
 import {
@@ -19,10 +20,15 @@ import {
 import { useFieldSelect } from '../FieldSelect/FieldSelectController';
 
 export interface ChooserSelectState<T = any> {
+  clear: () => void;
   description: string;
   listIsVisible: boolean;
   value?: T;
 }
+
+type ChooserSelectSlot<T> =
+  | ReactNode
+  | ((state: ChooserSelectState<T>) => ReactNode);
 
 interface ChooserSelectProps<
   T = any,
@@ -33,15 +39,19 @@ interface ChooserSelectProps<
   suggestions: E[];
   action?: FieldListAction;
   automatic?: boolean;
-  children?: ReactNode | ((state: ChooserSelectState<T>) => ReactNode);
+  children?: ChooserSelectSlot<T>;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T | undefined>
     | ReactControl<HTMLElement, NonNullable<T>>;
+  header?: ChooserSelectSlot<T>;
   identifier?: string;
   onSelect?: (value: NonNullable<T>) => void;
   onValue?: ((value?: T) => void) | ((value: T) => void);
+  panelClassName?: string;
   reference?: (value: T) => K;
+  searchable?: boolean;
+  searchPlaceholder?: string;
   value?: T;
 }
 
@@ -66,9 +76,24 @@ function RlsChooserSelectTemplateComponent<
     action,
     children,
     formControl,
+    header,
+    panelClassName,
     rlsSize,
-    rlsTheme
+    rlsTheme,
+    searchable,
+    searchPlaceholder
   } = props;
+
+  const search = useChooserSearch({
+    higher: select.higher,
+    listIsVisible: select.listIsVisible,
+    onClose: select.onClickBackdrop,
+    refContent: select.refContent,
+    refList: select.refList,
+    suggestions,
+    searchable,
+    searchPlaceholder
+  });
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -101,6 +126,18 @@ function RlsChooserSelectTemplateComponent<
     onKeyDown: onKeydownTrigger
   });
 
+  const value = formControl?.value ?? props.value;
+
+  const state = useMemo<ChooserSelectState<T>>(
+    () => ({
+      clear: select.onClear,
+      description: select.value,
+      listIsVisible: select.listIsVisible,
+      value
+    }),
+    [select.onClear, select.value, select.listIsVisible, value]
+  );
+
   return (
     <div
       id={props.identifier}
@@ -118,22 +155,19 @@ function RlsChooserSelectTemplateComponent<
         onBlur={select.onBlurInput}
         {...trigger}
       >
-        {typeof children === 'function'
-          ? children({
-              description: select.value,
-              listIsVisible: select.listIsVisible,
-              value: formControl?.value ?? props.value
-            })
-          : children}
+        {typeof children === 'function' ? children(state) : children}
       </div>
 
       <RlsFieldListSuggestions
-        elements={suggestions}
+        elements={search.elements}
         visible={select.listIsVisible}
         action={action}
+        className={panelClassName}
         disabled={disabled}
+        header={typeof header === 'function' ? header(state) : header}
         higher={select.higher}
         render={render}
+        searchControl={search.searchControl}
         isSelected={(element) => {
           const value = formControl?.value ?? props.value;
 

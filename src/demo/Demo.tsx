@@ -1,7 +1,8 @@
 import {
   PickerListener,
   PickerListenerEvent,
-  RolsterAutocompleteElement
+  RolsterAutocompleteElement,
+  RolsterListElement
 } from '@rolster/components';
 import { Time } from '@rolster/dates';
 import { useFormControl, useInputControl } from '@rolster/react-forms';
@@ -27,7 +28,9 @@ import {
   RlsDatatable,
   RlsDatatableCell,
   RlsDatatableFloating,
+  RlsDatatableHeader,
   RlsDatatableRecord,
+  RlsDatatableTitle,
   RlsDropdown,
   RlsFieldAutocomplete,
   RlsFieldDate,
@@ -35,6 +38,8 @@ import {
   RlsFieldList,
   RlsFieldSelect,
   RlsFieldText,
+  RlsFilterList,
+  RlsFilterSelect,
   RlsFormNavigation,
   RlsIcon,
   RlsImageChooser,
@@ -157,6 +162,8 @@ class PersonListElement extends RolsterAutocompleteElement<Person> {
 const PERSON_SUGGESTIONS = PERSONS.map(
   (person) => new PersonListElement(person)
 );
+
+const ROLE_SUGGESTIONS = ROLES.map((role) => new RolsterListElement(role));
 
 function personInitials(name: string): string {
   return name
@@ -306,7 +313,7 @@ function SizeSamples({ rlsSize }: { rlsSize: RlsSize }) {
 }
 
 export function Demo() {
-  const designSystem = useDesingSystemController('filled', 'bordered');
+  const designSystem = useDesingSystemController('bordered');
   const { confirmation, notify, snackbar } = useRlsContext();
 
   const modalController = usePortalController();
@@ -335,6 +342,8 @@ export function Demo() {
   const listControl = useFormControl<Person[]>([]);
   const roleControl = useFormControl<string>('ADMINISTRADOR');
   const personControl = useFormControl<Person>();
+  const roleFilterControl = useFormControl<string[]>([]);
+  const userFilterControl = useFormControl<Person>();
   const checkboxControl = useInputControl(false);
   const switchControl = useInputControl(true);
   const radioControl = useInputControl('daily');
@@ -484,8 +493,46 @@ export function Demo() {
                   ))}
                 </div>
 
-                <RlsDatatable>
-                  {PERSONS.map((person) => {
+                <RlsDatatable
+                  header={
+                    <RlsDatatableHeader>
+                      <RlsDatatableTitle control={true} />
+                      <RlsDatatableTitle className="rls-width-xs-20 rls-align-center">
+                        <span>Documento</span>
+                      </RlsDatatableTitle>
+                      <RlsDatatableTitle className="rls-width-xs-60">
+                        <RlsFilterList
+                          formControl={roleFilterControl}
+                          suggestions={ROLE_SUGGESTIONS}
+                          header="Filtrar por rol"
+                        >
+                          Nombre
+                        </RlsFilterList>
+                      </RlsDatatableTitle>
+                      <RlsDatatableTitle className="rls-width-xs-20 rls-align-right">
+                        <RlsFilterSelect
+                          formControl={userFilterControl}
+                          suggestions={PERSON_SUGGESTIONS}
+                          header="Filtrar por usuario"
+                        >
+                          Usuario
+                        </RlsFilterSelect>
+                      </RlsDatatableTitle>
+                      <RlsDatatableTitle className="rls-width-xs-20">
+                        <span>Acciones</span>
+                      </RlsDatatableTitle>
+                    </RlsDatatableHeader>
+                  }
+                >
+                  {PERSONS.filter((person) => {
+                    const roles = roleFilterControl.value ?? [];
+                    const user = userFilterControl.value;
+
+                    return (
+                      (!roles.length || roles.includes(person.role)) &&
+                      (!user || user.user === person.user)
+                    );
+                  }).map((person) => {
                     return (
                       <RlsDatatableRecord
                         key={person.documentNumber}

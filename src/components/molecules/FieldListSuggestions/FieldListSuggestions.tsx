@@ -17,7 +17,11 @@ import { renderClassStatus } from '../../../helpers/css';
 import { reactI18n } from '../../../i18n';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { RlsProgressBar } from '../../atoms/ProgressBar/ProgressBar';
-import { PropsWithRlsSize, PropsWithRlsTheme } from '../../definitions';
+import {
+  PropsWithClassName,
+  PropsWithRlsSize,
+  PropsWithRlsTheme
+} from '../../definitions';
 import { useSuggestionsPortalController } from './SuggestionsPortalController';
 
 export interface FieldListSearchControl {
@@ -41,7 +45,7 @@ export interface FieldListAction {
 }
 
 interface FieldListSuggestionsProps<E = any>
-  extends PropsWithRlsTheme, PropsWithRlsSize {
+  extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   elements: E[];
   onClickBackdrop: MouseEventHandler;
   onClickElement: (element: E) => MouseEventHandler;
@@ -50,6 +54,7 @@ interface FieldListSuggestionsProps<E = any>
   visible: boolean;
   action?: FieldListAction;
   disabled?: boolean;
+  header?: ReactNode;
   higher?: boolean;
   isSelected?: (element: E) => boolean;
   multiple?: boolean;
@@ -102,6 +107,7 @@ function RlsFieldListSuggestionsComponent<E = any>({
   elements,
   action,
   disabled,
+  header,
   higher,
   isSelected,
   multiple,
@@ -117,7 +123,8 @@ function RlsFieldListSuggestionsComponent<E = any>({
   refAnchor,
   refList,
   refSuggestions,
-  rlsTheme
+  rlsTheme,
+  ...props
 }: FieldListSuggestionsProps<E>) {
   const portal = useSuggestionsPortalController(
     visible,
@@ -140,12 +147,16 @@ function RlsFieldListSuggestionsComponent<E = any>({
     });
   }, []);
 
-  const className = renderClassStatus('rls-field-list__suggestions', {
-    disabled,
-    higher,
-    portal: portal.active,
-    visible
-  });
+  const className = renderClassStatus(
+    'rls-field-list__suggestions',
+    {
+      disabled,
+      higher,
+      portal: portal.active,
+      visible
+    },
+    props.className
+  );
 
   const onChangePattern = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -172,10 +183,14 @@ function RlsFieldListSuggestionsComponent<E = any>({
       ref={refSuggestions}
       className={className}
       style={portal.active ? portal.style : undefined}
-      rls-size={rlsSize}
+      rls-size={rlsSize ?? portal.size}
       rls-theme={rlsTheme ?? portal.theme}
     >
       <div className="rls-field-list__suggestions__body">
+        {header && (
+          <div className="rls-field-list__suggestions__header">{header}</div>
+        )}
+
         {searchControl && (
           <div className="rls-field-list__ul__search">
             <input

@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.18.1",
+  "version": "19.19.0",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "license": "MIT",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolster/rollup": "^3.0.0",
-    "@rolster/styles-foundations": "^3.16.0",
+    "@rolster/styles-foundations": "^3.17.0",
     "@rolster/types": "^1.2.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

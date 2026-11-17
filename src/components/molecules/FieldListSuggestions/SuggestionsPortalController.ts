@@ -1,7 +1,7 @@
 import { CSSProperties, RefObject, useEffect, useState } from 'react';
 import { useEventCallback } from '../../../controllers/EventCallbackController';
 import { getRemSize } from '../../../helpers/css';
-import { RlsTheme } from '../../../types';
+import { RlsSize, RlsTheme } from '../../../types';
 
 const MAX_LIST_HEIGHT_REM = 180;
 const MOBILE_MEDIA_QUERY = '(max-width: 480px)';
@@ -11,8 +11,17 @@ const VIEWPORT_GAP_REM = 8;
 
 export interface SuggestionsPortalController {
   active: boolean;
+  size?: RlsSize;
   style?: CSSProperties;
   theme?: RlsTheme;
+}
+
+function getAnchorAttribute<T extends string>(
+  anchor: HTMLElement,
+  attribute: string
+): Undefined<T> {
+  return (anchor.closest(`[${attribute}]`)?.getAttribute(attribute) ??
+    undefined) as Undefined<T>;
 }
 
 function getScrollableAncestors(element: HTMLElement): HTMLElement[] {
@@ -80,6 +89,7 @@ export function useSuggestionsPortalController(
   const [mounted, setMounted] = useState(false);
   const [style, setStyle] = useState<CSSProperties>();
   const [theme, setTheme] = useState<RlsTheme>();
+  const [size, setSize] = useState<RlsSize>();
 
   useEffect(() => {
     setMounted(true);
@@ -96,10 +106,8 @@ export function useSuggestionsPortalController(
       return;
     }
 
-    setTheme(
-      (anchor.closest('[rls-theme]')?.getAttribute('rls-theme') ??
-        undefined) as Undefined<RlsTheme>
-    );
+    setTheme(getAnchorAttribute<RlsTheme>(anchor, 'rls-theme'));
+    setSize(getAnchorAttribute<RlsSize>(anchor, 'rls-size'));
 
     const scrollables = getScrollableAncestors(anchor);
 
@@ -150,5 +158,5 @@ export function useSuggestionsPortalController(
     };
   }, [mounted, visible, refAnchor, higher]);
 
-  return { active: mounted && !!refAnchor, style, theme };
+  return { active: mounted && !!refAnchor, size, style, theme };
 }

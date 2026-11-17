@@ -4,6 +4,7 @@ import {
 } from '@rolster/components';
 import { ReactControl } from '@rolster/react-forms';
 import { KeyboardEvent, memo, ReactNode, useCallback, useMemo } from 'react';
+import { useChooserSearch } from '../../../controllers/ChooserSearchController';
 import { useInteractiveController } from '../../../controllers/InteractiveController';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsCheckBox } from '../../atoms/CheckBox/CheckBox';
@@ -20,22 +21,31 @@ import {
 import { useFieldList } from '../FieldList/FieldListController';
 
 export interface ChooserListState<T = any, E extends Element<T> = Element<T>> {
+  clear: () => void;
   listIsVisible: boolean;
   selected: E[];
 }
+
+type ChooserListSlot<T, E extends Element<T>> =
+  | ReactNode
+  | ((state: ChooserListState<T, E>) => ReactNode);
 
 interface ChooserListProps<T = any, E extends Element<T> = Element<T>>
   extends PropsWithRlsTheme, PropsWithRlsSize, PropsWithClassName {
   suggestions: E[];
   action?: FieldListAction;
-  children?: ReactNode | ((state: ChooserListState<T, E>) => ReactNode);
+  children?: ChooserListSlot<T, E>;
   disabled?: boolean;
   formControl?:
     | ReactControl<HTMLElement, T[]>
     | ReactControl<HTMLElement, NonNullable<T>[]>
     | ReactControl<HTMLElement, T[] | undefined>;
+  header?: ChooserListSlot<T, E>;
   identifier?: string;
   onValue?: (value: T[]) => void;
+  panelClassName?: string;
+  searchable?: boolean;
+  searchPlaceholder?: string;
   value?: T[];
 }
 
@@ -58,9 +68,24 @@ function RlsChooserListTemplateComponent<
     action,
     children,
     formControl,
+    header,
+    panelClassName,
     rlsSize,
-    rlsTheme
+    rlsTheme,
+    searchable,
+    searchPlaceholder
   } = props;
+
+  const search = useChooserSearch({
+    higher: fieldList.higher,
+    listIsVisible: fieldList.listIsVisible,
+    onClose: fieldList.onClickBackdrop,
+    refContent: fieldList.refContent,
+    refList: fieldList.refList,
+    suggestions,
+    searchable,
+    searchPlaceholder
+  });
 
   const disabled = useMemo(() => {
     return formControl?.disabled || props.disabled;
@@ -108,6 +133,15 @@ function RlsChooserListTemplateComponent<
     onKeyDown: onKeydownTrigger
   });
 
+  const state = useMemo<ChooserListState<T, E>>(
+    () => ({
+      clear: fieldList.onClear,
+      listIsVisible: fieldList.listIsVisible,
+      selected: fieldList.selected
+    }),
+    [fieldList.onClear, fieldList.listIsVisible, fieldList.selected]
+  );
+
   return (
     <div
       id={props.identifier}
@@ -124,21 +158,19 @@ function RlsChooserListTemplateComponent<
         aria-haspopup="listbox"
         {...trigger}
       >
-        {typeof children === 'function'
-          ? children({
-              listIsVisible: fieldList.listIsVisible,
-              selected: fieldList.selected
-            })
-          : children}
+        {typeof children === 'function' ? children(state) : children}
       </div>
 
       <RlsFieldListSuggestions
-        elements={suggestions}
+        elements={search.elements}
         visible={fieldList.listIsVisible}
         action={action}
+        className={panelClassName}
         disabled={disabled}
+        header={typeof header === 'function' ? header(state) : header}
         higher={fieldList.higher}
         render={renderWithCheckbox}
+        searchControl={search.searchControl}
         isSelected={fieldList.isSelected}
         multiple={true}
         refAnchor={fieldList.refContent}
