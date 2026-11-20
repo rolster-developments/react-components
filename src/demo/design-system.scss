@@ -2,8 +2,8 @@
 @use '@rolster/styles-foundations/components';
 @use '@rolster/styles-foundations/design-system-filled';
 @use '@rolster/styles-foundations/design-system-bordered';
-@use '@rolster/styles-foundations/fonts/poppins';
-@use './icons/rolster-icons';
+@use '@rolster/styles-foundations/fonts/mont';
+@use '@rolster/styles-foundations/icons/rolster-icons';
 
 body {
   --rlc-button-description-text-transform: none;
