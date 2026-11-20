@@ -1,0 +1,17 @@
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: var(--rls-sizing-x16);
+  width: 100%;
+
+  & > h6 {
+    flex: 0 0 auto;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    column-gap: var(--rls-sizing-x8);
+  }
+}

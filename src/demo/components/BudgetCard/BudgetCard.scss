@@ -1,0 +1,9 @@
+.budget-card {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--rls-sizing-x8);
+    margin-bottom: var(--rls-sizing-x8);
+  }
+}

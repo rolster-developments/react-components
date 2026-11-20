@@ -1,0 +1,123 @@
+.search-page {
+  display: flex;
+  align-items: flex-start;
+  column-gap: var(--rls-sizing-x16);
+
+  &__filters {
+    display: flex;
+    flex: 0 0 220px;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x8);
+
+    &__group {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--rls-sizing-x8);
+      padding: var(--rls-sizing-x8) 0;
+    }
+
+    &__range {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__results {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x12);
+    min-width: 0;
+  }
+
+  &__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rls-sizing-x8);
+
+    & > * {
+      flex: 1 1 140px;
+      min-width: 0;
+    }
+
+    & > *:first-child {
+      flex: 2 1 200px;
+    }
+
+    & > button {
+      flex: 0 0 auto;
+    }
+  }
+
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--rls-sizing-x8);
+
+    & > *:first-child {
+      flex: 0 0 auto;
+    }
+
+    &__actions {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      column-gap: var(--rls-sizing-x8);
+    }
+  }
+
+  &__job {
+    &__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      column-gap: var(--rls-sizing-x16);
+    }
+
+    &__salary {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      row-gap: var(--rls-sizing-x2);
+    }
+
+    &__bullets {
+      margin: var(--rls-sizing-x8) 0;
+      padding-left: var(--rls-sizing-x16);
+
+      & > li {
+        margin-bottom: var(--rls-sizing-x4);
+      }
+    }
+
+    &__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      column-gap: var(--rls-sizing-x16);
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rls-sizing-x8);
+  }
+
+  &__aside {
+    display: flex;
+    flex: 0 0 240px;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x16);
+  }
+
+  &__alert {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x8);
+  }
+}

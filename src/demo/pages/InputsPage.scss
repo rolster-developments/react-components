@@ -1,0 +1,45 @@
+.inputs-page {
+  align-items: start;
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x16);
+  }
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x4);
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    column-gap: var(--rls-sizing-x12);
+
+    & > * {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x8);
+  }
+
+  &__skills {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rls-sizing-x8);
+  }
+
+  &__photo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--rls-sizing-x12);
+  }
+}
