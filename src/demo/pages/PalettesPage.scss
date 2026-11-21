@@ -1,0 +1,62 @@
+.palettes-page {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rls-sizing-x16);
+
+  &__picker {
+    max-width: 280px;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x8);
+  }
+
+  &__ramp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rls-sizing-x6);
+  }
+
+  &__step {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x1);
+    width: auto;
+  }
+
+  &__chip {
+    width: var(--rls-sizing-x24);
+    height: var(--rls-sizing-x16);
+    box-sizing: border-box;
+    border-radius: var(--rls-sizing-x2);
+    border: var(--rls-app-border-1-200);
+
+    &--wide {
+      width: 100%;
+      height: var(--rls-sizing-x12);
+    }
+  }
+
+  &__hex {
+    font-family: monospace;
+  }
+
+  &__measure {
+    font-family: monospace;
+  }
+
+  &__wheel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--rls-sizing-x8);
+  }
+
+  &__entry {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--rls-sizing-x4);
+  }
+}

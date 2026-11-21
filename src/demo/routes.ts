@@ -15,7 +15,8 @@ export const DEMO_ROUTES: DemoRoute[] = [
     icon: 'shopping-cart',
     label: 'Ecommerce',
     path: '/ecommerce'
-  }
+  },
+  { id: 'palettes', icon: 'droplet', label: 'Palettes', path: '/palettes' }
 ];
 
 export const DEMO_FALLBACK_PATH = '/table';
