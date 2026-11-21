@@ -1,6 +1,7 @@
 import { memo, ReactNode } from 'react';
 import { useDatatable } from '../../../controllers/DatatableController';
 import { renderClassStatus } from '../../../helpers/css';
+import { datatableStatusTheme } from '../../../helpers/datatable';
 import { RlsComponent } from '../../definitions';
 
 interface DatatableProps extends RlsComponent {
@@ -165,7 +166,7 @@ function RlsDatatableRecordComponent({
 }: DatatableRecordProps) {
   const classNameRecord = renderClassStatus(
     'rls-datatable__record',
-    { error, info, truncated, success, warning },
+    { truncated },
     className
   );
 
@@ -174,7 +175,9 @@ function RlsDatatableRecordComponent({
       id={identifier}
       className={classNameRecord}
       rls-size={rlsSize}
-      rls-theme={rlsTheme}
+      rls-theme={
+        rlsTheme ?? datatableStatusTheme({ error, info, success, warning })
+      }
     >
       {children}
     </tr>
@@ -197,7 +200,7 @@ function RlsDatatableTotalsComponent({
 }: DatatableRecordProps) {
   const classNameTotals = renderClassStatus(
     'rls-datatable__totals',
-    { error, info, truncated, success, warning },
+    { truncated },
     className
   );
 
@@ -206,7 +209,9 @@ function RlsDatatableTotalsComponent({
       id={identifier}
       className={classNameTotals}
       rls-size={rlsSize}
-      rls-theme={rlsTheme}
+      rls-theme={
+        rlsTheme ?? datatableStatusTheme({ error, info, success, warning })
+      }
     >
       {children}
     </div>
