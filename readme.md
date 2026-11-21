@@ -174,7 +174,7 @@ function Header({ requesting, onSave }: HeaderProps) {
 | `RlsAppContent`           | Content container of an application page                                                 |
 | `RlsAppNavbar`            | Navigation bar of an application page, with backdrop                                     |
 | `RlsAppNavbarBody`        | Spacing block for the content of a navigation bar                                        |
-| `RlsAppNavbarMenu`        | List of navigation options with icon and label                                           |
+| `RlsAppNavbarMenu`        | List of navigation options with icon and label; `activeId` marks the active one          |
 | `RlsAppPage`              | Page of an application: holds the navbar and the body                                    |
 | `RlsAppThemeTabs`         | Tab bar with the application themes that writes the selected one on the body             |
 | `RlsAppToolbar`           | Toolbar fixed at the top of an application page                                          |

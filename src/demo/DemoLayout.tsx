@@ -1,5 +1,5 @@
 import { useInputControl } from '@rolster/react-forms';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router';
 import {
   AppNavbarMenuOption,
@@ -25,12 +25,15 @@ export function DemoLayout() {
   const navigate = useNavigate();
   const searchControl = useInputControl('');
 
+  const [id, setId] = useState('table');
+
   const onOption = useCallback(
     ({ id }: AppNavbarMenuOption) => {
       const route = DEMO_ROUTES.find((option) => option.id === id);
 
       if (route) {
         navigate(route.path);
+        setId(id);
       }
     },
     [navigate]
@@ -40,7 +43,11 @@ export function DemoLayout() {
     <RlsAppPage>
       <RlsAppNavbar>
         <RlsAppNavbarBody>
-          <RlsAppNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
+          <RlsAppNavbarMenu
+            options={NAV_OPTIONS}
+            activeId={id}
+            onOption={onOption}
+          />
         </RlsAppNavbarBody>
       </RlsAppNavbar>
 
@@ -50,7 +57,10 @@ export function DemoLayout() {
             <h6>Welcome back Daniel 👋</h6>
 
             <div className="demo-toolbar__actions">
-              <RlsInputSearch placeholder="Search" formControl={searchControl} />
+              <RlsInputSearch
+                placeholder="Search"
+                formControl={searchControl}
+              />
 
               <RlsAppThemeTabs rlsTheme="neutral" />
             </div>

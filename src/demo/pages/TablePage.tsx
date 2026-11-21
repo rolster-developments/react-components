@@ -102,7 +102,7 @@ export function TablePage() {
         {page.map(({ email, id, name, role, status }) => (
           <RlsDatatableRecord key={id} truncated={true}>
             <RlsDatatableCell className="rls-width-xs-30">
-              <RlsBallot initials={employeeInitials(name)}>
+              <RlsBallot initials={employeeInitials(name)} subtitle={email}>
                 <p className="rls-truncate">{name}</p>
               </RlsBallot>
             </RlsDatatableCell>

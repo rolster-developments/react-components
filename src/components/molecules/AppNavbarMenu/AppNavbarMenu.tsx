@@ -1,4 +1,5 @@
 import { memo, useCallback } from 'react';
+import { renderClassStatus } from '../../../helpers/css';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { PropsWithRlsSize } from '../../definitions';
 
@@ -10,15 +11,21 @@ export interface AppNavbarMenuOption {
 
 interface NavbarMenuProps extends PropsWithRlsSize {
   options: AppNavbarMenuOption[];
+  activeId?: string;
   onOption?: (option: AppNavbarMenuOption) => void;
 }
 
 interface AppNavbarMenuOptionProps {
+  active: boolean;
   option: AppNavbarMenuOption;
   onOption?: (option: AppNavbarMenuOption) => void;
 }
 
-function RlsAppNavbarMenuOption({ option, onOption }: AppNavbarMenuOptionProps) {
+function RlsAppNavbarMenuOption({
+  option,
+  active,
+  onOption
+}: AppNavbarMenuOptionProps) {
   const onClick = useCallback(() => {
     onOption?.(option);
   }, [onOption]);
@@ -27,7 +34,8 @@ function RlsAppNavbarMenuOption({ option, onOption }: AppNavbarMenuOptionProps) 
     <li>
       <button
         type="button"
-        className="rls-app-navbar__option"
+        className={renderClassStatus('rls-app-navbar__option', { active })}
+        aria-current={active ? 'true' : undefined}
         onClick={onClick}
       >
         <RlsIcon value={option.icon} />
@@ -39,6 +47,7 @@ function RlsAppNavbarMenuOption({ option, onOption }: AppNavbarMenuOptionProps) 
 
 function RlsAppNavbarMenuComponent({
   options,
+  activeId,
   rlsSize,
   onOption
 }: NavbarMenuProps) {
@@ -48,6 +57,7 @@ function RlsAppNavbarMenuComponent({
         <RlsAppNavbarMenuOption
           key={option.id}
           option={option}
+          active={activeId === option.id}
           onOption={onOption}
         />
       ))}
