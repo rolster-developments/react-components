@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-function RlsContentComponent({
+function RlsAppContentComponent({
   children,
   identifier,
   rlsSize,
@@ -19,4 +19,4 @@ function RlsContentComponent({
   );
 }
 
-export const RlsContent = memo(RlsContentComponent);
+export const RlsAppContent = memo(RlsAppContentComponent);

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-function RlsNavbarComponent({
+function RlsAppNavbarComponent({
   children,
   identifier,
   rlsSize,
@@ -21,4 +21,4 @@ function RlsNavbarComponent({
   );
 }
 
-export const RlsNavbar = memo(RlsNavbarComponent);
+export const RlsAppNavbar = memo(RlsAppNavbarComponent);

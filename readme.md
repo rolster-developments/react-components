@@ -49,7 +49,7 @@ Every design system is nested inside its own wrapper class (`.rls-design-system-
 
 ### Application
 
-`RlsApplication` must wrap the application. It renders its `children` inside the `rls-app__body` element and mounts the snackbar, the confirmation dialog and the notification stack, so all of them are available anywhere in the tree. It publishes a context, read with `useRlsContext`, that exposes:
+`RlsApplication` must wrap the application. It renders its `children` inside the `rls-app-body` element and mounts the snackbar, the confirmation dialog and the notification stack, so all of them are available anywhere in the tree. It publishes a context, read with `useRlsContext`, that exposes:
 
 | Member                | Description                                                            |
 | --------------------- | ---------------------------------------------------------------------- |
@@ -169,14 +169,19 @@ function Header({ requesting, onSave }: HeaderProps) {
 | ------------------------- | ---------------------------------------------------------------------------------------- |
 | `RlsAccordion`            | Collapsible section with title and indicator, animated on the height of its content      |
 | `RlsAlert`                | Message block with optional icon and bordered variant                                    |
+| `RlsAppBody`              | Body container of an application page                                                    |
+| `RlsAppContent`           | Content container of an application page                                                 |
+| `RlsAppNavbar`            | Navigation bar of an application page, with backdrop                                     |
+| `RlsAppNavbarBody`        | Spacing block for the content of a navigation bar                                        |
+| `RlsAppNavbarMenu`        | List of navigation options with icon and label                                           |
+| `RlsAppPage`              | Page of an application: holds the navbar and the body                                    |
 | `RlsAppThemeTabs`         | Tab bar with the application themes that writes the selected one on the body             |
+| `RlsAppToolbar`           | Toolbar fixed at the top of an application page                                          |
 | `RlsBallot`               | Avatar, title and subtitle row, with skeleton state                                      |
-| `RlsBody`                 | Body container of an application page                                                    |
 | `RlsButtonProgress`       | Action button surrounded by a circular progress while `progressing`                      |
 | `RlsButtonStepper`        | Pair of buttons that emit a down and an up action                                        |
 | `RlsButtonToggle`         | Action button with a second button that opens the list of `options`                      |
 | `RlsChipGroup`            | Group of chips that behaves as a single selection over a list of values                  |
-| `RlsContent`              | Content container of an application page                                                 |
 | `RlsFieldArea`            | Labelled field over `RlsAreaText`, with an optional counter and its error message        |
 | `RlsFieldDecimal`         | Labelled field over `RlsInputDecimal` with its error message                             |
 | `RlsFieldFile`            | Labelled field that opens a file selector and shows the name of the chosen file          |
@@ -192,8 +197,6 @@ function Header({ requesting, onSave }: HeaderProps) {
 | `RlsLabelSwitch`          | Switch and text that toggle a `boolean` control                                          |
 | `RlsMessageEmpty`         | Empty state with icon, emoji or image, title and content                                 |
 | `RlsMessageFormError`     | Renders the translated error of a control while it is wrong                              |
-| `RlsNavbar`               | Navigation bar of an application page, with backdrop                                     |
-| `RlsNavbarMenu`           | List of navigation options with icon and label                                           |
 | `RlsPagination`           | Paginator over a collection that emits a `PaginationEvent` on every page                 |
 | `RlsPickerDay`            | Grid of the days of a month, restricted by `minDate` and `maxDate`                       |
 | `RlsPickerDayRange`       | Grid of the days of a month that highlights the selected range                           |
@@ -420,7 +423,7 @@ toggleAppTheme(); // 'dark'
 | `PaginationEvent<T>`             | Event of `RlsPagination`: page, limits and suggestions of the page              |
 | `Tab<T>`                         | Tab of `RlsTabs`: label, value and disabled state                               |
 | `AppThemeLabels`                 | Labels of `RlsAppThemeTabs`, one optional string per application theme          |
-| `NavbarMenuOption`               | Option of `RlsNavbarMenu`: identifier, icon and label                           |
+| `AppNavbarMenuOption`            | Option of `RlsAppNavbarMenu`: identifier, icon and label                        |
 | `ImageEditorValue`               | Result of the image editor: `base64` and `blob`                                 |
 | `ThemePalette`                   | Palette generated for a theme: shades, custom properties and CSS                |
 | `HSV`, `RGB`, `HSL`              | Color models used by the conversion functions                                   |

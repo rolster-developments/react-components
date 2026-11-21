@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { RlsComponent } from '../../definitions';
 
-function RlsBodyComponent({
+function RlsAppNavbarBodyComponent({
   children,
   identifier,
   rlsSize,
@@ -10,7 +10,7 @@ function RlsBodyComponent({
   return (
     <div
       id={identifier}
-      className="rls-app-page__body"
+      className="rls-app-navbar__body"
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
@@ -19,4 +19,4 @@ function RlsBodyComponent({
   );
 }
 
-export const RlsBody = memo(RlsBodyComponent);
+export const RlsAppNavbarBody = memo(RlsAppNavbarBodyComponent);

@@ -2,21 +2,21 @@ import { useInputControl } from '@rolster/react-forms';
 import { useCallback } from 'react';
 import { Outlet, useNavigate } from 'react-router';
 import {
-  NavbarMenuOption,
+  AppNavbarMenuOption,
+  RlsAppBody,
+  RlsAppContent,
+  RlsAppNavbar,
+  RlsAppNavbarBody,
+  RlsAppNavbarMenu,
   RlsAppPage,
   RlsAppThemeTabs,
   RlsAppToolbar,
-  RlsBody,
-  RlsContent,
   RlsInputSearch,
-  RlsNavbar,
-  RlsNavbarBody,
-  RlsNavbarMenu,
   useDesingSystemController
 } from '../index';
 import { DEMO_ROUTES } from './routes';
 
-const NAV_OPTIONS: NavbarMenuOption[] = DEMO_ROUTES.map(
+const NAV_OPTIONS: AppNavbarMenuOption[] = DEMO_ROUTES.map(
   ({ icon, id, label }) => ({ icon, id, label })
 );
 
@@ -26,7 +26,7 @@ export function DemoLayout() {
   const searchControl = useInputControl('');
 
   const onOption = useCallback(
-    ({ id }: NavbarMenuOption) => {
+    ({ id }: AppNavbarMenuOption) => {
       const route = DEMO_ROUTES.find((option) => option.id === id);
 
       if (route) {
@@ -38,13 +38,13 @@ export function DemoLayout() {
 
   return (
     <RlsAppPage>
-      <RlsNavbar>
-        <RlsNavbarBody>
-          <RlsNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
-        </RlsNavbarBody>
-      </RlsNavbar>
+      <RlsAppNavbar>
+        <RlsAppNavbarBody>
+          <RlsAppNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
+        </RlsAppNavbarBody>
+      </RlsAppNavbar>
 
-      <RlsBody>
+      <RlsAppBody>
         <RlsAppToolbar>
           <div className="demo-toolbar">
             <h6>Welcome back Daniel 👋</h6>
@@ -57,10 +57,10 @@ export function DemoLayout() {
           </div>
         </RlsAppToolbar>
 
-        <RlsContent>
+        <RlsAppContent>
           <Outlet />
-        </RlsContent>
-      </RlsBody>
+        </RlsAppContent>
+      </RlsAppBody>
     </RlsAppPage>
   );
 }

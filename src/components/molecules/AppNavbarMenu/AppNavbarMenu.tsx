@@ -2,23 +2,23 @@ import { memo, useCallback } from 'react';
 import { RlsIcon } from '../../atoms/Icon/Icon';
 import { PropsWithRlsSize } from '../../definitions';
 
-export interface NavbarMenuOption {
+export interface AppNavbarMenuOption {
   icon: string;
   id: string;
   label: string;
 }
 
 interface NavbarMenuProps extends PropsWithRlsSize {
-  options: NavbarMenuOption[];
-  onOption?: (option: NavbarMenuOption) => void;
+  options: AppNavbarMenuOption[];
+  onOption?: (option: AppNavbarMenuOption) => void;
 }
 
-interface NavbarMenuOptionProps {
-  option: NavbarMenuOption;
-  onOption?: (option: NavbarMenuOption) => void;
+interface AppNavbarMenuOptionProps {
+  option: AppNavbarMenuOption;
+  onOption?: (option: AppNavbarMenuOption) => void;
 }
 
-function RlsNavbarMenuOption({ option, onOption }: NavbarMenuOptionProps) {
+function RlsAppNavbarMenuOption({ option, onOption }: AppNavbarMenuOptionProps) {
   const onClick = useCallback(() => {
     onOption?.(option);
   }, [onOption]);
@@ -37,7 +37,7 @@ function RlsNavbarMenuOption({ option, onOption }: NavbarMenuOptionProps) {
   );
 }
 
-function RlsNavbarMenuComponent({
+function RlsAppNavbarMenuComponent({
   options,
   rlsSize,
   onOption
@@ -45,7 +45,7 @@ function RlsNavbarMenuComponent({
   return (
     <ul className="rls-app-navbar__menu" rls-size={rlsSize}>
       {options.map((option) => (
-        <RlsNavbarMenuOption
+        <RlsAppNavbarMenuOption
           key={option.id}
           option={option}
           onOption={onOption}
@@ -55,4 +55,4 @@ function RlsNavbarMenuComponent({
   );
 }
 
-export const RlsNavbarMenu = memo(RlsNavbarMenuComponent);
+export const RlsAppNavbarMenu = memo(RlsAppNavbarMenuComponent);
