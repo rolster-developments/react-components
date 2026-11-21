@@ -22,7 +22,7 @@ export type RlsTheme =
 
 export type RlsAppTheme = 'light' | 'dim' | 'dark';
 
-export type RlsDesignSystem = 'bordered' | 'filled' | 'gradient';
+export type RlsDesignSystem = 'bordered' | 'filled' | 'gradient' | 'rome';
 
 export type RlsButtonType = 'ghost' | 'flat' | 'raised';
 

@@ -3,7 +3,12 @@ import { RlsDesignSystem } from '../types';
 
 const DESIGN_SYSTEM_PREFIX = 'rls-design-system';
 
-const DESIGN_SYSTEMS: RlsDesignSystem[] = ['bordered', 'filled', 'gradient'];
+export const DESIGN_SYSTEMS: RlsDesignSystem[] = [
+  'bordered',
+  'filled',
+  'gradient',
+  'rome'
+];
 
 function designSystemClass(designSystem: RlsDesignSystem): string {
   return `${DESIGN_SYSTEM_PREFIX}-${designSystem}`;
@@ -21,4 +26,13 @@ export function setDesignSystem(
   DESIGN_SYSTEMS.forEach((value) => {
     target.classList.toggle(designSystemClass(value), value === designSystem);
   });
+}
+
+export function nextDesignSystem(
+  designSystems: RlsDesignSystem[],
+  current: RlsDesignSystem
+): RlsDesignSystem {
+  const index = designSystems.indexOf(current);
+
+  return designSystems[(index + 1) % designSystems.length] ?? current;
 }

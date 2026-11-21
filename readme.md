@@ -37,6 +37,7 @@ The package exposes the following entry points, each one available as Sass (`@us
 | `@rolster/styles-foundations/design-system-bordered` | Bordered design system                                                |
 | `@rolster/styles-foundations/design-system-filled`   | Filled design system                                                  |
 | `@rolster/styles-foundations/design-system-gradient` | Gradient design system                                                |
+| `@rolster/styles-foundations/design-system-rome`     | Rome design system                                                    |
 
 ```scss
 @use '@rolster/styles-foundations';
@@ -45,7 +46,7 @@ The package exposes the following entry points, each one available as Sass (`@us
 @use '@rolster/styles-foundations/design-system-bordered';
 ```
 
-Every design system is nested inside its own wrapper class (`.rls-design-system-bordered`, `.rls-design-system-filled`, `.rls-design-system-gradient`), so its rules only reach the elements below an element carrying that class. `setDesignSystem` writes that class on `document.body` and removes the remaining ones, which allows importing more than one design system and switching between them at runtime.
+Every design system is nested inside its own wrapper class (`.rls-design-system-bordered`, `.rls-design-system-filled`, `.rls-design-system-gradient`, `.rls-design-system-rome`), so its rules only reach the elements below an element carrying that class. `setDesignSystem` writes that class on `document.body` and removes the remaining ones, which allows importing more than one design system and switching between them at runtime.
 
 ### Application
 
@@ -319,7 +320,7 @@ function Assignment({ persons }: { persons: Person[] }) {
 | `useFieldSelect(props)`                                 | State of a single selection field: value, references and event handlers               |
 | `useListController(props)`                              | Base of the previous ones: visibility, keyboard navigation and writing to the control |
 | `useDatatable(table?): DatatableController`             | Observes the body of a table and reports whether it is scrollable                     |
-| `useDesingSystemController(primary?, secondary?)`       | Applies a design system and toggles between two of them                               |
+| `useDesingSystemController(...designSystems?)`          | Applies the first design system of the list; `toggle` moves to the next one, wrapping |
 | `useAppThemeController(initial?, primary?, secondary?)` | Applies an application theme and toggles between two of them                          |
 | `useDropdownController(effect?): DropdownController`    | Opens a `RlsDropdown` at a position or from a mouse event                             |
 | `usePortalController(): PortalController`               | Visibility of modals, sheets and navigation panels                                    |
@@ -407,7 +408,7 @@ toggleAppTheme(); // 'dark'
 | -------------------------------- | ------------------------------------------------------------------------------- |
 | `RlsTheme`                       | Color theme of a component, applied with the `rlsTheme` prop                    |
 | `RlsAppTheme`                    | Application theme, `light`, `dim` or `dark`                                     |
-| `RlsDesignSystem`                | Design system, `bordered`, `filled` or `gradient`                               |
+| `RlsDesignSystem`                | Design system, `bordered`, `filled`, `gradient` or `rome`                       |
 | `RlsButtonType`                  | Button style, `ghost`, `flat` or `raised`                                       |
 | `PropsWithClassName`             | Props with an optional `className`                                              |
 | `PropsWithRlsTheme`              | Props with an optional `rlsTheme`                                               |

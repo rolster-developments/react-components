@@ -1,21 +1,31 @@
-import { useCallback, useState } from 'react';
-import { setDesignSystem } from '../helpers/design-system';
+import { useCallback, useMemo, useState } from 'react';
+import { nextDesignSystem, setDesignSystem } from '../helpers/design-system';
 import { RlsDesignSystem } from '../types';
 
+const DEFAULT_DESIGN_SYSTEMS: RlsDesignSystem[] = ['bordered', 'filled'];
+
 export interface DesingSystemController {
+  designSystems: RlsDesignSystem[];
   setValue: (value: RlsDesignSystem) => void;
   toggle: () => void;
   value: RlsDesignSystem;
 }
 
 export function useDesingSystemController(
-  primaryDesignSystem: RlsDesignSystem = 'bordered',
-  secondaryDesignSystem: RlsDesignSystem = 'filled'
+  ...designSystems: RlsDesignSystem[]
 ): DesingSystemController {
-  const [designSystem, setDesignSystemValue] = useState(() => {
-    setDesignSystem(primaryDesignSystem);
+  const key = designSystems.join('|');
 
-    return primaryDesignSystem;
+  const options = useMemo<RlsDesignSystem[]>(
+    () =>
+      key ? (key.split('|') as RlsDesignSystem[]) : DEFAULT_DESIGN_SYSTEMS,
+    [key]
+  );
+
+  const [designSystem, setDesignSystemValue] = useState(() => {
+    setDesignSystem(options[0]);
+
+    return options[0];
   });
 
   const setValue = useCallback((value: RlsDesignSystem) => {
@@ -24,14 +34,11 @@ export function useDesingSystemController(
   }, []);
 
   const toggle = useCallback(() => {
-    const nextDesignSystem: RlsDesignSystem =
-      designSystem === primaryDesignSystem
-        ? secondaryDesignSystem
-        : primaryDesignSystem;
+    const value = nextDesignSystem(options, designSystem);
 
-    setDesignSystem(nextDesignSystem);
-    setDesignSystemValue(nextDesignSystem);
-  }, [designSystem, primaryDesignSystem, secondaryDesignSystem]);
+    setDesignSystem(value);
+    setDesignSystemValue(value);
+  }, [designSystem, options]);
 
-  return { setValue, toggle, value: designSystem };
+  return { designSystems: options, setValue, toggle, value: designSystem };
 }

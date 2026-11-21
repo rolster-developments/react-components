@@ -21,7 +21,7 @@ const NAV_OPTIONS: AppNavbarMenuOption[] = DEMO_ROUTES.map(
 );
 
 export function DemoLayout() {
-  useDesingSystemController('bordered');
+  useDesingSystemController('rome', 'bordered', 'filled');
   const navigate = useNavigate();
   const searchControl = useInputControl('');
 
