@@ -10,13 +10,13 @@ function RlsNavbarComponent({
   return (
     <nav
       id={identifier}
-      className="rls-app__page__nav"
+      className="rls-app-navbar"
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >
-      <div className="rls-app__page__nav__content">{children}</div>
+      <div className="rls-app-navbar__content">{children}</div>
 
-      <div className="rls-app__page__nav__backdrop"></div>
+      <div className="rls-app-navbar__backdrop"></div>
     </nav>
   );
 }

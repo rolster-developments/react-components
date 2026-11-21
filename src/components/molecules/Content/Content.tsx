@@ -10,7 +10,7 @@ function RlsContentComponent({
   return (
     <div
       id={identifier}
-      className="rls-app__page__content"
+      className="rls-app-page__content"
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >

@@ -3,9 +3,14 @@ import { useCallback } from 'react';
 import { Outlet, useNavigate } from 'react-router';
 import {
   NavbarMenuOption,
+  RlsAppPage,
   RlsAppThemeTabs,
+  RlsAppToolbar,
+  RlsBody,
+  RlsContent,
   RlsInputSearch,
   RlsNavbar,
+  RlsNavbarBody,
   RlsNavbarMenu,
   useDesingSystemController
 } from '../index';
@@ -32,35 +37,30 @@ export function DemoLayout() {
   );
 
   return (
-    <div className="rls-app__body">
-      <section className="rls-app__page">
-        <RlsNavbar>
-          <div className="rls-app__page__nav__body">
-            <RlsNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
-          </div>
-        </RlsNavbar>
+    <RlsAppPage>
+      <RlsNavbar>
+        <RlsNavbarBody>
+          <RlsNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
+        </RlsNavbarBody>
+      </RlsNavbar>
 
-        <div className="rls-app__page__body">
-          <header className="rls-app__page__toolbar">
-            <div className="demo-toolbar">
-              <h6>Welcome back Daniel 👋</h6>
+      <RlsBody>
+        <RlsAppToolbar>
+          <div className="demo-toolbar">
+            <h6>Welcome back Daniel 👋</h6>
 
-              <div className="demo-toolbar__actions">
-                <RlsInputSearch
-                  placeholder="Search"
-                  formControl={searchControl}
-                />
+            <div className="demo-toolbar__actions">
+              <RlsInputSearch placeholder="Search" formControl={searchControl} />
 
-                <RlsAppThemeTabs rlsTheme="neutral" />
-              </div>
+              <RlsAppThemeTabs rlsTheme="neutral" />
             </div>
-          </header>
-
-          <div className="rls-app__page__content">
-            <Outlet />
           </div>
-        </div>
-      </section>
-    </div>
+        </RlsAppToolbar>
+
+        <RlsContent>
+          <Outlet />
+        </RlsContent>
+      </RlsBody>
+    </RlsAppPage>
   );
 }

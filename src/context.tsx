@@ -44,7 +44,7 @@ export function RlsApplication({ children }: RlsComponent) {
   const [navbarIsCondense, setNavbarIsCondense] = useState(false);
   const [appIsMobile, setIsMobile] = useState(false);
 
-  const className = renderClassStatus('rls-app__body', {
+  const className = renderClassStatus('rls-app-body', {
     mobile: appIsMobile,
     'navbar-snackbar': navbarInApp,
     'navbar-condense': navbarIsCondense

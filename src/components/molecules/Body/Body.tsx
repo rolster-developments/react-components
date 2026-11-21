@@ -10,7 +10,7 @@ function RlsBodyComponent({
   return (
     <div
       id={identifier}
-      className="rls-app__page__body"
+      className="rls-app-page__body"
       rls-size={rlsSize}
       rls-theme={rlsTheme}
     >

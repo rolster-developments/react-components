@@ -27,7 +27,7 @@ function RlsNavbarMenuOption({ option, onOption }: NavbarMenuOptionProps) {
     <li>
       <button
         type="button"
-        className="rls-app__page__nav__option"
+        className="rls-app-navbar__option"
         onClick={onClick}
       >
         <RlsIcon value={option.icon} />
@@ -43,7 +43,7 @@ function RlsNavbarMenuComponent({
   onOption
 }: NavbarMenuProps) {
   return (
-    <ul className="rls-app__page__nav__menu" rls-size={rlsSize}>
+    <ul className="rls-app-navbar__menu" rls-size={rlsSize}>
       {options.map((option) => (
         <RlsNavbarMenuOption
           key={option.id}
