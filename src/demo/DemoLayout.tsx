@@ -35,7 +35,9 @@ export function DemoLayout() {
     <div className="rls-app__body">
       <section className="rls-app__page">
         <RlsNavbar>
-          <RlsNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
+          <div className="rls-app__navbar__body">
+            <RlsNavbarMenu options={NAV_OPTIONS} onOption={onOption} />
+          </div>
         </RlsNavbar>
 
         <div className="rls-app__page__body">
