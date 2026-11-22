@@ -3,6 +3,7 @@ import { useFormControl, useInputControl } from '@rolster/react-forms';
 import {
   RlsAccordion,
   RlsAmount,
+  RlsBadge,
   RlsBallot,
   RlsButton,
   RlsButtonIcon,
@@ -79,9 +80,7 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <RlsCard className="shop-page__product">
       <div className="shop-page__product__header">
-        <RlsBallot
-          subtitle={<span className="rls-caption-font">{name}</span>}
-        >
+        <RlsBallot subtitle={<span className="rls-caption-font">{name}</span>}>
           <span className="rls-body-font-semibold">{brand}</span>
         </RlsBallot>
 
@@ -187,8 +186,13 @@ export function EcommercePage() {
         <div className="shop-page__bar">
           <RlsInputSearch formControl={searchControl} placeholder="Search" />
 
-          <RlsButton type="raised" rlsTheme="success" prefixIcon="shopping-cart">
-            Cart 3
+          <RlsButton
+            type="raised"
+            rlsTheme="success"
+            prefixIcon="shopping-cart"
+          >
+            <span>Cart</span>
+            <RlsBadge>3</RlsBadge>
           </RlsButton>
         </div>
 
@@ -217,9 +221,7 @@ export function EcommercePage() {
         <RlsCard>
           <div className="shop-page__detail__header">
             <RlsBallot
-              subtitle={
-                <span className="rls-caption-font">{detail.name}</span>
-              }
+              subtitle={<span className="rls-caption-font">{detail.name}</span>}
             >
               <span className="rls-body-font-semibold">{detail.brand}</span>
             </RlsBallot>

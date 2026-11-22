@@ -10,6 +10,7 @@ import {
   RlsButtonToggle,
   RlsFieldClock,
   RlsFieldColor,
+  RlsFieldDate,
   RlsFieldDateRange,
   RlsFieldFile,
   RlsPickerClock,
@@ -40,6 +41,7 @@ export function ComponentsPage() {
   const timeControl = useFormControl<Time>(new Time(9, 30));
   const colorControl = useFormControl<string>('#4e73f8');
 
+  const fieldDateControl = useFormControl<Date>();
   const fieldRangeControl = useFormControl<DateRange>();
   const fieldTimeControl = useFormControl<Time>();
   const fieldColorControl = useFormControl<string>();
@@ -82,6 +84,13 @@ export function ComponentsPage() {
         <span className="rls-subtitle-font">Fields</span>
 
         <div className="components-page__row">
+          <RlsFieldDate
+            formControl={fieldDateControl}
+            placeholder="Select date"
+          >
+            Date
+          </RlsFieldDate>
+
           <RlsFieldDateRange
             formControl={fieldRangeControl}
             placeholder="Select period"
