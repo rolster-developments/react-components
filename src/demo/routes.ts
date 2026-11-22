@@ -16,7 +16,8 @@ export const DEMO_ROUTES: DemoRoute[] = [
     label: 'Ecommerce',
     path: '/ecommerce'
   },
-  { id: 'palettes', icon: 'droplet', label: 'Palettes', path: '/palettes' }
+  { id: 'palettes', icon: 'droplet', label: 'Palettes', path: '/palettes' },
+  { id: 'components', icon: 'layers', label: 'Components', path: '/components' }
 ];
 
 export const DEMO_FALLBACK_PATH = '/table';

@@ -91,13 +91,6 @@ export function TablePage() {
             </RlsDatatableTitle>
           </RlsDatatableHeader>
         }
-        footer={
-          <RlsPagination
-            suggestions={EMPLOYEES}
-            count={PAGE_SIZE}
-            onPagination={onPagination}
-          />
-        }
       >
         {page.map(({ email, id, name, role, status }) => (
           <RlsDatatableRecord key={id} truncated={true}>
@@ -128,6 +121,12 @@ export function TablePage() {
           </RlsDatatableRecord>
         ))}
       </RlsDatatable>
+
+      <RlsPagination
+        suggestions={EMPLOYEES}
+        count={PAGE_SIZE}
+        onPagination={onPagination}
+      />
     </section>
   );
 }

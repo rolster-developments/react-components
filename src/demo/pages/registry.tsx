@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { ComponentsPage } from './ComponentsPage';
 import { EcommercePage } from './EcommercePage';
 import { InputsPage } from './InputsPage';
 import { PalettesPage } from './PalettesPage';
@@ -12,5 +13,6 @@ export const DEMO_PAGES: Record<string, ReactElement> = {
   sales: <SalesPage />,
   inputs: <InputsPage />,
   ecommerce: <EcommercePage />,
-  palettes: <PalettesPage />
+  palettes: <PalettesPage />,
+  components: <ComponentsPage />
 };
