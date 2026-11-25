@@ -1,6 +1,6 @@
 {
   "name": "@rolster/react-components",
-  "version": "19.20.0",
+  "version": "19.21.0",
   "type": "module",
   "description": "Package containing UI components for React Project.",
   "license": "MIT",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolster/rollup": "^3.0.0",
-    "@rolster/styles-foundations": "^4.1.0",
+    "@rolster/styles-foundations": "^4.3.0",
     "@rolster/types": "^1.2.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
@@ -82,6 +82,7 @@
     "node": ">=24"
   },
   "allowScripts": {
-    "@parcel/watcher": false
+    "@parcel/watcher": false,
+    "fsevents": false
   }
 }
