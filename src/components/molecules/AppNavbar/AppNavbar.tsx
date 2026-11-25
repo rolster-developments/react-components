@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext, useEffect } from 'react';
+import { memo, useCallback, useContext, useLayoutEffect } from 'react';
 import { RlsContext } from '../../../context';
 import { renderClassStatus } from '../../../helpers/css';
 import { RlsAppNavbarMode } from '../../../types';
@@ -23,7 +23,7 @@ function RlsAppNavbarComponent({
     setNavbarIsCondense?.(true);
   }, [setNavbarIsCondense]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (mode !== 'drawer' || !setNavbarIsCondense) {
       return;
     }
