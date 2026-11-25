@@ -74,7 +74,7 @@ export function useDialogFocusController({
       opener.current = null;
 
       if (target?.isConnected) {
-        target.focus();
+        target.focus({ preventScroll: true });
       }
 
       return;
