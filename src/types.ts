@@ -24,6 +24,8 @@ export type RlsAppTheme = 'light' | 'dim' | 'dark';
 
 export type RlsDesignSystem = 'bordered' | 'filled' | 'gradient' | 'rome';
 
+export type RlsAppNavbarMode = 'section' | 'drawer';
+
 export type RlsButtonType = 'ghost' | 'flat' | 'raised';
 
 export type RlsSize = 'normal' | 'small';

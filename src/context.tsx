@@ -16,6 +16,7 @@ import { renderClassStatus } from './helpers/css';
 
 interface RlsState {
   confirmation: Confirmation;
+  navbarIsCondense: boolean;
   notify: Notify;
   setIsMobile: (appIsMobile: boolean) => void;
   setNavbarInApp: (navbarInApp: boolean) => void;
@@ -53,13 +54,14 @@ export function RlsApplication({ children }: RlsComponent) {
   const state = useMemo<RlsState>(
     () => ({
       confirmation,
+      navbarIsCondense,
       notify,
       setIsMobile,
       setNavbarInApp,
       setNavbarIsCondense,
       snackbar
     }),
-    [confirmation, notify, snackbar]
+    [confirmation, navbarIsCondense, notify, snackbar]
   );
 
   return (

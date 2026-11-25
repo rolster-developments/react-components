@@ -11,8 +11,10 @@ import {
   RlsAppPage,
   RlsAppThemeTabs,
   RlsAppToolbar,
+  RlsButtonAction,
   RlsInputSearch,
-  useDesingSystemController
+  useDesingSystemController,
+  useRlsContext
 } from '../index';
 import { DEMO_ROUTES } from './routes';
 
@@ -24,8 +26,13 @@ export function DemoLayout() {
   useDesingSystemController('rome', 'bordered', 'filled');
   const navigate = useNavigate();
   const searchControl = useInputControl('');
+  const { navbarIsCondense, setNavbarIsCondense } = useRlsContext();
 
   const [id, setId] = useState('table');
+
+  const onNavbar = useCallback(() => {
+    setNavbarIsCondense(!navbarIsCondense);
+  }, [navbarIsCondense, setNavbarIsCondense]);
 
   const onOption = useCallback(
     ({ id }: AppNavbarMenuOption) => {
@@ -41,7 +48,7 @@ export function DemoLayout() {
 
   return (
     <RlsAppPage>
-      <RlsAppNavbar>
+      <RlsAppNavbar mode="drawer">
         <RlsAppNavbarBody>
           <RlsAppNavbarMenu
             options={NAV_OPTIONS}
@@ -54,7 +61,16 @@ export function DemoLayout() {
       <RlsAppBody>
         <RlsAppToolbar>
           <div className="demo-toolbar">
-            <h6>Welcome back Daniel 👋</h6>
+            <div className="demo-toolbar__title">
+              <RlsButtonAction
+                icon="menu"
+                type="ghost"
+                tooltip="Menú"
+                onClick={onNavbar}
+              />
+
+              <h6>Welcome back Daniel 👋</h6>
+            </div>
 
             <div className="demo-toolbar__actions">
               <RlsInputSearch

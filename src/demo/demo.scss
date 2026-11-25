@@ -5,8 +5,11 @@
   justify-content: space-between;
   column-gap: var(--rls-sizing-x16);
 
-  & > h6 {
+  &__title {
+    display: flex;
     flex: 0 0 auto;
+    align-items: center;
+    column-gap: var(--rls-sizing-x4);
   }
 
   &__actions {
